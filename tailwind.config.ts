@@ -10,11 +10,19 @@ const config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+      // backgroundImage: {
+      //   "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      //   "gradient-conic":
+      //     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      // },
+    },
+    fontFamily: {
+      MontserratRegular: 'Montserrat-Regular, sans-serif',
+      MontserratSemiBold: 'Montserrat-SemiBold, sans-serif',
+      MontserratBold: 'Montserrat-Bold, sans-serif',
+      PoppinsRegular: 'Poppins-Regular, sans-serif',
+      PoppinsSemiBold: 'Poppins-SemiBold, sans-serif',
+      PoppinsBold: 'Poppins-Bold, sans-serif',
     },
   },
   darkMode: "class",
