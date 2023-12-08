@@ -30,7 +30,7 @@ export default function ChatBot() {
         <textarea
           ref={inputRef}
           className={`${
-            !showInput && "pointer-events-none h-0 opacity-0"
+            !showInput && "pointer-events-none !h-0 opacity-0"
           } transition-all duration-300 outline-none border-none resize-none w-full h-full max-h-[50%] overflow-auto px-7 pt-4`}
           onChange={(e) => {
             setInputValue(e.target.value);

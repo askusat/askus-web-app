@@ -23,7 +23,7 @@ export default function Home() {
             <div className="pt-[92px]">
               <h1 className="font-PoppinsBold text-[58px] font-bold leading-[72px] tracking-[1px]">Transforming Legal Services</h1>
               <p className="mt-[28px] mb-[15px] w-full max-w-[600px] tracking-[1px] text-[20px]">
-              Gain round-the-clock access to thousands of Expert Lawyers, available wherever and whenever you need assistance.
+                Gain round-the-clock access to thousands of Expert Lawyers, available wherever and whenever you need assistance.
               </p>
               <Button className="mt-3 bg-primary text-white rounded-[10px]" size='lg'>Get started</Button>
 
@@ -37,7 +37,36 @@ export default function Home() {
           </div>
         </div>
       </header>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+
+       <section className="w-full h-auto bg-[url(/works.svg)] mt-8 bg-cover bg-no-repeat bg-center py-[62px] px-[60px]">
+        <div className="flex items-center gap-0 justify-around">
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="font-PoppinsRegular text-center max-w-[500px] text-[60px] mb-10 font-[400]">Expert support in 3 easy steps</h1>     
+            <div className="bg-white rounded-full w-[50px] h-[50px] flex items-center max-w-full justify-center 
+            hover:bg-[#0580FE] hover:scale-105   ease-in duration-300 "> 
+              <p className="hover:text-white text-black hover:text-[25px] w-full text-center text-[20px]">1</p> </div>
+
+            <div className="bg-white shadow-md rounded-full mt-[37px] mb-[37px] w-[50px] h-[50px] flex items-center max-w-full justify-center hover:bg-[#0580FE] hover:scale-105  ease-in duration-300
+            "> <p className="hover:text-white text-black hover:text-[25px] text-[20px] font-400 leading-[72px] w-full text-center">2</p> </div>
+
+            <div className="bg-white rounded-full w-[50px] h-[50px] flex items-center max-w-full justify-center 
+            hover:bg-[#0580FE] hover:scale-105  ease-in duration-300">
+              <p className="hover:text-white hover:text-[25px] text-black w-full text-[20px] text-center">3</p> </div>
+           
+          </div>
+
+          <div className="max-w-[515px] h-[500px] w-full overflow-hidden bg-white shadow-md border-1 flex-col items-center justify-center flex-start  rounded-[46px]">
+            <div className="flex justify-center items-center flex-col mt-[20px]">   <Image src="/people.svg" alt="" width={530} height={353} className="w-[300px] h-[203px] " />  </div>
+           <div className="flex justify-center items-center flex-col"> 
+           <h1 className="font-PoppinsBold mt-[20px] text-[32px] font-700">Ask your question</h1>
+              <p className="mt-[22px] w-[489px] text-center">Tell us your situation. Ask any question in any category, anytime you want. Tell us your situation. Ask any question in any category, anytime you want. lore</p></div>
+          </div>
+        </div>    
+
+        
+      </section>
+
+      {/* <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
           <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
             Get started by editing&nbsp;
@@ -134,7 +163,10 @@ export default function Home() {
             </p>
           </a>
         </div>
-      </main>
+
+
+
+      </main>  */}
     </>
   );
 }
