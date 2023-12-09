@@ -29,8 +29,8 @@ const questions = [
 
 export default function SampleQuestionsSlider() {
   return (
-    <div className="w-[60%] relative">
-      <div className="w-full overflow-auto flex items-center gap-4 scrolled-remove">
+    <div className="md:w-[60%] relative">
+      <div className="w-screen md:w-full overflow-x-auto flex items-center gap-4 scrolled-remove h-[310px]">
         <div className="flex items-center gap-6">
           {questions.map((quest) => (
             <div
@@ -45,7 +45,7 @@ export default function SampleQuestionsSlider() {
         </div>
       </div>
       
-      <div className="flex items-center gap-6 absolute right-0 -bottom-20">
+      <div className="flex items-center gap-6 absolute right-0 -bottom-12">
         <Button className="min-w-[60px] min-h-[60px] rounded-full grid place-items-center bg-white hover:bg-primary hover:text-white shadow-lg">
           <FaAngleLeft size={22} />
         </Button>

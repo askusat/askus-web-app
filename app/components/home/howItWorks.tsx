@@ -39,20 +39,20 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section className="w-full h-auto bg-[url(/works.svg)] bg-cover bg-no-repeat bg-center py-[62px] px-[60px]">
-      <div className="flex items-center gap-4 justify-around">
-        <h1 className="font-PoppinsBold text-center max-w-[500px] text-[60px] mb-10 font-bold leading-[66.15px]">
+    <section className="w-full h-auto bg-[url(/works.svg)] bg-cover bg-no-repeat bg-center lg:py-[62px] lg:px-[60px] px-[5%]">
+      <div className="flex flex-col lg:flex-row items-center gap-4 justify-around">
+        <h1 className="font-PoppinsBold text-center max-w-[500px] xl:text-[60px] text-[36px] mb-10 font-bold xl:leading-[66.15px] leading-[40px]">
           Expert support in 3 easy steps
         </h1>
 
-        <div className="flex items-center gap-8">
-          <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col-reverse md:flex-row items-center gap-8">
+          <div className="flex md:flex-col items-center gap-4">
             {steps.map((stepz) => (
               <div
                 key={`step_button_${stepz.id}`}
                 className={`${
                   stepz.id === step ? "bg-[#0580FE] scale-105 text-white"
-                 : 'bg-white'} rounded-full w-[50px] h-[50px] flex items-center max-w-full justify-center cursor-pointer hover:bg-[#0580FE] hover:scale-105 hover:text-white ease-in duration-1000 transition-all`}
+                 : 'bg-white'} rounded-full md:w-[50px] md:h-[50px] w-[40px] h-[40px] flex items-center max-w-full justify-center cursor-pointer hover:bg-[#0580FE] hover:scale-105 hover:text-white ease-in duration-1000 transition-all`}
                 onClick={() => setStep(stepz.id)}
               >
                 <p className="w-full text-center text-[20px]">{stepz.id}</p>
@@ -65,7 +65,7 @@ export default function HowItWorks() {
               key={`step_main_${stepz.id}`}
               className={`${
                 stepz.id === step ? "flex" : "hidden"
-              } max-w-[515px] h-[500px] overflow-hidden bg-white shadow-md border-1 flex-col items-center justify-center flex-start rounded-[46px] transition-all w-[489px]`}
+              } xl:max-w-[515px] md:max-w-[424px] xl:h-[500px] md:h-[480px] overflow-hidden bg-white shadow-md border-1 flex-col items-center justify-center flex-start md:rounded-[46px] rounded-[16px] transition-all md:w-[489px]`}
             >
               <div className="flex justify-center items-center flex-col mt-[20px]">
                 {" "}
@@ -74,14 +74,14 @@ export default function HowItWorks() {
                   alt=""
                   width={530}
                   height={353}
-                  className="w-[300px] h-[203px] "
+                  className="w-[300px] h-[203px]"
                 />
               </div>
               <div className="flex justify-center items-center flex-col">
-                <h1 className="font-PoppinsBold mt-[20px] text-[32px] font-700">
+                <h1 className="font-PoppinsBold mt-[20px] xl:text-[32px] text-[24px] font-700 text-center md:text-start">
                   {stepz.title}
                 </h1>
-                <p className="mt-[22px] w-full max-w-[400px] min-h-[80px]  text-center">
+                <p className="xl:mt-[22px] mt-[18px] w-full xl:max-w-[400px] max-w-[300px] min-h-[80px]  text-center xl:text-base text-sm">
                   {stepz.desc}
                 </p>
               </div>

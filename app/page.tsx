@@ -52,16 +52,16 @@ const testimonials = [
 export default function Home() {
   return (
     <>
-      <header className="h-screen w-full bg-[url(/bg-2.svg)] bg-cover bg-no-repeat bg-center py-[62px] px-[60px]">
+      <header className="h-screen w-full bg-[url(/bg-2.svg)] bg-cover bg-no-repeat bg-center py-[62px] lg:px-[60px] px-[5%]">
         <Nav />
 
         <div className="flex gap-4 justify-between">
           <div className="flex-[4]">
             <div className="pt-[92px]">
-              <h1 className="font-PoppinsBold text-[58px] font-bold leading-[72px] tracking-[1px]">
+              <h1 className="font-PoppinsBold text-[32px] font-semibold md:text-[58px] md:font-bold md:leading-[72px] tracking-[1px]">
                 Transforming Legal Services
               </h1>
-              <p className="mt-[28px] mb-[15px] w-full max-w-[600px] tracking-[1px] text-[20px]">
+              <p className="md:mt-[28px] mt-[18px] md:mb-[15px] mb-[8px] w-full max-w-[600px] tracking-[1px] md:text-[20px] text-[14px]">
                 Gain round-the-clock access to thousands of Expert Lawyers,
                 available wherever and whenever you need assistance.
               </p>
@@ -83,7 +83,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="flex-[3]">
+          <div className="hidden lg:flex-[3]">
             <ChatBot />
           </div>
         </div>
@@ -91,24 +91,25 @@ export default function Home() {
 
       <main className="">
         <Spacer />
+
         <HowItWorks />
 
         <Spacer />
 
         <section
           id="sample-question"
-          className="bg-[url(/sample-questions-bg.svg)] bg-no-repeat bg-cover bg-center w-full flex items-center justify-between gap-4 px-[60px]"
+          className="bg-[url(/sample-questions-bg.svg)] bg-no-repeat bg-cover bg-center w-full flex flex-col md:flex-row items-center justify-between gap-4 lg:px-[60px] px-[5%]"
         >
-          <div className="w-[40%]">
-            <h1 className="font-PoppinsBold text-[58px] font-bold leading-[60px] tracking-[1px] max-w-[500px]">
-              Ask us anytime anytime!
+          <div className="md:w-[40%]">
+            <h1 className="font-PoppinsBold xl:text-[58px] md:text-[36px] text-[28px] font-bold xl:leading-[60px] leading-[40px] tracking-[1px] max-w-[500px]">
+              Ask us anything anytime!
             </h1>
-            <p className="mt-[28px] mb-[15px] w-full max-w-[500px] tracking-[1px] text-[20px]">
+            <p className="xl:mt-[28px] mt-[18px] mb-[15px] w-full max-w-[500px] xl:tracking-[1px] xl:text-[20px] text-[16px]">
               The Experts at AskUs are ready to answer your questions, day or
               night.
             </p>
             <Button
-              className="mt-3 bg-primary text-white rounded-[10px]"
+              className="xl:mt-3 mt-1 bg-primary text-white rounded-[10px]"
               size="lg"
             >
               Get started
@@ -122,10 +123,10 @@ export default function Home() {
 
         <section id="services">
           <div className="flex flex-col items-center">
-            <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase">
+            <h2 className="font-PoppinsBold md:text-[60px] text-[36px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase">
               Testimonials
             </h2>
-            <h3 className="text-[48px] font-bold -mt-11">
+            <h3 className="md:text-[48px] text-[24px] font-bold md:-mt-11 -mt-8">
               What our clients say
             </h3>
             <div className="h-1 bg-primary min-w-[100px]"></div>
@@ -133,7 +134,7 @@ export default function Home() {
 
           <div className="mt-12"></div>
 
-          <div className="flex justify-center">
+          <div className="hidden md:flex justify-center">
             <div className="flex flex-col gap-12">
               <div className="h-[135px] flex items-center">
                 <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase mr-7">
@@ -260,18 +261,45 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          <div className="flex flex-col gap-8 md:hidden">
+            <div className="">
+              <div className="flex items-center justify-center">
+                <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase mr-7">
+                  01
+                </h2>
+                <Image
+                  src={"circle-check.svg"}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className="w-[80px] h-[80px] md:w-[100px] md:h-[100px]"
+                />
+              </div>
+
+              <div className="mt-4 flex flex-col justify-center items-center">
+                <h3 className="font-PoppinsBold font-bold text-[28px] text-primary">
+                  Expert lawyers
+                </h3>
+                <p className="mt-2 text-xl max-w-[280px] text-center">
+                  We have high quality verified expert lawyers ready to help
+                  you.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
         <Spacer />
 
         <section
           id="cta"
-          className="w-full h-[400px] bg-[url(/get-started-bg.svg)] bg-cover bg-center flex flex-col items-center justify-center gap-8 text-white"
+          className="w-full h-[400px] bg-[url(/get-started-bg.svg)] bg-cover bg-center flex flex-col items-center justify-center lg:gap-8 gap-4 text-white px-4"
         >
-          <h2 className="text-[48px] font-PoppinsBold font-bold ">
+          <h2 className="lg:text-[48px] md:text-[32px] text-[26px] font-PoppinsBold font-bold text-center md:text-start ">
             Start your chat with an expert now
           </h2>
-          <p className="max-w-[544px] text-[20px] text-center">
+          <p className="lg:max-w-[544px] max-w-[344px] lg:text-[20px] text-[16px] text-center">
             With both chat and telephone options the power is in your hands, get
             the answers you need now.
           </p>
@@ -287,16 +315,16 @@ export default function Home() {
 
         <section id="testimonials">
           <div className="flex flex-col items-center">
-            <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase">
+            <h2 className="font-PoppinsBold md:text-[60px] text-[36px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase">
               Testimonials
             </h2>
-            <h3 className="text-[48px] font-bold -mt-11">
+            <h3 className="md:text-[48px] text-[24px] font-bold md:-mt-11 -mt-8">
               What our clients say
             </h3>
             <div className="h-1 bg-primary min-w-[100px]"></div>
           </div>
 
-          <div className="mt-[100px] lg:grid grid-cols-4 gap-8 px-[60px]">
+          <div className="mt-[100px] grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:px-[60px] px-[5%]">
             {testimonials.map((testomial, index) => (
               <div
                 key={`testimonials_t-${index}`}
