@@ -24,7 +24,7 @@ export default function RootLayout({
           <div className="bg-[#f9f9f9]">
             {children}
 
-            <footer className="flex flex-col bg-[#0580FE] w-full min-h-[502px] lg:px-[60px] px-[5%]">    
+            <footer className="flex flex-col bg-[#0580FE] w-full lg:px-[60px] px-[5%]">    
               <div className="flex flex-col lg:flex-row justify-between w-full">
                 <div className="flex flex-col lg:items-start md:items-center">
                   <Image src="/footer.svg" alt="" width={132} height={29} className="pt-[30px]" />
@@ -40,27 +40,27 @@ export default function RootLayout({
 
                 <div className="flex flex-col md:flex-row justify-around gap-8 xl:gap-[100px] mt-[38px]">
                   <div className="flex flex-col  ">
-                    <Link href="#" className="text-[28px] font-PoppinsBold font-[700] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">General</Link>
+                    <Link href="#" className="text-[28px] font-PoppinsBold font-[700] xl:leading-[50.3px] leading-[30px] tracking-[1px] text-[#FFFFFF]">General</Link>
                     <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Home</Link>
                     <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">About</Link>
                   </div>
 
                   <div className="flex flex-col ">
-                    <Link href="#" className="text-[28px] font-PoppinsBold font-[700] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">How to Subscribe</Link>
+                    <Link href="#" className="text-[28px] font-PoppinsBold font-[700] xl:leading-[50.3px] leading-[30px] tracking-[1px] text-[#FFFFFF]">How to Subscribe</Link>
                     <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Why use AskUs</Link>
                     <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Sign Up</Link>
                     <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Subscribers Login</Link>
                   </div>
 
                   <div className="flex flex-col ">
-                    <Link href="#" className="text-[28px] font-PoppinsBold font-[700] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Help</Link>
+                    <Link href="#" className="text-[28px] font-PoppinsBold font-[700] xl:leading-[50.3px] leading-[30px] tracking-[1px] text-[#FFFFFF]">Help</Link>
                     <Link href="#" className="text-[18px] font-Poppins  leading-[50.3px] tracking-[1px] text-[#FFFFFF]">FAQ</Link>
                     <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Contact Us</Link>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 lg:mt-0 flex items-center justify-end w-full h-full mb-6 flex-col text-[18px] font-Poppins leading-[50.3px] tracking-[1px]">
+              <div className="mt-8 flex items-center justify-end w-full h-full mb-6 flex-col text-[18px] font-Poppins leading-[50.3px] tracking-[1px]">
                 <Link href="#" className="text-[#FFFFFF]">
                   ©2023 AskUs Limited. All rights reserved.</Link>
                 <Link href="#" className="text-[#FFFFFF]">

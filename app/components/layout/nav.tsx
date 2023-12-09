@@ -29,7 +29,7 @@ export default function Nav() {
         </Link>
       </div>
 
-      <Button isIconOnly color="primary" aria-label="Like">
+      <Button isIconOnly color="primary" aria-label="menu-button" className="lg:hidden">
         <FaBars size={24} />
       </Button>
     </nav>

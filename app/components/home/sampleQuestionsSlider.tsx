@@ -30,7 +30,7 @@ const questions = [
 export default function SampleQuestionsSlider() {
   return (
     <div className="md:w-[60%] relative">
-      <div className="w-screen md:w-full overflow-x-auto flex items-center gap-4 scrolled-remove h-[310px]">
+      <div className="w-screen md:w-full overflow-x-auto flex items-center gap-4 scrolled-remove h-[310px] px-4">
         <div className="flex items-center gap-6">
           {questions.map((quest) => (
             <div

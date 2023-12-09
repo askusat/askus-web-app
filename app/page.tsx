@@ -83,7 +83,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="hidden lg:flex-[3]">
+          <div className="hidden lg:block lg:flex-[3]">
             <ChatBot />
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function Home() {
         <Spacer />
 
         <section id="services">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center max-w-[768px] lg:max-w-full mx-auto">
             <h2 className="font-PoppinsBold md:text-[60px] text-[36px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase">
               Testimonials
             </h2>
@@ -137,7 +137,7 @@ export default function Home() {
           <div className="hidden md:flex justify-center">
             <div className="flex flex-col gap-12">
               <div className="h-[135px] flex items-center">
-                <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase mr-7">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                   01
                 </h2>
                 <Image
@@ -145,24 +145,24 @@ export default function Home() {
                   alt=""
                   width={100}
                   height={100}
-                  className=""
+                  className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
                 />
-                <div className="min-w-[210px] border border-dashed"></div>
+                <div className="lg:min-w-[210px] min-w-[176px] border border-dashed"></div>
                 <div className="w-4 h-4 rounded-full -mr-[10px] bg-primary relative z-10"></div>
               </div>
 
               <div className="h-[135px] flex flex-col justify-center">
-                <h3 className="font-PoppinsBold font-bold text-[28px] text-primary ">
+                <h3 className="font-PoppinsBold font-bold lg:text-[28px] text-[22px] text-primary ">
                   Available 24/7
                 </h3>
-                <p className="mt-2 text-xl max-w-[400px]">
+                <p className="mt-2 text-xl lg:max-w-[400px] max-w-[300px]">
                   Available 24/7 for your convenience! Get in touch anytime, day
                   or night, for swift and reliable assistance.
                 </p>
               </div>
 
               <div className="h-[135px] flex items-center">
-                <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase mr-7">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                   03
                 </h2>
                 <Image
@@ -170,23 +170,23 @@ export default function Home() {
                   alt=""
                   width={100}
                   height={100}
-                  className=""
+                  className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
                 />
-                <div className="min-w-[210px] border border-dashed"></div>
+                <div className="lg:min-w-[210px] min-w-[164px] border border-dashed"></div>
                 <div className="w-4 h-4 rounded-full -mr-[10px] bg-primary relative z-10"></div>
               </div>
 
               <div className="h-[135px] flex flex-col justify-center">
-                <h3 className="font-PoppinsBold font-bold text-[28px] text-primary ">
+                <h3 className="font-PoppinsBold font-bold lg:text-[28px] text-[22px] text-primary ">
                   Tailored answers
                 </h3>
-                <p className="mt-2 text-xl max-w-[400px]">
+                <p className="mt-2 text-xl lg:max-w-[400px] max-w-[300px]">
                   Every answer is bespoke to you and addresses your query without the expensive price tag of in person legal guidance.
                 </p>
               </div>
 
               <div className="h-[135px] flex items-center">
-                <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase mr-7">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                   05
                 </h2>
                 <Image
@@ -194,19 +194,19 @@ export default function Home() {
                   alt=""
                   width={100}
                   height={100}
-                  className=""
+                  className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
                 />
-                <div className="min-w-[210px] border border-dashed"></div>
+                <div className="lg:min-w-[210px] min-w-[164px] border border-dashed"></div>
                 <div className="w-4 h-4 rounded-full -mr-[10px] bg-primary relative z-10"></div>
               </div>
             </div>
             <div className="border border-dashed h-[calc(870px-130px)] mt-[65px]"></div>
             <div className="flex flex-col gap-12">
               <div className="h-[135px] flex flex-col justify-center px-8">
-                <h3 className="font-PoppinsBold font-bold text-[28px] text-primary">
+                <h3 className="font-PoppinsBold font-bold lg:text-[28px] text-[22px] text-primary">
                   Expert lawyers
                 </h3>
-                <p className="mt-2 text-xl max-w-[400px]">
+                <p className="mt-2 text-xl lg:max-w-[400px] max-w-[300px]">
                   We have high quality verified expert lawyers ready to help
                   you.
                 </p>
@@ -214,48 +214,48 @@ export default function Home() {
 
               <div className="h-[135px] flex items-center">
                 <div className="w-4 h-4 rounded-full -ml-[10px] bg-primary relative z-10"></div>
-                <div className="min-w-[210px] border border-dashed"></div>
+                <div className="lg:min-w-[210px] min-w-[189px] border border-dashed"></div>
                 <Image
                   src={"Icon2.svg"}
                   alt=""
                   width={100}
                   height={100}
-                  className=""
+                  className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
                 />
-                <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase ml-7">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:ml-7 ml-4">
                   02
                 </h2>
               </div>
 
-              <div className="h-[135px] flex flex-col justify-center px-8">
-                <h3 className="font-PoppinsBold font-bold text-[28px] text-primary">
+              <div className="h-[135px] flex flex-col justify-center pl-8">
+                <h3 className="font-PoppinsBold font-bold lg:text-[28px] text-[22px] text-primary">
                   Connect with an expert
                 </h3>
-                <p className="mt-2 text-xl max-w-[400px]">
+                <p className="mt-2 text-xl lg:max-w-[400px] max-w-[300px]">
                   Realise the convenience of connecting to your expert from home saving time and money.
                 </p>
               </div>
 
               <div className="h-[135px] flex items-center">
                 <div className="w-4 h-4 rounded-full -ml-[10px] bg-primary relative z-10"></div>
-                <div className="min-w-[210px] border border-dashed"></div>
+                <div className="lg:min-w-[210px] min-w-[189px] border border-dashed"></div>
                 <Image
                   src={"icon4.svg"}
                   alt=""
                   width={100}
                   height={100}
-                  className=""
+                  className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
                 />
-                <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase ml-7">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:ml-7 ml-4">
                   04
                 </h2>
               </div>
 
-              <div className="h-[135px] flex flex-col justify-center px-8">
-                <h3 className="font-PoppinsBold font-bold text-[28px] text-primary">
+              <div className="h-[135px] flex flex-col justify-center pl-8">
+                <h3 className="font-PoppinsBold font-bold lg:text-[28px] text-[22px] text-primary">
                   Fast and reliable
                 </h3>
-                <p className="mt-2 text-xl max-w-[400px]">
+                <p className="mt-2 text-xl lg:max-w-[400px] max-w-[300px]">
                   Our service is fast and reliable, you can speak to an expert in minutes rather than waiting days or weeks for an appointment.
                 </p>
               </div>
@@ -265,7 +265,7 @@ export default function Home() {
           <div className="flex flex-col gap-8 md:hidden">
             <div className="">
               <div className="flex items-center justify-center">
-                <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase mr-7">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                   01
                 </h2>
                 <Image
@@ -273,12 +273,12 @@ export default function Home() {
                   alt=""
                   width={100}
                   height={100}
-                  className="w-[80px] h-[80px] md:w-[100px] md:h-[100px]"
+                  className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
                 />
               </div>
 
               <div className="mt-4 flex flex-col justify-center items-center">
-                <h3 className="font-PoppinsBold font-bold text-[28px] text-primary">
+                <h3 className="font-PoppinsBold font-bold lg:text-[28px] text-[22px] text-primary">
                   Expert lawyers
                 </h3>
                 <p className="mt-2 text-xl max-w-[280px] text-center">
