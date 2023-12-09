@@ -162,10 +162,10 @@ export default function Home() {
 
               <div className="h-[135px] flex items-center">
                 <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase mr-7">
-                  01
+                  03
                 </h2>
                 <Image
-                  src={"circle-check.svg"}
+                  src={"icon3.svg"}
                   alt=""
                   width={100}
                   height={100}
@@ -177,20 +177,19 @@ export default function Home() {
 
               <div className="h-[135px] flex flex-col justify-center">
                 <h3 className="font-PoppinsBold font-bold text-[28px] text-primary ">
-                  Available 24/7
+                  Tailored answers
                 </h3>
                 <p className="mt-2 text-xl max-w-[400px]">
-                  Available 24/7 for your convenience! Get in touch anytime, day
-                  or night, for swift and reliable assistance.
+                  Every answer is bespoke to you and addresses your query without the expensive price tag of in person legal guidance.
                 </p>
               </div>
 
               <div className="h-[135px] flex items-center">
                 <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase mr-7">
-                  01
+                  05
                 </h2>
                 <Image
-                  src={"circle-check.svg"}
+                  src={"icon5.svg"}
                   alt=""
                   width={100}
                   height={100}
@@ -216,7 +215,7 @@ export default function Home() {
                 <div className="w-4 h-4 rounded-full -ml-[10px] bg-primary relative z-10"></div>
                 <div className="min-w-[210px] border border-dashed"></div>
                 <Image
-                  src={"circle-check.svg"}
+                  src={"Icon2.svg"}
                   alt=""
                   width={100}
                   height={100}
@@ -229,11 +228,10 @@ export default function Home() {
 
               <div className="h-[135px] flex flex-col justify-center px-8">
                 <h3 className="font-PoppinsBold font-bold text-[28px] text-primary">
-                  Expert lawyers
+                  Connect with an expert
                 </h3>
                 <p className="mt-2 text-xl max-w-[400px]">
-                  We have high quality verified expert lawyers ready to help
-                  you.
+                  Realise the convenience of connecting to your expert from home saving time and money.
                 </p>
               </div>
 
@@ -241,24 +239,23 @@ export default function Home() {
                 <div className="w-4 h-4 rounded-full -ml-[10px] bg-primary relative z-10"></div>
                 <div className="min-w-[210px] border border-dashed"></div>
                 <Image
-                  src={"circle-check.svg"}
+                  src={"icon4.svg"}
                   alt=""
                   width={100}
                   height={100}
                   className=""
                 />
                 <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase ml-7">
-                  02
+                  04
                 </h2>
               </div>
 
               <div className="h-[135px] flex flex-col justify-center px-8">
                 <h3 className="font-PoppinsBold font-bold text-[28px] text-primary">
-                  Expert lawyers
+                  Fast and reliable
                 </h3>
                 <p className="mt-2 text-xl max-w-[400px]">
-                  We have high quality verified expert lawyers ready to help
-                  you.
+                  Our service is fast and reliable, you can speak to an expert in minutes rather than waiting days or weeks for an appointment.
                 </p>
               </div>
             </div>
