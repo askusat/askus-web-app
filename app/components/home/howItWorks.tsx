@@ -35,7 +35,8 @@ export default function HowItWorks() {
         setStep(step + 1);
       }
     }, 3000);
-  }, [step]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="w-full h-auto bg-[url(/works.svg)] bg-cover bg-no-repeat bg-center py-[62px] px-[60px]">

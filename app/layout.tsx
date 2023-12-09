@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Button, Link } from "@nextui-org/react";
+import Image from "next/image";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -20,10 +22,54 @@ export default function RootLayout({
       <body className={`${inter.className} font-MontserratRegular bg-white text-black`}>
         <Providers>
           <div className="bg-[#f9f9f9]">
-          {children}
+            {children}
+
+            <footer className="flex flex-col bg-[#0580FE] w-full h-[502px]   px-[60px]">    
+              <div className="flex justify-between w-full">
+                <div className="flex flex-col">
+                  <Image src="/footer.svg" alt="" width={132} height={29} className="pt-[30px]" />
+                  <h1 className="text-[#FFF] mt-[29px] w-[400px] font-PoppinsBold font-[700] tracking-[1px] leading-[50.3px] text-[28px]">If you have a question, AskUs</h1>
+
+                  <Button
+                    className="mt-[35px] text-primary max-w-[175px] w-full h-[50px] bg-white rounded-[10px]"
+                    size={175}
+                  >
+                    Get started
+                  </Button>
+                </div>
+
+                <div className="flex justify-around gap-[100px] mt-[38px]">
+                  <div className="flex flex-col  ">
+                    <Link href="#" className="text-[28px] font-PoppinsBold font-[700] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">General</Link>
+                    <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Home</Link>
+                    <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">About</Link>
+                  </div>
+
+                  <div className="flex flex-col ">
+                    <Link href="#" className="text-[28px] font-PoppinsBold font-[700] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">How to Subscribe</Link>
+                    <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Why use AskUs</Link>
+                    <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Sign Up</Link>
+                    <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Subscribers Login</Link>
+                  </div>
+
+                  <div className="flex flex-col ">
+                    <Link href="#" className="text-[28px] font-PoppinsBold font-[700] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Help</Link>
+                    <Link href="#" className="text-[18px] font-Poppins  leading-[50.3px] tracking-[1px] text-[#FFFFFF]">FAQ</Link>
+                    <Link href="#" className="text-[18px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]">Contact Us</Link>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end w-full h-full mb-6 flex-col  ">
+                <Link href="#" className="text-[18px] font-Poppins  leading-[50.3px] tracking-[1px] text-[#FFFFFF]">
+                  ©2023 AskUs Limited. All rights reserved.</Link>
+                <Link href="#" className="text-[18px] font-Poppins  leading-[50.3px] tracking-[1px] text-[#FFFFFF]">
+                  Privacy | Policy | Terms of Service | Sitemap</Link>
+              </div>
+            </footer>
 
           </div>
-          </Providers>
+        </Providers>
       </body>
     </html>
   );

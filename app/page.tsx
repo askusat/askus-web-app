@@ -4,45 +4,24 @@ import ChatBot from "./components/chatBot";
 import HowItWorks from "./components/home/howItWorks";
 import Spacer from "./components/spacer";
 import SampleQuestionsSlider from "./components/home/sampleQuestionsSlider";
+import Nav from "./components/layout/nav";
 
 const testimonials = [
-  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
-  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
-  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
-  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
-  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
-  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
-  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
-  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
+  { title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user: 'Kelvin' },
+  { title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user: 'Kelvin' },
+  { title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user: 'Kelvin' },
+  { title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user: 'Kelvin' },
+  { title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user: 'Kelvin' },
+  { title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user: 'Kelvin' },
+  { title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user: 'Kelvin' },
+  { title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user: 'Kelvin' },
 ]
 
 export default function Home() {
   return (
     <>
       <header className="h-screen w-full bg-[url(/bg-2.svg)] bg-cover bg-no-repeat bg-center py-[62px] px-[60px]">
-        <nav className="flex items-center justify-between gap-[46px] font-semibold">
-          <Image src="/logo-2.svg" alt="" width={132} height={29} />
-          <div className="flex items-center gap-[46px]">
-            <Link href="#" className="text-black hover:text-primary">
-              Home
-            </Link>
-            <Link href="#" className="text-black hover:text-primary">
-              Chat With Expert
-            </Link>
-            <Link href="#" className="text-black hover:text-primary">
-              About Us
-            </Link>
-            <Link href="#" className="text-black hover:text-primary">
-              Help
-            </Link>
-            <Link href="#" className="text-black hover:text-primary">
-              Register
-            </Link>
-            <Link href="#" className="text-black hover:text-primary">
-              Sign In
-            </Link>
-          </div>
-        </nav>
+        <Nav />
 
         <div className="flex gap-4 justify-between">
           <div className="flex-[4]">
@@ -158,7 +137,7 @@ export default function Home() {
                 </div>
 
                 <h4 className="font-bold font-PoppinsBold text-[17px] text-center mt-6">
-                {testomial.title}
+                  {testomial.title}
                 </h4>
                 <div className="flex items-end">
                   <div className="">
@@ -183,6 +162,9 @@ export default function Home() {
         <Spacer />
         <Spacer />
         <Spacer />
+
+
+
       </main>
     </>
   );
