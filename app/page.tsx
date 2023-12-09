@@ -1,34 +1,74 @@
 import { Button, Link } from "@nextui-org/react";
 import Image from "next/image";
 import ChatBot from "./components/chatBot";
+import HowItWorks from "./components/home/howItWorks";
+import Spacer from "./components/spacer";
+import SampleQuestionsSlider from "./components/home/sampleQuestionsSlider";
+
+const testimonials = [
+  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
+  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
+  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
+  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
+  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
+  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
+  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
+  {title: 'Best site I’ve ever been on', desc: 'Very knowledgeable about any question, and they answer within minutes.', user:'Kelvin'},
+]
 
 export default function Home() {
   return (
     <>
-      <header className="h-screen w-full bg-[url(/bg-img.svg)] bg-cover bg-no-repeat bg-center py-[62px] px-[60px]">
-        <nav className="flex items-center justify-between gap-[46px]">
-          <Image src="/logo.svg" alt="" width={132} height={29} />
+      <header className="h-screen w-full bg-[url(/bg-2.svg)] bg-cover bg-no-repeat bg-center py-[62px] px-[60px]">
+        <nav className="flex items-center justify-between gap-[46px] font-semibold">
+          <Image src="/logo-2.svg" alt="" width={132} height={29} />
           <div className="flex items-center gap-[46px]">
-            <Link href="#" className="text-black hover:text-primary">Home</Link>
-            {/* <Link href="#" className="text-black hover:text-primary">Chat With Expert</Link> */}
-            <Link href="#" className="text-black hover:text-primary">About Us</Link>
-            <Link href="#" className="text-black hover:text-primary">Help</Link>
-            <Link href="#" className="text-black hover:text-primary">Register</Link>
-            <Link href="#" className="text-black hover:text-primary">Sign In</Link>
+            <Link href="#" className="text-black hover:text-primary">
+              Home
+            </Link>
+            <Link href="#" className="text-black hover:text-primary">
+              Chat With Expert
+            </Link>
+            <Link href="#" className="text-black hover:text-primary">
+              About Us
+            </Link>
+            <Link href="#" className="text-black hover:text-primary">
+              Help
+            </Link>
+            <Link href="#" className="text-black hover:text-primary">
+              Register
+            </Link>
+            <Link href="#" className="text-black hover:text-primary">
+              Sign In
+            </Link>
           </div>
         </nav>
 
         <div className="flex gap-4 justify-between">
           <div className="flex-[4]">
             <div className="pt-[92px]">
-              <h1 className="font-PoppinsBold text-[58px] font-bold leading-[72px] tracking-[1px]">Transforming Legal Services</h1>
+              <h1 className="font-PoppinsBold text-[58px] font-bold leading-[72px] tracking-[1px]">
+                Transforming Legal Services
+              </h1>
               <p className="mt-[28px] mb-[15px] w-full max-w-[600px] tracking-[1px] text-[20px]">
-                Gain round-the-clock access to thousands of Expert Lawyers, available wherever and whenever you need assistance.
+                Gain round-the-clock access to thousands of Expert Lawyers,
+                available wherever and whenever you need assistance.
               </p>
-              <Button className="mt-3 bg-primary text-white rounded-[10px]" size='lg'>Get started</Button>
+              <Button
+                className="mt-3 bg-primary text-white rounded-[10px]"
+                size="lg"
+              >
+                Get started
+              </Button>
 
               <div className="mt-20">
-                <Image src="/review.svg" alt="" width={616} height={104} className="w-[300px] h-auto" />
+                <Image
+                  src="/review.svg"
+                  alt=""
+                  width={616}
+                  height={104}
+                  className="w-[300px] h-auto"
+                />
               </div>
             </div>
           </div>
@@ -38,135 +78,112 @@ export default function Home() {
         </div>
       </header>
 
-       <section className="w-full h-auto bg-[url(/works.svg)] mt-8 bg-cover bg-no-repeat bg-center py-[62px] px-[60px]">
-        <div className="flex items-center gap-0 justify-around">
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="font-PoppinsRegular text-center max-w-[500px] text-[60px] mb-10 font-[400]">Expert support in 3 easy steps</h1>     
-            <div className="bg-white rounded-full w-[50px] h-[50px] flex items-center max-w-full justify-center 
-            hover:bg-[#0580FE] hover:scale-105   ease-in duration-300 "> 
-              <p className="hover:text-white text-black hover:text-[25px] w-full text-center text-[20px]">1</p> </div>
+      <main className="">
+        <Spacer />
+        <HowItWorks />
 
-            <div className="bg-white shadow-md rounded-full mt-[37px] mb-[37px] w-[50px] h-[50px] flex items-center max-w-full justify-center hover:bg-[#0580FE] hover:scale-105  ease-in duration-300
-            "> <p className="hover:text-white text-black hover:text-[25px] text-[20px] font-400 leading-[72px] w-full text-center">2</p> </div>
+        <Spacer />
 
-            <div className="bg-white rounded-full w-[50px] h-[50px] flex items-center max-w-full justify-center 
-            hover:bg-[#0580FE] hover:scale-105  ease-in duration-300">
-              <p className="hover:text-white hover:text-[25px] text-black w-full text-[20px] text-center">3</p> </div>
-           
-          </div>
-
-          <div className="max-w-[515px] h-[500px] w-full overflow-hidden bg-white shadow-md border-1 flex-col items-center justify-center flex-start  rounded-[46px]">
-            <div className="flex justify-center items-center flex-col mt-[20px]">   <Image src="/people.svg" alt="" width={530} height={353} className="w-[300px] h-[203px] " />  </div>
-           <div className="flex justify-center items-center flex-col"> 
-           <h1 className="font-PoppinsBold mt-[20px] text-[32px] font-700">Ask your question</h1>
-              <p className="mt-[22px] w-[489px] text-center">Tell us your situation. Ask any question in any category, anytime you want. Tell us your situation. Ask any question in any category, anytime you want. lore</p></div>
-          </div>
-        </div>    
-
-        
-      </section>
-
-      {/* <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-          <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-            Get started by editing&nbsp;
-            <code className="font-mono font-bold">app/page.tsx</code>
-          </p>
-          <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-            <a
-              className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+        <section
+          id="sample-question"
+          className="bg-[url(/sample-questions-bg.svg)] bg-no-repeat bg-cover bg-center w-full flex items-center justify-between gap-4 px-[60px]"
+        >
+          <div className="w-[40%]">
+            <h1 className="font-PoppinsBold text-[58px] font-bold leading-[60px] tracking-[1px] max-w-[500px]">
+              Ask us anytime anytime!
+            </h1>
+            <p className="mt-[28px] mb-[15px] w-full max-w-[500px] tracking-[1px] text-[20px]">
+              The Experts at AskUs are ready to answer your questions, day or
+              night.
+            </p>
+            <Button
+              className="mt-3 bg-primary text-white rounded-[10px]"
+              size="lg"
             >
-              By{" "}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className="dark:invert"
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+              Get started
+            </Button>
           </div>
-        </div>
 
-        <Button>Click me</Button>
+          <SampleQuestionsSlider />
+        </section>
 
-        <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-            target="_blank"
-            rel="noopener noreferrer"
+        <Spacer />
+
+        <section
+          id="cta"
+          className="w-full h-[400px] bg-[url(/get-started-bg.svg)] bg-cover bg-center flex flex-col items-center justify-center gap-8 text-white"
+        >
+          <h2 className="text-[48px] font-PoppinsBold font-bold ">
+            Start your chat with an expert now
+          </h2>
+          <p className="max-w-[544px] text-[20px] text-center">
+            With both chat and telephone options the power is in your hands, get
+            the answers you need now.
+          </p>
+          <Button
+            className="mt-3 text-primary bg-white rounded-[10px]"
+            size="lg"
           >
-            <h2 className={`mb-3 text-2xl font-semibold`}>
-              Docs sdf{" "}
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
+            Get started
+          </Button>
+        </section>
+
+        <Spacer />
+
+        <section id="testimonials">
+          <div className="flex flex-col items-center">
+            <h2 className="font-PoppinsBold text-[60px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase">
+              Testimonials
             </h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
+            <h3 className="text-[48px] font-bold -mt-11">
+              What our clients say
+            </h3>
+            <div className="h-1 bg-primary min-w-[100px]"></div>
+          </div>
 
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={`mb-3 text-2xl font-semibold`}>
-              Learn{" "}
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
-            </h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
+          <div className="mt-[100px] lg:grid grid-cols-4 gap-8 px-[60px]">
+            {testimonials.map((testomial, index) => (
+              <div key={`testimonials_t-${index}`} className="shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] rounded-3xl w-[300px] h-[200px] bg-white px-[14px] py-[18px]">
+                <div className="flex items-center gap-3">
+                  <div className="">
+                    <Image
+                      src="/FaGrinStars.svg"
+                      alt=""
+                      width={24}
+                      height={24}
+                      className="w-[24px] h-auto"
+                    />
+                  </div>
+                  <div className="font-bold">{testomial.user}</div>
+                </div>
 
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={`mb-3 text-2xl font-semibold`}>
-              Templates{" "}
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
-            </h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              Explore starter templates for Next.js.
-            </p>
-          </a>
+                <h4 className="font-bold font-PoppinsBold text-[17px] text-center mt-6">
+                {testomial.title}
+                </h4>
+                <div className="flex items-end">
+                  <div className="">
+                    <p className="text-center">
+                      {testomial.desc}
+                    </p>
+                  </div>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={`mb-3 text-2xl font-semibold`}>
-              Deploy{" "}
-              <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                -&gt;
-              </span>
-            </h2>
-            <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-              Instantly deploy your Next.js site to a shareable URL with Vercel.
-            </p>
-          </a>
-        </div>
+                  <Image
+                    src="/FaQuoteLeft.svg"
+                    alt=""
+                    width={100}
+                    height={100}
+                    className="w-[100px] h-auto"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
-
-
-      </main>  */}
+        <Spacer />
+        <Spacer />
+        <Spacer />
+      </main>
     </>
   );
 }

@@ -51,3 +51,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+.scrolled-remove {
+  /* Hide scrollbar for Chrome, Safari, and Edge */
+  -ms-overflow-style: none; /* For Internet Explorer */
+  scrollbar-width: none; /* For Firefox */
+  overflow-x: -moz-scrollbars-none; /* For Firefox */
+
+  /* Hide scrollbar for Chrome, Safari, and Edge */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
