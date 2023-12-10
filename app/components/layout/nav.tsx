@@ -120,7 +120,7 @@ const mobileLinkVars={
 
           <div className="flex items-center pt-4 justify-between">
             <div className="flex h-full ">
-              <Image src="/logo.svg" alt="" width={132} height={29} classname="" />
+              <Image src="/logo.svg" alt="" width={132} height={29} className="" />
             </div>
 
             <div className="flex" >
@@ -132,7 +132,7 @@ const mobileLinkVars={
 
           <div className="flex flex-col justify-center w-full pt-10  items-start">
             <motion.div
-            variant={containerVars} 
+            variants={containerVars} 
               initial="initial"
               animate="open"
             className=" flex-col overflow-hidden flex z-20 justify-center items-start gap-[46px]">
@@ -143,13 +143,13 @@ const mobileLinkVars={
                   animate="open"
                 className="flex"><FaHome size={30} />
                 </motion.p>
-                <motion.Link 
+                <motion.link 
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
                 href="#" className="text-black flex font-normal font-PoppinsRegular pt-1 text-[20px] hover:text-primary ">
                   Home
-                </motion.Link>
+                </motion.link>
               </div>
 
               <div className="flex items-start text-xl gap-4">
@@ -158,13 +158,13 @@ const mobileLinkVars={
                   initial="initial"
                   animate="open"
                 className="flex"><GrUserExpert size={30} /></motion.p>
-                <motion.Link
+                <motion.link
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
                 href="#" className="text-black flex font-normal font-PoppinsRegular pt-1 text-[20px] hover:text-primary ">
                   Chat With Expert
-                </motion.Link>
+                </motion.link>
               </div>
               <div className="flex items-start text-xl gap-4">
                 <motion.p
@@ -172,13 +172,13 @@ const mobileLinkVars={
                   initial="initial"
                   animate="open"
                 className="flex"><IoMdHelpCircle size={30} /></motion.p>
-                <motion.Link 
+                <motion.link 
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
                 href="#" className="text-black flex font-normal font-PoppinsRegular pt-1 text-[20px] hover:text-primary ">
                   Help
-                </motion.Link>
+                </motion.link>
               </div>
               <div className="flex items-start text-xl gap-4">
                 <motion.p 
@@ -186,13 +186,13 @@ const mobileLinkVars={
                   initial="initial"
                   animate="open"
                 className="flex"><FaRegAddressCard size={30} /></motion.p>
-                <motion.Link 
+                <motion.link 
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
                 href="#" className="text-black flex font-normal font-PoppinsRegular pt-1 text-[20px] hover:text-primary ">
                   Register
-                </motion.Link>
+                </motion.link>
               </div>
               <div className="flex items-start text-xl gap-4">
                 <motion.p 
@@ -200,13 +200,13 @@ const mobileLinkVars={
                   initial="initial"
                   animate="open"
                 className="flex"><FaSignInAlt size={30} /></motion.p>
-                <motion.Link 
+                <motion.link 
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
                 href="#" className="text-black flex font-normal flexfont-PoppinsRegular pt-1 text-[20px] hover:text-primary ">
                   Sign In
-                </motion.Link>
+                </motion.link>
               </div>
          
             </motion.div>
