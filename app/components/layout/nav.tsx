@@ -128,7 +128,7 @@ export default function Nav() {
             exit="exit"
             className={`${
               openMobileMenu ? "" : ""
-            } lg:hidden fixed place-items-center origin-top left-0 bg-white primary z-30 w-full top-0 flex-col justify-center items-center max-w-[400px] text-black h-screen px-10`}
+            } lg:hidden fixed place-items-center origin-top left-0 bg-white primary z-30 w-full top-0 flex-col justify-center items-center max-w-[400px] text-black h-screen px-4`}
           >
             <div className="flex items-center pt-4 justify-between">
               <div className="flex h-full ">
@@ -158,15 +158,16 @@ export default function Nav() {
                 variants={containerVars}
                 initial="initial"
                 animate="open"
-                className=" flex-col overflow-hidden flex z-20 justify-center items-start gap-[46px]"
+                className=" flex-col overflow-hidden flex z-20 justify-center items-start gap-[30px] w-full"
               >
                 <motion.div
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
+                  className="w-full"
                 >
-                  <Link href="/" className="flex items-center gap-4 text-lg">
-                    <FaHome size={24} />
+                  <Link href="/" className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group">
+                    <FaHome size={24} className="group-hover:text-primary transition-all duration-300" />
                     <span>Home</span>
                   </Link>
                 </motion.div>
@@ -174,9 +175,10 @@ export default function Nav() {
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
+                  className="w-full"
                 >
-                  <Link href="/" className="flex items-center gap-4 text-lg">
-                  <MdSupportAgent size={24} />
+                  <Link href="/#chat" className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary">
+                  <MdSupportAgent size={24} className="group-hover:text-primary transition-all duration-300" />
                     <span>Chat with Expert</span>
                   </Link>
                 </motion.div>
@@ -184,9 +186,10 @@ export default function Nav() {
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
+                  className="w-full"
                 >
-                  <Link href="/about" className="flex items-center gap-4 text-lg">
-                    <FaUsers size={24} />
+                  <Link href="/about" className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary">
+                    <FaUsers size={24} className="group-hover:text-primary transition-all duration-300" />
                     <span>About</span>
                   </Link>
                 </motion.div>
@@ -194,9 +197,10 @@ export default function Nav() {
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
+                  className="w-full"
                 >
-                  <Link href="/contact-us" className="flex items-center gap-4 text-lg">
-                    <FaPhone size={24} />
+                  <Link href="/contact-us" className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary">
+                    <FaPhone size={24} className="group-hover:text-primary transition-all duration-300" />
                     <span>Contact Us</span>
                   </Link>
                 </motion.div>
@@ -204,9 +208,10 @@ export default function Nav() {
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
+                  className="w-full"
                 >
-                  <Link href="/faq" className="flex items-center gap-4 text-lg">
-                    <FaQuestion size={24} />
+                  <Link href="/faq" className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary">
+                    <FaQuestion size={24} className="group-hover:text-primary transition-all duration-300" />
                     <span>FAQ</span>
                   </Link>
                 </motion.div>
@@ -214,9 +219,10 @@ export default function Nav() {
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
+                  className="w-full"
                 >
-                  <Link href="/" className="flex items-center gap-4 text-lg">
-                    <FaUserLock size={24} />
+                  <Link href="/signup" className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary">
+                    <FaUserLock size={24} className="group-hover:text-primary transition-all duration-300" />
                     <span>Register</span>
                   </Link>
                 </motion.div>
@@ -224,9 +230,10 @@ export default function Nav() {
                   variants={mobileLinkVars}
                   initial="initial"
                   animate="open"
+                  className="w-full"
                 >
-                  <Link href="/" className="flex items-center gap-4 text-lg">
-                    <MdLogin size={24} />
+                  <Link href="/login" className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary">
+                    <MdLogin size={24} className="group-hover:text-primary transition-all duration-300" />
                     <span>Login</span>
                   </Link>
                 </motion.div>
