@@ -28,14 +28,13 @@ export default function HowItWorks() {
   const [step, setStep] = useState(1);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (step === steps.length) {
-        setStep(1);
-      } else {
-        setStep(step + 1);
-      }
-    }, 3000);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    const timer = setInterval(() => {
+      setStep((prevStep) => (prevStep === steps.length ? 1 : prevStep + 1));
+    }, 4000);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   return (

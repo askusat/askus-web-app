@@ -89,8 +89,11 @@ const mobileLinkVars={
         <Link href="/about" className="text-black hover:text-primary">
           About Us
         </Link>
-        <Link href="#" className="text-black hover:text-primary">
-          Help
+        <Link href="/faq" className="text-black hover:text-primary">
+          FAQ
+        </Link>
+        <Link href="/contact-us" className="text-black hover:text-primary">
+          Contact us
         </Link>
         <Link href="#" className="text-black hover:text-primary">
           Register

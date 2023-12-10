@@ -121,13 +121,13 @@ export default function Home() {
 
         <Spacer />
 
-        <section id="services">
+        <section id="why-ask-us">
           <div className="flex flex-col items-center max-w-[768px] lg:max-w-full mx-auto">
             <h2 className="font-PoppinsBold md:text-[60px] text-[36px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase">
-              Testimonials
+              Services
             </h2>
-            <h3 className="md:text-[48px] text-[24px] font-bold md:-mt-11 -mt-8">
-              What our clients say
+            <h3 className="md:text-[48px] text-[24px] font-semibold md:-mt-11 -mt-8">
+            Why you should use <span className="font-bold">AskUs</span>
             </h3>
             <div className="h-1 bg-primary min-w-[100px]"></div>
           </div>
