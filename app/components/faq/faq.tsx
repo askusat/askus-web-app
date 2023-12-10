@@ -97,10 +97,10 @@ export default function Faq() {
   }, []);
 
   return (
-    <main className="lg:max-w-[60%] max-w-[80%] mx-auto flex gap-12 mb-20">
-      <ul className="flex flex-col gap-4">
+    <main className="lg:max-w-[60%] md:max-w-[80%] mx-auto flex flex-col md:flex-row gap-12 mb-20">
+      <ul className="flex md:flex-col flex-wrap gap-4">
         {categories.map((c, i) => (
-          <li key={`categ-${i + 1}`} className="">
+          <li key={`categ-${i + 1}`} className="bg-blue-100/50 py-1 px-3 rounded-lg">
             <Link
               href={`/faq#${c.toLowerCase()}`}
               className={`${

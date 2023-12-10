@@ -166,7 +166,7 @@ export default function Nav() {
                   animate="open"
                   className="w-full"
                 >
-                  <Link href="/" className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group">
+                  <Link href="/" className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary">
                     <FaHome size={24} className="group-hover:text-primary transition-all duration-300" />
                     <span>Home</span>
                   </Link>
