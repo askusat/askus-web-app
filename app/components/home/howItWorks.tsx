@@ -73,7 +73,7 @@ export default function HowItWorks() {
                   alt=""
                   width={530}
                   height={353}
-                  className="w-[300px] h-[203px]"
+                  className="w-[300px] h-auto transition-all duration-300"
                 />
               </div>
               <div className="flex justify-center items-center flex-col">
