@@ -324,7 +324,7 @@ export default function Home() {
             <div className="h-1 bg-primary min-w-[100px]"></div>
           </div>
 
-          <div className="mt-[100px] grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:px-[60px] px-[5%]">
+          <div className="mt-[100px] grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:px-[60px] px-[5%] place-items-center">
             {testimonials.map((testomial, index) => (
               <div
                 key={`testimonials_t-${index}`}
