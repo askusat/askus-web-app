@@ -294,7 +294,7 @@ export default function Home() {
 
         <section
           id="cta"
-          className="w-full h-[400px] bg-[url(/get-started-bg.svg)] bg-cover bg-center flex flex-col items-center justify-center lg:gap-8 gap-4 text-white px-4"
+          className="w-full h-[400px] bg-[url(/get-started-bg.png)] bg-cover bg-center flex flex-col items-center justify-center lg:gap-8 gap-4 text-white px-4"
         >
           <h2 className="lg:text-[48px] md:text-[32px] text-[26px] font-PoppinsBold font-bold text-center md:text-start ">
             Start your chat with an expert now
