@@ -110,13 +110,13 @@ export default function SampleQuestionsSlider() {
         {clonedQuestions.map((quest, index) => (
           <div
             key={`quest_id_${quest.id}_${index}`}
-            className="shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] rounded-3xl min-w-[300px] h-[200px] bg-white flex flex-col items-center px-8 snap-start"
+            className="shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] rounded-3xl min-w-[300px] h-[200px] bg-white flex flex-col items-center justify-center gap-4 px-8 snap-start"
           >
             <div className="w-[40px] h-[40px] rounded-full shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] bg-white -mt-[20px] grid place-items-center">
               <TbCloudQuestion />
             </div>
 
-            <p className="text-center mt-6">{`"${quest.title}"`}</p>
+            <p className="text-center">{`"${quest.title}"`}</p>
           </div>
         ))}
         {/* </div> */}
