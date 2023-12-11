@@ -27,7 +27,7 @@ const questionsAndAnswers: QuesAnsType = [
     .map((_, index) => ({
       category: "general",
       question: `What is our return policy ${index + 1}?`,
-      answer: `Our return policy allows returns within 30 days of purchase for refund or exchange ${
+      answer: `Our return policy allows returns within 30 days of purchase for refund or exchange Our return policy allows returns within 30 days of purchase for refund or exchange Our return policy allows returns within 30 days of purchase for refund or exchange ${
         index + 1
       }.`,
     })),
@@ -100,13 +100,13 @@ export default function Faq() {
     <main className="lg:max-w-[60%] md:max-w-[80%] mx-auto flex flex-col md:flex-row gap-12 mb-20">
       <ul className="flex md:flex-col flex-wrap gap-4">
         {categories.map((c, i) => (
-          <li key={`categ-${i + 1}`} className="bg-blue-100/50 py-1 px-3 rounded-lg">
+          <li key={`categ-${i + 1}`} className="">
             <Link
               href={`/faq#${c.toLowerCase()}`}
               className={`${
                 seletedCategory !== c.toLowerCase() &&
                 "text-black hover:text-primary"
-              }`}
+              } bg-blue-100/50 py-1 px-3 rounded-lg w-full`}
               onClick={() => setSeletedCategory(c.toLowerCase())}
             >
               <span className="font-bold mr-2">#</span>
@@ -165,7 +165,7 @@ const QuesAns = ({ qa }: { qa: QuesAnsItemType }) => {
 
       <div
         className={`${
-          !open && "h-0 pointer-events-none opacity-0 -mt-10"
+          !open && "h-0 pointer-events-none opacity-0 -mt-10 "
         } transition-all duration-300 w-full py-3 mt-3 px-4 border border-gray-400 rounded-[8px] mb-10`}
       >
         <p className="text-sm">{qa.answer}</p>

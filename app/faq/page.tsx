@@ -5,8 +5,6 @@ import { Link } from "@nextui-org/react";
 // import { usePathname } from "next/navigation";
 
 export default function FAQPage() {
-  // const pathname = usePathname()
-
   return (
     <div>
       <Layout />
