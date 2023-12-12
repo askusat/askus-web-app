@@ -10,9 +10,9 @@ export default function ContactForm() {
     const [Subject, setSubject] = useState('')
     const [Help, setHelp] = useState('')
   return (
-      <div className="text-black  max-w-[600px] w-full h-[600px] border-t-primary border-t-[8px] bg-white border-2 rounded-lg shadow-xl pt-10 px-8">
+      <div className="text-black  max-w-[600px] w-full md:h-[600px] sm:h-auto mb-4 border-t-primary border-t-[8px]  bg-white border-2 rounded-lg shadow-xl pt-10 px-8">
 
-          <div className="flex justify-center  items-center gap-3 ">
+          <div className="md:flex  sm:space-y-4 md:space-x-0  justify-center sm:flex-col md:flex-row  items-center gap-3 ">
               <div className="flex w-full flex-col">
                   <h1 className='text-black font-medium pl-2'>FirstName</h1>
                   <Input type="text" variant='bordered' label="Enter your FirstName" className="" onChange={(e: any) => setFirstName(e.target.value)} />
@@ -37,10 +37,10 @@ export default function ContactForm() {
           </div>
           <div className='flex items-center justify-center '>
               <Button
-                  className=" bg-primary text-white rounded-[10px]"
+                  className=" bg-primary mb-10 text-white rounded-[10px]"
                   size="lg"
               >
-                  Get started
+                  Submit
               </Button>
           </div>
       </div>

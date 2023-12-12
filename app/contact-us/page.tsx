@@ -11,22 +11,22 @@ export default function ContactUsPage() {
     <div className="">
       <Layout />
 
-      <div className='flex  justify-center  gap-20  w-full h-screen pt-8 px-8'>
+      <div className='lg:flex sm:flex-col lg:flex-row justify-center md:items-center md:flex gap-20 w-full h-full pt-8 px-8'>
 
         {/* left side */}
 
         <ContactForm />
 
         {/* right side */}
-        <div className="flex items-center flex-col justify-center w-full max-w-[600px] ">
-          <div className="flex w-full  flex-col">
-            <h1 className="text-primary font-bold font-PoppinsRegular text-[20px] ">Contact Us</h1>
-            <h2 className="text-bold text-[30px] font-PoppinsSemiBold ">How can we Help?</h2>
-            <p className="w-[400px]">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta ipsam pariatur quibusdam</p>
+        <div className="flex  items-center flex-col justify-center w-full max-w-[600px] ">
+          <div className="flex sm:items-center lg:items-start    w-full  flex-col">
+            <h1 className="text-primary sm:pt-10 lg:pt-0 font-bold font-PoppinsRegular text-[20px] ">Contact Us</h1>
+            <h2 className="text-bold  text-[30px] font-PoppinsSemiBold ">How can we Help?</h2>
+            <p className="sm:w-full md:w-[400px]">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta ipsam pariatur quibusdam</p>
           </div>
 
           <div className="w-full items-center mb-10  flex justify-center  mt-16 ">
-            <div className="h-[200px] flex justify-around items-center w-full rounded-lg ">
+            <div className="md:h-[200px] md:flex sm:h-full md:space-y-0 space-y-10 sm:flex-col md:flex-row justify-around items-center w-full rounded-lg ">
               <div className="flex justify-center items-center  flex-col">
                 <FaLocationDot size={30} className="text-primary " />
                 <h1 className='font-bold text-[15px] mb-4 mt-6'>Headquarter</h1>
