@@ -1,5 +1,8 @@
+import { SignUpParam } from "@/app/context/AuthProvider";
+import { useAuth } from "@/app/hooks/useAuth";
 import { supabase } from "@/app/supabaseClient";
-import { Button, Image, Link } from "@nextui-org/react";
+import { Button, Image} from "@nextui-org/react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { FaArrowRight, FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -12,13 +15,14 @@ export const StepOne = ({
   password,
   setPassword,
 }: any) => {
+  const auth = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState({
-    title: "Alert",
-    message: "something went wrong",
+    title: "",
+    message: '',
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [processingSignUp, setProcessingSignUp] = useState(false);
+  const [processingSignUp, setProcessingSignUp] = useState<boolean>(false);
 
   const handleSignUpStep1 = async () => {
     // check if user already has an account with same email
@@ -32,56 +36,14 @@ export const StepOne = ({
     } else {
       // sign up then continue to payment
       if (processingSignUp) return;
-      setProcessingSignUp(true);
-      const {
-        data: { user },
-        error,
-      } = await supabase.auth.signUp({
-        email,
-        password: password?.toString(),
-      });
-      if (error) {
-        console.log(error?.message);
-        // alert(error?.message);
-        setIsModalOpen(true);
+      auth.signup({ email, password, fullName } as SignUpParam, (error) => {
+        // console.log('signupError', error);
         setErrorMsg({
-          title: "Registration Error",
-          message: error?.message,
+          title: "Failed to register",
+          message: error.message,
         });
-        setProcessingSignUp(false);
-        return;
-      }
-
-      let data = {
-        user_id: user?.id,
-        email: user?.email?.toLowerCase(),
-        full_name: fullName.toString() || "",
-      };
-
-      console.log("signup data");
-      console.log(data);
-
-      if (!user) {
-        setIsModalOpen(true);
-        setErrorMsg({
-          title: "Alert",
-          message: `Error updating user's details`,
-        });
-        setProcessingSignUp(false);
-        return;
-      }
-
-      const createUser = await supabase.from("users").insert(data);
-      if (createUser?.error) {
-        setIsModalOpen(true);
-        setErrorMsg({
-          title: "Failed to create user account",
-          message: createUser?.error?.message,
-        });
-        setProcessingSignUp(false);
-        return;
-      }
-      handleSetStep(2);
+      }, setProcessingSignUp);
+      // handleSetStep(2);
     }
   };
 
@@ -96,8 +58,16 @@ export const StepOne = ({
       </h5>
 
       <p className="mb-4 text-[17px]">
-        Try 3 days for just £5. Then £50/month. Cancel anytime. Start getting answers to your questions.
+        Try 3 days for just £5. Then £50/month. Cancel anytime. Start getting
+        answers to your questions.
       </p>
+
+      {errorMsg?.message && (
+        <div className="bg-red-300 py-3 px-4 rounded-lg mb-3 text-gray-900">
+          <div className="font-bold">{errorMsg.title}</div>
+          <div className="">{errorMsg.message}</div>
+        </div>
+      )}
 
       <form
         className="flex flex-col gap-3"
@@ -211,12 +181,10 @@ export const StepOne = ({
         <Button
           type="submit"
           onClick={() => {}}
-          className={`${
-            (!email || !password) && "!cursor-not-allowed"
-          } bg-primary w-full flex items-center gap-3 justify-center text-white`}
+          className={`bg-primary w-full flex items-center gap-3 justify-center text-white`}
           isLoading={processingSignUp}
         >
-          {processingSignUp ? `processing...` : `Start My Growth`}
+          {processingSignUp ? `processing...` : `Continue`}
           <FaArrowRight />
         </Button>
         <p className="text-center text-[#8091A7] italic text-xs">

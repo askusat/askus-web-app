@@ -1,4 +1,4 @@
-import { Button, Link } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import ChatBot from "./components/chatBot";
 import HowItWorks from "./components/home/howItWorks";
@@ -46,6 +46,23 @@ const testimonials = [
     title: "Best site I’ve ever been on",
     desc: "Very knowledgeable about any question, and they answer within minutes.",
     user: "Kelvin",
+  },
+];
+
+const services = [
+  {
+    id: "01",
+    icon: "circle-check.svg",
+    title: "Expert lawyers",
+    description:
+      "We have high quality verified expert lawyers ready to help you.",
+  },
+  {
+    id: "02",
+    icon: "circle-check.svg",
+    title: "Expert lawyers",
+    description:
+      "We have high quality verified expert lawyers ready to help you.",
   },
 ];
 
@@ -127,7 +144,7 @@ export default function Home() {
               Services
             </h2>
             <h3 className="md:text-[48px] text-[24px] font-semibold md:-mt-11 -mt-8">
-            Why you should use <span className="font-bold">AskUs</span>
+              Why you should use <span className="font-bold">AskUs</span>
             </h3>
             <div className="h-1 bg-primary min-w-[100px]"></div>
           </div>
@@ -181,7 +198,8 @@ export default function Home() {
                   Tailored answers
                 </h3>
                 <p className="mt-2 text-xl lg:max-w-[400px] max-w-[300px]">
-                  Every answer is bespoke to you and addresses your query without the expensive price tag of in person legal guidance.
+                  Every answer is bespoke to you and addresses your query
+                  without the expensive price tag of in person legal guidance.
                 </p>
               </div>
 
@@ -232,7 +250,8 @@ export default function Home() {
                   Connect with an expert
                 </h3>
                 <p className="mt-2 text-xl lg:max-w-[400px] max-w-[300px]">
-                  Realise the convenience of connecting to your expert from home saving time and money.
+                  Realise the convenience of connecting to your expert from home
+                  saving time and money.
                 </p>
               </div>
 
@@ -256,37 +275,40 @@ export default function Home() {
                   Fast and reliable
                 </h3>
                 <p className="mt-2 text-xl lg:max-w-[400px] max-w-[300px]">
-                  Our service is fast and reliable, you can speak to an expert in minutes rather than waiting days or weeks for an appointment.
+                  Our service is fast and reliable, you can speak to an expert
+                  in minutes rather than waiting days or weeks for an
+                  appointment.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col gap-8 md:hidden">
-            <div className="">
-              <div className="flex items-center justify-center">
-                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
-                  01
-                </h2>
-                <Image
-                  src={"circle-check.svg"}
-                  alt=""
-                  width={100}
-                  height={100}
-                  className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
-                />
-              </div>
+          <div className="flex flex-col gap-14 md:hidden">
+            {services.map((service, i) => (
+              <div key={`services_mobile${service.id}`} className="">
+                <div className={`${(i+1) % 2 === 0 && 'flex-row-reverse'} flex items-center justify-center`}>
+                  <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
+                    {service.id}
+                  </h2>
+                  <Image
+                    src={service.icon}
+                    alt=""
+                    width={100}
+                    height={100}
+                    className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
+                  />
+                </div>
 
-              <div className="mt-4 flex flex-col justify-center items-center">
-                <h3 className="font-PoppinsBold font-bold lg:text-[28px] text-[22px] text-primary">
-                  Expert lawyers
-                </h3>
-                <p className="mt-2 text-xl max-w-[280px] text-center">
-                  We have high quality verified expert lawyers ready to help
-                  you.
-                </p>
+                <div className="mt-4 flex flex-col justify-center items-center">
+                  <h3 className="font-PoppinsBold font-bold lg:text-[28px] text-[22px] text-primary">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2 text-xl max-w-[280px] text-center">
+                    {service.description}
+                  </p>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </section>
 

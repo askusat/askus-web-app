@@ -1,4 +1,5 @@
-import { Button, Image, Link } from '@nextui-org/react'
+import { Button, Image} from '@nextui-org/react'
+import Link from 'next/link'
 import React from 'react'
 
 export default function Footer() {

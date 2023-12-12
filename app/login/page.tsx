@@ -1,144 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { supabase } from "../supabaseClient";
+import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Button, Image, Link } from "@nextui-org/react";
+import { Button, Image } from "@nextui-org/react";
 import AuthLayout from "../components/layout/authLayout";
+// ** Hooks
+import { useAuth } from "../hooks/useAuth";
+import { LoginParam } from "../context/AuthProvider";
+import Link from "next/link";
 
 export default function Login() {
+  const auth = useAuth();
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState({
-    title: "Alert",
-    message: "something went wrong",
+    title: "",
+    message: "",
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  //   useEffect(() => {
-  //     const regContd = async (authUser) => {
-  //       const user = await getUser(authUser?.id);
-  //       // console.log('await getUser(authUser?.id): user');
-  //       // console.log(user);
-  //       if (user && user.status === 200 && user.obj) {
-  //         if (user.status === 500) {
-  //           console.log(user.obj);
-  //           alert('an error occured');
-  //           setLoading(false);
-  //           return user;
-  //         } else {
-  //           navigate(`/dashboard/${user?.obj?.username}`);
-  //         }
-  //         setLoading(false);
-  //         return user;
-  //       } else {
-  //         // register user to db
-  //         // console.log('register user to db');
-  //         const { error } = await supabase.from('users').insert({
-  //           user_id: authUser?.id,
-  //           full_name: authUser?.user_metadata?.full_name || '',
-  //           email: authUser?.email?.toLowerCase(),
-  //           username: '',
-  //         });
-  //         if (error) {
-  //           console.log(error);
-  //           setLoading(false);
-  //           alert('User record not recorded, try again or contact support');
-  //           return { status: 500, message: 'User record not recorded' };
-  //         } else {
-  //           const { key, ref } = getRefCode();
-  //           if (ref) {
-  //             navigate(`/search?${key}=${ref}`);
-  //           } else {
-  //             navigate(`/search`);
-  //           }
-  //           return { status: 200, message: 'success' };
-  //         }
-  //       }
-  //     };
-
-  //     const getData = async () => {
-  //       const {
-  //         data: { user },
-  //       } = await supabase.auth.getUser();
-  //       // console.log('await supabase.auth.getUser: user');
-  //       // console.log(user);
-  //       const u = user ? await getUser(user?.id) : null;
-  //       // console.log('await supabase.auth.getUser: u');
-  //       // console.log(u);
-  //       if (!u.obj) {
-  //         // new user
-  //         const contd = await regContd(user);
-  //         contd?.status !== 200 && showErrorAlert(contd);
-  //         return;
-  //       }
-  //       if (u?.status === 200 && u?.obj?.username)
-  //         return navigate(`/dashboard/${u?.obj?.username}`);
-  //       // console.log(u);
-  //     };
-
-  //     getData();
-  //   }, [navigate]);
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
     if (loading) return;
 
-    setLoading(true);
-    const authUserObj = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (authUserObj?.error) {
-      console.log(authUserObj?.error?.message);
-      if (authUserObj?.error?.message === "Invalid login credentials") {
-        showErrorAlert(authUserObj?.error);
-        // alert(`${authUserObj.error.message}, please check your credentials and try again`);
-        setLoading(false);
-        return;
-      }
-      if (
-        authUserObj.error?.message ===
-        `Cannot read properties of null (reading 'id')`
-      ) {
-        // alert('User not found please try again or register')
-        setIsModalOpen(true);
+    auth.login(
+      { email, password } as LoginParam,
+      (error) => {
+        console.log("loginError", error);
         setErrorMsg({
-          title: "Login Error",
-          message: "User not found please try again or register",
+          title: "Failed to login",
+          message: error.message,
         });
-        return;
-      } else {
-        // alert('An error occurred, please try again')
-        setIsModalOpen(true);
-        setErrorMsg({
-          title: "Login Error",
-          message: "An error occurred, please try again",
-        });
-        return;
-      }
-    }
-
-    if (authUserObj?.error) {
-      setLoading(false);
-      return;
-    }
-
-    // const contd = await regContd(authUserObj?.data?.user);
-    // if (contd?.status !== 200) return showErrorAlert(contd);
-
-    setLoading(false);
+      },
+      setLoading
+    );
   };
-
-  function showErrorAlert(error: any) {
-    if (error) {
-      console.log(error);
-      setIsModalOpen(true);
-      setErrorMsg({ title: "Login Error", message: error?.message });
-    }
-  }
 
   return (
     <>
@@ -153,6 +50,13 @@ export default function Login() {
           </h5>
 
           <p className="mb-4 text-[17px]">Login into you account</p>
+
+          {errorMsg?.message && (
+            <div className="bg-red-300 py-3 px-4 rounded-lg text-gray-900">
+              <div className="font-bold">{errorMsg.title}</div>
+              <div className="">{errorMsg.message}</div>
+            </div>
+          )}
 
           <form
             className="flex flex-col gap-3"
@@ -243,10 +147,7 @@ export default function Login() {
 
             <Button
               type="submit"
-              onClick={() => {}}
-              className={`${
-                (!email || !password) && "!cursor-not-allowed"
-              } w-full`}
+              className={`w-full`}
               color="primary"
               isLoading={loading}
             >

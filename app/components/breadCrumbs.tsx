@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, Link } from "@nextui-org/react";
+import { Button} from "@nextui-org/react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { FaAngleLeft } from "react-icons/fa";

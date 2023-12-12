@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Link } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import Link from "next/link";
 
 const categories = [
   "General",
@@ -118,7 +119,9 @@ export default function Faq() {
 
       <div className="w-full">
         <div className="">
-          <div className="font-semibold mb-4 capitalize">{seletedCategory} Questions</div>
+          <div className="font-semibold mb-4 capitalize">
+            {seletedCategory} Questions
+          </div>
           <ul className="">
             {questionsAndAnswers
               .filter((qa) => qa.category === seletedCategory)

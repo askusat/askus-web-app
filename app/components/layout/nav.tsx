@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { Button, Link } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import {
+  FaAngleDown,
   FaBars,
   FaPhone,
   FaQuestion,
+  FaUser,
   FaUserLock,
   FaUsers,
 } from "react-icons/fa";
@@ -13,8 +15,11 @@ import { MdCancel, MdLogin, MdSupportAgent } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
+import { useAuth } from "@/app/hooks/useAuth";
+import Link from "next/link";
 
 export default function Nav() {
+  const { user } = useAuth();
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -73,7 +78,7 @@ export default function Nav() {
       </Link>
 
       <div className="hidden  lg:flex items-center gap-[46px]">
-        <Link href="#" className="text-black hover:text-primary">
+        <Link href="/" className="text-black hover:text-primary">
           Home
         </Link>
         <Link href="#" className="text-black hover:text-primary">
@@ -88,12 +93,18 @@ export default function Nav() {
         <Link href="/contact-us" className="text-black hover:text-primary">
           Contact us
         </Link>
-        <Link href="#" className="text-black hover:text-primary">
-          Register
-        </Link>
-        <Link href="/login" className="text-black hover:text-primary">
-          Sign In
-        </Link>
+        {!user ? (
+          <>
+            <Link href="/signup" className="text-black hover:text-primary">
+              Register
+            </Link>
+            <Link href="/login" className="text-black hover:text-primary">
+              Sign In
+            </Link>
+          </>
+        ) : (
+          <ProfileButton />
+        )}
       </div>
 
       <Button
@@ -281,3 +292,33 @@ export default function Nav() {
     </nav>
   );
 }
+
+const ProfileButton = () => {
+  const { logout } = useAuth()
+  const [show, setShow] = useState(false);
+
+  return (
+    <div className="relative">
+      <div
+        className="flex items-center gap-2 cursor-pointer"
+        onClick={() => setShow(!show)}
+      >
+        <Button isIconOnly color="primary" className="pointer-events-none" variant="faded" aria-label="user">
+          <FaUser />
+        </Button>
+        <FaAngleDown />
+      </div>
+
+      {show && <div className="absolute top-full right-0 min-w-[100px] z-50 flex justify-end py-3 px-4 shadow-lg bg-white rounded-lg">
+        <div className="flex flex-col gap-3">
+          <Link href="/profile" className="text-black hover:text-primary">
+            Profile
+          </Link>
+          <Link href="#logout" onClick={() => logout()} className="text-black hover:text-primary">
+            Logout
+          </Link>
+        </div>
+      </div>}
+    </div>
+  );
+};
