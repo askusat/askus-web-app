@@ -7,7 +7,7 @@ import { FaThumbsUp } from "react-icons/fa";
 export default function AuthLayout({ children }: any) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 font-PlusJakartaSansRegular">
-      <div className="lg:col-span-7 py-3 lg:py-0 w-full min-h-screen lg:h-screen lg:overflow-auto bg-white grid place-items-center relative">
+      <div className="lg:col-span-7 py-3 lg:py-0 w-full min-h-screen lg:h-screen lg:overflow-auto bg-[#e8e8e8] grid place-items-center relative">
         {children}
       </div>
       <div className="lg:col-span-5 w-full h-full lg:h-screen overflow-auto bg-primary text-white py-10 lg:py-[10px] px-4 lg:px-[50px] lg:grid lg:place-items-center">

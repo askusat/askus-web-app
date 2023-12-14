@@ -4,10 +4,11 @@
 import React, { ReactNode, useCallback } from "react";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { AuthContext, User, defaultProvider } from "./AuthContext";
+import { AuthContext, defaultProvider } from "./AuthContext";
 import { supabase } from "../supabaseClient";
 import { authConfig } from "../config";
 import { AuthUser } from "@supabase/supabase-js";
+import { User } from "@/types";
 
 export interface LoginParam {
   email: string;
@@ -65,13 +66,13 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       email: authUser.email || "",
       fullName,
     };
-    
+
     const { data: authUserDataM, error } = await supabase
       .from("users")
       .insert(entryData);
     if (error) {
       console.log("error creating user profile", error);
-      
+
       if (errorCallback) errorCallback(error);
       return;
     } else {
@@ -103,7 +104,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     errorCallback: (error: any) => void,
     setProcessingSignUp: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    setProcessingSignUp(true)
+    setProcessingSignUp(true);
     const { email, password, fullName } = params;
     const {
       data: { user: authUser },
@@ -114,10 +115,10 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     });
     if (error) {
       if (errorCallback) errorCallback(error);
-      setProcessingSignUp(false)
+      setProcessingSignUp(false);
       return;
     }
-    console.log(authUser);
+    // console.log(authUser);
 
     if (authUser) {
       try {
@@ -130,13 +131,17 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       await createUserProfile(authUser, fullName, errorCallback);
     } else {
       if (errorCallback) errorCallback(error);
-      setProcessingSignUp(false)      
+      setProcessingSignUp(false);
       return;
     }
-    setProcessingSignUp(false)
+    setProcessingSignUp(false);
   };
 
-  const handleLogin = async (params: LoginParam, errorCallback: (error: any) => void, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+  const handleLogin = async (
+    params: LoginParam,
+    errorCallback: (error: any) => void,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
     const { email, password } = params;
     setLoading(true);
     const {

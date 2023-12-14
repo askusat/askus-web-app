@@ -3,11 +3,10 @@ import { useAuth } from "@/app/hooks/useAuth";
 import { supabase } from "@/app/supabaseClient";
 import { Button, Image} from "@nextui-org/react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { FaArrowRight, FaEye, FaEyeSlash } from "react-icons/fa";
 
-export const StepOne = ({
-  handleSetStep,
+export const SignupStepOne = ({
   fullName,
   setFullName,
   setEmail,
@@ -21,7 +20,6 @@ export const StepOne = ({
     title: "",
     message: '',
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [processingSignUp, setProcessingSignUp] = useState<boolean>(false);
 
   const handleSignUpStep1 = async () => {
@@ -43,7 +41,6 @@ export const StepOne = ({
           message: error.message,
         });
       }, setProcessingSignUp);
-      // handleSetStep(2);
     }
   };
 
@@ -75,7 +72,6 @@ export const StepOne = ({
           e.preventDefault();
           if (!email || !password) return;
           if (password.length < 6) {
-            setIsModalOpen(true);
             setErrorMsg({
               title: "Alert",
               message: "Password must be at least 6 characters long.",
