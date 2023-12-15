@@ -14,7 +14,7 @@ export default function TermsPage() {
             </h1>
             <p className="lg:max-w-[40%] md:max-w-[60%] mt-3 md:mt-0">
               {`Find answers to commonly asked questions below. If you don't find what you're looking for, feel free to`}{' '}
-              <Link href="/contact-us">contact us.</Link>
+              <Link href="/contact-us" className={"text-primary"}>contact us.</Link>
             </p>
           </div>
         </header>
@@ -57,11 +57,11 @@ export default function TermsPage() {
                 <span className="SpellE">AskUs</span> Anytime, a limited company
                 with a registered office at Suite 3863 Unit 3a, 34-35 Hatton
                 Garden, Holborn, London, Greater London, United Kingdom, EC1N
-                8DX
+                8DX{' '}
                 <span className="SpellE">
-                  <b>AskUs</b>
-                </span>
-                ,<b>we</b>, or <b>us</b>. We can be contacted at&nbsp;
+                  <b>{`"AskUs"`}</b>
+                </span>,{' '}
+                <b>{`"we"`}</b>, or <b>{`"us"`}</b>. We can be contacted at&nbsp;
               </span>
               <span lang="EN-GB">
                 <a href="mailto:info@askusat.co.uk">
