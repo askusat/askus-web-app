@@ -26,6 +26,8 @@ export interface CreateSubscriptionProps {
   price: string;
   customer_id: string;
   payment_method: string;
+  creditMode: string;
+  credit: number;
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -142,6 +144,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         price,
         customer_id,
         payment_method,
+        creditMode,
+        credit
       }: CreateSubscriptionProps = body;
 
       if (!customer_id) {
@@ -204,23 +208,23 @@ export async function POST(req: NextRequest, res: NextResponse) {
         }
       }
 
-      // // Create an immediate £3 charge
+      // // Create an immediate £5 charge
       // const charge = await stripe.charges.create({
-      //   amount: 300, // £3 in pennies
+      //   amount: 500, // £5 in pennies
       //   currency: "GBP",
       //   customer: customer_id,
-      //   description: "Immediate £3 charge",
+      //   description: "Immediate £5 charge",
       // });
 
       await stripe.paymentIntents.create({
-        amount: 300,
+        amount: creditMode ? credit*100 : 300, // £50 if in creditMode
         currency: 'GBP',
         automatic_payment_methods: {
           enabled: true,
           allow_redirects: "never"
         },
         customer: customer_id,
-        description: "Immediate £3 charge",
+        description: creditMode ? `for ${(credit/50)*15} credits` : "Immediate £5 charge",
         payment_method,
         confirm: true,
       });
@@ -238,11 +242,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
         expand: ["latest_invoice.payment_intent"],
       };
 
-      const subscription = await stripe.subscriptions.create(subData);
+      const subscription = creditMode ? null : await stripe.subscriptions.create(subData);
 
       console.log(`subscription created for ${email}: ${subscription?.id}`);
 
-      const lastInvoice: any = subscription.latest_invoice;
+      const lastInvoice: any = subscription?.latest_invoice;
 
       // console.log("paymentIntent");
       // console.log(paymentIntent);
@@ -254,6 +258,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
           subscription,
           // paymentIntent,
           customer_id,
+          creditMode,
+          credit,
           clientSecret: lastInvoice?.payment_intent?.client_secret,
         },
         { status: 200, statusText: "OK" }

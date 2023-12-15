@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/layout";
-import { Link } from "@nextui-org/react";
+import Link from "next/link";
 
 export default function SitemapPage() {
   return (
@@ -20,9 +20,9 @@ export default function SitemapPage() {
         </header>
 
         <div className="lg:max-w-[60%] md:max-w-[80%] mx-auto flex flex-col lg:flex-col md:flex-row gap-6 mb-20">
-          
-          
-          <div className="flex flex-col font-[400] leading-[50.3px] tracking-[1px] "> 
+
+
+          <div className="flex flex-col font-[400] leading-[50.3px] tracking-[1px] ">
           <Link href="/" className="font-bold hover:underline cursor-pointer text-[25px] text-black">General</Link>
             <div className="flex flex-col  leading-[40px]  pl-8">
               <Link href="/" className="font-[500] text-[18px] hover:underline">Home</Link>

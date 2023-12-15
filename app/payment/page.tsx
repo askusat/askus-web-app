@@ -19,10 +19,12 @@ import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import { supabase } from "../supabaseClient";
 import { User } from "@/types";
-import { Button } from "@nextui-org/react";
+import { Button, Tab, Tabs } from "@nextui-org/react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { AuthUser } from "@supabase/supabase-js";
+import { TbRotateRectangle } from "react-icons/tb";
+import { BsCashCoin } from "react-icons/bs";
 
 const stripePromise = loadStripe(STRIPE_Pk || "");
 
@@ -142,6 +144,10 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
   });
   const [confirmingSetUpIntent, setConfirmingSetUpIntent] = useState(false);
   const [processingSubscription, setProcessingSubscription] = useState(false);
+  const [selectedTab, setSelectedTab] = useState<any>("subscription");
+  const credits = 15;
+  const createAmountPerUnit = 50
+  const [creditUnit, setCreditUnit] = useState(1);
 
   // confirm setup_intent_client_secret;
   useEffect(() => {
@@ -160,6 +166,9 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
         return setConfirmingSetUpIntent(false);
       }
 
+      console.log("clientSecret");
+      console.log(clientSecret);
+
       console.log("setup_intent_client_secret success!");
       const paymentIntent = await stripe.retrieveSetupIntent(clientSecret);
       switch (paymentIntent?.setupIntent?.status) {
@@ -171,15 +180,28 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
           setProcessingSubscription(true);
           var createSubscription = null;
           try {
+            const creditAmount = new URLSearchParams(
+              window.location.search
+            ).get("credit");
+            const hash = window.location.hash;
+            const creditMode = hash.substring(1) === "credit";
+
             // create customer and subscription
-            createSubscription = await axios.post(`/api/stripe`, {
+            const createSubscriptionData = {
               route: "create_subscription",
               name: user?.full_name,
               email: user?.email,
               price: PRICE_ID,
               customer_id: user?.stripeCustomerId,
               payment_method, //attach_payment_method_to_customer
-            });
+              creditMode,
+              credit: (parseInt(creditAmount?.split("?")[0] || "15")/credits)*createAmountPerUnit,
+            };
+
+            createSubscription = await axios.post(
+              `/api/stripe`,
+              createSubscriptionData
+            );
           } catch (error: any) {
             // alert(error?.message);
             return setConfirmingSetUpIntent(false);
@@ -188,18 +210,29 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
           console.log("createSubscription: ");
           console.log(createSubscription);
 
-          const d = {
+          let d: any = {
             stripeSubscriptionId: createSubscription?.data?.subscription?.id,
             stripeCustomerId: createSubscription?.data?.customer_id,
             isSubscribed: true,
           };
+          if (createSubscription.data?.creditMode) {
+            delete d.stripeSubscriptionId;
+            delete d.isSubscribed;
+            d = { ...d, credit: (createSubscription.data?.credit/createAmountPerUnit)*credits };
+          }
+
+          console.log("updateUser data: ");
+          console.log(d);
+
           await supabase.from("users").update(d).eq("id", user?.id);
 
           const progressbarEl: any = document.querySelector("#progressbar");
           if (progressbarEl) {
             progressbarEl.style.width = "100%";
           }
-          router.push("/profile");
+
+          window.location.href = '/profile';
+
           setConfirmingSetUpIntent(false);
           break;
         case "processing":
@@ -226,6 +259,14 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
       return;
     }
 
+    if (selectedTab !== "subscription" && creditUnit < 1) {
+      setErrorMsg({
+        title: "Invalid",
+        message: "Credit must be at least 1",
+      });
+      return;
+    }
+
     if (!stripe || !elements) {
       return;
     }
@@ -246,7 +287,9 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${returnUrl}`,
+        return_url: `${returnUrl}?credit=${
+          credits * creditUnit
+        }#${selectedTab}`,
       },
     });
 
@@ -292,6 +335,72 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
           <div className="">{errorMsg.message}</div>
         </div>
       )}
+
+      <div className="flex w-full flex-col items-center">
+        <Tabs
+          aria-label="Options"
+          color="primary"
+          variant="bordered"
+          onSelectionChange={setSelectedTab}
+        >
+          <Tab
+            key="subscription"
+            title={
+              <div className="flex items-center space-x-2">
+                <TbRotateRectangle />
+                <span>Subscription</span>
+              </div>
+            }
+          />
+          <Tab
+            key="credit"
+            title={
+              <div className="flex items-center space-x-2">
+                <BsCashCoin />
+                <span>Credit</span>
+              </div>
+            }
+          />
+        </Tabs>
+      </div>
+
+      <div
+        className={`mb-4 mt-2 ${
+          selectedTab === "subscription" ? "h-[40px]" : "h-[80px]"
+        } transition-all duration-700`}
+      >
+        <p className="text-xs text-center md:max-w-[320px] mx-auto border">
+          {selectedTab === "subscription" ? (
+            "Join for £5, Billed £50/month"
+          ) : (
+            <span>
+              Purchase question credit 15 credits/unit for{" "}
+              <b>£${createAmountPerUnit * creditUnit}</b> (unused credit expires after a month)
+            </span>
+          )}
+        </p>
+
+        <div
+          className={`${
+            selectedTab === "subscription" &&
+            "h-0 w-0 pointer-events-none opacity-0"
+          } transition-all duration-300 flex items-center gap-3 justify-center border shadow-lg w-fit mx-auto rounded-lg py-1 px-3`}
+        >
+          <span className="w-auto h-8 rounded-md grid place-items-center border bg-primary text-white px-2">
+            {credits * creditUnit}
+          </span>
+          <input
+            type="number"
+            inputMode="numeric"
+            value={creditUnit}
+            onChange={(e: any) => {
+              setCreditUnit(e.target.value);
+            }}
+            min={1}
+            className="w-12 rounded-md text-center border outline-none"
+          />
+        </div>
+      </div>
 
       <PaymentElement id="payment-element" options={paymentElementOptions} />
 

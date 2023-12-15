@@ -21,14 +21,14 @@ export default function TermsPage() {
 
         <div className="lg:max-w-[60%] md:max-w-[80%]  mx-auto flex flex-col md:flex-row gap-12 mb-20">
           <div className=" space-y-5">
-           
+
 
             <p className="MsoNormal">
               <span lang="EN-GB">Effective date: 01 January 2024</span>
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">1. THE TERMS</span>
               </b>
@@ -104,7 +104,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">
                   1.2 Electronic communications and right to modify Terms
@@ -160,7 +160,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">2. THE SITE</span>
               </b>
@@ -172,7 +172,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">
                   2.1 <span className="SpellE">AskUs</span>
@@ -258,7 +258,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">2.2</span>
               </b>
@@ -287,7 +287,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">
                   2.3 Posts are not private or confidential
@@ -337,7 +337,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">2.4 Verification</span>
               </b>
@@ -387,7 +387,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">2.5 No reliance</span>
               </b>
@@ -429,7 +429,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">2.6 Information not advice</span>
               </b>
@@ -485,7 +485,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">
                   2.7 Professional-client relationships shall not be formed on
@@ -519,7 +519,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">3. YOUR ACCOUNT</span>
               </b>
@@ -531,7 +531,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">3.1 User accounts</span>
               </b>
@@ -590,7 +590,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">3.2 Restricted activities</span>
               </b>
@@ -719,7 +719,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">
                   3.3 Suspension of termination of service
@@ -741,7 +741,7 @@ export default function TermsPage() {
               <span lang="EN-GB">
                 <a href="mailto:info@askusat.co.uk">
                   <span
-                    
+
                   >
                     info@askusat.co.uk
                   </span>
@@ -775,7 +775,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">3.4 Charges</span>
               </b>
@@ -844,7 +844,7 @@ export default function TermsPage() {
                 Auto-renewal will remain in effect until withdrawn by you or
                 terminated by <span className="SpellE">AskUs</span>. You can
                 stop auto-renewal of your subscription by{' '}
-                
+
                   (1) clicking the cancel subscription button on either the help
                   centre page or your subscriber account page; (2) sending a
                   written notice of cancellation via e-mail to&nbsp;
@@ -875,7 +875,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">3.5 Subscription specific terms</span>
               </b>
@@ -921,7 +921,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">3.6 Response Time </span>
               </b>
@@ -949,7 +949,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">3.7 Payment</span>
               </b>
@@ -1014,7 +1014,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">3.8 Refunds and cancellations</span>
               </b>
@@ -1033,7 +1033,7 @@ export default function TermsPage() {
               <span lang="EN-GB">
                 <a href="mailto:customerservice@askusat.co.uk">
                   <span
-                    
+
                   >
                     customerservice@askusat.co.uk
                   </span>
@@ -1066,7 +1066,7 @@ export default function TermsPage() {
               <span lang="EN-GB">
                 <a href="mailto:customerservice@askusat.co.uk">
                   <span
-                    
+
                   >
                     customerservice@askusat.co.uk
                   </span>
@@ -1120,8 +1120,8 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
-              
+
+
               <b>
                 <span
                   lang="EN-GB"
@@ -1139,7 +1139,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">4.1 Limitation of liability</span>
               </b>
@@ -1301,7 +1301,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">4.2 Proprietary rights of content</span>
               </b>
@@ -1410,7 +1410,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">
                   4.3 No endorsement of non-
@@ -1460,7 +1460,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">4.4 Information control and storage</span>
               </b>
@@ -1503,7 +1503,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">4.5 Exclusion of warranties</span>
               </b>
@@ -1553,7 +1553,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">4.6 Indemnification</span>
               </b>
@@ -1584,7 +1584,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">
                   4.7 Press releases and third-party press about{' '}
@@ -1619,7 +1619,7 @@ export default function TermsPage() {
             </p>
 
             <p className="MsoNormal">
-              
+
               <b>
                 <span lang="EN-GB">4.8 Miscellaneous</span>
               </b>
@@ -1692,7 +1692,7 @@ export default function TermsPage() {
             </p>
 
             <p
-              className="MsoNormal"  
+              className="MsoNormal"
             >
               <span lang="EN-GB">
                 4.8.4 The Terms are only available in English.

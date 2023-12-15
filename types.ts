@@ -4,6 +4,7 @@ export type User = {
     email: string;
     fullName: string;
     isSubscribed?: boolean;
+    credit: number;
     stripeCustomerId?: string;
     stripeSubscriptionId?: string;
     isAdmin?: boolean;

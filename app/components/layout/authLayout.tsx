@@ -1,6 +1,7 @@
 // authLayout
 
 import { Image } from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 import { FaThumbsUp } from "react-icons/fa";
 
@@ -12,13 +13,15 @@ export default function AuthLayout({ children }: any) {
       </div>
       <div className="lg:col-span-5 w-full h-full lg:h-screen overflow-auto bg-primary text-white py-10 lg:py-[10px] px-4 lg:px-[50px] lg:grid lg:place-items-center">
         <div className="">
-          <Image
-            src="/footer.svg"
-            alt=""
-            width={132}
-            height={29}
-            className="pt-[30px]"
-          />
+          <Link href={'/'}>
+            <Image
+              src="/footer.svg"
+              alt=""
+              width={132}
+              height={29}
+              className="pt-[30px]"
+            />
+          </Link>
           <h3 className="mt-4 text-[2rem] lg:text-[2rem] xl:text-[2.2rem] font-bold font-PlusJakartaSansBold text-center lg:text-start">
             Join for £5 and get your answer in few minutes
           </h3>
@@ -29,38 +32,39 @@ export default function AuthLayout({ children }: any) {
 
           <div className="flex flex-col gap-4">
             <div className="flex gap-6 items-start justify-start">
-              <div className="min-w-[24px] h-auto"><FaThumbsUp size={24} /></div>
+              <div className="min-w-[24px] h-auto">
+                <FaThumbsUp size={24} />
+              </div>
               <p className="">
                 <span className="font-bold font-PlusJakartaSansBold">
                   Available 24/7
                 </span>
-                <span>
-                  {" "}
-                  Get answers from lawyers in minutes, 24/7
-                </span>
+                <span> Get answers from lawyers in minutes, 24/7</span>
               </p>
             </div>
             <div className="flex gap-6 items-start justify-start">
-              <div className="min-w-[24px] h-auto"><FaThumbsUp size={24} /></div>
+              <div className="min-w-[24px] h-auto">
+                <FaThumbsUp size={24} />
+              </div>
               <p className="">
                 <span className="font-bold font-PlusJakartaSansBold">
                   Quick and Efficient.
                 </span>
-                <span>
-                  {" "}
-                  Save time and money vs. in-person appointments
-                </span>
+                <span> Save time and money vs. in-person appointments</span>
               </p>
             </div>
             <div className="flex gap-6 items-start justify-start">
-              <div className="min-w-[24px] h-auto"><FaThumbsUp size={24} /></div>
+              <div className="min-w-[24px] h-auto">
+                <FaThumbsUp size={24} />
+              </div>
               <p className="">
                 <span className="font-bold font-PlusJakartaSansBold">
-                Tailored answers.
+                  Tailored answers.
                 </span>
                 <span>
                   {" "}
-                  Every answer is bespoke to you and addresses your query without the expensive price tag of in person legal guidance.
+                  Every answer is bespoke to you and addresses your query
+                  without the expensive price tag of in person legal guidance.
                 </span>
               </p>
             </div>

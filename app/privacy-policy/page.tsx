@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../components/layout'
-import { Link } from '@nextui-org/react'
 import { FaCircle } from "react-icons/fa";
+import Link from 'next/link';
 
 export default function PrivacyPage() {
   return (
