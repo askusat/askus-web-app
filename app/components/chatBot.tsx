@@ -2,6 +2,7 @@
 
 import { Button, Image, Textarea } from "@nextui-org/react";
 import React, { useRef, useState } from "react";
+import ChatBotAnimText from "./home/ChatBotAnimText";
 
 export default function ChatBot() {
   const [showInput, setShowInput] = useState(false);
@@ -53,7 +54,8 @@ export default function ChatBot() {
                 (inputRef.current as HTMLTextAreaElement).focus();
             }}
           >
-            Ask your question here...
+            {/* Ask your question here... */}
+            <ChatBotAnimText delay={1} />
           </div>
         )}
 

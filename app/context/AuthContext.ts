@@ -4,18 +4,7 @@
 import React from 'react';
 import { createContext } from 'react'
 import { LoginParam, SignUpParam } from './AuthProvider';
-
-export type User = {
-  id: number;
-  authUserId: string;
-  email: string;
-  fullName: string;
-  isSubscribed: boolean;
-  isAdmin: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  [key: string]: any;
-} | null;
+import { User } from '@/types';
 
 interface AuthContextType {
   user: User | null;

@@ -5,6 +5,7 @@ import HowItWorks from "./components/home/howItWorks";
 import Spacer from "./components/spacer";
 import SampleQuestionsSlider from "./components/home/sampleQuestionsSlider";
 import Nav from "./components/layout/nav";
+import AnimText from "./components/home/AnimText";
 
 const testimonials = [
   {
@@ -97,7 +98,8 @@ export default function Home() {
           <div className="flex-[4]">
             <div className="pt-[92px]">
               <h1 className="font-PoppinsBold text-[32px] font-semibold md:text-[58px] md:font-bold md:leading-[72px] tracking-[1px]">
-                Transforming Legal Services
+                {/* Transforming Legal Services */}
+                <AnimText delay={1} />
               </h1>
               <p className="md:mt-[28px] mt-[18px] md:mb-[15px] mb-[8px] w-full max-w-[600px] tracking-[1px] md:text-[20px] text-[14px]">
                 Gain round-the-clock access to thousands of Expert Lawyers,
@@ -121,7 +123,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="hidden lg:block lg:flex-[3]">
+          <div className="hidden lg:block lg:flex-[3] xl:mt-14">
             <ChatBot />
           </div>
         </div>

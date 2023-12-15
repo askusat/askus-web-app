@@ -5,6 +5,7 @@ import Image from "next/image";
 import {
   FaAngleDown,
   FaBars,
+  FaBell,
   FaPhone,
   FaQuestion,
   FaUser,
@@ -103,7 +104,15 @@ export default function Nav() {
             </Link>
           </>
         ) : (
-          <ProfileButton />
+          <>
+            <div className="relative">
+              <FaBell size={24} />
+              <div className="w-5 h-5 bg-red-600 text-white rounded-full text-xs grid place-items-center absolute -top-2 -right-2">
+                5
+              </div>
+            </div>
+            <ProfileButton />
+          </>
         )}
       </div>
 
@@ -133,7 +142,7 @@ export default function Nav() {
             exit="exit"
             className={`${
               openMobileMenu ? "" : ""
-            } lg:hidden fixed place-items-center origin-top left-0 bg-white primary z-30 w-full top-0 flex-col justify-center items-center max-w-[400px] text-black h-screen px-4`}
+            } lg:hidden fixed place-items-center origin-top left-0 bg-white primary z-30 w-full top-0 flex-col justify-center items-center max-w-[400px] text-black h-screen overflow-auto px-4`}
           >
             <div className="flex items-center pt-4 justify-between">
               <div className="flex h-full ">
@@ -163,7 +172,7 @@ export default function Nav() {
                 variants={containerVars}
                 initial="initial"
                 animate="open"
-                className=" flex-col overflow-hidden flex z-20 justify-center items-start gap-[30px] w-full"
+                className=" flex-col overflow-auto flex z-20 justify-center items-start gap-[30px] w-full"
               >
                 <motion.div
                   variants={mobileLinkVars}
@@ -250,40 +259,62 @@ export default function Nav() {
                     <span>FAQ</span>
                   </Link>
                 </motion.div>
-                <motion.div
-                  variants={mobileLinkVars}
-                  initial="initial"
-                  animate="open"
-                  className="w-full"
-                >
-                  <Link
-                    href="/signup"
-                    className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary"
+                {!user ? (
+                  <>
+                    <motion.div
+                      variants={mobileLinkVars}
+                      initial="initial"
+                      animate="open"
+                      className="w-full"
+                    >
+                      <Link
+                        href="/signup"
+                        className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary"
+                      >
+                        <FaUserLock
+                          size={24}
+                          className="group-hover:text-primary transition-all duration-300"
+                        />
+                        <span>Register</span>
+                      </Link>
+                    </motion.div>
+                    <motion.div
+                      variants={mobileLinkVars}
+                      initial="initial"
+                      animate="open"
+                      className="w-full"
+                    >
+                      <Link
+                        href="/login"
+                        className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary"
+                      >
+                        <MdLogin
+                          size={24}
+                          className="group-hover:text-primary transition-all duration-300"
+                        />
+                        <span>Login</span>
+                      </Link>
+                    </motion.div>
+                  </>
+                ) : (
+                  <motion.div
+                    variants={mobileLinkVars}
+                    initial="initial"
+                    animate="open"
+                    className="w-full flex flex-col justify-center gap-8"
                   >
-                    <FaUserLock
-                      size={24}
-                      className="group-hover:text-primary transition-all duration-300"
-                    />
-                    <span>Register</span>
-                  </Link>
-                </motion.div>
-                <motion.div
-                  variants={mobileLinkVars}
-                  initial="initial"
-                  animate="open"
-                  className="w-full"
-                >
-                  <Link
-                    href="/login"
-                    className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary"
-                  >
-                    <MdLogin
-                      size={24}
-                      className="group-hover:text-primary transition-all duration-300"
-                    />
-                    <span>Login</span>
-                  </Link>
-                </motion.div>
+                    <div className="relative w-fit py-1 px-3">
+                      <FaBell size={24} />
+                      <div className="w-5 h-5 bg-red-600 text-white rounded-full text-xs grid place-items-center absolute -top-2 -right-1">
+                        5
+                      </div>
+                    </div>
+
+                    <div className="py-1 px-3 relative">
+                      <ProfileButton toggleMenu={toggleMenu} />
+                    </div>
+                  </motion.div>
+                )}
               </motion.div>
             </div>
           </motion.div>
@@ -293,32 +324,57 @@ export default function Nav() {
   );
 }
 
-const ProfileButton = () => {
-  const { logout } = useAuth()
+const ProfileButton = ({ toggleMenu }: any) => {
+  const { logout } = useAuth();
   const [show, setShow] = useState(false);
 
   return (
     <div className="relative">
       <div
         className="flex items-center gap-2 cursor-pointer"
-        onClick={() => setShow(!show)}
+        onClick={() => {
+          setShow(!show);
+        }}
       >
-        <Button isIconOnly color="primary" className="pointer-events-none" variant="faded" aria-label="user">
+        <Button
+          isIconOnly
+          color="primary"
+          className="pointer-events-none"
+          variant="faded"
+          aria-label="user"
+        >
           <FaUser />
         </Button>
         <FaAngleDown />
       </div>
 
-      {show && <div className="absolute top-full right-0 min-w-[100px] z-50 flex justify-end py-3 px-4 shadow-lg bg-white rounded-lg">
-        <div className="flex flex-col gap-3">
-          <Link href="/profile" className="text-black hover:text-primary">
-            Profile
-          </Link>
-          <Link href="#logout" onClick={() => logout()} className="text-black hover:text-primary">
-            Logout
-          </Link>
+      {show && (
+        <div className="lg:absolute w-fit top-full right-0 min-w-[100px] z-50 flex justify-end py-3 px-4 shadow-lg bg-whiterounded-lg">
+          <div className="flex flex-col gap-3">
+            <Link
+              href="/profile"
+              className="text-black hover:text-primary"
+              onClick={() => {
+                setShow(false);
+                toggleMenu();
+              }}
+            >
+              Profile
+            </Link>
+            <Link
+              href="/"
+              onClick={() => {
+                logout();
+                setShow(false);
+                toggleMenu();
+              }}
+              className="text-black hover:text-primary"
+            >
+              Logout
+            </Link>
+          </div>
         </div>
-      </div>}
+      )}
     </div>
   );
 };
