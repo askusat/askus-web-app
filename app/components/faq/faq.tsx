@@ -23,70 +23,36 @@ type QuesAnsType = QuesAnsItemType[];
 
 const questionsAndAnswers: QuesAnsType = [
   // General
-  ...Array(5)
-    .fill(null)
-    .map((_, index) => ({
-      category: "general",
-      question: `What is our return policy ${index + 1}?`,
-      answer: `Our return policy allows returns within 30 days of purchase for refund or exchange Our return policy allows returns within 30 days of purchase for refund or exchange Our return policy allows returns within 30 days of purchase for refund or exchange ${
-        index + 1
-      }.`,
-    })),
-
-  // Subscription
-  ...Array(5)
-    .fill(null)
-    .map((_, index) => ({
-      category: "subscription",
-      question: `How do I cancel my subscription ${index + 1}?`,
-      answer: `To cancel your subscription, visit your account settings and select the 'Cancel Subscription' option ${
-        index + 1
-      }.`,
-    })),
-
-  // Account
-  ...Array(5)
-    .fill(null)
-    .map((_, index) => ({
-      category: "account",
-      question: `How do I change my account password ${index + 1}?`,
-      answer: `To change your account password, go to your account settings and select the 'Change Password' option for password ${
-        index + 1
-      }.`,
-    })),
-
-  // Technical
-  ...Array(5)
-    .fill(null)
-    .map((_, index) => ({
-      category: "technical",
-      question: `How do I troubleshoot connection issues ${index + 1}?`,
-      answer: `Troubleshooting connection issues can often be resolved by restarting your device and checking your internet connection for issue ${
-        index + 1
-      }.`,
-    })),
-
-  // Security
-  ...Array(5)
-    .fill(null)
-    .map((_, index) => ({
-      category: "security",
-      question: `How I'm I assured that my information are safe ${index + 1}?`,
-      answer: `Data collected are not been share anywhy not with anyone ${
-        index + 1
-      }.`,
-    })),
-
-  // Privacy
-  ...Array(5)
-    .fill(null)
-    .map((_, index) => ({
-      category: "privacy",
-      question: `How do I manage my privacy settings ${index + 1}?`,
-      answer: `Privacy settings can be managed in your account privacy preferences for settings ${
-        index + 1
-      }.`,
-    })),
+  {
+    category: "general",
+    question: `How do I ask a question?`,
+    answer: `To ask a question on Askusat.co.uk go to our homepage or sign into your account and enter your question. If you have credit (on a pay as you go) service or are subscribed your question will be posted and our experts will look to respond in minutes. If you do not have credit and are not a subscriber on our subscription payment model you will be prompted to credit your account to be able to ask the question on a pay as you go basis.`,
+  },
+  {
+    category: "general",
+    question: `How much does asking a question cost?`,
+    answer: `Askusat.co.uk has different payment models, when you initially enter the site you may be offered a trial for a set period for a nominal fee to try out the site. At the end of the trial period, if you have not cancelled your subscription you will be entered into a subscription where you will pay monthly for continued access to askusat.co.uk in order to post questions. In the alternative, you may choose to cancel the subscription and pay to post questions on a pay as you go basis, you will be shown the cost of posting a question and asked to consent to the payment before the question is posted.`,
+  },
+  {
+    category: "general",
+    question: `How long does it take to get a response?`,
+    answer: `Our aim is to always provide a response within minutes of you posting a question, 24/7 however, we cannot guarantee any particular response time. That said, our service is often much faster and more efficient than booking an appointment with a professional would otherwise be.`,
+  },
+  {
+    category: "general",
+    question: `Who are the Experts?`,
+    answer: `Our experts are legal professionals with the extensive experience needed to be able to answer your questions. `,
+  },
+  {
+    category: "general",
+    question: `Is my question and answer confidential?`,
+    answer: `Askusat.co.uk is a public website and questions and answers are not and should not be considered confidential. We therefore recommend not supplying information that can be used to easily identify you. In addition, no lawyer-client privilege attaches to the conversation or your interactions with AskUsat.co.uk`,
+  },
+  {
+    category: "general",
+    question: `How can I cancel my subscription?`,
+    answer: `We are sorry you would like to cancel your subscription. To cancel your subscription you can select Cancel Subscription once logged into your account.`,
+  },
 ];
 
 export default function Faq() {
@@ -104,10 +70,9 @@ export default function Faq() {
           <li key={`categ-${i + 1}`} className="">
             <Link
               href={`/faq#${c.toLowerCase()}`}
-              className={`${
-                seletedCategory !== c.toLowerCase() &&
+              className={`${seletedCategory !== c.toLowerCase() &&
                 "text-black hover:text-primary"
-              } bg-blue-100/50 py-1 px-3 rounded-lg w-full`}
+                } bg-blue-100/50 py-1 px-3 rounded-lg w-full`}
               onClick={() => setSeletedCategory(c.toLowerCase())}
             >
               <span className="font-bold mr-2">#</span>
@@ -167,9 +132,8 @@ const QuesAns = ({ qa }: { qa: QuesAnsItemType }) => {
       </Button>
 
       <div
-        className={`${
-          !open && "h-0 pointer-events-none opacity-0 -mt-10 "
-        } transition-all duration-300 w-full py-3 mt-3 px-4 border border-gray-400 rounded-[8px] mb-10`}
+        className={`${!open && "h-0 pointer-events-none opacity-0 -mt-10 "
+          } transition-all duration-300 w-full py-3 mt-3 px-4 border border-gray-400 rounded-[8px] mb-10`}
       >
         <p className="text-sm">{qa.answer}</p>
       </div>
