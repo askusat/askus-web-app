@@ -13,39 +13,39 @@ const testimonials = [
     user: "Kelvin",
   },
   {
-    title: "Best site I’ve ever been on",
-    desc: "Very knowledgeable about any question, and they answer within minutes.",
-    user: "Kelvin",
+    title: "Fast & Reliable",
+    desc: "the service provided by AskUs is quick and efficient with excellent knowledge and helpful insights.",
+    user: "JL",
+  },
+  {
+    title: "Trusted & Fast Response",
+    desc: "I had a trust issue that I needed to talk to someone about urgently. The expert I spoke to responded in minutes and provided clear and detailed answers to all of my questions even when I had multiple follow up queries.",
+    user: "PS",
+  },
+  {
+    title: "Efficient Service",
+    desc: "This is an amazing service, I have asked multiple questions and have saved thousands in legal fees whilst receiving a far more convenient service. I have been able to talk to a lawyer at the office and on my sofa or even in bed at home. I cannot recommend AskUs more highly",
+    user: "IMK",
+  },
+  {
+    title: "Knowledgeable Expert",
+    desc: "I had a sensitive query that I needed answers to and I found the expert I spoke to was empathetic, calm and reassuring. They helped me to feel soothed within minutes as a result of both their in depth knowledge and the tone and manner of their responses, I would not hesitate to use this service again",
+    user: "BC",
+  },
+  {
+    title: "Timely Response",
+    desc: "Fast effective responses and for a low price, what a bargain",
+    user: "Junior",
   },
   {
     title: "Best site I’ve ever been on",
-    desc: "Very knowledgeable about any question, and they answer within minutes.",
-    user: "Kelvin",
+    desc: "This service is the best, it is like having a personal lawyer on speed dial. I recommend this service to all my family and friends.",
+    user: "JK",
   },
   {
     title: "Best site I’ve ever been on",
-    desc: "Very knowledgeable about any question, and they answer within minutes.",
-    user: "Kelvin",
-  },
-  {
-    title: "Best site I’ve ever been on",
-    desc: "Very knowledgeable about any question, and they answer within minutes.",
-    user: "Kelvin",
-  },
-  {
-    title: "Best site I’ve ever been on",
-    desc: "Very knowledgeable about any question, and they answer within minutes.",
-    user: "Kelvin",
-  },
-  {
-    title: "Best site I’ve ever been on",
-    desc: "Very knowledgeable about any question, and they answer within minutes.",
-    user: "Kelvin",
-  },
-  {
-    title: "Best site I’ve ever been on",
-    desc: "Very knowledgeable about any question, and they answer within minutes.",
-    user: "Kelvin",
+    desc: "I thought the service could not be as good as it looks but I have been pleasantly surprised. This is now my go to site whenever I have an issue and I need reliable, answers fast",
+    user: "LS",
   },
 ];
 
@@ -59,10 +59,31 @@ const services = [
   },
   {
     id: "02",
-    icon: "circle-check.svg",
+    icon: "icon2.svg",
     title: "Expert lawyers",
     description:
-      "We have high quality verified expert lawyers ready to help you.",
+      "Available 24/7 for your convenience! Get in touch anytime, day or night, for swift and reliable assistance.",
+  },
+  {
+    id: "03",
+    icon: "icon3.svg",
+    title: "Connect with an expert",
+    description:
+      "Realise the convenience of connecting to your expert from home saving time and money.",
+  },
+  {
+    id: "04",
+    icon: "icon4.svg",
+    title: "Tailored answers",
+    description:
+      "Every answer is bespoke to you and addresses your query without the expensive price tag of in person legal guidance.",
+  },
+  {
+    id: "05",
+    icon: "icon5.svg",
+    title: "Fast and reliable",
+    description:
+      "Our service is fast and reliable, you can speak to an expert in minutes rather than waiting days or weeks for an appointment.",
   },
 ];
 
@@ -350,7 +371,7 @@ export default function Home() {
             {testimonials.map((testomial, index) => (
               <div
                 key={`testimonials_t-${index}`}
-                className="shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] rounded-3xl w-[300px] h-[200px] bg-white px-[14px] py-[18px]"
+                className="shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] rounded-3xl w-[300px] h-[320px] bg-white px-[14px] py-[18px]"
               >
                 <div className="flex items-center gap-3">
                   <div className="">
@@ -362,7 +383,7 @@ export default function Home() {
                       className="w-[24px] h-auto"
                     />
                   </div>
-                  <div className="font-bold">{testomial.user}</div>
+                  <div className="font-bold ">{testomial.user}</div>
                 </div>
 
                 <h4 className="font-bold font-PoppinsBold text-[17px] text-center mt-6">
@@ -370,15 +391,15 @@ export default function Home() {
                 </h4>
                 <div className="flex items-end">
                   <div className="">
-                    <p className="text-center">{testomial.desc}</p>
+                    <p className="text-center text-[14px]">{testomial.desc}</p>
                   </div>
 
                   <Image
                     src="/FaQuoteLeft.svg"
                     alt=""
-                    width={100}
-                    height={100}
-                    className="w-[100px] h-auto"
+                    width={50}
+                    height={50}
+                    className="w-[50px] h-[50px]"
                   />
                 </div>
               </div>
