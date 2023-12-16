@@ -1,12 +1,9 @@
+
 import React from "react";
-import Layout from "../components/layout";
 import Image from "next/image";
 import { FaAngleDown } from "react-icons/fa";
 import { Button } from "@nextui-org/react";
 import Nav from "../components/layout/nav";
-
-
-
 
 export default function AboutPage() {
   return (
@@ -58,7 +55,7 @@ export default function AboutPage() {
               <h1 className="text-[30px] border-b-1 font-PoppinsBold ">Available 24/7</h1>
               <p className="text-[18px] mt-2 font-[500] text-center">Available 24/7 for your convenience! Get in touch anytime, day or night, for swift and reliable assistance..</p>
             </div>
-           
+
             <div className="bg-none w-auto h-auto flex items-center justify-center hover:scale-110 duration-300 rounded-xl ">
               <Image src="/fast.jpg" alt="logo" width={350} height={330} className="  rounded-xl " />
             </div>
@@ -80,7 +77,7 @@ export default function AboutPage() {
             Our Mission
           </h2>
           <p className="lg:max-w-[544px] max-w-[344px] lg:text-[20px] text-[16px] text-center">
-            Our mission is to try to bring expert help to those who need it, when they need it for a reasonable cost.  
+            Our mission is to try to bring expert help to those who need it, when they need it for a reasonable cost.
           </p>
           <Button
             className="mt-3 text-primary bg-white rounded-[10px] border-none"

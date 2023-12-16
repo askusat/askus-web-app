@@ -38,7 +38,7 @@ export default function ProfilePage() {
       </nav>
 
       <div className="relative flex min-h-[calc(100vh-6rem)]">
-        <aside className="w-[25%] max-h-[calc(100vh-6rem)] xl:sticky lg:static top-20 bg-primary text-white">
+        <aside className="hidden lg:block w-[25%] max-h-[calc(100vh-6rem)] xl:sticky lg:static top-20 bg-primary text-white">
           <div className="h-full">
             <div className="flex flex-col gap-6 mt-8 px-8 w-full">
               <Button
