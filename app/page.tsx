@@ -91,7 +91,7 @@ const services = [
 export default function Home() {
   return (
     <>
-      <header className="h-screen w-full bg-[url(/bg-2.svg)] bg-cover bg-no-repeat bg-center py-[62px] lg:px-[60px] px-[5%]">
+      <header className="h-screen w-full bg-[url(/bg-2.svg)] bg-cover bg-no-repeat bg-center pt-[30px] pb-[62px] lg:px-[60px] px-[5%]">
         <Nav />
 
         <div className="flex gap-4 justify-between">

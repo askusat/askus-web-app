@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import LoadingScreen from "../components/loadingScreen";
 import Layout from "../components/layout";
@@ -11,12 +11,28 @@ import { FaCheckCircle, FaPen } from "react-icons/fa";
 import { MdOutlineLoop } from "react-icons/md";
 import { IoCashOutline } from "react-icons/io5";
 import { IoMdHelp } from "react-icons/io";
+import { supabase } from "../supabaseClient";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
   const auth = useAuth();
+  const router = useRouter()
+
+  useEffect(() => {
+    const fetch = async () => {
+      const authUser = await supabase.auth.getUser()
+      if(!authUser.data.user) return router.push('/login')
+    }
+  fetch()
+  }, [router])
+
+  if(!auth.user){
+    return <LoadingScreen />
+  }
+
   return (
     <>
-      <LoadingScreen />
+    <LoadingScreen />
       <nav className="max-h-[6rem] sticky top-0 z-20 col-[1/-1] row-[1] px-8 py-3 bg-[#F9F9F9] shadow-lg">
         <Nav />
       </nav>

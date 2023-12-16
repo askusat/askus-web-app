@@ -23,40 +23,40 @@ export async function GET() {
 
     const maps = [
         {
-            url: 'https://aralingual.vercel.app',
+            url: 'https://askus.vercel.app',
             lastModified: new Date(),
             changeFrequency: 'yearly',
             priority: 1,
         },
         {
-            url: 'https://aralingual.vercel.app/about-us',
+            url: 'https://askus.vercel.app/about-us',
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.8,
         },
         {
-            url: 'https://aralingual.vercel.app/faq',
+            url: 'https://askus.vercel.app/faq',
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.8,
         },
         {
-            url: 'https://aralingual.vercel.app/contact-us',
+            url: 'https://askus.vercel.app/contact-us',
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.8,
         },
         {
-            url: 'https://aaralingual.vercel.app/blog',
+            url: 'https://aaskus.vercel.app/blog',
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.5,
         },
     ]
 
-    posts.forEach(post => {
+    posts.forEach((post: any) => {
         maps.push({
-            url: `https://aralingual.vercel.app/${post.attributes.slug}`,
+            url: `https://askus.vercel.app/${post.attributes.slug}`,
             lastModified: new Date(),
             changeFrequency: 'yearly',
             priority: 1,
