@@ -26,6 +26,9 @@ export default function Nav() {
   const toggleMenu = () => {
     setOpenMobileMenu(!openMobileMenu);
   };
+
+  const [open, setOpen] = useState(false);
+
   const menuVars = {
     initial: {
       scaleY: 0,
@@ -111,22 +114,43 @@ export default function Nav() {
           </>
         ) : (
           <>
-            <div className="relative">
-              <FaBell size={24} />
-              <div className="w-5 h-5 bg-red-600 text-white rounded-full text-xs grid place-items-center absolute -top-2 -right-2">
-                5
+            <Button
+              isIconOnly
+              className=" bg-transparent"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              <div className="relative">
+                <FaBell size={24} />
+                <div className="w-5 h-5 bg-red-600 text-white rounded-full text-xs grid place-items-center absolute -top-2 -right-2">
+                  5
+                </div>
               </div>
-            </div>
+            </Button>
             <ProfileButton />
           </>
+        )}
+
+        {openMobileMenu && (
+          <div
+            className="bg-black/60 fixed w-full h-screen z-10 top-0 left-0 cursor-pointer"
+            onClick={toggleMenu}
+          ></div>
         )}
       </div>
 
       <div className="flex items-center gap-3 xl:hidden">
-        <Button isIconOnly className="bg-transparent">
-          <div className="relative w-fit py-1 px-3">
-            <FaBell size={20} />
-            <div className="w-[18px] h-[18px] bg-red-600 text-white rounded-full text-[9px] grid place-items-center absolute -top-1 right-1">
+        <Button
+          isIconOnly
+          className=" bg-transparent"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
+          <div className="relative   w-fit  py-1 px-3">
+            <FaBell size={20} className="" />
+            <div className="w-[18px] h-[18px] bg-red-600   text-white rounded-full text-[9px] grid place-items-center absolute -top-1 right-1">
               0
             </div>
           </div>
@@ -141,14 +165,168 @@ export default function Nav() {
         >
           <FaBars size={24} />
         </Button>
-      </div>
 
-      {openMobileMenu && (
-        <div
-          className="bg-black/60 fixed w-full h-screen z-10 top-0 left-0 cursor-pointer"
-          onClick={toggleMenu}
-        ></div>
-      )}
+        {open && (
+          <div className="">
+            <div
+              className="fixed bg-cover w-full h-screen z-5  top-0 left-0"
+              onClick={() => {
+                setOpen(false);
+              }}
+            ></div>
+            
+            <div
+              className={`fixed place-items-center origin-top right-10 bg-white primary z-[99999] w-full top-[12%] flex-col justify-center items-center max-w-[300px] text-black shadow-lg rounded-lg`}
+            >
+              <div className="shadow-xl py-3 px-4 text-gray-700">
+                Notifications (0)
+              </div>
+              <div className="flex flex-col gap-6 py-4 max-h-[400px] overflow-auto px-4">
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+                <div className="rounded-lg py-1 px-3 bg-slate-200">
+                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
+                  <div className="flex justify-between items-center">
+                    <p className="truncate text-[10px]">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing
+                      elit...
+                    </p>
+                    <div className="text-[9px] text-gray-400">5min</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
 
       <AnimatePresence>
         {openMobileMenu && (
