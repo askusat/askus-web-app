@@ -103,9 +103,9 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-end w-full h-full mb-6 flex-col text-[18px] font-Poppins leading-[50.3px] tracking-[1px] text-[#FFFFFF]">
-        <div className="">©2023 AskUs Limited. All rights reserved.</div>
-        <div className="flex flex-col md:flex-row items-center md:gap-3">
+      <div className="mt-8 flex items-center justify-end w-full h-full mb-6 flex-col text-[18px] font-Poppins md:leading-[50.3px] tracking-[1px] text-[#FFFFFF]">
+        <div className="text-center mb-4 md:mb-0">©2023 AskUs Limited. All rights reserved.</div>
+        <div className="flex flex-col md:flex-row items-center md:gap-3 gap-2">
           <Link href="/privacy-policy" className="text-[#FFFFFF]">
             Privacy Policy
           </Link>

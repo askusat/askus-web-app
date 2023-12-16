@@ -75,10 +75,16 @@ export default function Nav() {
   return (
     <nav className="flex items-center justify-between gap-[46px] font-semibold">
       <Link href="/">
-        <Image src="/logo-2.svg" alt="logo" width={200} height={40} />
+        <Image
+          src="/logo-2.svg"
+          alt="logo"
+          width={200}
+          height={40}
+          className="md:w-[117px] md:h-[40px] w-[100px] h-auto"
+        />
       </Link>
 
-      <div className="hidden  lg:flex items-center gap-[46px]">
+      <div className="hidden xl:flex items-center gap-[46px]">
         <Link href="/" className="text-black hover:text-primary">
           Home
         </Link>
@@ -116,15 +122,26 @@ export default function Nav() {
         )}
       </div>
 
-      <Button
-        isIconOnly
-        color="primary"
-        aria-label="menu-button"
-        className="lg:hidden"
-        onClick={toggleMenu}
-      >
-        <FaBars size={24} />
-      </Button>
+      <div className="flex items-center gap-3 xl:hidden">
+        <Button isIconOnly className="bg-transparent">
+          <div className="relative w-fit py-1 px-3">
+            <FaBell size={20} />
+            <div className="w-[18px] h-[18px] bg-red-600 text-white rounded-full text-[9px] grid place-items-center absolute -top-1 right-1">
+              0
+            </div>
+          </div>
+        </Button>
+
+        <Button
+          isIconOnly
+          color="primary"
+          aria-label="menu-button"
+          className=""
+          onClick={toggleMenu}
+        >
+          <FaBars size={24} />
+        </Button>
+      </div>
 
       {openMobileMenu && (
         <div
@@ -142,7 +159,7 @@ export default function Nav() {
             exit="exit"
             className={`${
               openMobileMenu ? "" : ""
-            } lg:hidden fixed place-items-center origin-top left-0 bg-white primary z-30 w-full top-0 flex-col justify-center items-center max-w-[400px] text-black h-screen overflow-auto px-4`}
+            } xl:hidden fixed place-items-center origin-top left-0 bg-white primary z-30 w-full top-0 flex-col justify-center items-center max-w-[400px] text-black h-screen overflow-auto px-4`}
           >
             <div className="flex items-center pt-4 justify-between">
               <div className="flex h-full ">
@@ -301,15 +318,8 @@ export default function Nav() {
                     variants={mobileLinkVars}
                     initial="initial"
                     animate="open"
-                    className="w-full flex flex-col justify-center gap-8"
+                    className="w-full"
                   >
-                    <div className="relative w-fit py-1 px-3">
-                      <FaBell size={24} />
-                      <div className="w-5 h-5 bg-red-600 text-white rounded-full text-xs grid place-items-center absolute -top-2 -right-1">
-                        5
-                      </div>
-                    </div>
-
                     <div className="py-1 px-3 relative">
                       <ProfileButton toggleMenu={toggleMenu} />
                     </div>

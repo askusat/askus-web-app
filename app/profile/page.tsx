@@ -3,9 +3,7 @@
 import React, { useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import LoadingScreen from "../components/loadingScreen";
-import Layout from "../components/layout";
 import Nav from "../components/layout/nav";
-import { Button } from "@nextui-org/react";
 import { AiOutlineFundView } from "react-icons/ai";
 import { FaCheckCircle, FaHome, FaPen } from "react-icons/fa";
 import { MdOutlineLoop } from "react-icons/md";
@@ -14,6 +12,7 @@ import { IoMdHelp } from "react-icons/io";
 import { supabase } from "../supabaseClient";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Button } from "@nextui-org/react";
 
 export default function ProfilePage() {
   const auth = useAuth();
@@ -34,7 +33,7 @@ export default function ProfilePage() {
   return (
     <>
       <LoadingScreen />
-      <nav className="max-h-[6rem] sticky top-0 z-20 col-[1/-1] row-[1] px-8 py-3 bg-[#F9F9F9] shadow-lg">
+      <nav className="max-h-[6rem] sticky top-0 z-20 col-[1/-1] row-[1] md:px-8 px-4 py-3 bg-[#F9F9F9] shadow-lg">
         <Nav />
       </nav>
 
@@ -42,7 +41,7 @@ export default function ProfilePage() {
         <aside className="hidden lg:block w-[25%] max-h-[calc(100vh-6rem)] xl:sticky lg:static top-20 bg-primary text-white">
           <div className="h-full relative">
             <div className="flex flex-col gap-6 mt-8 px-8 w-full">
-              <Link href={""}>
+              <Link href="">
                 <Button
                   startContent={<AiOutlineFundView />}
                   className="flex justify-start"
@@ -190,7 +189,13 @@ const MobileFooter = () => {
   return (
     <div className="lg:hidden fixed bottom-0 left-0 z-50 w-full bg-white py-3 px-3">
       <div className="flex items-center justify-center gap-5 md:gap-8">
-        <Link href="">
+        <Link
+          href=""
+          onClick={() => {
+            window.scrollTo(0, 0);
+            window.location.reload()
+          }}
+        >
           <Button
             isIconOnly
             variant="faded"
@@ -201,7 +206,13 @@ const MobileFooter = () => {
             <FaHome className="text-white" />
           </Button>
         </Link>
-        <Link href="#ongoing">
+        <Link
+          href="#ongoing"
+          onClick={() => {
+            window.scrollTo(0, 0);
+            window.location.reload()
+          }}
+        >
           <Button
             isIconOnly
             variant="faded"
@@ -212,7 +223,13 @@ const MobileFooter = () => {
             <MdOutlineLoop className="text-white" />
           </Button>
         </Link>
-        <Link href="#answered">
+        <Link
+          href="#answered"
+          onClick={() => {
+            window.scrollTo(0, 0);
+            window.location.reload()
+          }}
+        >
           <Button
             isIconOnly
             variant="faded"
@@ -223,7 +240,13 @@ const MobileFooter = () => {
             <FaCheckCircle className="text-white" />
           </Button>
         </Link>
-        <Link href="#subscription">
+        <Link
+          href="#subscription"
+          onClick={() => {
+            window.scrollTo(0, 0);
+            window.location.reload()
+          }}
+        >
           <Button
             isIconOnly
             variant="faded"
@@ -234,7 +257,7 @@ const MobileFooter = () => {
             <IoCashOutline className="text-white" />
           </Button>
         </Link>
-        <Link href="/faq">
+        {/* <Link href="/faq">
           <Button
             isIconOnly
             variant="faded"
@@ -244,7 +267,7 @@ const MobileFooter = () => {
           >
             <IoMdHelp className="text-white" />
           </Button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

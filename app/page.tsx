@@ -373,7 +373,7 @@ export default function Home() {
             {testimonials.map((testomial, index) => (
               <div
                 key={`testimonials_t-${index}`}
-                className="shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] rounded-3xl w-[300px] h-[320px] bg-white px-[14px] py-[18px]"
+                className="shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] rounded-3xl max-w-[300px] h-fit md:h-[320px] bg-white px-[14px] py-[18px] relative"
               >
                 <div className="flex items-center gap-3">
                   <div className="">
@@ -401,7 +401,7 @@ export default function Home() {
                     alt=""
                     width={50}
                     height={50}
-                    className="w-[50px] h-[50px]"
+                    className="w-[50px] h-[50px] absolute bottom-0 right-0 opacity-20"
                   />
                 </div>
               </div>

@@ -7,11 +7,11 @@ import Link from "next/link";
 
 const categories = [
   "General",
-  "Subscription",
-  "Account",
-  "Technical",
-  "Security",
-  "Privacy",
+  // "Subscription",
+  // "Account",
+  // "Technical",
+  // "Security",
+  // "Privacy",
 ];
 
 interface QuesAnsItemType {
@@ -127,13 +127,13 @@ const QuesAns = ({ qa }: { qa: QuesAnsItemType }) => {
         className="hover:bg-primary hover:text-white text-primary w-full border-none flex justify-between items-center py-6 px-4 rounded-[8px] group"
         onClick={() => setOpen(!open)}
       >
-        <span className="text-base">{qa.question}</span>
-        {open ? <FaAngleUp className="" /> : <FaAngleDown className="" />}
+        <div className="text-base flex flex-wrap">{qa.question}</div>
+        <div className="min-w-[20px] min-h-[100%] grid place-items-center">{open ? <FaAngleUp className="" /> : <FaAngleDown className="" />}</div>
       </Button>
 
       <div
-        className={`${!open && "h-0 pointer-events-none opacity-0 -mt-10 "
-          } transition-all duration-300 w-full py-3 mt-3 px-4 border border-gray-400 rounded-[8px] mb-10`}
+        className={`${!open ? "!h-0 w-0 pointer-events-none opacity-0" : "mb-10 mt-3"
+          } transition-all duration-700 w-full py-3 px-4 border border-gray-400 rounded-[8px]`}
       >
         <p className="text-sm">{qa.answer}</p>
       </div>

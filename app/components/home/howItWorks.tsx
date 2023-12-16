@@ -13,7 +13,7 @@ const steps = [
   {
     id: 2,
     title: "Connect with an expert",
-    img: "/step2.jpg",
+    img: "/step2.JPG",
     desc: "You can be chatting to a legal expert in minutes.",
   },
   {
@@ -71,8 +71,8 @@ export default function HowItWorks() {
                 <Image
                   src={stepz.img}
                   alt=""
-                  width={530}
-                  height={353}
+                  width={300}
+                  height={300}
                   className="w-[300px] h-auto transition-all duration-300"
                 />
               </div>
