@@ -130,9 +130,6 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           filter: `user_id=eq.${user?.id}`
         },
         (payload) => {
-          console.log("payload");
-          console.log(payload);
-          console.log(user?.id);
           if(payload.new?.user_id === user?.id){
             setNotifications([...notifications, payload.new as Notification]);
           }

@@ -123,11 +123,11 @@ const QuesAns = ({ qa }: { qa: QuesAnsItemType }) => {
       <Button
         variant="faded"
         aria-label="andle left"
-        // size="sm"
+        size="lg"
         className="hover:bg-primary hover:text-white text-primary w-full border-none flex justify-between items-center py-6 px-4 rounded-[8px] group"
         onClick={() => setOpen(!open)}
       >
-        <div className="text-base flex flex-wrap">{qa.question}</div>
+        <div className="text-base text-start leading-[18px] whitespace-break-spaces">{qa.question}</div>
         <div className="min-w-[20px] min-h-[100%] grid place-items-center">{open ? <FaAngleUp className="" /> : <FaAngleDown className="" />}</div>
       </Button>
 

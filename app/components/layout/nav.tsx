@@ -176,7 +176,7 @@ export default function Nav() {
         {open && (
           <div className="">
             <div
-              className="fixed bg-cover w-full h-screen z-5  top-0 left-0"
+              className="fixed bg-cover w-full h-screen z-5  top-0 left-0 bg-black/10"
               onClick={() => {
                 setOpen(false);
               }}
@@ -219,7 +219,7 @@ export default function Nav() {
                       <p className="truncate text-[10px]">
                         {notification?.message}
                       </p>
-                      <div className="text-[9px] text-gray-400">
+                      <div className="text-[9px] text-gray-600 whitespace-nowrap">
                         {formatDateToDMYY(
                           notification?.updatedAt || new Date()
                         )}

@@ -309,7 +309,11 @@ export default function Home() {
           <div className="flex flex-col gap-14 md:hidden">
             {services.map((service, i) => (
               <div key={`services_mobile${service.id}`} className="">
-                <div className={`${(i+1) % 2 === 0 && 'flex-row-reverse'} flex items-center justify-center`}>
+                <div
+                  className={`${
+                    (i + 1) % 2 === 0 && "flex-row-reverse"
+                  } flex items-center justify-center`}
+                >
                   <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                     {service.id}
                   </h2>
@@ -387,22 +391,25 @@ export default function Home() {
                   </div>
                   <div className="font-bold ">{testomial.user}</div>
                 </div>
-
-                <h4 className="font-bold font-PoppinsBold text-[17px] text-center mt-6">
-                  {testomial.title}
-                </h4>
-                <div className="flex items-end">
+                <div className="h-full grid place-items-center">
                   <div className="">
-                    <p className="text-center text-[14px]">{testomial.desc}</p>
-                  </div>
+                    <div className="">
+                      <h4 className="font-bold font-PoppinsBold text-[17px] text-center mb-2 mt-3 md:mt-0">
+                        {testomial.title}
+                      </h4>
+                      <p className="text-center text-[14px]">
+                        {testomial.desc}
+                      </p>
+                    </div>
 
-                  <Image
-                    src="/FaQuoteLeft.svg"
-                    alt=""
-                    width={50}
-                    height={50}
-                    className="w-[50px] h-[50px] absolute bottom-0 right-0 opacity-20"
-                  />
+                    <Image
+                      src="/FaQuoteLeft.svg"
+                      alt=""
+                      width={50}
+                      height={50}
+                      className="w-[50px] h-[50px] absolute bottom-0 right-0 opacity-20"
+                    />
+                  </div>
                 </div>
               </div>
             ))}
