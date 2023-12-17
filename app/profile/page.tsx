@@ -175,11 +175,11 @@ export default function ProfilePage() {
         </main>
       </div>
 
-      <div className="fixed z-[999999] bottom-20 right-2">
+      {/* <div className="fixed z-[999999] bottom-20 right-2">
         <Button className="bg-primary text-white w-[50px] h-[50px]" isIconOnly>
           <IoCreateOutline size={24} />
         </Button>
-      </div>
+      </div> */}
       <MobileFooter />
     </>
   );

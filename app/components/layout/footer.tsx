@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button, Image } from "@nextui-org/react";
 import Link from "next/link";
@@ -6,10 +6,19 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function Footer() {
-  const pathname = usePathname()
+  const pathname = usePathname();
+  const list = ["/chat"];
+
+  if (list.includes(pathname)) {
+    return <></>;
+  }
 
   return (
-    <footer className={`${pathname === '/profile' && 'mb-16 lg:mb-0'} flex flex-col bg-[#0580FE] w-full lg:px-[60px] px-[5%]`}>
+    <footer
+      className={`${
+        pathname === "/profile" && "mb-16 lg:mb-0"
+      } flex flex-col bg-[#0580FE] w-full lg:px-[60px] px-[5%]`}
+    >
       <div className="flex flex-col lg:flex-row justify-between w-full">
         <div className="flex flex-col lg:items-start md:items-center">
           <Image
@@ -104,7 +113,9 @@ export default function Footer() {
       </div>
 
       <div className="mt-8 flex items-center justify-end w-full h-full mb-6 flex-col text-[18px] font-Poppins md:leading-[50.3px] tracking-[1px] text-[#FFFFFF]">
-        <div className="text-center mb-4 md:mb-0">©2023 AskUs Limited. All rights reserved.</div>
+        <div className="text-center mb-4 md:mb-0">
+          ©2023 AskUs Limited. All rights reserved.
+        </div>
         <div className="flex flex-col md:flex-row items-center md:gap-3 gap-2">
           <Link href="/privacy-policy" className="text-[#FFFFFF]">
             Privacy Policy

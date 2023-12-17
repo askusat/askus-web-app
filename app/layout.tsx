@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Footer from "./components/layout/footer";
+import { Button } from "@nextui-org/react";
+import { IoCreateOutline } from "react-icons/io5";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +27,6 @@ export default function RootLayout({
         <Providers>
           <div className="bg-[#f9f9f9]">
             {children}
-
             <Footer />
           </div>
         </Providers>

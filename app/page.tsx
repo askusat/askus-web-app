@@ -6,6 +6,7 @@ import Spacer from "./components/spacer";
 import SampleQuestionsSlider from "./components/home/sampleQuestionsSlider";
 import Nav from "./components/layout/nav";
 import AnimText from "./components/home/AnimText";
+import CreateChat from "./components/chat/createChat";
 
 const testimonials = [
   {
@@ -91,6 +92,7 @@ const services = [
 export default function Home() {
   return (
     <>
+      <CreateChat />
       <header className="h-screen w-full bg-[url(/bg-2.svg)] bg-cover bg-no-repeat bg-center pt-[30px] pb-[62px] lg:px-[60px] px-[5%]">
         <Nav />
 
