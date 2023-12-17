@@ -248,13 +248,13 @@ export default function TableC() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button
+            {/* <Button
               className="bg-foreground text-background"
               endContent={<PlusIcon />}
               size="sm"
             >
               Add New
-            </Button>
+            </Button> */}
           </div>
         </div>
         <div className="flex justify-between items-center">
