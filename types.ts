@@ -11,6 +11,7 @@ export type User = {
   stripeSubscriptionId?: string;
   isAdmin?: boolean;
   userProfilePicture?: string;
+  chatsJoined: number[];
   [key: string]: any;
 } | null;
 
@@ -19,6 +20,7 @@ export type Notification = {
   createdAt?: Date;
   updatedAt?: Date;
   userId: number;
+  chatId: number;
   title: string;
   message: string;
   read: boolean;
@@ -33,6 +35,7 @@ export type Chat = {
   createdAt: Date;
   updatedAt: Date;
   endedAt: Date;
+  chatUsers: number[] | any;
 } | null;
 
 export type ChatSummary = {
@@ -44,6 +47,7 @@ export type ChatSummary = {
   createdAt: Date;
   updatedAt: Date;
   endedAt: Date;
+  chatUsers: number[] | any;
   lastMessage: string;
 } | null;
 

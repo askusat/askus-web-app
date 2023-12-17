@@ -157,18 +157,35 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           schema: "public",
           table: "chat_messages",
           // filter: `userId=eq.${user?.id}`,
+          // filter: `chatId=any.${JSON.stringify(user?.chatsJoined)}`,
         },
-        (payload) => {
-          console.log("chat_messages context");
-          console.log(payload);
+        async (payload) => {
+          // console.log("chat_messages context");
+          // console.log(payload);
 
-          if (payload.new?.chatId !== onChatPageId) {
-            const notfcn = {
-              ...payload.new,
-              title: `New message`,
-              read: false,
-            };
-            setNotifications([...notifications, notfcn as Notification]);
+          // if (
+          //   payload.new?.chatId !== onChatPageId
+          // ) {
+          //   const notfcn = {
+          //     userId: user?.id,
+          //     message: payload.new.message,
+          //     title: `New message`,
+          //     read: false,
+          //   };
+          //   setNotifications([...notifications, notfcn as Notification]);
+          // }
+
+          // console.log("payload.new?.chatId === onChatPageId: ");
+          // console.log(payload.new?.chatId === onChatPageId);
+          // console.log(payload.new?.chatId);
+          // console.log(onChatPageId);
+
+          if (payload.new?.chatId === onChatPageId) {
+            await supabase
+              .from("notifications")
+              .delete()
+              .eq("chatId", onChatPageId)
+              .eq("userId", user?.id);
           }
         }
       )
@@ -177,7 +194,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [notifications, onChatPageId, user?.id]);
+  }, [notifications, onChatPageId, user]);
 
   const handleSignup = async (
     params: SignUpParam,

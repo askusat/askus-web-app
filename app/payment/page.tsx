@@ -128,7 +128,7 @@ export default function PaymentPage() {
                 <div className="skeleton-item"></div>
               </div>
               <p className="text-center text-lg mt-3 animate-pulse">
-                Loading payment form...
+                Loading...
               </p>
             </div>
           )}

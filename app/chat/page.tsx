@@ -15,7 +15,7 @@ import { ImAttachment } from "react-icons/im";
 import { IoIosSend } from "react-icons/io";
 import { TbRotateRectangle } from "react-icons/tb";
 import { useAuth } from "../hooks/useAuth";
-import { Chat, ChatMessage, ChatSummary } from "@/types";
+import { Chat, ChatMessage, ChatSummary, User } from "@/types";
 import { supabase } from "../supabaseClient";
 import { formatDateToDMYY, getFirstName } from "../utils/helpers";
 import { useRouter } from "next/navigation";
@@ -77,7 +77,7 @@ export default function ChatPage() {
       }
     };
     fetch();
-  }, [user, selectedChatId]);
+  }, [user, selectedChatId, sendingMessage]);
 
   // subscribe to chat_messages
   useEffect(() => {
@@ -94,8 +94,8 @@ export default function ChatPage() {
           // filter: `userId=eq.${user?.id}`,
         },
         (payload) => {
-          console.log("chat_messages payload.new");
-          console.log(payload.new);
+          // console.log("chat_messages payload.new");
+          // console.log(payload.new);
 
           setchatMessages([...chatMessages, payload.new as ChatMessage]);
         }
@@ -107,12 +107,34 @@ export default function ChatPage() {
     };
   }, [chatMessages, user?.id]);
 
+  useEffect(() => {
+    // console.log(`message_-_${chatMessages.length}`);
+
+    const lastMessage = document.getElementById(
+      `message_-_${chatMessages?.length}`
+    );
+    if (lastMessage) {
+      lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+      inputRef?.current && inputRef?.current?.focus();
+    }
+
+    return () => {};
+  }, [chatMessages]);
+
   const createChat = async () => {
+    if (!user) return null;
+
     const createData: Partial<Chat> = {
       title: `ASK-${new Date().getTime()}`,
-      userId: user?.id,
+      userId: user.id,
+      chatUsers: [user.id],
     };
-    const { data, error } = await supabase.from("chats").insert(createData);
+
+    const { data, error } = await supabase
+      .from("chats")
+      .insert(createData)
+      .select().single();
+
     if (!error && data) {
       return data;
     } else {
@@ -124,13 +146,17 @@ export default function ChatPage() {
     if (!user?.id) return;
 
     setSendingMessage(true);
-    var chatId = selectedChatId;
+    var chatId = selectedChat?.id;
     if (!selectedChatId || selectedChatId === 0) {
       const chat: ChatSummary | any = await createChat();
+
       if (chat) {
         chatId = chat?.id;
+        setSelectedChatId(chat.id);
+        setSelectedChat(chat);
       }
     }
+
     if (chatId) {
       // Send message
       const createChatMessage: Partial<ChatMessage> = {
@@ -141,10 +167,66 @@ export default function ChatPage() {
         userProfilePicture: user.userProfilePicture || "",
       };
       await supabase.from("chat_messages").insert(createChatMessage);
+
+      try {
+        const { error } = await supabase
+          .from("notifications")
+          .delete()
+          .eq("chatId", chatId)
+          .eq("userId", user?.id);
+          error && console.log(error?.message);
+      } catch (error) {}
+
+      try {
+        for (const index in selectedChat?.chatUsers) {
+          if (
+            Object.prototype.hasOwnProperty.call(selectedChat?.chatUsers, index)
+          ) {
+            const chatUserId = selectedChat?.chatUsers[parseInt(index)];
+
+            if (chatUserId !== user?.id) {
+              const notfcn = {
+                userId: chatUserId,
+                chatId: selectedChat.id,
+                message: messageInput,
+                title: `New message`,
+                read: false,
+              };
+              const { error } = await supabase
+                .from("notifications")
+                .insert(notfcn);
+              console.log(error?.message);
+            }
+          }
+        }
+      } catch (error) {}
       setSendingMessage(false);
       setMessageInput("");
+    } else {
+      resetChatScreen();
     }
     setSendingMessage(false);
+  };
+
+  const [addingUserToChat, setAddingUserToChat] = useState(false);
+  const addUserToChat = async (
+    userId: number | undefined,
+    chatId: number | undefined
+  ) => {
+    if (!userId || !chatId) return alert("something went wrong");
+
+    setAddingUserToChat(true);
+    const currentUsers: any = selectedChat?.chatUsers;
+    const d = [...currentUsers, userId];
+    await supabase.from("chats").update({ chatUsers: d }).eq("id", chatId);
+    setAddingUserToChat(false);
+  };
+
+  const resetChatScreen = () => {
+    setSelectedChatId(0);
+    setSelectedChat(null);
+    setchatMessages([]);
+    router.replace("/chat");
   };
 
   return (
@@ -157,8 +239,7 @@ export default function ChatPage() {
               size="sm"
               className="bg-transparent"
               onClick={() => {
-                setSelectedChatId(0);
-                setSelectedChat(null);
+                resetChatScreen();
               }}
             >
               {/* <div className="w-4 h-4 rounded-full bg-danger text-white grid place-items-center text-xs"></div> */}
@@ -169,8 +250,7 @@ export default function ChatPage() {
               size="sm"
               className="bg-transparent"
               onClick={() => {
-                setSelectedChatId(0);
-                setSelectedChat(null);
+                resetChatScreen();
               }}
             >
               <div className="w-4 h-4 rounded-full bg-warning text-white grid place-items-center text-xs"></div>
@@ -180,8 +260,7 @@ export default function ChatPage() {
               size="sm"
               className="bg-transparent"
               onClick={() => {
-                setSelectedChatId(0);
-                setSelectedChat(null);
+                resetChatScreen();
               }}
             >
               <div className="w-4 h-4 rounded-full bg-success text-white grid place-items-center text-xs"></div>
@@ -244,13 +323,18 @@ export default function ChatPage() {
                         chats.length !== index + 1 &&
                         "border-b border-slate-400"
                       } ${
-                        selectedChatId === index + 1 && "bg-gray-200"
+                        selectedChatId === chat?.id && "bg-gray-200"
                       } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
                       onClick={() => {
-                        if (!chat) return;
+                        resetChatScreen();
+                        if (!chat) {
+                          router.replace("/chat");
+                          return;
+                        }
                         setSelectedChat(chat);
                         setSelectedChatId(chat?.id || 0);
                         setIsChatPageOpen(true);
+                        inputRef?.current && inputRef?.current?.focus();
                         router.push(`#${chat.id}`);
                       }}
                     >
@@ -305,9 +389,10 @@ export default function ChatPage() {
                 onClick={() => {
                   setIsChatPageOpen(true);
                   inputRef?.current && inputRef?.current?.focus();
+                  resetChatScreen();
                 }}
               >
-                Ask Question
+                Ask New Question
               </Button>
             </div>
           </footer>
@@ -318,13 +403,20 @@ export default function ChatPage() {
             (!selectedChatId || !isChatPageOpen) && "hidden md:block"
           } w-full mt-[50px] py-2 h-[calc(100vh-50px)] overflow-auto bg-gray-200`}
         >
-          <div className="h-[calc(100vh-140px)] overflow-auto pb-3 px-4 pt-2">
+          <div
+            id="chatScreenMain"
+            className="h-[calc(100vh-140px)] overflow-auto pb-3 px-4 pt-2"
+          >
             {selectedChat?.title && (
               <div className="fixed top-[50px] right-1 w-full">
                 <div className="flex items-center justify-center w-full">
                   <div className="border border-gray-600 bg-gray-200 rounded-lg py-1 px-2">
-                    <span className="font-semibold">Title: </span>
-                    <span className="italic">{selectedChat?.title}</span>
+                    <span className="font-semibold text-sm">Title: </span>
+                    <input
+                      className="italic text-xs"
+                      value={selectedChat?.title}
+                      disabled
+                    />
                   </div>
                   <Button isIconOnly className="bg-transparent">
                     <FaPen />
@@ -335,7 +427,7 @@ export default function ChatPage() {
 
             <div className="flex flex-col gap-4 mt-[50px] mb-5">
               {chatMessages?.length > 0 &&
-                chatMessages.map((chatMessage) => {
+                chatMessages?.map((chatMessage, index) => {
                   // console.log("chatMessage: ");
                   // console.log(chatMessage);
 
@@ -343,6 +435,7 @@ export default function ChatPage() {
                     return (
                       <div
                         key={`message-${chatMessage?.id}`}
+                        id={`message_-_${index + 1}`}
                         className="flex-row-reverse flex items-end gap-2"
                       >
                         <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning"></div>
@@ -357,7 +450,9 @@ export default function ChatPage() {
                               </span>
                             </p>
                           </div>
-                          <div className="text-xs text-end">{chatMessage?.userName}</div>
+                          <div className="text-xs text-end">
+                            {chatMessage?.userName}
+                          </div>
                         </div>
                       </div>
                     );
@@ -365,6 +460,7 @@ export default function ChatPage() {
                     return (
                       <div
                         key={`message-${chatMessage?.id}`}
+                        id={`message_-_${index + 1}`}
                         className="flex items-start gap-2"
                       >
                         <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary"></div>
@@ -387,7 +483,7 @@ export default function ChatPage() {
                 })}
             </div>
 
-            {chatMessages?.length <= 0 && (
+            {/* {chatMessages?.length <= 0 && (
               <div className="grid place-items-center h-full">
                 <div className="">
                   <Button
@@ -400,40 +496,55 @@ export default function ChatPage() {
                   </Button>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
 
           <div className="fixed md:static bottom-0 left-0 bg-gray-200 w-full h-[65px] px-4">
-            <form
-              className="-mt-2 py-2 border border-primary rounded-full"
-              onSubmit={(e: any) => {
-                e.preventDefault();
-                handleSubmit();
-              }}
-            >
-              <div className="px-6 flex items-center gap-0">
-                <Button isIconOnly size="sm" className="bg-transparent">
-                  <ImAttachment size={18} />
-                </Button>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  className="bg-transparent outline-none p-2 w-full"
-                  placeholder="Enter message here..."
-                  value={messageInput}
-                  onChange={(e: any) => setMessageInput(e.target.value)}
-                />
+            {(selectedChat && selectedChat?.chatUsers?.includes(user?.id)) ||
+            !selectedChat ? (
+              <form
+                className="-mt-2 py-2 border border-primary rounded-full bg-gray-200 relative z-20"
+                onSubmit={(e: any) => {
+                  e.preventDefault();
+                  handleSubmit();
+                }}
+              >
+                <div className="px-6 flex items-center gap-0">
+                  <Button isIconOnly size="sm" className="bg-transparent">
+                    <ImAttachment size={18} />
+                  </Button>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    className="bg-transparent outline-none p-2 w-full"
+                    placeholder="Enter message here..."
+                    value={messageInput}
+                    onChange={(e: any) => setMessageInput(e.target.value)}
+                  />
+                  <Button
+                    isIconOnly
+                    type="submit"
+                    size="sm"
+                    className="bg-primary text-white ml-2"
+                    isLoading={sendingMessage}
+                  >
+                    <IoIosSend size={20} />
+                  </Button>
+                </div>
+              </form>
+            ) : (
+              <div className="flex justify-center">
                 <Button
-                  isIconOnly
-                  type="submit"
-                  size="sm"
-                  className="bg-primary text-white ml-2"
-                  isLoading={sendingMessage}
+                  onClick={() => {
+                    addUserToChat(user?.id, selectedChat?.id);
+                  }}
+                  isLoading={addingUserToChat}
+                  color="primary"
                 >
-                  <IoIosSend size={20} />
+                  Join Chat
                 </Button>
               </div>
-            </form>
+            )}
           </div>
         </div>
       </main>
