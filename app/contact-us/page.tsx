@@ -19,7 +19,7 @@ export default function ContactUsPage() {
             <h1 className="text-primary sm:pt-10 lg:pt-0 font-bold font-PoppinsRegular text-[20px] hidden lg:block">
               Contact Us
             </h1>
-            <h2 className="text-bold  text-[30px] font-PoppinsSemiBold ">
+            <h2 className="text-bold  text-[30px] font-PoppinsSemiBold text-center lg:text-start">
               How can we Help?
             </h2>
             <p className="w-full md:max-w-[500px] text-center lg:text-start">
