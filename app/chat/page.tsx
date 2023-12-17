@@ -29,13 +29,28 @@ export default function ChatPage() {
       <nav className="fixed top-0 left-0 z-10 w-full h-[50px] bg-primary text-white">
         <div className="flex items-center justify-between h-full px-2">
           <div className="flex items-center h-full">
-            <Button isIconOnly size="sm" className="bg-transparent" onClick={() => setSelectedChatId(0)}>
+            <Button
+              isIconOnly
+              size="sm"
+              className="bg-transparent"
+              onClick={() => setSelectedChatId(0)}
+            >
               <div className="w-4 h-4 rounded-full bg-danger text-white grid place-items-center text-xs"></div>
             </Button>
-            <Button isIconOnly size="sm" className="bg-transparent" onClick={() => setSelectedChatId(0)}>
+            <Button
+              isIconOnly
+              size="sm"
+              className="bg-transparent"
+              onClick={() => setSelectedChatId(0)}
+            >
               <div className="w-4 h-4 rounded-full bg-warning text-white grid place-items-center text-xs"></div>
             </Button>
-            <Button isIconOnly size="sm" className="bg-transparent" onClick={() => setSelectedChatId(0)}>
+            <Button
+              isIconOnly
+              size="sm"
+              className="bg-transparent"
+              onClick={() => setSelectedChatId(0)}
+            >
               <div className="w-4 h-4 rounded-full bg-success text-white grid place-items-center text-xs"></div>
             </Button>
           </div>
@@ -55,7 +70,7 @@ export default function ChatPage() {
         <div
           className={`${
             selectedChatId && "hidden md:block"
-          } max-w-[400px] w-full mt-[50px] py-2`}
+          } max-w-[400px] w-full mt-[50px] py-2 relative`}
         >
           <div className="h-[calc(100vh-140px)] overflow-auto pb-3">
             {conversations.length > 0 ? (
@@ -115,7 +130,7 @@ export default function ChatPage() {
             )}
           </div>
 
-          <footer className="w-full h-[65px] py-4 bg-[#F9F9F9]">
+          <footer className="fixed md:static bottom-0 left-0 w-full h-[65px] py-4 bg-[#F9F9F9]">
             <div className="px-6">
               <Button
                 className="bg-primary text-white w-full"
@@ -152,33 +167,35 @@ export default function ChatPage() {
             </div>
           </div>
 
-          <form
-            className="w-full h-[65px] py-4 border border-primary rounded-full"
-            onSubmit={(e: any) => {
-              e.preventDefault();
-              // TODO: implement send message
-            }}
-          >
-            <div className="px-6 flex items-center gap-4">
-              <Button isIconOnly size="sm" className="bg-transparent">
-                <ImAttachment />
-              </Button>
-              <input
-                ref={inputRef}
-                type="text"
-                className="bg-transparent outline-none p-2 w-full"
-                placeholder="Enter message here..."
-              />
-              <Button
-                isIconOnly
-                type="submit"
-                size="sm"
-                className="bg-primary text-white"
-              >
-                <IoIosSend size={20} />
-              </Button>
-            </div>
-          </form>
+          <div className="fixed md:static bottom-0 left-0 bg-gray-200 w-full h-[65px] px-4">
+            <form
+              className="-mt-4 py-4 border border-primary rounded-full"
+              onSubmit={(e: any) => {
+                e.preventDefault();
+                // TODO: implement send message
+              }}
+            >
+              <div className="px-6 flex items-center gap-4">
+                <Button isIconOnly size="sm" className="bg-transparent">
+                  <ImAttachment />
+                </Button>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  className="bg-transparent outline-none p-2 w-full"
+                  placeholder="Enter message here..."
+                />
+                <Button
+                  isIconOnly
+                  type="submit"
+                  size="sm"
+                  className="bg-primary text-white"
+                >
+                  <IoIosSend size={20} />
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </main>
     </div>
