@@ -1,8 +1,10 @@
-// 'use client'
+"use client";
 
 import { Avatar, AvatarGroup, Button, Image } from "@nextui-org/react";
 import Link from "next/link";
-import React from "react";
+import React, { useRef, useState } from "react";
+import { ImAttachment } from "react-icons/im";
+import { IoIosSend } from "react-icons/io";
 
 const conversations = [
   "kj",
@@ -19,18 +21,21 @@ const conversations = [
   "ssdsf",
 ];
 export default function ChatPage() {
+  const [selectedChatId, setSelectedChatId] = useState(0);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <div className="h-screen w-full">
       <nav className="fixed top-0 left-0 z-10 w-full h-[50px] bg-primary text-white">
         <div className="flex items-center justify-between h-full px-2">
           <div className="flex items-center h-full">
-            <Button isIconOnly size="sm" className="bg-transparent">
+            <Button isIconOnly size="sm" className="bg-transparent" onClick={() => setSelectedChatId(0)}>
               <div className="w-4 h-4 rounded-full bg-danger text-white grid place-items-center text-xs"></div>
             </Button>
-            <Button isIconOnly size="sm" className="bg-transparent">
+            <Button isIconOnly size="sm" className="bg-transparent" onClick={() => setSelectedChatId(0)}>
               <div className="w-4 h-4 rounded-full bg-warning text-white grid place-items-center text-xs"></div>
             </Button>
-            <Button isIconOnly size="sm" className="bg-transparent">
+            <Button isIconOnly size="sm" className="bg-transparent" onClick={() => setSelectedChatId(0)}>
               <div className="w-4 h-4 rounded-full bg-success text-white grid place-items-center text-xs"></div>
             </Button>
           </div>
@@ -46,9 +51,13 @@ export default function ChatPage() {
         </div>
       </nav>
 
-      <main className="md:flex">
-        <div className="max-w-[400px] w-full mt-[50px] py-2">
-          <div className="h-[calc(100vh-125px)] overflow-auto pb-3">
+      <main className="md:flex h-[calc(100vh-15px)] overflow-hidden">
+        <div
+          className={`${
+            selectedChatId && "hidden md:block"
+          } max-w-[400px] w-full mt-[50px] py-2`}
+        >
+          <div className="h-[calc(100vh-140px)] overflow-auto pb-3">
             {conversations.length > 0 ? (
               <div className="flex flex-col gap-6 py-6">
                 {conversations.map((conversation, index) => (
@@ -57,7 +66,10 @@ export default function ChatPage() {
                     className={`${
                       conversations.length !== index + 1 &&
                       "border-b border-slate-400"
-                    } flex items-center gap-2 px-3 pb-4 cursor-pointer`}
+                    } ${
+                      selectedChatId === index + 1 && "bg-gray-200"
+                    } flex items-center gap-2 px-3 pb-4 cursor-pointer select-none`}
+                    onClick={() => setSelectedChatId(index + 1)}
                   >
                     <div className="w-[17%]">
                       <div className="w-10 h-10 rounded-full bg-primary"></div>
@@ -105,18 +117,68 @@ export default function ChatPage() {
 
           <footer className="w-full h-[65px] py-4 bg-[#F9F9F9]">
             <div className="px-6">
-              <Button className="bg-primary text-white w-full">
-              Ask Question
+              <Button
+                className="bg-primary text-white w-full"
+                onClick={() => {
+                  inputRef?.current && inputRef?.current?.focus();
+                }}
+              >
+                Ask Question
               </Button>
             </div>
           </footer>
         </div>
-        <div className="w-full mt-[50px] py-2 h-[calc(100vh-50px)] overflow-auto bg-gray-200">
-          <div className="grid place-items-center h-full">
-            <Button className="bg-primary text-white">
-              Ask Question
-            </Button>
+
+        <div
+          className={`${
+            !selectedChatId && "hidden md:block"
+          } w-full mt-[50px] py-2 h-[calc(100vh-50px)] overflow-auto bg-gray-200`}
+        >
+          <div className="h-[calc(100vh-140px)] overflow-auto pb-3">
+            <div className="grid place-items-center h-full">
+              <div className="">
+                <Button
+                  className="bg-primary text-white"
+                  onClick={() => {
+                    inputRef?.current && inputRef?.current?.focus();
+                  }}
+                >
+                  Ask Question
+                </Button>
+                <div className="mt-4 font-bold text-center">
+                  {selectedChatId}
+                </div>
+              </div>
+            </div>
           </div>
+
+          <form
+            className="w-full h-[65px] py-4 border border-primary rounded-full"
+            onSubmit={(e: any) => {
+              e.preventDefault();
+              // TODO: implement send message
+            }}
+          >
+            <div className="px-6 flex items-center gap-4">
+              <Button isIconOnly size="sm" className="bg-transparent">
+                <ImAttachment />
+              </Button>
+              <input
+                ref={inputRef}
+                type="text"
+                className="bg-transparent outline-none p-2 w-full"
+                placeholder="Enter message here..."
+              />
+              <Button
+                isIconOnly
+                type="submit"
+                size="sm"
+                className="bg-primary text-white"
+              >
+                <IoIosSend size={20} />
+              </Button>
+            </div>
+          </form>
         </div>
       </main>
     </div>
