@@ -110,7 +110,7 @@ export default function PaymentPage() {
       </div>
       <div className="p-[20px] w-full">
         <div className={`md:px-[10%] lg:px-[15%] xl:px-[20%]`}>
-          {clientSecret && (
+          {clientSecret ? (
             <Elements
               stripe={stripePromise}
               options={{
@@ -120,6 +120,17 @@ export default function PaymentPage() {
             >
               <StripeCont user={user} clientSecret={clientSecret} />
             </Elements>
+          ) : (
+            <div className="">
+              <div className="skeleton-container">
+                <div className="skeleton-item"></div>
+                <div className="skeleton-item"></div>
+                <div className="skeleton-item"></div>
+              </div>
+              <p className="text-center text-lg mt-3 animate-pulse">
+                Loading payment form...
+              </p>
+            </div>
           )}
         </div>
       </div>
@@ -145,8 +156,19 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
   const [processingSubscription, setProcessingSubscription] = useState(false);
   const [selectedTab, setSelectedTab] = useState<any>("subscription");
   const credits = 15;
-  const createAmountPerUnit = 50
+  const createAmountPerUnit = 50;
   const [creditUnit, setCreditUnit] = useState(1);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === "#credit") {
+      setSelectedTab("credit");
+    }
+
+    return () => {
+      setSelectedTab("subscription");
+    };
+  }, []);
 
   // confirm setup_intent_client_secret;
   useEffect(() => {
@@ -194,7 +216,9 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
               customer_id: user?.stripeCustomerId,
               payment_method, //attach_payment_method_to_customer
               creditMode,
-              credit: (parseInt(creditAmount?.split("?")[0] || "15")/credits)*createAmountPerUnit,
+              credit:
+                (parseInt(creditAmount?.split("?")[0] || "15") / credits) *
+                createAmountPerUnit,
             };
 
             createSubscription = await axios.post(
@@ -217,7 +241,12 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
           if (createSubscription.data?.creditMode) {
             delete d.stripeSubscriptionId;
             delete d.isSubscribed;
-            d = { ...d, credit: (createSubscription.data?.credit/createAmountPerUnit)*credits };
+            d = {
+              ...d,
+              credit:
+                (createSubscription.data?.credit / createAmountPerUnit) *
+                credits,
+            };
           }
 
           console.log("updateUser data: ");
@@ -230,7 +259,7 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
             progressbarEl.style.width = "100%";
           }
 
-          window.location.href = '/profile';
+          window.location.href = "/profile";
 
           setConfirmingSetUpIntent(false);
           break;
@@ -341,6 +370,7 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
           color="primary"
           variant="bordered"
           onSelectionChange={setSelectedTab}
+          selectedKey={selectedTab}
         >
           <Tab
             key="subscription"
@@ -374,7 +404,8 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
           ) : (
             <span>
               Purchase question credit 15 credits/unit for{" "}
-              <b>£${createAmountPerUnit * creditUnit}</b> (unused credit expires after a month)
+              <b>£${createAmountPerUnit * creditUnit}</b> (unused credit expires
+              after a month)
             </span>
           )}
         </p>

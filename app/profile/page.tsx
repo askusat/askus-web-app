@@ -127,14 +127,21 @@ export default function ProfilePage() {
                 </Button>
               </div>
 
-              <div className="flex items-center justify-center gap-8 mt-10">
-                <Button className="border-2 border-primary bg-primary text-white">
-                  Subscribe
-                </Button>
-                <Button className="border-2 border-primary bg-white">
-                  Buy Credit
-                </Button>
-              </div>
+              {!auth.user?.isSubscribed && (
+                <div className="flex items-center justify-center gap-2 mt-10">
+                  <Link href={"/payment"}>
+                    <Button className="border-2 border-primary bg-primary text-white">
+                      Subscribe
+                    </Button>
+                  </Link>
+                  <span className="text-gray-500">or</span>
+                  <Link href={"/payment#credit"}>
+                    <Button className="border-2 border-primary bg-white">
+                      Buy Credit
+                    </Button>
+                  </Link>
+                </div>
+              )}
 
               <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
                 <div className="h-[150px] min-w-[215px] flex flex-col justify-between bg-white shadow-xl rounded-md border-b-[5px] border-[#EBA125] text-center px-8 py-4">
@@ -193,7 +200,7 @@ const MobileFooter = () => {
           href=""
           onClick={() => {
             window.scrollTo(0, 0);
-            window.location.reload()
+            window.location.reload();
           }}
         >
           <Button
@@ -210,7 +217,7 @@ const MobileFooter = () => {
           href="#ongoing"
           onClick={() => {
             window.scrollTo(0, 0);
-            window.location.reload()
+            window.location.reload();
           }}
         >
           <Button
@@ -227,7 +234,7 @@ const MobileFooter = () => {
           href="#answered"
           onClick={() => {
             window.scrollTo(0, 0);
-            window.location.reload()
+            window.location.reload();
           }}
         >
           <Button
@@ -244,7 +251,7 @@ const MobileFooter = () => {
           href="#subscription"
           onClick={() => {
             window.scrollTo(0, 0);
-            window.location.reload()
+            window.location.reload();
           }}
         >
           <Button

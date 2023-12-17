@@ -10,6 +10,7 @@ interface AuthContextType {
   user: User | null;
   notifications: Notification[] | [];
   setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
+  setOnChatPageId: React.Dispatch<React.SetStateAction<number | null>>
   loading: boolean;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,6 +23,7 @@ export const defaultProvider: AuthContextType = {
   user: null,
   notifications: [],
   setNotifications: () => [],
+  setOnChatPageId: () => null,
   loading: true,
   setUser: () => null,
   setLoading: () => false,

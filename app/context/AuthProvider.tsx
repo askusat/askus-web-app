@@ -26,6 +26,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(defaultProvider.user);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState<boolean>(defaultProvider.loading);
+  const [onChatPageId, setOnChatPageId] = useState<number | null>(null);
   // Router
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -106,9 +107,9 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       const { data, error } = await supabase
         .from("notifications")
         .select()
-        .eq("user_id", user?.id)
+        .eq("userId", user?.id)
         .eq("read", false)
-        .order("updatedAt", { ascending: true})
+        .order("updatedAt", { ascending: true });
 
       if (!error) {
         const notfs: Notification[] = data || [];
@@ -118,6 +119,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     getNotifications();
   }, [user?.id]);
 
+  // subscribe to notifications
   useEffect(() => {
     const channel = supabase
       .channel("realtime notifications")
@@ -127,10 +129,10 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           event: "INSERT",
           schema: "public",
           table: "notifications",
-          filter: `user_id=eq.${user?.id}`
+          filter: `userId=eq.${user?.id}`,
         },
         (payload) => {
-          if(payload.new?.user_id === user?.id){
+          if (payload.new?.userId === user?.id) {
             setNotifications([...notifications, payload.new as Notification]);
           }
         }
@@ -141,6 +143,41 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       supabase.removeChannel(channel);
     };
   }, [notifications, user?.id]);
+
+  // subscribe to chat_messages
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel("chat messages")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chat_messages",
+          // filter: `userId=eq.${user?.id}`,
+        },
+        (payload) => {
+          console.log("chat_messages context");
+          console.log(payload);
+
+          if (payload.new?.chatId !== onChatPageId) {
+            const notfcn = {
+              ...payload.new,
+              title: `New message`,
+              read: false,
+            };
+            setNotifications([...notifications, notfcn as Notification]);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [notifications, onChatPageId, user?.id]);
 
   const handleSignup = async (
     params: SignUpParam,
@@ -220,6 +257,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     user,
     notifications,
     setNotifications,
+    setOnChatPageId,
     loading,
     setUser,
     setLoading,

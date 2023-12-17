@@ -35,7 +35,7 @@ export const markAllNotificationAsRead = async (
   await supabase
     .from("notifications")
     .update({ read: true })
-    .eq("user_id", user?.id);
+    .eq("userId", user?.id);
 
   setNotifications([]);
 };
@@ -49,10 +49,15 @@ export const markNotificationAsRead = async (
   await supabase
     .from("notifications")
     .update({ read: true })
-    .eq("user_id", user?.id)
+    .eq("userId", user?.id)
     .eq("id", notification_id);
 
   setNotifications(
     notifications.filter((notification) => notification?.id !== notification_id)
   );
 };
+
+export function getFirstName(fullName: string) {
+  const firstName = fullName.split(' ')[0];
+  return firstName;
+}
