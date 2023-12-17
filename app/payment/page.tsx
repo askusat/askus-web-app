@@ -10,7 +10,6 @@ import {
 } from "@stripe/react-stripe-js";
 import {
   Appearance,
-  Stripe,
   StripePaymentElementOptions,
   loadStripe,
 } from "@stripe/stripe-js";

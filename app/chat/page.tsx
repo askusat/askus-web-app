@@ -1,10 +1,20 @@
 "use client";
 
-import { Avatar, AvatarGroup, Button, Image } from "@nextui-org/react";
+import {
+  Avatar,
+  AvatarGroup,
+  Button,
+  Image,
+  Tab,
+  Tabs,
+} from "@nextui-org/react";
 import Link from "next/link";
 import React, { useRef, useState } from "react";
+import { BsCashCoin } from "react-icons/bs";
+import { FaCheck } from "react-icons/fa";
 import { ImAttachment } from "react-icons/im";
 import { IoIosSend } from "react-icons/io";
+import { TbRotateRectangle } from "react-icons/tb";
 
 const conversations = [
   "kj",
@@ -23,6 +33,13 @@ const conversations = [
 export default function ChatPage() {
   const [selectedChatId, setSelectedChatId] = useState(0);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedTab, setSelectedTab] = useState<any>("ongoing");
+  const [messageInput, setMessageInput] = useState("");
+
+  const handleSubmit = async () => {
+    // TODO: implement send message
+    setMessageInput("");
+  };
 
   return (
     <div className="h-screen w-full">
@@ -60,7 +77,7 @@ export default function ChatPage() {
               alt=""
               width={132}
               height={29}
-              className="w-auto h-[35px] mr-2"
+              className="w-auto h-[35px] md:mr-2 mr-4"
             />
           </Link>
         </div>
@@ -74,43 +91,72 @@ export default function ChatPage() {
         >
           <div className="h-[calc(100vh-140px)] overflow-auto pb-3">
             {conversations.length > 0 ? (
-              <div className="flex flex-col gap-6 py-6">
-                {conversations.map((conversation, index) => (
-                  <div
-                    key={`convstn_${index + 1}`}
-                    className={`${
-                      conversations.length !== index + 1 &&
-                      "border-b border-slate-400"
-                    } ${
-                      selectedChatId === index + 1 && "bg-gray-200"
-                    } flex items-center gap-2 px-3 pb-4 cursor-pointer select-none`}
-                    onClick={() => setSelectedChatId(index + 1)}
+              <>
+                <div className="flex w-full flex-col items-center">
+                  <Tabs
+                    aria-label="Options"
+                    color="primary"
+                    variant="bordered"
+                    onSelectionChange={setSelectedTab}
                   >
-                    <div className="w-[17%]">
-                      <div className="w-10 h-10 rounded-full bg-primary"></div>
-                    </div>
-                    <div className="w-[63%]">
-                      <h3 className="font-semibold truncate">
-                        Lorem ipsum dolor sit amet.
-                      </h3>
-                      <p className="truncate text-sm">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Repudiandae?
-                      </p>
-                    </div>
-                    <div className="w-[20%]">
-                      <div className="whitespace-nowrap text-xs text-slate-600 flex justify-end">
-                        21-12-23
+                    <Tab
+                      key="ongoing"
+                      title={
+                        <div className="flex items-center space-x-2">
+                          <TbRotateRectangle />
+                          <span>Ongoing</span>
+                        </div>
+                      }
+                    />
+                    <Tab
+                      key="answered"
+                      title={
+                        <div className="flex items-center space-x-2">
+                          <FaCheck />
+                          <span>Answered</span>
+                        </div>
+                      }
+                    />
+                  </Tabs>
+                </div>
+                <div className="flex flex-col gap-0 py-6">
+                  {conversations.map((conversation, index) => (
+                    <div
+                      key={`convstn_${index + 1}`}
+                      className={`${
+                        conversations.length !== index + 1 &&
+                        "border-b border-slate-400"
+                      } ${
+                        selectedChatId === index + 1 && "bg-gray-200"
+                      } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
+                      onClick={() => setSelectedChatId(index + 1)}
+                    >
+                      <div className="w-[17%]">
+                        <div className="w-10 h-10 rounded-full bg-primary"></div>
                       </div>
-                      <div className="flex justify-end">
-                        <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
-                          5
+                      <div className="w-[63%]">
+                        <h3 className="font-semibold truncate">
+                          Lorem ipsum dolor sit amet.
+                        </h3>
+                        <p className="truncate text-sm">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Repudiandae?
+                        </p>
+                      </div>
+                      <div className="w-[20%]">
+                        <div className="whitespace-nowrap text-xs text-slate-600 flex justify-end">
+                          21-12-23
+                        </div>
+                        <div className="mt-1 flex justify-end">
+                          <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
+                            5
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </>
             ) : (
               <div className="h-[calc(100vh-100px)] grid place-items-center">
                 <div className="">
@@ -149,7 +195,30 @@ export default function ChatPage() {
             !selectedChatId && "hidden md:block"
           } w-full mt-[50px] py-2 h-[calc(100vh-50px)] overflow-auto bg-gray-200`}
         >
-          <div className="h-[calc(100vh-140px)] overflow-auto pb-3">
+          <div className="h-[calc(100vh-140px)] overflow-auto pb-3 px-4 pt-2">
+            <div className="flex flex-col gap-4">
+              <div className="flex-row-reverse flex items-center gap-2">
+                <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning"></div>
+                <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit">
+                  <p className="text-sm">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Non accusantium exercitationem voluptatem!
+                    <span className="text-xs font-semibold"> | 21-12-23</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary"></div>
+                <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit">
+                  <p className="text-sm">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing.
+                    <span className="text-xs font-semibold"> | 21-12-23</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div className="grid place-items-center h-full">
               <div className="">
                 <Button
@@ -169,13 +238,13 @@ export default function ChatPage() {
 
           <div className="fixed md:static bottom-0 left-0 bg-gray-200 w-full h-[65px] px-4">
             <form
-              className="-mt-4 py-4 border border-primary rounded-full"
+              className="-mt-2 py-2 border border-primary rounded-full"
               onSubmit={(e: any) => {
                 e.preventDefault();
-                // TODO: implement send message
+                handleSubmit();
               }}
             >
-              <div className="px-6 flex items-center gap-4">
+              <div className="px-6 flex items-center gap-0">
                 <Button isIconOnly size="sm" className="bg-transparent">
                   <ImAttachment />
                 </Button>
@@ -184,12 +253,14 @@ export default function ChatPage() {
                   type="text"
                   className="bg-transparent outline-none p-2 w-full"
                   placeholder="Enter message here..."
+                  value={messageInput}
+                  onChange={(e: any) => setMessageInput(e.target.value)}
                 />
                 <Button
                   isIconOnly
                   type="submit"
                   size="sm"
-                  className="bg-primary text-white"
+                  className="bg-primary text-white ml-2"
                 >
                   <IoIosSend size={20} />
                 </Button>
