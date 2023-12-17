@@ -115,13 +115,13 @@ export default function Home() {
               </Button>
 
               <div className="mt-20">
-                <Image
-                  src="/review.svg"
-                  alt=""
-                  width={616}
-                  height={104}
-                  className="w-[300px] h-auto"
-                />
+                  <Image
+                    src="/review.svg"
+                    alt=""
+                    width={616}
+                    height={104}
+                    className="w-[300px] h-auto"
+                  />
               </div>
             </div>
           </div>
