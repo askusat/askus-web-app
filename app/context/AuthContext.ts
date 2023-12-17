@@ -4,10 +4,12 @@
 import React from 'react';
 import { createContext } from 'react'
 import { LoginParam, SignUpParam } from './AuthProvider';
-import { User } from '@/types';
+import { User, Notification } from '@/types';
 
 interface AuthContextType {
   user: User | null;
+  notifications: Notification[] | [];
+  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
   loading: boolean;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,6 +20,8 @@ interface AuthContextType {
 
 export const defaultProvider: AuthContextType = {
   user: null,
+  notifications: [],
+  setNotifications: () => [],
   loading: true,
   setUser: () => null,
   setLoading: () => false,

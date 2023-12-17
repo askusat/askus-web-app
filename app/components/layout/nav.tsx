@@ -6,6 +6,7 @@ import {
   FaAngleDown,
   FaBars,
   FaBell,
+  FaCheckDouble,
   FaPhone,
   FaQuestion,
   FaUser,
@@ -18,9 +19,14 @@ import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 import { useAuth } from "@/app/hooks/useAuth";
 import Link from "next/link";
+import {
+  formatDateToDMYY,
+  markAllNotificationAsRead,
+  markNotificationAsRead,
+} from "@/app/utils/helpers";
 
 export default function Nav() {
-  const { user } = useAuth();
+  const { user, notifications, setNotifications } = useAuth();
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -75,8 +81,9 @@ export default function Nav() {
       },
     },
   };
+
   return (
-    <nav className="flex items-center justify-between gap-[46px] font-semibold">
+    <nav className="flex items-center justify-between gap-[46px]">
       <Link href="/">
         <Image
           src="/logo-2.svg"
@@ -87,7 +94,7 @@ export default function Nav() {
         />
       </Link>
 
-      <div className="hidden xl:flex items-center gap-[46px]">
+      <div className="hidden xl:flex items-center gap-[46px] font-semibold">
         <Link href="/" className="text-black hover:text-primary">
           Home
         </Link>
@@ -124,7 +131,7 @@ export default function Nav() {
               <div className="relative">
                 <FaBell size={24} />
                 <div className="w-5 h-5 bg-red-600 text-white rounded-full text-xs grid place-items-center absolute -top-2 -right-2">
-                  5
+                  {notifications.length}
                 </div>
               </div>
             </Button>
@@ -143,7 +150,7 @@ export default function Nav() {
       <div className="flex items-center gap-3 xl:hidden">
         <Button
           isIconOnly
-          className=" bg-transparent"
+          className=" bg-transparent -mb-2"
           onClick={() => {
             setOpen(true);
           }}
@@ -151,7 +158,7 @@ export default function Nav() {
           <div className="relative   w-fit  py-1 px-3">
             <FaBell size={20} className="" />
             <div className="w-[18px] h-[18px] bg-red-600   text-white rounded-full text-[9px] grid place-items-center absolute -top-1 right-1">
-              0
+              {notifications.length}
             </div>
           </div>
         </Button>
@@ -174,154 +181,52 @@ export default function Nav() {
                 setOpen(false);
               }}
             ></div>
-            
+
             <div
-              className={`fixed place-items-center origin-top right-10 bg-white primary z-[99999] w-full top-[12%] flex-col justify-center items-center max-w-[300px] text-black shadow-lg rounded-lg`}
+              className={`fixed place-items-center origin-top md:right-10 right-2 bg-white primary z-[99999] w-full top-[12%] flex-col justify-center items-center max-w-[300px] text-black shadow-lg rounded-lg font-normal`}
             >
-              <div className="shadow-xl py-3 px-4 text-gray-700">
-                Notifications (0)
+              <div className="shadow-xl py-3 px-4 text-gray-700j flex items-center justify-between gap-4">
+                Notifications ({notifications.length})
+                <Button
+                  isIconOnly
+                  title="mark as read"
+                  className="bg-transparent"
+                  onClick={() => {
+                    markAllNotificationAsRead(user, setNotifications);
+                  }}
+                >
+                  <FaCheckDouble />
+                </Button>
               </div>
-              <div className="flex flex-col gap-6 py-4 max-h-[400px] overflow-auto px-4">
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
+              <div className="flex flex-col gap-6 py-4 max-h-[350px] overflow-auto px-4">
+                {notifications.map((notification) => (
+                  <div
+                    key={`notfn_${notification?.id}`}
+                    className="rounded-lg py-1 px-3 bg-slate-200 cursor-pointer"
+                    onClick={() =>
+                      markNotificationAsRead(
+                        user,
+                        notification?.id || 1,
+                        notifications,
+                        setNotifications
+                      )
+                    }
+                  >
+                    <div className="text-xs truncate">
+                      {notification?.title}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className="truncate text-[10px]">
+                        {notification?.message}
+                      </p>
+                      <div className="text-[9px] text-gray-400">
+                        {formatDateToDMYY(
+                          notification?.updatedAt || new Date()
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
-                <div className="rounded-lg py-1 px-3 bg-slate-200">
-                  <div className="text-xs">Lorem ipsum dolor sit amet...</div>
-                  <div className="flex justify-between items-center">
-                    <p className="truncate text-[10px]">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing
-                      elit...
-                    </p>
-                    <div className="text-[9px] text-gray-400">5min</div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

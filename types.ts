@@ -1,5 +1,7 @@
 export type User = {
     id: number;
+    createdAt?: Date;
+    updatedAt?: Date;
     authUserId: string;
     email: string;
     fullName: string;
@@ -8,9 +10,17 @@ export type User = {
     stripeCustomerId?: string;
     stripeSubscriptionId?: string;
     isAdmin?: boolean;
+    [key: string]: any;
+  } | null;
+
+  export type Notification = {
+    id: number;
     createdAt?: Date;
     updatedAt?: Date;
-    [key: string]: any;
+    user_id: string;
+    title: string;
+    message: string;
+    read: boolean;
   } | null;
 
 export type Question = {

@@ -8,7 +8,7 @@ import { AuthContext, defaultProvider } from "./AuthContext";
 import { supabase } from "../supabaseClient";
 import { authConfig } from "../config";
 import { AuthUser } from "@supabase/supabase-js";
-import { User } from "@/types";
+import { Notification, User } from "@/types";
 
 export interface LoginParam {
   email: string;
@@ -24,6 +24,7 @@ export interface SignUpParam {
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // ** States
   const [user, setUser] = useState<User | null>(defaultProvider.user);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState<boolean>(defaultProvider.loading);
   // Router
   const router = useRouter();
@@ -98,6 +99,51 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     };
     initAuth();
   }, [getAndSetUserData, router]);
+
+  useEffect(() => {
+    const getNotifications = async () => {
+      if (!user?.id) return;
+      const { data, error } = await supabase
+        .from("notifications")
+        .select()
+        .eq("user_id", user?.id)
+        .eq("read", false)
+        .order("updatedAt", { ascending: true})
+
+      if (!error) {
+        const notfs: Notification[] = data || [];
+        setNotifications(notfs);
+      }
+    };
+    getNotifications();
+  }, [user?.id]);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime notifications")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "notifications",
+          filter: `user_id=eq.${user?.id}`
+        },
+        (payload) => {
+          console.log("payload");
+          console.log(payload);
+          console.log(user?.id);
+          if(payload.new?.user_id === user?.id){
+            setNotifications([...notifications, payload.new as Notification]);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [notifications, user?.id]);
 
   const handleSignup = async (
     params: SignUpParam,
@@ -175,6 +221,8 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const values = {
     user,
+    notifications,
+    setNotifications,
     loading,
     setUser,
     setLoading,
