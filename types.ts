@@ -1,57 +1,60 @@
 export type User = {
-    id: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-    authUserId: string;
-    email: string;
-    fullName: string;
-    isSubscribed?: boolean;
-    credit: number;
-    stripeCustomerId?: string;
-    stripeSubscriptionId?: string;
-    isAdmin?: boolean;
-    [key: string]: any;
-  } | null;
-
-  export type Notification = {
-    id: number;
-    createdAt?: Date;
-    updatedAt?: Date;
-    user_id: string;
-    title: string;
-    message: string;
-    read: boolean;
-  } | null;
-
-export type Question = {
-    id: number;
-    userId: number;
-    userSubscriptionStatus: string;
-    title: string;
-    status: 'open' | 'close' | 'cancelled' | 'reported' | string;
-    createdAt: Date;
-    updatedAt: Date;
+  id: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  authUserId: string;
+  email: string;
+  fullName: string;
+  isSubscribed?: boolean;
+  credit: number;
+  stripeCustomerId?: string;
+  stripeSubscriptionId?: string;
+  isAdmin?: boolean;
+  userProfilePicture?: string;
+  [key: string]: any;
 } | null;
 
-// just type
-export type Conversation = {
-    id: number;
-    senderId: number;
-    senderName: string;
-    sentByUser: boolean;
-    message: string;
-    createdAt: Date;
-    updatedAt: Date;
+export type Notification = {
+  id: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  userId: number;
+  title: string;
+  message: string;
+  read: boolean;
 } | null;
 
 export type Chat = {
-    id: number;
-    questionId: number;
-    userId: number;
-    expertId: number;
-    conversations: Conversation[];
-    status: 'open' | 'close' | 'cancelled' | 'reported' | string;
-    createdAt: Date;
-    updatedAt: Date;
-    endedAt: Date;
+  id: number;
+  userId: number; // chat creator
+  status: "ongoing" | "answered" | "cancelled" | "reported" | string;
+  answered: boolean;
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+  endedAt: Date;
+} | null;
+
+export type ChatSummary = {
+  id: number;
+  userId: number; // chat creator
+  status: "ongoing" | "answered" | "cancelled" | "reported" | string;
+  answered: boolean;
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+  endedAt: Date;
+  lastMessage: string;
+} | null;
+
+export type ChatMessage = {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  message: string;
+  chatId: number;
+  userId: number;
+  userName: string;
+  userProfilePicture: string;
+  sender: "expert" | "user" | string;
 } | null;

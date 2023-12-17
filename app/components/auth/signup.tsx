@@ -86,7 +86,7 @@ export const SignupStepOne = ({
             htmlFor="full_name"
             className="font-PlusJakartaSansSemiBold font-semibold text-[#344357] text-[15px] mb-[8px]"
           >
-            Full Name
+            Full Name (First name first)
           </label>
           <div className="flex items-center gap-3 px-4 border border-[#DBDFEA] bg-white rounded-[8.8px] focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(0,_112,_239,_0.10)]">
             <input
@@ -284,7 +284,7 @@ export const SignupStepOne = ({
 //       const { data } = await supabase
 //         .from("users")
 //         .select()
-//         .eq("user_id", authUser?.id);
+//         .eq("userId", authUser?.id);
 //       setUser(data?.[0]);
 //       if (data?.length > 1) {
 //         console.log("you have more than one account");
@@ -360,8 +360,8 @@ export const SignupStepOne = ({
 //               delete d.chargebee_customer;
 //               delete d.chargebee_customer_id;
 //             }
-//             await supabase.from("users").update(d).eq("user_id", user?.user_id);
-//             // .match({ user_id: user?.user_id });
+//             await supabase.from("users").update(d).eq("userId", user?.userId);
+//             // .match({ userId: user?.userId });
 //             // // attach payment_method to customer
 //             // let attach_payment_method_to_customer = await axios
 //             //   .post(
@@ -395,7 +395,7 @@ export const SignupStepOne = ({
 //             clientIntentSecret: "",
 //             profile_pic_url,
 //           };
-//           await supabase.from("users").update(d).eq("user_id", user?.user_id);
+//           await supabase.from("users").update(d).eq("userId", user?.userId);
 
 //           try {
 //             process.env.NODE_ENV === "production" &&
@@ -476,7 +476,7 @@ export const SignupStepOne = ({
 //           const d = {
 //             chargebee_customer_id: customer.id,
 //           };
-//           await supabase.from("users").update(d).eq("user_id", user?.user_id);
+//           await supabase.from("users").update(d).eq("userId", user?.userId);
 //         }
 //       }
 //     };
@@ -515,7 +515,7 @@ export const SignupStepOne = ({
 //         billing_details: value,
 //         full_name: value?.name || user?.username,
 //       })
-//       .eq("user_id", user?.user_id);
+//       .eq("userId", user?.userId);
 
 //     setProcessingPayment(true);
 
