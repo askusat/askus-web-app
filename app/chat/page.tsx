@@ -265,6 +265,18 @@ export default function ChatPage() {
     const currentUsers: any = selectedChat?.chatUsers;
     const d = [...currentUsers, userId];
     await supabase.from("chats").update({ chatUsers: d }).eq("id", chatId);
+
+    // Send message
+    const createChatMessage: Partial<ChatMessage> = {
+      chatId,
+      message: `${user?.fullName} just joined the chat ${formatDateToDMYY(
+        new Date()
+      )}`,
+      userId: 0,
+      userName: "system",
+      userProfilePicture: "",
+    };
+    await supabase.from("chat_messages").insert(createChatMessage);
     setAddingUserToChat(false);
   };
 
@@ -495,54 +507,64 @@ export default function ChatPage() {
                   // console.log("chatMessage: ");
                   // console.log(chatMessage);
 
-                  if (chatMessage?.userId === user?.id) {
+                  if (chatMessage?.userName === "system") {
                     return (
-                      <div
-                        key={`message-${chatMessage?.id}`}
-                        id={`message_-_${index + 1}`}
-                        className="flex-row-reverse flex items-end gap-2"
-                      >
-                        <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning"></div>
-                        <div className="">
-                          <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit">
-                            <p className="text-sm">
-                              {chatMessage?.message}
-                              <span className="text-xs font-semibold bg-gray-400/40 ml-2 p-1 rounded-lg">
-                                {formatDateToDMYY(
-                                  chatMessage?.createdAt || new Date()
-                                )}
-                              </span>
-                            </p>
-                          </div>
-                          <div className="text-xs text-end">
-                            {chatMessage?.userName}
-                          </div>
-                        </div>
+                      <div key={`message-${chatMessage?.id}`} className="border-y border-gray-400/50 py-2 px-4">
+                        <p className="text-center text-sm">{chatMessage?.message}</p>
                       </div>
-                    );
+                    )
                   } else {
-                    return (
-                      <div
-                        key={`message-${chatMessage?.id}`}
-                        id={`message_-_${index + 1}`}
-                        className="flex items-start gap-2"
-                      >
-                        <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary"></div>
-                        <div className="">
-                          <div className="text-xs">{chatMessage?.userName}</div>
-                          <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit">
-                            <p className="text-sm">
-                              {chatMessage?.message}
-                              <span className="text-xs font-semibold bg-gray-400/40 ml-2 p-1 rounded-lg">
-                                {formatDateToDMYY(
-                                  chatMessage?.createdAt || new Date()
-                                )}
-                              </span>
-                            </p>
+                    if (chatMessage?.userId === user?.id) {
+                      return (
+                        <div
+                          key={`message-${chatMessage?.id}`}
+                          id={`message_-_${index + 1}`}
+                          className="flex-row-reverse flex items-end gap-2"
+                        >
+                          <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning"></div>
+                          <div className="">
+                            <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit">
+                              <p className="text-sm">
+                                {chatMessage?.message}
+                                <span className="text-xs font-semibold bg-gray-400/40 ml-2 p-1 rounded-lg">
+                                  {formatDateToDMYY(
+                                    chatMessage?.createdAt || new Date()
+                                  )}
+                                </span>
+                              </p>
+                            </div>
+                            <div className="text-xs text-end">
+                              {chatMessage?.userName}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
+                      );
+                    } else {
+                      return (
+                        <div
+                          key={`message-${chatMessage?.id}`}
+                          id={`message_-_${index + 1}`}
+                          className="flex items-start gap-2"
+                        >
+                          <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary"></div>
+                          <div className="">
+                            <div className="text-xs">
+                              {chatMessage?.userName}
+                            </div>
+                            <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit">
+                              <p className="text-sm">
+                                {chatMessage?.message}
+                                <span className="text-xs font-semibold bg-gray-400/40 ml-2 p-1 rounded-lg">
+                                  {formatDateToDMYY(
+                                    chatMessage?.createdAt || new Date()
+                                  )}
+                                </span>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
                   }
                 })}
             </div>
