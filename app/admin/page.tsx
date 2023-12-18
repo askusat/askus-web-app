@@ -40,14 +40,14 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="flex px-2 py-2 rounded-s-sm hover:bg-white mt-14 w-full cursor-pointer">
+          {/* <div className="flex px-2 py-2 rounded-s-sm hover:bg-white mt-14 w-full cursor-pointer">
             <div className=" flex items-center rounded-lg w-full hover:bg-white hover:text-primary gap-6 justify-center text-white">
               <BsFillPeopleFill size={20} />
               <h1 className="text-[20px] hidden lg:flex font-semibold">
                 Customer
               </h1>
             </div>
-          </div>
+          </div> */}
 
           {/* <div className="flex px-2 py-2  rounded-md hover:bg-white mt-14 w-full">
             <div className=" flex items-center rounded-lg w-full hover:bg-white hover:text-primary gap-6  justify-center text-white">

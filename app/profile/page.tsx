@@ -71,14 +71,14 @@ export default function ProfilePage() {
                   </div>
                 </Button>
               </Link>
-              <Link href={"#subscription"}>
+              {/* <Link href={"#subscription"}>
                 <Button
                   startContent={<IoCashOutline />}
                   className="flex justify-start"
                 >
                   Subscription / Credit
                 </Button>
-              </Link>
+              </Link> */}
               <Link href={"/faq"}>
                 <Button
                   startContent={<IoMdHelp />}
@@ -145,7 +145,7 @@ export default function ProfilePage() {
 
               <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
                 <div className="h-[150px] min-w-[215px] flex flex-col justify-between bg-white shadow-xl rounded-md border-b-[5px] border-[#EBA125] text-center px-8 py-4">
-                  <div className="text-[20px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
+                  <div className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
                     0
                   </div>
                   <div className="text-[#2B2B2B] text-[28px] font-bold font-MontserratBold">
@@ -153,7 +153,7 @@ export default function ProfilePage() {
                   </div>
                 </div>
                 <div className="h-[150px] min-w-[215px] flex flex-col justify-between bg-white shadow-xl rounded-md border-b-[5px] border-success text-center px-8 py-4">
-                  <div className="text-[20px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
+                  <div className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
                     0
                   </div>
                   <div className="text-[#2B2B2B] text-[28px] font-bold font-MontserratBold">
@@ -161,17 +161,31 @@ export default function ProfilePage() {
                   </div>
                 </div>
                 <div className="h-[150px] min-w-[215px] flex flex-col justify-between bg-white shadow-xl rounded-md border-b-[5px] border-[#9005FE] text-center px-8 py-4">
-                  <div className="text-[20px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
-                    {auth.user?.credit || 0}
+                  <div className="flex justify-between">
+                    <div className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
+                      {auth.user?.credit || 0}
+                    </div>
+                    <div className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
+                      +
+                    </div>
                   </div>
-                  <div className="text-[#2B2B2B] text-[28px] font-bold font-MontserratBold">
+
+                  <div className="text-[#2B2B2B] pt-6 text-[28px] font-bold font-MontserratBold">
                     Credits
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <div className=" text-[10px] text-gray-500 justify-center">
+                      Expires on 21-12-2023
+                    </div>
                   </div>
                 </div>
                 <div className="h-[150px] min-w-[215px] flex flex-col justify-between bg-white shadow-xl rounded-md border-b-[5px] border-primary text-center px-8 py-4">
                   <div className="text-[20px] font-bold">
                     {auth.user?.isSubscribed ? "Active" : "Unsubscribed"}
-                  </div>
+                    <div className=" text-[10px] font-normal text-gray-500 justify-start">
+                      Renewing on 21-12-2023
+                    </div>
+                  </div>                 
                   <div className="text-[#2B2B2B] text-[28px] font-bold font-MontserratBold">
                     Subscription
                   </div>
