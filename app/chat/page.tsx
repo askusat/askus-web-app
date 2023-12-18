@@ -284,6 +284,7 @@ export default function ChatPage() {
     setSelectedChatId(0);
     setSelectedChat(null);
     setchatMessages([]);
+    setIsChatPageOpen(false)
     router.replace("/chat");
   };
 
@@ -339,103 +340,98 @@ export default function ChatPage() {
       <main className="md:flex h-[calc(100vh-15px)] overflow-hidden">
         <div
           className={`${
-            !(!selectedChatId || selectedChatId === 0 || !isChatPageOpen) &&
+            isChatPageOpen &&
             "hidden md:block"
           } max-w-[400px] w-full mt-[50px] py-2 relative`}
         >
           <div className="h-[calc(100vh-140px)] overflow-auto pb-3">
+            <div className="flex w-full flex-col items-center">
+              <Tabs
+                aria-label="Options"
+                color="primary"
+                variant="bordered"
+                onSelectionChange={setSelectedTab}
+              >
+                <Tab
+                  key="ongoing"
+                  title={
+                    <div className="flex items-center space-x-2">
+                      <TbRotateRectangle />
+                      <span>Ongoing</span>
+                    </div>
+                  }
+                />
+                <Tab
+                  key="answered"
+                  title={
+                    <div className="flex items-center space-x-2">
+                      <FaCheck />
+                      <span>Answered</span>
+                    </div>
+                  }
+                />
+              </Tabs>
+            </div>
             {chats.length > 0 ? (
-              <>
-                <div className="flex w-full flex-col items-center">
-                  <Tabs
-                    aria-label="Options"
-                    color="primary"
-                    variant="bordered"
-                    onSelectionChange={setSelectedTab}
+              <div className="flex flex-col gap-0 py-6">
+                {chats.map((chat, index) => (
+                  <div
+                    key={`convstn_${index + 1}`}
+                    className={`${
+                      chats.length !== index + 1 && "border-b border-slate-400"
+                    } ${
+                      selectedChatId === chat?.id && "bg-gray-200"
+                    } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
+                    onClick={() => {
+                      resetChatScreen();
+                      if (!chat) {
+                        router.replace("/chat");
+                        return;
+                      }
+                      setSelectedChat(chat);
+                      setSelectedChatId(chat?.id || 0);
+                      setIsChatPageOpen(true);
+                      inputRef?.current && inputRef?.current?.focus();
+                      router.push(`#${chat.id}`);
+                    }}
                   >
-                    <Tab
-                      key="ongoing"
-                      title={
-                        <div className="flex items-center space-x-2">
-                          <TbRotateRectangle />
-                          <span>Ongoing</span>
-                        </div>
-                      }
-                    />
-                    <Tab
-                      key="answered"
-                      title={
-                        <div className="flex items-center space-x-2">
-                          <FaCheck />
-                          <span>Answered</span>
-                        </div>
-                      }
-                    />
-                  </Tabs>
-                </div>
-                <div className="flex flex-col gap-0 py-6">
-                  {chats.map((chat, index) => (
-                    <div
-                      key={`convstn_${index + 1}`}
-                      className={`${
-                        chats.length !== index + 1 &&
-                        "border-b border-slate-400"
-                      } ${
-                        selectedChatId === chat?.id && "bg-gray-200"
-                      } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
-                      onClick={() => {
-                        resetChatScreen();
-                        if (!chat) {
-                          router.replace("/chat");
-                          return;
-                        }
-                        setSelectedChat(chat);
-                        setSelectedChatId(chat?.id || 0);
-                        setIsChatPageOpen(true);
-                        inputRef?.current && inputRef?.current?.focus();
-                        router.push(`#${chat.id}`);
-                      }}
-                    >
-                      <div className="w-[17%]">
-                        <div className="w-10 h-10 rounded-full bg-primary"></div>
+                    <div className="w-[17%]">
+                      <div className="w-10 h-10 rounded-full bg-primary"></div>
+                    </div>
+                    <div className="w-[63%]">
+                      <div className="flex items-center">
+                        <input
+                          className="font-semibold truncate"
+                          value={chat?.title}
+                          disabled
+                        />
+                        <Button isIconOnly className="bg-transparent">
+                          <FaPen />
+                        </Button>
                       </div>
-                      <div className="w-[63%]">
-                        <div className="flex items-center">
-                          <input
-                            className="font-semibold truncate"
-                            value={chat?.title}
-                            disabled
-                          />
-                          <Button isIconOnly className="bg-transparent">
-                            <FaPen />
-                          </Button>
-                        </div>
-                        <p className="truncate text-sm">
-                          {chat?.lastMessage || "New message"}
-                        </p>
+                      <p className="truncate text-sm">
+                        {chat?.lastMessage || "New message"}
+                      </p>
+                    </div>
+                    <div className="w-[20%]">
+                      <div className="whitespace-nowrap text-xs text-slate-600 flex justify-end">
+                        {formatDateToDMYY(chat?.createdAt || new Date())}
                       </div>
-                      <div className="w-[20%]">
-                        <div className="whitespace-nowrap text-xs text-slate-600 flex justify-end">
-                          {formatDateToDMYY(chat?.createdAt || new Date())}
-                        </div>
-                        <div className="mt-1 flex justify-end">
-                          {notifications.find(
-                            (r) => r?.chatId === chat?.id
-                          ) && (
-                            <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
-                              {
-                                notifications.filter(
-                                  (r) => r?.chatId === chat?.id
-                                ).length
-                              }
-                            </div>
-                          )}
-                        </div>
+                      <div className="mt-1 flex justify-end">
+                        {notifications.find((r) => r?.chatId === chat?.id) && (
+                          <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
+                            {
+                              notifications.filter(
+                                (r) => r?.chatId === chat?.id
+                              ).length
+                            }
+                          </div>
+                        )}
                       </div>
                     </div>
-                  ))}
-                </div>
-              </>
+                  </div>
+                ))}
+              </div>
             ) : (
               <div className="h-[calc(100vh-100px)] grid place-items-center">
                 <div className="">
@@ -462,9 +458,9 @@ export default function ChatPage() {
                   color="primary"
                   className="text-white w-full"
                   onClick={() => {
+                    resetChatScreen();
                     setIsChatPageOpen(true);
                     inputRef?.current && inputRef?.current?.focus();
-                    resetChatScreen();
                   }}
                 >
                   Ask New Question
@@ -476,7 +472,7 @@ export default function ChatPage() {
 
         <div
           className={`${
-            (!selectedChatId || !isChatPageOpen) && "hidden md:block"
+            !isChatPageOpen && "hidden md:block"
           } w-full mt-[50px] py-2 h-[calc(100vh-50px)] overflow-auto bg-gray-200`}
         >
           <div
@@ -509,10 +505,15 @@ export default function ChatPage() {
 
                   if (chatMessage?.userName === "system") {
                     return (
-                      <div key={`message-${chatMessage?.id}`} className="border-y border-gray-400/50 py-2 px-4">
-                        <p className="text-center text-sm">{chatMessage?.message}</p>
+                      <div
+                        key={`message-${chatMessage?.id}`}
+                        className="border-y border-gray-400/50 py-2 px-4"
+                      >
+                        <p className="text-center text-sm">
+                          {chatMessage?.message}
+                        </p>
                       </div>
-                    )
+                    );
                   } else {
                     if (chatMessage?.userId === user?.id) {
                       return (

@@ -178,7 +178,7 @@ export default function ProfilePage() {
                   </div>
                   <div className="flex items-center justify-center">
                     <div className=" text-[10px] text-gray-500 justify-center">
-                      Expires on 21-12-2023
+                      Expires on 21-12-23
                     </div>
                   </div>
                 </div>
@@ -186,9 +186,9 @@ export default function ProfilePage() {
                   <div className="text-[20px] font-bold">
                     {auth.user?.isSubscribed ? "Active" : "Unsubscribed"}
                     <div className=" text-[10px] font-normal text-gray-500 justify-start">
-                      Renewing on 21-12-2023
+                      Renewing on 21-12-23
                     </div>
-                  </div>                 
+                  </div>
                   <div className="text-[#2B2B2B] text-[28px] font-bold font-MontserratBold">
                     Subscription
                   </div>
