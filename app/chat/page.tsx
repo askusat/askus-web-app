@@ -62,7 +62,7 @@ export default function ChatPage() {
         setSelectedChat(chat);
         setSelectedChatId(chat?.id || 0);
         setIsChatPageOpen(true);
-        inputRef?.current && inputRef?.current?.focus();
+        // inputRef?.current && inputRef?.current?.focus();
         router.push(`#${chat.id}`);
       } else {
         router.replace("/chat");
@@ -90,11 +90,11 @@ export default function ChatPage() {
       if (editChatTitleProp !== null) return;
       if (user?.isAdmin) {
         const { data, error } = await supabase
-          .from("chats") //chats_summary
+          .from("chat_view") //chats_summary
           .select()
           // .eq("userId", user?.id)
-          .eq("answered", selectedTab === "answered");
-
+          .eq("answered", selectedTab === "answered")
+          .order("updatedAt", { ascending: false })
         if (!error && data.length > 0) {
           setChats(data);
         } else {
@@ -163,6 +163,7 @@ export default function ChatPage() {
     };
   }, [chatMessages, user?.id]);
 
+  // scrollIntoView last message of a chat
   useEffect(() => {
     // console.log(`message_-_${chatMessages.length}`);
 
@@ -199,6 +200,7 @@ export default function ChatPage() {
     }
   };
 
+  // setSendingMessage
   const handleSubmit = async () => {
     if (!user?.id) return;
 
@@ -220,8 +222,9 @@ export default function ChatPage() {
         chatId,
         message: messageInput,
         userId: user.id,
-        userName: getFirstName(user.fullName),
+        userName: user.username, //getFirstName(user.fullName),
         userProfilePicture: user.userProfilePicture || "",
+        sender: user.isAdmin ? 'expert' : 'user'
       };
       await supabase.from("chat_messages").insert(createChatMessage);
 
@@ -270,6 +273,7 @@ export default function ChatPage() {
     userId: number | undefined,
     chatId: number | undefined
   ) => {
+    if(!user) return;
     if (!userId || !chatId) return alert("something went wrong");
 
     setAddingUserToChat(true);
@@ -283,11 +287,15 @@ export default function ChatPage() {
       message: `${user?.fullName} just joined the chat ${formatDateToDMYY(
         new Date()
       )}`,
-      userId: 0,
+      userId: user.id,
       userName: "system",
       userProfilePicture: "",
     };
     await supabase.from("chat_messages").insert(createChatMessage);
+    const oldList = selectedChat?.chatUsers;
+    const c: any = { ...selectedChat, chatUsers: [...oldList, user.id] };
+    setSelectedChat(c)
+    router.replace(`/chat#${chatId}`)
     setAddingUserToChat(false);
   };
 
@@ -402,7 +410,7 @@ export default function ChatPage() {
                       setSelectedChat(chat);
                       setSelectedChatId(chat?.id || 0);
                       setIsChatPageOpen(true);
-                      inputRef?.current && inputRef?.current?.focus();
+                      // inputRef?.current && inputRef?.current?.focus();
                       router.push(`#${chat.id}`);
                     }}
                   >
@@ -457,7 +465,7 @@ export default function ChatPage() {
                         </Button>
                       </div>
                       <p className="truncate text-sm">
-                        {chat?.lastMessage || "New message"}
+                        {chat?.message || "New message"}
                       </p>
                     </div>
                     <div className="w-[20%]">
