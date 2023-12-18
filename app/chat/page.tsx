@@ -10,7 +10,13 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { FaAngleLeft, FaCheck, FaPen } from "react-icons/fa";
+import {
+  FaAngleLeft,
+  FaCheck,
+  FaCheckSquare,
+  FaLock,
+  FaPen,
+} from "react-icons/fa";
 import { ImAttachment } from "react-icons/im";
 import { IoIosSend } from "react-icons/io";
 import { TbRotateRectangle } from "react-icons/tb";
@@ -31,6 +37,10 @@ export default function ChatPage() {
   const [chats, setChats] = useState<ChatSummary[]>([]);
   const [sendingMessage, setSendingMessage] = useState(false);
   const [chatMessages, setchatMessages] = useState<ChatMessage[] | []>([]);
+  const [editChatTitleProp, setEditChatTitleProp] = useState<number | null>(
+    null
+  );
+  const [chatTitle, setChatTitle] = useState('')
 
   const router = useRouter();
 
@@ -77,6 +87,7 @@ export default function ChatPage() {
     if (!user?.id) return;
 
     const fetch = async () => {
+      if (editChatTitleProp !== null) return;
       if (user?.isAdmin) {
         const { data, error } = await supabase
           .from("chats") //chats_summary
@@ -104,7 +115,7 @@ export default function ChatPage() {
       }
     };
     fetch();
-  }, [selectedTab, user, isChatPageOpen, selectedChatId]);
+  }, [selectedTab, user, isChatPageOpen, selectedChatId, editChatTitleProp]);
 
   // get all messages for a chat
   useEffect(() => {
@@ -284,7 +295,7 @@ export default function ChatPage() {
     setSelectedChatId(0);
     setSelectedChat(null);
     setchatMessages([]);
-    setIsChatPageOpen(false)
+    setIsChatPageOpen(false);
     router.replace("/chat");
   };
 
@@ -340,8 +351,7 @@ export default function ChatPage() {
       <main className="md:flex h-[calc(100vh-15px)] overflow-hidden">
         <div
           className={`${
-            isChatPageOpen &&
-            "hidden md:block"
+            isChatPageOpen && "hidden md:block"
           } max-w-[400px] w-full mt-[50px] py-2 relative`}
         >
           <div className="h-[calc(100vh-140px)] overflow-auto pb-3">
@@ -383,6 +393,7 @@ export default function ChatPage() {
                       selectedChatId === chat?.id && "bg-gray-200"
                     } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
                     onClick={() => {
+                      if(editChatTitleProp !== null) return;
                       resetChatScreen();
                       if (!chat) {
                         router.replace("/chat");
@@ -402,11 +413,47 @@ export default function ChatPage() {
                       <div className="flex items-center">
                         <input
                           className="font-semibold truncate"
-                          value={chat?.title}
-                          disabled
+                          value={chatTitle ? chatTitle : chat?.title}
+                          onChange={(e: any) => setChatTitle(e.target.value)}
+                          id={`chatMain-${chat?.id}`}
+                          disabled={!editChatTitleProp}
                         />
-                        <Button isIconOnly className="bg-transparent">
-                          <FaPen />
+                        <Button
+                          isIconOnly
+                          className="bg-transparent"
+                          onClick={async () => {
+                            const inputEl: any = document.getElementById(
+                              `chatMain-${chat?.id}`
+                            );
+                            console.log("inputEl");
+                            console.log(inputEl);
+
+                            if (inputEl) {
+                              if (editChatTitleProp) {
+                                console.log("inputEl?.value, editChatTitleProp");
+                                console.log(inputEl?.value, editChatTitleProp);
+                                const { error } = await supabase
+                                  .from("chats")
+                                  .update({ title: inputEl?.value })
+                                  .eq("id", editChatTitleProp);
+
+                                if (error) {
+                                  alert(error.message);
+                                } else {
+                                  setEditChatTitleProp(null);
+                                }
+                              } else {
+                                setEditChatTitleProp(chat?.id || null);
+                                inputEl.focus();
+                              }
+                            }
+                          }}
+                        >
+                          {editChatTitleProp !== chat?.id ? (
+                            <FaPen />
+                          ) : (
+                            <FaCheckSquare className="text-primary" />
+                          )}
                         </Button>
                       </div>
                       <p className="truncate text-sm">
@@ -638,3 +685,79 @@ export default function ChatPage() {
     </div>
   );
 }
+
+interface ChangeChatItileProps {
+  chatId: string;
+}
+
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Checkbox,
+  Input,
+} from "@nextui-org/react";
+
+// const ChangeChatTitle = ({ chatId }: ChangeChatItileProps) => {
+//   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+//   return (
+//     <>
+//       <Button onPress={onOpen} color="primary">
+//         Open Modal
+//       </Button>
+//       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+//         <ModalContent>
+//           {(onClose) => (
+//             <>
+//               <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+//               <ModalBody>
+//                 <Input
+//                   autoFocus
+//                   // endContent={
+//                   //   <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+//                   // }
+//                   label="Email"
+//                   placeholder="Enter your email"
+//                   variant="bordered"
+//                 />
+//                 <Input
+//                   endContent={
+//                     <FaLock className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+//                   }
+//                   label="Password"
+//                   placeholder="Enter your password"
+//                   type="password"
+//                   variant="bordered"
+//                 />
+//                 <div className="flex py-2 px-1 justify-between">
+//                   <Checkbox
+//                     classNames={{
+//                       label: "text-small",
+//                     }}
+//                   >
+//                     Remember me
+//                   </Checkbox>
+//                   {/* <Link color="primary" href="#" size="sm">
+//                     Forgot password?
+//                   </Link> */}
+//                 </div>
+//               </ModalBody>
+//               <ModalFooter>
+//                 <Button color="danger" variant="flat" onPress={onClose}>
+//                   Close
+//                 </Button>
+//                 <Button color="primary" onPress={onClose}>
+//                   Sign in
+//                 </Button>
+//               </ModalFooter>
+//             </>
+//           )}
+//         </ModalContent>
+//       </Modal>
+//     </>
+//   );
+// };
