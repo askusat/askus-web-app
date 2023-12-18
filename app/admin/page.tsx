@@ -145,37 +145,37 @@ const AdminDashboard = () => {
           </div>
         </div>
         {/* The Texxt */}
-        <div className="flex items-center  flex-wrap lg:flex-nowrap mt-10 gap-4  justify-center">
-          <div className="flex items-center hover:text-white hover:bg-primary justify-between w-full max-w-[250px] h-[100px] px-4  bg-white shadow-xl rounded-xl ">
+        <div className="flex items-center flex-wrap lg:flex-nowrap mt-10 gap-4  justify-center">
+          <div className="flex items-center hover:text-white hover:bg-primary justify-between w-full max-w-[250px] h-[100px] px-4  bg-white shadow-xl rounded-xl group transition-all duration-700">
             <div className="">
-              <h1 className="text-[25px]  font-semibold ">1000</h1>
-              <p className="hover:text-white">Question Asked</p>
+              <h1 className="text-[25px] font-semibold text-primary group-hover:text-white">1000</h1>
+              <p className="hover:text-white">Questions Asked</p>
             </div>
-            <FaQuestion size={25} className="hover:text-white" />
+            <FaQuestion size={25} className="hover:text-white text-primary " />
           </div>
 
-          <div className="flex items-center hover:text-white hover:bg-primary justify-between w-full max-w-[250px] h-[100px] px-4  bg-white shadow-xl rounded-xl ">
+          <div className="flex items-center hover:text-white hover:bg-primary justify-between w-full max-w-[250px] h-[100px] px-4 bg-white shadow-xl rounded-xl group transition-all duration-700">
             <div className="">
-              <h1 className="text-[25px]  font-semibold ">800</h1>
+              <h1 className="text-[25px] font-semibold text-primary group-hover:text-white">800</h1>
               <p className="hover:text-white">Answered Question</p>
             </div>
-            <RiQuestionAnswerLine size={25} className="hover:text-white" />
+            <RiQuestionAnswerLine size={25} className="hover:text-white text-primary " />
           </div>
 
-          <div className="flex items-center hover:text-white hover:bg-primary justify-between w-full max-w-[250px] h-[100px] px-4  bg-white shadow-xl rounded-xl ">
+          <div className="flex items-center hover:text-white hover:bg-primary justify-between w-full max-w-[250px] h-[100px] px-4  bg-white shadow-xl rounded-xl group transition-all duration-700">
             <div className="">
-              <h1 className="text-[25px]  font-semibold ">200</h1>
+              <h1 className="text-[25px] font-semibold text-primary group-hover:text-white">200</h1>
               <p className="hover:text-white">Total Customer</p>
             </div>
-            <FaPeopleGroup size={25} className="hover:text-white" />
+            <FaPeopleGroup size={25} className="hover:text-white text-primary " />
           </div>
 
-          <div className="flex items-center hover:text-white hover:bg-primary justify-between w-full max-w-[250px] h-[100px] px-4  bg-white shadow-xl rounded-xl ">
+          <div className="flex items-center hover:text-white hover:bg-primary justify-between w-full max-w-[250px] h-[100px] px-4  bg-white shadow-xl rounded-xl group transition-all duration-700">
             <div className="">
-              <h1 className="text-[25px]  font-semibold ">2</h1>
+              <h1 className="text-[25px] font-semibold text-primary group-hover:text-white">2</h1>
               <p className="hover:text-white">Staff</p>
             </div>
-            <IoIosPeople size={25} className="hover:text-white" />
+            <IoIosPeople size={25} className="hover:text-white text-primary " />
           </div>
         </div>
 

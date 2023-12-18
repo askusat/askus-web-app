@@ -71,7 +71,7 @@ export default function AuthLayout({ children }: any) {
           </div>
 
           <p className="font-semibold text-center mt-[60px]">
-            Trusted by 24,000+ customers & businesses
+            Trusted by thousands of customers & businesses
           </p>
         </div>
       </div>

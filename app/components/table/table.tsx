@@ -84,7 +84,7 @@ export default function TableC() {
     }
 
     return filteredUsers;
-  }, [users, filterValue, statusFilter]);
+  }, [hasSearchFilter, statusFilter, filterValue]);
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -182,7 +182,7 @@ export default function TableC() {
   const topContent = React.useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between gap-3 items-end">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3">
           <Input
             isClearable
             classNames={{
@@ -199,7 +199,7 @@ export default function TableC() {
           />
           <div className="flex gap-3">
             <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
+              <DropdownTrigger className="flex">
                 <Button
                   endContent={<ChevronDownIcon className="text-small" />}
                   size="sm"
@@ -224,7 +224,7 @@ export default function TableC() {
               </DropdownMenu>
             </Dropdown>
             <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
+              <DropdownTrigger className="flex">
                 <Button
                   endContent={<ChevronDownIcon className="text-small" />}
                   size="sm"
@@ -275,15 +275,16 @@ export default function TableC() {
         </div>
       </div>
     );
-  }, [
-    filterValue,
-    statusFilter,
-    visibleColumns,
-    onSearchChange,
-    onRowsPerPageChange,
-    users.length,
-    hasSearchFilter,
-  ]);
+  }, [filterValue, statusFilter, visibleColumns, onSearchChange, onRowsPerPageChange]);
+  // }, [
+  //   filterValue,
+  //   statusFilter,
+  //   visibleColumns,
+  //   onSearchChange,
+  //   onRowsPerPageChange,
+  //   users.length,
+  //   hasSearchFilter,
+  // ]);
 
   const bottomContent = React.useMemo(() => {
     return (

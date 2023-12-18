@@ -448,7 +448,7 @@ export default function ChatPage() {
                     <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
                   </AvatarGroup>
                   <p className="text-center max-w-[200px] text-gray-400 mx-auto mt-2 text-sm">
-                    Join others to get answer to your questions
+                    Join others to get answers to your questions
                   </p>
                 </div>
               </div>

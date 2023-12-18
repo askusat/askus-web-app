@@ -9,6 +9,8 @@ import { FaArrowRight, FaEye, FaEyeSlash } from "react-icons/fa";
 export const SignupStepOne = ({
   fullName,
   setFullName,
+  username,
+  setUsername,
   setEmail,
   email,
   password,
@@ -34,7 +36,7 @@ export const SignupStepOne = ({
     } else {
       // sign up then continue to payment
       if (processingSignUp) return;
-      auth.signup({ email, password, fullName } as SignUpParam, (error) => {
+      auth.signup({ email, password, fullName, username } as SignUpParam, (error) => {
         // console.log('signupError', error);
         setErrorMsg({
           title: "Failed to register",
@@ -81,14 +83,15 @@ export const SignupStepOne = ({
           email && password && handleSignUpStep1();
         }}
       >
-        <div className="flex flex-col">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 w-full">
+        <div className="flex flex-col w-full">
           <label
             htmlFor="full_name"
             className="font-PlusJakartaSansSemiBold font-semibold text-[#344357] text-[15px] mb-[8px]"
           >
             Full Name (First name first)
           </label>
-          <div className="flex items-center gap-3 px-4 border border-[#DBDFEA] bg-white rounded-[8.8px] focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(0,_112,_239,_0.10)]">
+          <div className="flex items-center gap-3 px-4 border border-[#DBDFEA] bg-white rounded-[8.8px] focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(0,_112,_239,_0.10)] w-full">
             <input
               type="text"
               name="full_name"
@@ -100,6 +103,27 @@ export const SignupStepOne = ({
               onChange={({ target }) => setFullName(target.value)}
             />
           </div>
+        </div>
+        <div className="flex flex-col w-full">
+          <label
+            htmlFor="full_name"
+            className="font-PlusJakartaSansSemiBold font-semibold text-[#344357] text-[15px] mb-[8px]"
+          >
+            username
+          </label>
+          <div className="flex items-center gap-3 px-4 border border-[#DBDFEA] bg-white rounded-[8.8px] focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(0,_112,_239,_0.10)] w-full">
+            <input
+              type="text"
+              name="username"
+              id="username"
+              className="w-full py-3 outline-none border-none"
+              placeholder="Choose a username"
+              required
+              value={username}
+              onChange={({ target }) => setUsername(target.value)}
+            />
+          </div>
+        </div>
         </div>
         <div className="flex flex-col">
           <label
@@ -184,7 +208,7 @@ export const SignupStepOne = ({
           <FaArrowRight />
         </Button>
         <p className="text-center text-[#8091A7] italic text-xs">
-          I agree to Sprouty’s{" "}
+          I agree to Askusat’s{" "}
           <Link
             href="/terms-of-service"
             target="_blank"

@@ -7,12 +7,14 @@ export type User = {
   fullName: string;
   isSubscribed?: boolean;
   credit: number;
+  creditExpiresOn: Date;
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
   isAdmin?: boolean;
   userProfilePicture?: string;
   chatsJoined: number[];
-  [key: string]: any;
+  username: string;
+  // [key: string]: any;
 } | null;
 
 export type Notification = {

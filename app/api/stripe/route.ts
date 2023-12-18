@@ -87,7 +87,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     try {
       const { name, email }: CreateSetupIntentProps = body;
       var options: any = {
-        amount: 300,
+        amount: 500,
         currency: "GBP",
         payment_method_types: ["card"],
       };
@@ -217,7 +217,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       // });
 
       await stripe.paymentIntents.create({
-        amount: creditMode ? credit*100 : 300, // £50 if in creditMode
+        amount: creditMode ? credit*100 : 500, // £50 if in creditMode
         currency: 'GBP',
         automatic_payment_methods: {
           enabled: true,

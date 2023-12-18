@@ -151,7 +151,7 @@ export default function Nav() {
       </div>
 
       <div className="flex items-center gap-3 xl:hidden">
-        <Button
+        {user && <Button
           isIconOnly
           className=" bg-transparent -mb-2"
           onClick={() => {
@@ -164,7 +164,7 @@ export default function Nav() {
               {notifications.length}
             </div>
           </div>
-        </Button>
+        </Button>}
 
         <Button
           isIconOnly
@@ -448,7 +448,7 @@ const ProfileButton = ({ toggleMenu }: any) => {
       </div>
 
       {show && (
-        <div className="lg:absolute w-fit top-full right-0 min-w-[100px] z-50 flex justify-end py-3 px-4 shadow-lg bg-whiterounded-lg">
+        <div className="lg:absolute w-fit top-full right-0 min-w-[100px] z-[9999999999] flex justify-end py-3 px-4 shadow-lg bg-whiterounded-lg">
           <div className="flex flex-col gap-3">
             <Link
               href="/profile"
@@ -465,7 +465,7 @@ const ProfileButton = ({ toggleMenu }: any) => {
               onClick={() => {
                 logout();
                 setShow(false);
-                toggleMenu();
+                toggleMenu && toggleMenu();
               }}
               className="text-black hover:text-primary"
             >

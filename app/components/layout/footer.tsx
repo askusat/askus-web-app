@@ -31,13 +31,14 @@ export default function Footer() {
           <h1 className="text-[#FFF] lg:mt-[29px] mt-[18px] md:w-[400px] lg:font-PoppinsBold font-PoppinsSemiBold lg:font-[700] lg:tracking-[1px] lg:leading-[50.3px] text-[24px] md:text-center pr-4 md:pr-0 lg:text-start">
             If you have a question, AskUs
           </h1>
-
-          <Button
-            className="lg:mt-[35px] mt-[20px] text-primary max-w-[175px] w-full h-[50px] bg-white rounded-[10px]"
-            size={"lg"}
-          >
-            Get started
-          </Button>
+          <Link href={"/chat"}>
+            <Button
+              className="lg:mt-[35px] mt-[20px] text-primary max-w-[175px] w-full h-[50px] bg-white rounded-[10px]"
+              size={"lg"}
+            >
+              Get started
+            </Button>
+          </Link>
         </div>
 
         <div className="flex flex-col md:flex-row justify-around gap-8 xl:gap-[100px] mt-[38px]">

@@ -230,8 +230,8 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
             return setConfirmingSetUpIntent(false);
           }
 
-          console.log("createSubscription: ");
-          console.log(createSubscription);
+          // console.log("createSubscription: ");
+          // console.log(createSubscription);
 
           let d: any = {
             stripeSubscriptionId: createSubscription?.data?.subscription?.id,
@@ -246,11 +246,12 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
               credit:
                 (createSubscription.data?.credit / createAmountPerUnit) *
                 credits,
+                creditExpiresOn: new Date()
             };
           }
 
-          console.log("updateUser data: ");
-          console.log(d);
+          // console.log("updateUser data: ");
+          // console.log(d);
 
           await supabase.from("users").update(d).eq("id", user?.id);
 
@@ -404,8 +405,8 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
           ) : (
             <span>
               Purchase question credit 15 credits/unit for{" "}
-              <b>£${createAmountPerUnit * creditUnit}</b> (unused credit expires
-              after a month)
+              <b>£{createAmountPerUnit * creditUnit}</b> (unused credit expires
+              after 30 days)
             </span>
           )}
         </p>

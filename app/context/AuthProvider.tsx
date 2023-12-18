@@ -19,6 +19,7 @@ export interface SignUpParam {
   email: string;
   password: string;
   fullName: string;
+  username: string;
 }
 
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -61,12 +62,14 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const createUserProfile = async (
     authUser: AuthUser,
     fullName: string,
+    username: string,
     errorCallback: (error: any) => void
   ) => {
     const entryData: Partial<User> = {
       authUserId: authUser.id,
       email: authUser.email || "",
       fullName,
+      username,
     };
 
     const { data: authUserDataM, error } = await supabase
@@ -202,7 +205,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setProcessingSignUp: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
     setProcessingSignUp(true);
-    const { email, password, fullName } = params;
+    const { email, password, fullName, username } = params;
     const {
       data: { user: authUser },
       error,
@@ -225,13 +228,12 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       } catch (error) {
         console.error("Error updating user display name", error);
       }
-      await createUserProfile(authUser, fullName, errorCallback);
+      await createUserProfile(authUser, fullName, username, errorCallback);
     } else {
       if (errorCallback) errorCallback(error);
       setProcessingSignUp(false);
       return;
     }
-    setProcessingSignUp(false);
   };
 
   const handleLogin = async (
@@ -265,7 +267,10 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const handleLogout = async () => {
     setUser(null);
+    console.log("logging out");
+
     await supabase.auth.signOut();
+    console.log("logged out");
     window.localStorage.removeItem("userData");
     // router.push("/login");
   };

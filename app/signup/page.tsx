@@ -6,6 +6,7 @@ import { SignupStepOne } from "../components/auth/signup";
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [progress, setProgress] = useState("10%");
@@ -30,6 +31,8 @@ export default function RegisterPage() {
           <SignupStepOne
             fullName={fullName}
             setFullName={setFullName}
+            username={username}
+            setUsername={setUsername}
             setEmail={setEmail}
             email={email}
             password={password}

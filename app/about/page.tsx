@@ -53,12 +53,14 @@ export default function AboutPage() {
               expect from a professional but with the convenience of asking from
               anywhere, anytime.
             </h1>
-            <Button
-              className=" bg-white mt-10 mb-10 text-primary rounded-[10px]"
-              size="lg"
-            >
-              Get Started
-            </Button>
+            <Link href={"/chat"}>
+              <Button
+                className=" bg-white mt-10 mb-10 text-primary rounded-[10px]"
+                size="lg"
+              >
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           <div className="hidden lg:flex">
@@ -145,12 +147,14 @@ export default function AboutPage() {
             Our mission is to try to bring expert help to those who need it,
             when they need it for a reasonable cost.
           </p>
-          <Button
-            className="mt-3 text-primary bg-white rounded-[10px] border-none"
-            size="lg"
-          >
-            Get started
-          </Button>
+          <Link href={"/chat"}>
+            <Button
+              className="mt-3 text-primary bg-white rounded-[10px] border-none"
+              size="lg"
+            >
+              Get started
+            </Button>
+          </Link>
         </section>
       </div>
     </div>

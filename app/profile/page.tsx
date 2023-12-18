@@ -1,18 +1,19 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import LoadingScreen from "../components/loadingScreen";
 import Nav from "../components/layout/nav";
 import { AiOutlineFundView } from "react-icons/ai";
-import { FaCheckCircle, FaHome, FaPen } from "react-icons/fa";
+import { FaCheck, FaCheckCircle, FaHome, FaPen } from "react-icons/fa";
 import { MdOutlineLoop } from "react-icons/md";
 import { IoCashOutline, IoCreateOutline } from "react-icons/io5";
 import { IoMdHelp } from "react-icons/io";
 import { supabase } from "../supabaseClient";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
+import { User } from "@/types";
 
 export default function ProfilePage() {
   const auth = useAuth();
@@ -44,7 +45,7 @@ export default function ProfilePage() {
               <Link href="">
                 <Button
                   startContent={<AiOutlineFundView />}
-                  className="flex justify-start"
+                  className="flex justify-start w-full"
                 >
                   Overview
                 </Button>
@@ -52,7 +53,7 @@ export default function ProfilePage() {
               <Link href={"#ongoing"}>
                 <Button
                   startContent={<MdOutlineLoop />}
-                  className="flex justify-start"
+                  className="flex justify-start w-full"
                 >
                   Ongiong{" "}
                   <div className="w-6 h-6 grid place-items-center rounded-md bg-primary text-white">
@@ -63,7 +64,7 @@ export default function ProfilePage() {
               <Link href={"#answered"}>
                 <Button
                   startContent={<FaCheckCircle />}
-                  className="flex justify-start"
+                  className="flex justify-start w-full"
                 >
                   Answered{" "}
                   <div className="w-6 h-6 grid place-items-center rounded-md bg-primary text-white">
@@ -74,7 +75,7 @@ export default function ProfilePage() {
               {/* <Link href={"#subscription"}>
                 <Button
                   startContent={<IoCashOutline />}
-                  className="flex justify-start"
+                  className="flex justify-start w-full"
                 >
                   Subscription / Credit
                 </Button>
@@ -82,17 +83,19 @@ export default function ProfilePage() {
               <Link href={"/faq"}>
                 <Button
                   startContent={<IoMdHelp />}
-                  className="flex justify-start"
+                  className="flex justify-start w-full"
                 >
                   Help
                 </Button>
               </Link>
             </div>
 
-            <div className="absolute bottom-0 py-6 left-0 w-full flex justify-center bg-white">
-              <Button className="bg-primary text-white">
-                Start Conversation
-              </Button>
+            <div className="absolute bottom-0 py-6 left-0 w-full flex justify-center bg-[#F9F9F9]">
+              <Link href="/chat">
+                <Button className="bg-primary text-white">
+                  Start Conversation
+                </Button>
+              </Link>
             </div>
           </div>
         </aside>
@@ -118,7 +121,7 @@ export default function ProfilePage() {
                     </Button>
                   </div>
                 </div>
-                <h3 className="mt-6">{auth.user?.fullName}</h3>
+                <DisplayUserName user={auth.user} setUser={auth.setUser} />
                 <Button
                   variant="ghost"
                   className="mt-3 border border-[#CBCBCB] py-2 px-4 rounded-xl"
@@ -134,12 +137,12 @@ export default function ProfilePage() {
                       Subscribe
                     </Button>
                   </Link>
-                  <span className="text-gray-500">or</span>
+                  {/* <span className="text-gray-500">or</span>
                   <Link href={"/payment#credit"}>
                     <Button className="border-2 border-primary bg-white">
                       Buy Credit
                     </Button>
-                  </Link>
+                  </Link> */}
                 </div>
               )}
 
@@ -201,95 +204,165 @@ export default function ProfilePage() {
           <IoCreateOutline size={24} />
         </Button>
       </div> */}
-      <MobileFooter />
+      {/* <MobileFooter /> */}
     </>
   );
 }
 
-const MobileFooter = () => {
+// const MobileFooter = () => {
+//   return (
+//     <div className="lg:hidden fixed bottom-0 left-0 z-50 w-full bg-white py-3 px-3">
+//       <div className="flex items-center justify-center gap-5 md:gap-8">
+//         <Link
+//           href=""
+//           onClick={() => {
+//             window.scrollTo(0, 0);
+//             window.location.reload();
+//           }}
+//         >
+//           <Button
+//             isIconOnly
+//             variant="faded"
+//             aria-label="Overview"
+//             title="Overview"
+//             className="bg-primary shadow-none border-none"
+//           >
+//             <FaHome className="text-white" />
+//           </Button>
+//         </Link>
+//         <Link
+//           href="#ongoing"
+//           onClick={() => {
+//             window.scrollTo(0, 0);
+//             window.location.reload();
+//           }}
+//         >
+//           <Button
+//             isIconOnly
+//             variant="faded"
+//             aria-label="Ongoing"
+//             title="Ongoing"
+//             className="bg-primary shadow-none border-none"
+//           >
+//             <MdOutlineLoop className="text-white" />
+//           </Button>
+//         </Link>
+//         <Link
+//           href="#answered"
+//           onClick={() => {
+//             window.scrollTo(0, 0);
+//             window.location.reload();
+//           }}
+//         >
+//           <Button
+//             isIconOnly
+//             variant="faded"
+//             aria-label="Answered"
+//             title="Answered"
+//             className="bg-primary shadow-none border-none"
+//           >
+//             <FaCheckCircle className="text-white" />
+//           </Button>
+//         </Link>
+//         <Link
+//           href="#subscription"
+//           onClick={() => {
+//             window.scrollTo(0, 0);
+//             window.location.reload();
+//           }}
+//         >
+//           <Button
+//             isIconOnly
+//             variant="faded"
+//             aria-label="Subscription / Credits"
+//             title="Subscription / Credits"
+//             className="bg-primary shadow-none border-none"
+//           >
+//             <IoCashOutline className="text-white" />
+//           </Button>
+//         </Link>
+//         {/* <Link href="/faq">
+//           <Button
+//             isIconOnly
+//             variant="faded"
+//             aria-label="Help"
+//             title="Help"
+//             className="bg-primary shadow-none border-none"
+//           >
+//             <IoMdHelp className="text-white" />
+//           </Button>
+//         </Link> */}
+//       </div>
+//     </div>
+//   );
+// };
+
+interface DisplayUserNameProp {
+  user: User;
+  setUser: React.Dispatch<React.SetStateAction<User>>;
+}
+
+const DisplayUserName = ({ user, setUser }: DisplayUserNameProp) => {
+  const [editMode, setEditMode] = useState(false);
+  const [newUsername, setNewUsername] = useState(user?.username);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, seterrorMsg] = useState("");
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    seterrorMsg("");
+    if (!user) return;
+    if (loading) return;
+
+
+    setLoading(true);
+    const { data: newUser, error } = await supabase
+      .from("users")
+      .update({ username: newUsername })
+      .eq("id", user.id).select().single();
+    if (error) {
+      seterrorMsg(error.message);
+    }
+    !error && newUser && setUser(newUser)
+    setLoading(false);
+    setEditMode(false);
+  };
+
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 z-50 w-full bg-white py-3 px-3">
-      <div className="flex items-center justify-center gap-5 md:gap-8">
-        <Link
-          href=""
+    <>
+      <div className="mt-6 flex items-center -mr-6">
+        <h3 className="">{user?.username}</h3>
+        <Button
+          className="bg-transparent"
+          isIconOnly
           onClick={() => {
-            window.scrollTo(0, 0);
-            window.location.reload();
+            setEditMode(!editMode);
+            seterrorMsg("");
           }}
         >
-          <Button
-            isIconOnly
-            variant="faded"
-            aria-label="Overview"
-            title="Overview"
-            className="bg-primary shadow-none border-none"
-          >
-            <FaHome className="text-white" />
-          </Button>
-        </Link>
-        <Link
-          href="#ongoing"
-          onClick={() => {
-            window.scrollTo(0, 0);
-            window.location.reload();
-          }}
-        >
-          <Button
-            isIconOnly
-            variant="faded"
-            aria-label="Ongoing"
-            title="Ongoing"
-            className="bg-primary shadow-none border-none"
-          >
-            <MdOutlineLoop className="text-white" />
-          </Button>
-        </Link>
-        <Link
-          href="#answered"
-          onClick={() => {
-            window.scrollTo(0, 0);
-            window.location.reload();
-          }}
-        >
-          <Button
-            isIconOnly
-            variant="faded"
-            aria-label="Answered"
-            title="Answered"
-            className="bg-primary shadow-none border-none"
-          >
-            <FaCheckCircle className="text-white" />
-          </Button>
-        </Link>
-        <Link
-          href="#subscription"
-          onClick={() => {
-            window.scrollTo(0, 0);
-            window.location.reload();
-          }}
-        >
-          <Button
-            isIconOnly
-            variant="faded"
-            aria-label="Subscription / Credits"
-            title="Subscription / Credits"
-            className="bg-primary shadow-none border-none"
-          >
-            <IoCashOutline className="text-white" />
-          </Button>
-        </Link>
-        {/* <Link href="/faq">
-          <Button
-            isIconOnly
-            variant="faded"
-            aria-label="Help"
-            title="Help"
-            className="bg-primary shadow-none border-none"
-          >
-            <IoMdHelp className="text-white" />
-          </Button>
-        </Link> */}
+          <FaPen size={12} />
+        </Button>
       </div>
-    </div>
+      {errorMsg && <p className="text-xs text-warning">{errorMsg}</p>}
+      {editMode && (
+        <form className="flex items-center gap-1" onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            size="sm"
+            className="p-0"
+            value={newUsername}
+            onChange={(e: any) => setNewUsername(e.target.value)}
+          />
+          <Button
+            className="bg-primary text-white"
+            isIconOnly
+            type="submit"
+            isLoading={loading}
+          >
+            <FaCheck size={12} />
+          </Button>
+        </form>
+      )}
+    </>
   );
 };

@@ -6,6 +6,7 @@ import Spacer from "./components/spacer";
 import SampleQuestionsSlider from "./components/home/sampleQuestionsSlider";
 import Nav from "./components/layout/nav";
 import AnimText from "./components/home/AnimText";
+import Link from "next/link";
 // import CreateChat from "./components/chat/createChat";
 
 const testimonials = [
@@ -100,28 +101,30 @@ export default function Home() {
           <div className="flex-[4]">
             <div className="pt-[92px]">
               <h1 className="font-PoppinsBold text-[32px] font-semibold md:text-[58px] md:font-bold md:leading-[72px] tracking-[1px]">
-                {/* Transforming Legal Services */}
+                {/* Expert support 24/7 */}
                 <AnimText delay={1} />
               </h1>
               <p className="md:mt-[28px] mt-[18px] md:mb-[15px] mb-[8px] w-full max-w-[600px] tracking-[1px] md:text-[20px] text-[14px]">
                 Gain round-the-clock access to thousands of Expert Lawyers,
                 available wherever and whenever you need assistance.
               </p>
-              <Button
-                className="mt-3 bg-primary text-white rounded-[10px]"
-                size="lg"
-              >
-                Get started
-              </Button>
+              <Link href={"/chat"}>
+                <Button
+                  className="mt-3 bg-primary text-white rounded-[10px]"
+                  size="lg"
+                >
+                  Get started
+                </Button>
+              </Link>
 
               <div className="mt-20">
-                  <Image
-                    src="/review.svg"
-                    alt=""
-                    width={616}
-                    height={104}
-                    className="w-[300px] h-auto"
-                  />
+                <Image
+                  src="/review.svg"
+                  alt=""
+                  width={616}
+                  height={104}
+                  className="w-[300px] h-auto"
+                />
               </div>
             </div>
           </div>
@@ -150,12 +153,14 @@ export default function Home() {
               The Experts at AskUs are ready to answer your questions, day or
               night.
             </p>
-            <Button
-              className="xl:mt-3 mt-1 bg-primary text-white rounded-[10px]"
-              size="lg"
-            >
-              Get started
-            </Button>
+            <Link href={"/chat"}>
+              <Button
+                className="xl:mt-3 mt-1 bg-primary text-white rounded-[10px]"
+                size="lg"
+              >
+                Get started
+              </Button>
+            </Link>
           </div>
 
           <SampleQuestionsSlider />
@@ -354,12 +359,14 @@ export default function Home() {
             With both chat and telephone options the power is in your hands, get
             the answers you need now.
           </p>
-          <Button
-            className="mt-3 text-primary bg-white rounded-[10px] border-none"
-            size="lg"
-          >
-            Get started
-          </Button>
+          <Link href={"/chat"}>
+            <Button
+              className="mt-3 text-primary bg-white rounded-[10px] border-none"
+              size="lg"
+            >
+              Get started
+            </Button>
+          </Link>
         </section>
 
         <Spacer />
