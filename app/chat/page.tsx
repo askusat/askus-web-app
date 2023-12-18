@@ -21,7 +21,7 @@ import { formatDateToDMYY, getFirstName } from "../utils/helpers";
 import { useRouter } from "next/navigation";
 
 export default function ChatPage() {
-  const { user, setOnChatPageId } = useAuth();
+  const { user, setOnChatPageId, notifications } = useAuth();
   const [selectedChatId, setSelectedChatId] = useState(0);
   const [selectedChat, setSelectedChat] = useState<Chat>(null);
   const [isChatPageOpen, setIsChatPageOpen] = useState(false);
@@ -33,6 +33,35 @@ export default function ChatPage() {
   const [chatMessages, setchatMessages] = useState<ChatMessage[] | []>([]);
 
   const router = useRouter();
+
+  // URLSearchParams
+  useEffect(() => {
+    const fetch = async () => {
+      const chatId = new URLSearchParams(window.location.search).get("chatId");
+      if (chatId) {
+        const { data: chat, error } = await supabase
+          .from("chats")
+          .select()
+          .eq("id", chatId)
+          .single();
+        if (error) {
+          router.replace("/chat");
+          return;
+        }
+        resetChatScreen();
+        setSelectedChat(chat);
+        setSelectedChatId(chat?.id || 0);
+        setIsChatPageOpen(true);
+        inputRef?.current && inputRef?.current?.focus();
+        router.push(`#${chat.id}`);
+      } else {
+        router.replace("/chat");
+        return;
+      }
+    };
+    fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
 
   // setOnChatPageId
   useEffect(() => {
@@ -48,18 +77,34 @@ export default function ChatPage() {
     if (!user?.id) return;
 
     const fetch = async () => {
-      const { data, error } = await supabase
-        .from("chats") //chats_summary
-        .select()
-        // .eq("userId", user?.id)
-        .eq("answered", selectedTab === "answered");
+      if (user?.isAdmin) {
+        const { data, error } = await supabase
+          .from("chats") //chats_summary
+          .select()
+          // .eq("userId", user?.id)
+          .eq("answered", selectedTab === "answered");
 
-      if (!error && data.length > 0) {
-        setChats(data);
+        if (!error && data.length > 0) {
+          setChats(data);
+        } else {
+          setChats([]);
+        }
+      } else {
+        const { data, error } = await supabase
+          .from("chats") //chats_summary
+          .select()
+          .eq("userId", user?.id)
+          .eq("answered", selectedTab === "answered");
+
+        if (!error && data.length > 0) {
+          setChats(data);
+        } else {
+          setChats([]);
+        }
       }
     };
     fetch();
-  }, [selectedTab, user?.id, isChatPageOpen, selectedChatId]);
+  }, [selectedTab, user, isChatPageOpen, selectedChatId]);
 
   // get all messages for a chat
   useEffect(() => {
@@ -133,7 +178,8 @@ export default function ChatPage() {
     const { data, error } = await supabase
       .from("chats")
       .insert(createData)
-      .select().single();
+      .select()
+      .single();
 
     if (!error && data) {
       return data;
@@ -174,7 +220,7 @@ export default function ChatPage() {
           .delete()
           .eq("chatId", chatId)
           .eq("userId", user?.id);
-          error && console.log(error?.message);
+        error && console.log(error?.message);
       } catch (error) {}
 
       try {
@@ -342,9 +388,16 @@ export default function ChatPage() {
                         <div className="w-10 h-10 rounded-full bg-primary"></div>
                       </div>
                       <div className="w-[63%]">
-                        <h3 className="font-semibold truncate">
-                          {chat?.title}
-                        </h3>
+                        <div className="flex items-center">
+                          <input
+                            className="font-semibold truncate"
+                            value={chat?.title}
+                            disabled
+                          />
+                          <Button isIconOnly className="bg-transparent">
+                            <FaPen />
+                          </Button>
+                        </div>
                         <p className="truncate text-sm">
                           {chat?.lastMessage || "New message"}
                         </p>
@@ -354,9 +407,17 @@ export default function ChatPage() {
                           {formatDateToDMYY(chat?.createdAt || new Date())}
                         </div>
                         <div className="mt-1 flex justify-end">
-                          <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
-                            5
-                          </div>
+                          {notifications.find(
+                            (r) => r?.chatId === chat?.id
+                          ) && (
+                            <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
+                              {
+                                notifications.filter(
+                                  (r) => r?.chatId === chat?.id
+                                ).length
+                              }
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -382,20 +443,23 @@ export default function ChatPage() {
             )}
           </div>
 
-          <footer className="fixed md:static bottom-0 left-0 w-full h-[65px] py-4 bg-[#F9F9F9]">
-            <div className="px-6">
-              <Button
-                className="bg-primary text-white w-full"
-                onClick={() => {
-                  setIsChatPageOpen(true);
-                  inputRef?.current && inputRef?.current?.focus();
-                  resetChatScreen();
-                }}
-              >
-                Ask New Question
-              </Button>
-            </div>
-          </footer>
+          {!user?.isAdmin && (
+            <footer className="fixed md:static bottom-0 left-0 w-full h-[65px] py-4 bg-[#F9F9F9]">
+              <div className="px-6">
+                <Button
+                  color="primary"
+                  className="text-white w-full"
+                  onClick={() => {
+                    setIsChatPageOpen(true);
+                    inputRef?.current && inputRef?.current?.focus();
+                    resetChatScreen();
+                  }}
+                >
+                  Ask New Question
+                </Button>
+              </div>
+            </footer>
+          )}
         </div>
 
         <div
@@ -407,7 +471,7 @@ export default function ChatPage() {
             id="chatScreenMain"
             className="h-[calc(100vh-140px)] overflow-auto pb-3 px-4 pt-2"
           >
-            {selectedChat?.title && (
+            {/* {selectedChat?.title && (
               <div className="fixed top-[50px] right-1 w-full">
                 <div className="flex items-center justify-center w-full">
                   <div className="border border-gray-600 bg-gray-200 rounded-lg py-1 px-2">
@@ -423,7 +487,7 @@ export default function ChatPage() {
                   </Button>
                 </div>
               </div>
-            )}
+            )} */}
 
             <div className="flex flex-col gap-4 mt-[50px] mb-5">
               {chatMessages?.length > 0 &&
@@ -483,7 +547,7 @@ export default function ChatPage() {
                 })}
             </div>
 
-            {/* {chatMessages?.length <= 0 && (
+            {chatMessages?.length <= 0 && (
               <div className="grid place-items-center h-full">
                 <div className="">
                   <Button
@@ -496,7 +560,7 @@ export default function ChatPage() {
                   </Button>
                 </div>
               </div>
-            )} */}
+            )}
           </div>
 
           <div className="fixed md:static bottom-0 left-0 bg-gray-200 w-full h-[65px] px-4">

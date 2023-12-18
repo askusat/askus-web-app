@@ -6,6 +6,7 @@ import Footer from "./components/layout/footer";
 import { Button } from "@nextui-org/react";
 import { IoCreateOutline } from "react-icons/io5";
 import Link from "next/link";
+import CreateChat from "./components/chat/createChat";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         className={`${inter.className} font-MontserratRegular bg-white text-black`}
       >
         <Providers>
+          <CreateChat />
           <div className="bg-[#f9f9f9]">
             {children}
             <Footer />

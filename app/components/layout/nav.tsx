@@ -24,10 +24,13 @@ import {
   markAllNotificationAsRead,
   markNotificationAsRead,
 } from "@/app/utils/helpers";
+import { useRouter } from "next/navigation";
 
 export default function Nav() {
   const { user, notifications, setNotifications } = useAuth();
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
+
+  const router = useRouter()
 
   const toggleMenu = () => {
     setOpenMobileMenu(!openMobileMenu);
@@ -203,14 +206,17 @@ export default function Nav() {
                   <div
                     key={`notfn_${notification?.id}`}
                     className="rounded-lg py-1 px-3 bg-slate-200 cursor-pointer"
-                    onClick={() =>
+                    onClick={() => {
                       markNotificationAsRead(
                         user,
                         notification?.id || 1,
                         notifications,
                         setNotifications
-                      )
-                    }
+                      );
+                      if(notification?.chatId){
+                        router.push(`/chat?chatId=${notification?.chatId}`)
+                      }
+                    }}
                   >
                     <div className="text-xs truncate">
                       {notification?.title}

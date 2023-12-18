@@ -7,12 +7,19 @@ import { AiFillMessage } from "react-icons/ai";
 import TableC from "../components/table/table";
 import { FaQuestion } from "react-icons/fa";
 import { RiQuestionAnswerLine } from "react-icons/ri";
-import { FaMoneyBill } from "react-icons/fa";
 import { IoIosPeople } from "react-icons/io";
+import Nav from "../components/layout/nav";
+import Link from "next/link";
+// import CreateChat from "../components/chat/createChat";
 
 const AdminDashboard = () => {
   return (
-    <div className="flex justify-center bg-white md:bg-primary 2xl:bg-white w-full h-full ">
+    <>
+    {/* <CreateChat /> */}
+    <div className="px-4 py-2">
+    <Nav />
+    </div>
+    <div className="flex justify-center md:bg-primary w-full h-full ">
       {/* Left Side */}
       <div className="max-w-[25%] hidden  md:flex flex-col items-center  lg:items-center rounded-md w-full mb-[80px] h-screen     bg-primary">
         <Image
@@ -24,19 +31,19 @@ const AdminDashboard = () => {
         />
 
         <div className="flex flex-col w-full h-full md:pl-6 lg:pl-0  items-center">
-          <div className="flex px-2 py-2 justify-center  hover:bg-white mt-14 w-full">
+          <div className="flex px-2 py-2 justify-center  hover:bg-white mt-14 w-full cursor-pointer">
             <div className=" flex items-center justify-center rounded-lg w-full hover:bg-white hover:text-primary gap-6  text-white">
-              <FaHome size={25} />
-              <h1 className="text-[25px] hidden lg:flex font-semibold">
+              <FaHome size={20} />
+              <h1 className="text-[20px] hidden lg:flex font-semibold">
                 Dashboard
               </h1>
             </div>
           </div>
 
-          <div className="flex px-2 py-2 rounded-s-sm hover:bg-white mt-14 w-full">
+          <div className="flex px-2 py-2 rounded-s-sm hover:bg-white mt-14 w-full cursor-pointer">
             <div className=" flex items-center rounded-lg w-full hover:bg-white hover:text-primary gap-6 justify-center text-white">
-              <BsFillPeopleFill size={25} />
-              <h1 className="text-[25px] hidden lg:flex font-semibold">
+              <BsFillPeopleFill size={20} />
+              <h1 className="text-[20px] hidden lg:flex font-semibold">
                 Customer
               </h1>
             </div>
@@ -44,25 +51,25 @@ const AdminDashboard = () => {
 
           {/* <div className="flex px-2 py-2  rounded-md hover:bg-white mt-14 w-full">
             <div className=" flex items-center rounded-lg w-full hover:bg-white hover:text-primary gap-6  justify-center text-white">
-              <FaPeopleGroup size={25} className="" />
-              <h1 className="text-[25px] hidden lg:flex font-semibold">
+              <FaPeopleGroup size={25} className=0" />
+              <h1 className="text-[20px] hidden lg:flex font-semibold">
                 Staff
               </h1>
             </div>
           </div> */}
 
-          <div className="flex px-2 py-2 rounded-s-sm hover:bg-white mt-14 w-full">
+          <Link href={'/chat'} className="flex px-2 py-2 rounded-s-sm hover:bg-white mt-14 w-full">
             <div className=" flex items-center rounded-lg w-full hover:bg-white hover:text-primary gap-6 justify-center text-white">
-              <AiFillMessage size={25} />
-              <h1 className="text-[25px] hidden lg:flex font-semibold">
+              <AiFillMessage size={20} />
+              <h1 className="text-[20px] hidden lg:flex font-semibold">
                 Message
               </h1>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
       {/* Right Side */}
-      <div className="md:max-w-[75%] max-w-full h-full items-center justify-center  w-full px-10 pt-14   bg-white">
+      <div className="md:max-w-[75%] max-w-full h-full items-center justify-center  w-full px-10 pt-14 bg-[#F9F9F9]">
         <div className="flex flex-col mt-2 items-center   gap-5 justify-center">
           {/* <h1 className="text-[30px] font-bold">The Admins</h1> */}
           <div className="flex w-full flex-col items-center md:flex-row justify-center gap-7">
@@ -134,7 +141,7 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-           
+
           </div>
         </div>
         {/* The Texxt */}
@@ -177,6 +184,7 @@ const AdminDashboard = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
