@@ -210,7 +210,7 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
             // create customer and subscription
             const createSubscriptionData = {
               route: "create_subscription",
-              name: user?.full_name,
+              name: user?.fullName,
               email: user?.email,
               price: PRICE_ID,
               customer_id: user?.stripeCustomerId,
