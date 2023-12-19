@@ -216,7 +216,8 @@ export default function ChatPage() {
       `message_-_${chatMessages?.length}`
     );
     if (lastMessage) {
-      lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+      // lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+      lastMessage.scrollIntoView(false);
       // inputRef?.current && inputRef?.current?.focus();
       return;
     }
@@ -231,7 +232,8 @@ export default function ChatPage() {
       `message_-_${chatMessages?.length}`
     );
     if (lastMessage) {
-      lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+      // lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+      lastMessage.scrollIntoView(false);
       // inputRef?.current && inputRef?.current?.focus();
     }
   }
