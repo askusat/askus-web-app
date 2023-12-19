@@ -757,7 +757,30 @@ export default function ChatPage() {
                               </span>
                             </div>
                             <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit max-w-[200px] break-words md:max-w-[100%]">
-                              <p className="text-sm">{chatMessage?.message}</p>
+                              {/* <p className="text-sm">{chatMessage?.message}</p> */}
+                              {chatMessage?.type === "text" && (
+                                <p className="text-sm">
+                                  {chatMessage?.message}
+                                </p>
+                              )}
+                              {chatMessage?.type === "image" && (
+                                <ImageNUI
+                                  src={chatMessage?.message}
+                                  // fill
+                                  isZoomed
+                                  alt="Preview"
+                                  className="w-[150px] h-[150px] static"
+                                />
+                              )}
+                              {chatMessage?.type !== "text" &&
+                                chatMessage?.type !== "image" && (
+                                  <div className="relative">
+                                    <IoMdDocument size={50} />
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                      {chatMessage?.type}
+                                    </div>
+                                  </div>
+                                )}
                             </div>
                           </div>
                         </div>
@@ -794,6 +817,12 @@ export default function ChatPage() {
                 onSubmit={(e: any) => {
                   e.preventDefault();
                   handleSubmit();
+                }}
+                onKeyDown={(e: any) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault(); // Prevents new line in textarea if Shift+Enter is pressed
+                    handleSubmit(); // Call your submit function here
+                  }
                 }}
               >
                 <div className="px-3 flex items-center gap-0 w-full">
