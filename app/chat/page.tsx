@@ -4,7 +4,7 @@ import {
   Avatar,
   AvatarGroup,
   Button,
-  Image,
+  Image as ImageNUI,
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -16,7 +16,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaAngleLeft, FaCheck, FaPen, FaTimes } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { ImAttachment } from "react-icons/im";
-import { IoIosSend } from "react-icons/io";
+import { IoIosSend, IoMdDocument } from "react-icons/io";
 import { TbRotateRectangle } from "react-icons/tb";
 import { useAuth } from "../hooks/useAuth";
 import { Chat, ChatMessage, ChatSummary, User } from "@/types";
@@ -24,6 +24,7 @@ import { supabase } from "../supabaseClient";
 import { formatDateToTimeAgo, formatDate } from "../utils/helpers";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "../components/loadingScreen";
+import Image from "next/image";
 
 export default function ChatPage() {
   const {
@@ -36,7 +37,8 @@ export default function ChatPage() {
   const [selectedChat, setSelectedChat] = useState<Chat>(null);
   const [refreshSelectedChat, setRefreshSelectedChat] = useState(false);
   const [isChatPageOpen, setIsChatPageOpen] = useState(false);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
   const [selectedTab, setSelectedTab] = useState<any>("ongoing");
   const [messageInput, setMessageInput] = useState("");
   const [chats, setChats] = useState<ChatSummary[]>([]);
@@ -46,6 +48,7 @@ export default function ChatPage() {
     null
   );
   const [chatTitle, setChatTitle] = useState("");
+  const [seletectedFiles, setSeletectedFiles] = useState<any[]>([]);
 
   const router = useRouter();
 
@@ -176,7 +179,7 @@ export default function ChatPage() {
 
   // subscribe to chat_messages
   useEffect(() => {
-    if (!user || ! selectedChat) return;
+    if (!user || !selectedChat) return;
 
     const chatMessagesChannel = supabase
       .channel("chat messages")
@@ -186,11 +189,12 @@ export default function ChatPage() {
           event: "INSERT",
           schema: "public",
           table: "chat_messages",
-          filter: `userId=eq.${user.id}`,
+          // filter: `userId=eq.${user.id}`,
         },
         (payload) => {
           // console.log("chat_messages payload.new");
           // console.log(payload.new);
+
           if (selectedChat.chatUsers?.includes(user.id)) {
             setchatMessages([...chatMessages, payload.new as ChatMessage]);
           }
@@ -213,7 +217,10 @@ export default function ChatPage() {
     if (lastMessage) {
       lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
       inputRef?.current && inputRef?.current?.focus();
+      return;
     }
+    // alert("message not loaded");
+    console.log("message not loaded");
 
     return () => {};
   }, [chatMessages]);
@@ -268,15 +275,61 @@ export default function ChatPage() {
 
     if (chatId) {
       // Send message
-      const createChatMessage: Partial<ChatMessage> = {
-        chatId,
-        message: messageInput,
-        userId: user.id,
-        userName: user.username, //getFirstName(user.fullName),
-        userProfilePicture: user.userProfilePicture || "",
-        sender: user.isAdmin ? "expert" : "user",
-      };
-      await supabase.from("chat_messages").insert(createChatMessage);
+      if (seletectedFiles.length > 0) {
+        for (const i in seletectedFiles) {
+          if (Object.prototype.hasOwnProperty.call(seletectedFiles, i)) {
+            const file = seletectedFiles[i];
+            const { data, error } = await supabase.storage
+              .from("chatmedia")
+              .upload(`chats/${chatId}/${file.name}`, file, {
+                upsert: true,
+              });
+
+            if (!error) {
+              const {
+                data: { publicUrl },
+              }: any = supabase.storage
+                .from("chatmedia")
+                .getPublicUrl(data?.path || "");
+
+              const createChatFileMessage: Partial<ChatMessage> = {
+                chatId,
+                message: publicUrl,
+                type: file.type.split("/")[0] === "image" ? "image" : "file",
+                replyTo: null,
+                userId: user.id,
+                userName: user.username, //getFirstName(user.fullName),
+                userProfilePicture: user.userProfilePicture || "",
+                sender: user.isAdmin ? "expert" : "user",
+              };
+
+              console.log("createChatFileMessage: ");
+              console.log(createChatFileMessage);
+
+              await supabase
+                .from("chat_messages")
+                .insert(createChatFileMessage);
+            } else {
+              console.log(`failed to upload media file: ${file.name}`);
+            }
+          }
+        }
+        setSeletectedFiles([]);
+      }
+
+      if (messageInput) {
+        const createChatMessage: Partial<ChatMessage> = {
+          chatId,
+          message: messageInput,
+          type: "text",
+          replyTo: null,
+          userId: user.id,
+          userName: user.username, //getFirstName(user.fullName),
+          userProfilePicture: user.userProfilePicture || "",
+          sender: user.isAdmin ? "expert" : "user",
+        };
+        await supabase.from("chat_messages").insert(createChatMessage);
+      }
       scrollLastMsgIntoView();
 
       try {
@@ -320,6 +373,7 @@ export default function ChatPage() {
   };
 
   const [addingUserToChat, setAddingUserToChat] = useState(false);
+
   const addUserToChat = async (
     userId: number | undefined,
     chatId: number | undefined
@@ -338,6 +392,8 @@ export default function ChatPage() {
       message: `${user?.fullName} just joined the chat ${formatDate(
         new Date()
       )}`,
+      type: "text",
+      replyTo: null,
       userId: user.id,
       userName: "system",
       userProfilePicture: "",
@@ -413,7 +469,7 @@ export default function ChatPage() {
           <div className="text-xs text-center">{selectedChat?.title}</div>
 
           <Link href={"/"}>
-            <Image
+            <ImageNUI
               src="/footer.svg"
               alt=""
               width={132}
@@ -636,24 +692,47 @@ export default function ChatPage() {
                           id={`message_-_${index + 1}`}
                           className="flex-row-reverse flex items-end gap-2"
                         >
-                          <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning"></div>
+                          <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
+                            you
+                          </div>
                           <div className="">
-                            <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit">
-                              <p className="text-sm">
-                                {chatMessage?.message}
-                                <span
-                                  className="text-xs bg-gray-400/40 ml-2 p-1 rounded-lg whitespace-normal"
-                                  style={{ whiteSpace: "nowrap" }}
-                                >
+                            <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit max-w-[200px] break-words md:max-w-[100%]">
+                              {chatMessage?.type === "text" && (
+                                <p className="text-sm">
+                                  {chatMessage?.message}
+                                </p>
+                              )}
+                              {chatMessage?.type === "image" && (
+                                <ImageNUI
+                                  src={chatMessage?.message}
+                                  // fill
+                                  isZoomed
+                                  alt="Preview"
+                                  className="w-[150px] h-[150px] static"
+                                />
+                              )}
+                              {chatMessage?.type !== "text" &&
+                                chatMessage?.type !== "image" && (
+                                  <div className="relative">
+                                    <IoMdDocument size={50} />
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                      {chatMessage?.type}
+                                    </div>
+                                  </div>
+                                )}
+                            </div>
+                            <div className="text-xs text-end flex justify-end">
+                              <div className="bg-gray-300/70 rounded-b-lg px-1 w-fit">
+                                <span className="text-xs p-1 rounded-lg">
                                   {formatDateToTimeAgo(
                                     chatMessage?.createdAt || new Date()
                                   )}
                                 </span>
-                              </p>
-                            </div>
-                            <div className="text-xs text-end">
-                              {chatMessage?.userName}{" "}
-                              {user?.isAdmin && `(Expert)`}
+                                | {chatMessage?.userName}{" "}
+                                <span className="text-[9px]">
+                                  {user?.isAdmin && `(Expert)`}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -665,23 +744,20 @@ export default function ChatPage() {
                           id={`message_-_${index + 1}`}
                           className="flex items-start gap-2"
                         >
-                          <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary"></div>
+                          <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary grid place-items-center text-xs select-none">
+                            {user?.isAdmin ? "user" : "expert"}
+                          </div>
                           <div className="">
-                            <div className="text-xs">
-                              {chatMessage?.userName}
+                            <div className="text-xs bg-gray-300 rounded-t-lg w-fit px-1">
+                              {chatMessage?.userName} |
+                              <span className="text-xs p-1 rounded-lg">
+                                {formatDateToTimeAgo(
+                                  chatMessage?.createdAt || new Date()
+                                )}
+                              </span>
                             </div>
-                            <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit">
-                              <p className="text-sm">
-                                {chatMessage?.message}
-                                <span
-                                  className="text-xs bg-gray-400/40 ml-2 p-1 rounded-lg whitespace-normal"
-                                  style={{ whiteSpace: "nowrap" }}
-                                >
-                                  {formatDateToTimeAgo(
-                                    chatMessage?.createdAt || new Date()
-                                  )}
-                                </span>
-                              </p>
+                            <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit max-w-[200px] break-words md:max-w-[100%]">
+                              <p className="text-sm">{chatMessage?.message}</p>
                             </div>
                           </div>
                         </div>
@@ -721,7 +797,7 @@ export default function ChatPage() {
                 }}
               >
                 <div className="px-3 flex items-center gap-0 w-full">
-                  <Popover
+                  {user?.isAdmin && <Popover
                     showArrow
                     offset={10}
                     placement="bottom"
@@ -744,12 +820,88 @@ export default function ChatPage() {
                       scrollLastMsgIntoView={scrollLastMsgIntoView}
                       setSelectedChat={setSelectedChat}
                     />
-                  </Popover>
+                  </Popover>}
+                  {seletectedFiles.length > 0 && (
+                    <div className="absolute z-[50] bottom-[60px] rounded-lg w-[200px] h-[150px] bg-white shadow-xl text-center">
+                      <div className="flex flex-wrap items-center gap-2 p-2">
+                        {seletectedFiles.map((file: any, index) => {
+                          // console.log("file: ");
+                          // console.log(file);
+                          const imageUrl = URL.createObjectURL(file);
+                          return (
+                            <div
+                              key={`file_-${index + 1}`}
+                              className="relative group"
+                            >
+                              {file.type.startsWith("image") ? (
+                                <ImageNUI
+                                  src={imageUrl}
+                                  isZoomed
+                                  alt="Preview"
+                                  className="w-[50px] h-[50px]"
+                                />
+                              ) : (
+                                <div className="relative">
+                                  <IoMdDocument size={50} />
+                                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                    {
+                                      file.name.split(".")[
+                                        file.name.split(".").length - 1
+                                      ]
+                                    }
+                                  </div>
+                                </div>
+                              )}
+                              <div
+                                className="hidden absolute z-20 top-0 left-0 w-full h-full bg-black/30 group-hover:grid place-items-center cursor-pointer"
+                                onClick={() => {
+                                  const n = seletectedFiles.filter(
+                                    (file, i) => i !== index
+                                  );
+                                  setSeletectedFiles(n);
+                                }}
+                              >
+                                <FaTimes size={18} color="red" />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                   <div className="pr-6 pl-3 flex items-center gap-0 w-full">
-                    <Button isIconOnly size="sm" className="bg-transparent">
-                      <ImAttachment size={18} />
-                    </Button>
-                    <input
+                    <div className="relative w-[18px] h-[18px]">
+                      <input
+                        ref={fileRef}
+                        type="file"
+                        name="file"
+                        id="file"
+                        multiple
+                        className="relative z-20 w-[18px] h-[18px] cursor-pointer opacity-0"
+                        accept=".jpg, .jpeg, .png, .webp, .gif, .pdf, .doc, .docx, .txt"
+                        onChange={(e: any) => {
+                          setSeletectedFiles([
+                            ...seletectedFiles,
+                            ...e.target.files,
+                          ]);
+                        }}
+                      />
+                      <label
+                        htmlFor="file"
+                        id="file"
+                        className="absolute top-0 left-0 z-10 w-[18px] h-[18px]"
+                      >
+                        {/* <Button isIconOnly size="sm" className="bg-transparent">
+                          <ImAttachment size={18} />
+                        </Button> */}
+                        <ImAttachment size={18} />
+                      </label>
+                    </div>
+                    {/* <Button isIconOnly size="sm" className="bg-transparent">
+                      <ImAttachment size={18}  />
+                    </Button> */}
+
+                    {/* <input
                       ref={inputRef}
                       type="text"
                       className="bg-transparent outline-none p-2 w-full"
@@ -757,7 +909,16 @@ export default function ChatPage() {
                       value={messageInput}
                       onChange={(e: any) => setMessageInput(e.target.value)}
                       disabled={sendingMessage}
-                    />
+                    /> */}
+                    <textarea
+                      ref={inputRef}
+                      className="bg-transparent outline-none px-2 pb-3 pt-[10px] placeholder:pt-[5px] w-full h-[40px] resize-none placeholder:text-sm scrolled-remove focus:ring-0 focus-visible:ring-0"
+                      tabIndex={0}
+                      placeholder="Enter message here..."
+                      value={messageInput}
+                      onChange={(e: any) => setMessageInput(e.target.value)}
+                      disabled={sendingMessage}
+                    ></textarea>
                     <Button
                       isIconOnly
                       type="submit"
@@ -814,6 +975,8 @@ const JoinChatButton = ({
         message: `${user?.fullName} re-opend the chat ${formatDate(
           new Date()
         )}`,
+        type: "text",
+        replyTo: null,
         userId: user.id,
         userName: "system",
         userProfilePicture: "",
@@ -875,6 +1038,8 @@ const MenuContent = ({
       const createChatMessage: Partial<ChatMessage> = {
         chatId: chat.id,
         message: `${user?.fullName} ended the chat ${formatDate(new Date())}`,
+        type: "text",
+        replyTo: null,
         userId: user.id,
         userName: "system",
         userProfilePicture: "",

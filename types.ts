@@ -31,7 +31,7 @@ export type Notification = {
 export type Chat = {
   id: number;
   userId: number; // chat creator
-  status: "ongoing" | "answered" | "cancelled" | "reported" // | string;
+  status: "ongoing" | "answered" | "cancelled" | "reported"; // | string;
   answered: boolean;
   title: string;
   createdAt: Date;
@@ -43,7 +43,7 @@ export type Chat = {
 export type ChatSummary = {
   id: number;
   userId: number; // chat creator
-  status: "ongoing" | "answered" | "cancelled" | "reported" // | string;
+  status: "ongoing" | "answered" | "cancelled" | "reported"; // | string;
   answered: boolean;
   title: string;
   createdAt: Date;
@@ -58,9 +58,11 @@ export type ChatMessage = {
   createdAt: Date;
   updatedAt: Date;
   message: string;
+  type: string;
+  replyTo: string | null;
   chatId: number;
   userId: number;
   userName: string;
   userProfilePicture: string;
-  sender: "expert" | "user" // | string;
+  sender: "expert" | "user"; // | string;
 } | null;
