@@ -21,10 +21,7 @@ import { TbRotateRectangle } from "react-icons/tb";
 import { useAuth } from "../hooks/useAuth";
 import { Chat, ChatMessage, ChatSummary, User } from "@/types";
 import { supabase } from "../supabaseClient";
-import {
-  formatDateToTimeAgo,
-  formatDate,
-} from "../utils/helpers";
+import { formatDateToTimeAgo, formatDate } from "../utils/helpers";
 import { useRouter } from "next/navigation";
 
 export default function ChatPage() {
@@ -44,6 +41,32 @@ export default function ChatPage() {
   const [chatTitle, setChatTitle] = useState("");
 
   const router = useRouter();
+
+  // subscribe to chat_messages
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel("chats")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chats",
+        },
+        async (payload) => {
+          console.log("payload");
+          console.log(payload);
+          setEditChatTitleProp(null);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
 
   // URLSearchParams
   useEffect(() => {
