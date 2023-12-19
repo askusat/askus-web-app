@@ -186,7 +186,7 @@ export default function ChatPage() {
           event: "INSERT",
           schema: "public",
           table: "chat_messages",
-          // filter: `userId=eq.${user?.id}`,
+          filter: `userId=eq.${user?.id}`,
         },
         (payload) => {
           // console.log("chat_messages payload.new");
@@ -373,15 +373,19 @@ export default function ChatPage() {
               size="sm"
               className="bg-transparent"
               onClick={() => {
-                if(selectedChat){
+                if (selectedChat) {
                   resetChatScreen();
-                }else{
-                  router.push('/')
+                } else {
+                  router.push("/");
                 }
               }}
             >
               {/* <div className="w-4 h-4 rounded-full bg-danger text-white grid place-items-center text-xs"></div> */}
-              {selectedChat ? <FaAngleLeft size={20} className="text-white  " /> : <FaTimes size={20} className="text-red-600  " />}
+              {selectedChat ? (
+                <FaAngleLeft size={20} className="text-white  " />
+              ) : (
+                <FaTimes size={20} className="text-red-600  " />
+              )}
             </Button>
             {/* <Button
               isIconOnly
@@ -636,7 +640,10 @@ export default function ChatPage() {
                             <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit">
                               <p className="text-sm">
                                 {chatMessage?.message}
-                                <span className="text-xs font-semibold bg-gray-400/40 ml-2 p-1 rounded-lg">
+                                <span
+                                  className="text-xs bg-gray-400/40 ml-2 p-1 rounded-lg whitespace-normal"
+                                  style={{ whiteSpace: "nowrap" }}
+                                >
                                   {formatDateToTimeAgo(
                                     chatMessage?.createdAt || new Date()
                                   )}
@@ -665,7 +672,10 @@ export default function ChatPage() {
                             <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit">
                               <p className="text-sm">
                                 {chatMessage?.message}
-                                <span className="text-xs font-semibold bg-gray-400/40 ml-2 p-1 rounded-lg">
+                                <span
+                                  className="text-xs bg-gray-400/40 ml-2 p-1 rounded-lg whitespace-normal"
+                                  style={{ whiteSpace: "nowrap" }}
+                                >
                                   {formatDateToTimeAgo(
                                     chatMessage?.createdAt || new Date()
                                   )}
@@ -745,6 +755,7 @@ export default function ChatPage() {
                       placeholder="Enter message here..."
                       value={messageInput}
                       onChange={(e: any) => setMessageInput(e.target.value)}
+                      disabled={sendingMessage}
                     />
                     <Button
                       isIconOnly
