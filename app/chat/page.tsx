@@ -35,7 +35,7 @@ export default function ChatPage() {
   } = useAuth();
   const [selectedChatId, setSelectedChatId] = useState(0);
   const [selectedChat, setSelectedChat] = useState<Chat>(null);
-  const [refreshSelectedChat, setRefreshSelectedChat] = useState(false);
+  const [refreshChatList, setRefreshChatList] = useState(false);
   const [isChatPageOpen, setIsChatPageOpen] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -52,32 +52,47 @@ export default function ChatPage() {
 
   const router = useRouter();
 
-  // Todo: remove this since we'll be listening to chat updatedAt attribute on the chat_view
   // subscribe to chats insert
-  // useEffect(() => {
-  //   if (!user) return;
+  useEffect(() => {
+    if (!user) return;
 
-  //   const channel = supabase
-  //     .channel("chats")
-  //     .on(
-  //       "postgres_changes",
-  //       {
-  //         event: "INSERT",
-  //         schema: "public",
-  //         table: "chats",
-  //       },
-  //       async (payload) => {
-  //         if (payload.new) {
-  //           user?.isAdmin && setRefreshSelectedChat(true);
-  //         }
-  //       }
-  //     )
-  //     .subscribe();
+    const channel = supabase
+      .channel("chats")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chats",
+        },
+        async (payload) => {
+          if (payload.new) {
+            user?.isAdmin && setRefreshChatList(true);
+          }
+        }
+      )
+      .subscribe();
+    const channelUpdate = supabase
+      .channel("chatsupdate")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "chats",
+        },
+        (payload) => {
+          // Handle UPDATE event payload
+          setRefreshChatList(true);
+        }
+      )
+      .subscribe();
 
-  //   return () => {
-  //     supabase.removeChannel(channel);
-  //   };
-  // }, [user]);
+    return () => {
+      supabase.removeChannel(channel);
+      supabase.removeChannel(channelUpdate);
+    };
+  }, [user]);
 
   // URLSearchParams
   useEffect(() => {
@@ -117,7 +132,7 @@ export default function ChatPage() {
     };
   }, [selectedChatId, setOnChatPageId]);
 
-  // get all chats_summary for user
+  // get all chats_view for user
   useEffect(() => {
     if (!user?.id) return;
 
@@ -148,7 +163,7 @@ export default function ChatPage() {
           setChats([]);
         }
       }
-      setRefreshSelectedChat(false);
+      setRefreshChatList(false);
     };
     fetch();
   }, [
@@ -157,7 +172,7 @@ export default function ChatPage() {
     isChatPageOpen,
     selectedChatId,
     editChatTitleProp,
-    refreshSelectedChat,
+    refreshChatList,
   ]);
 
   // get all messages for a chat
@@ -198,7 +213,7 @@ export default function ChatPage() {
 
           if (selectedChat.chatUsers?.includes(user.id)) {
             setchatMessages([...chatMessages, payload.new as ChatMessage]);
-            setRefreshSelectedChat(true);
+            setRefreshChatList(true);
           }
         }
       )
@@ -333,7 +348,10 @@ export default function ChatPage() {
           sender: user.isAdmin ? "expert" : "user",
         };
         await supabase.from("chat_messages").insert(createChatMessage);
-        await supabase.from("chats").update({ updatedAt: new Date() }).eq("id", chatId)
+        await supabase
+          .from("chats")
+          .update({ updatedAt: new Date() })
+          .eq("id", chatId);
       }
       scrollLastMsgIntoView();
 
@@ -404,7 +422,10 @@ export default function ChatPage() {
       userProfilePicture: "",
     };
     await supabase.from("chat_messages").insert(createChatMessage);
-    await supabase.from("chats").update({ updatedAt: new Date() }).eq("id", chatId)
+    await supabase
+      .from("chats")
+      .update({ updatedAt: new Date() })
+      .eq("id", chatId);
     scrollLastMsgIntoView();
     const oldList = selectedChat?.chatUsers;
     const c: any = { ...selectedChat, chatUsers: [...oldList, user.id] };
@@ -677,120 +698,121 @@ export default function ChatPage() {
                 chatMessages?.map((chatMessage, index) => {
                   // console.log("chatMessage: ");
                   // console.log(chatMessage);
-
-                  if (chatMessage?.userName === "system") {
-                    return (
-                      <div
-                        key={`message-${chatMessage?.id}`}
-                        id={`message_-_${index + 1}`}
-                        className="border-y border-gray-400/50 py-2 px-4"
-                      >
-                        <p className="text-center text-sm">
-                          {chatMessage?.message}
-                        </p>
-                      </div>
-                    );
-                  } else {
-                    if (chatMessage?.userId === user?.id) {
+                  if (chatMessage?.chatId === selectedChat?.id) {
+                    if (chatMessage?.userName === "system") {
                       return (
                         <div
                           key={`message-${chatMessage?.id}`}
                           id={`message_-_${index + 1}`}
-                          className="flex-row-reverse flex items-end gap-2"
+                          className="border-y border-gray-400/50 py-2 px-4"
                         >
-                          <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
-                            you
-                          </div>
-                          <div className="">
-                            <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit max-w-[200px] break-words md:max-w-[100%]">
-                              {chatMessage?.type === "text" && (
-                                <p className="text-sm">
-                                  {chatMessage?.message}
-                                </p>
-                              )}
-                              {chatMessage?.type === "image" && (
-                                <ImageNUI
-                                  src={chatMessage?.message}
-                                  // fill
-                                  isZoomed
-                                  alt="Preview"
-                                  className="w-[150px] h-[150px] static"
-                                />
-                              )}
-                              {chatMessage?.type !== "text" &&
-                                chatMessage?.type !== "image" && (
-                                  <div className="relative">
-                                    <IoMdDocument size={50} />
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
-                                      {chatMessage?.type}
-                                    </div>
-                                  </div>
-                                )}
+                          <p className="text-center text-sm">
+                            {chatMessage?.message}
+                          </p>
+                        </div>
+                      );
+                    } else {
+                      if (chatMessage?.userId === user?.id) {
+                        return (
+                          <div
+                            key={`message-${chatMessage?.id}`}
+                            id={`message_-_${index + 1}`}
+                            className="flex-row-reverse flex items-end gap-2"
+                          >
+                            <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
+                              you
                             </div>
-                            <div className="text-xs text-end flex justify-end">
-                              <div className="bg-gray-300/70 rounded-b-lg px-1 w-fit">
+                            <div className="">
+                              <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit max-w-[200px] break-words md:max-w-[100%]">
+                                {chatMessage?.type === "text" && (
+                                  <p className="text-sm">
+                                    {chatMessage?.message}
+                                  </p>
+                                )}
+                                {chatMessage?.type === "image" && (
+                                  <ImageNUI
+                                    src={chatMessage?.message}
+                                    // fill
+                                    isZoomed
+                                    alt="Preview"
+                                    className="w-[150px] h-[150px] static"
+                                  />
+                                )}
+                                {chatMessage?.type !== "text" &&
+                                  chatMessage?.type !== "image" && (
+                                    <div className="relative">
+                                      <IoMdDocument size={50} />
+                                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                        {chatMessage?.type}
+                                      </div>
+                                    </div>
+                                  )}
+                              </div>
+                              <div className="text-xs text-end flex justify-end">
+                                <div className="bg-gray-300/70 rounded-b-lg px-1 w-fit">
+                                  <span className="text-xs p-1 rounded-lg">
+                                    {formatDateToTimeAgo(
+                                      chatMessage?.createdAt || new Date()
+                                    )}
+                                  </span>
+                                  | {chatMessage?.userName}{" "}
+                                  <span className="text-[9px]">
+                                    {user?.isAdmin && `(Expert)`}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div
+                            key={`message-${chatMessage?.id}`}
+                            id={`message_-_${index + 1}`}
+                            className="flex items-start gap-2"
+                          >
+                            <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary text-white grid place-items-center text-xs select-none">
+                              {user?.isAdmin ? "user" : "expert"}
+                            </div>
+                            <div className="">
+                              <div className="text-xs bg-gray-300 rounded-t-lg w-fit px-1">
+                                {chatMessage?.userName} |
                                 <span className="text-xs p-1 rounded-lg">
                                   {formatDateToTimeAgo(
                                     chatMessage?.createdAt || new Date()
                                   )}
                                 </span>
-                                | {chatMessage?.userName}{" "}
-                                <span className="text-[9px]">
-                                  {user?.isAdmin && `(Expert)`}
-                                </span>
+                              </div>
+                              <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit max-w-[200px] break-words md:max-w-[100%]">
+                                {/* <p className="text-sm">{chatMessage?.message}</p> */}
+                                {chatMessage?.type === "text" && (
+                                  <p className="text-sm">
+                                    {chatMessage?.message}
+                                  </p>
+                                )}
+                                {chatMessage?.type === "image" && (
+                                  <ImageNUI
+                                    src={chatMessage?.message}
+                                    // fill
+                                    isZoomed
+                                    alt="Preview"
+                                    className="w-[150px] h-[150px] static"
+                                  />
+                                )}
+                                {chatMessage?.type !== "text" &&
+                                  chatMessage?.type !== "image" && (
+                                    <div className="relative">
+                                      <IoMdDocument size={50} />
+                                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                        {chatMessage?.type}
+                                      </div>
+                                    </div>
+                                  )}
                               </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div
-                          key={`message-${chatMessage?.id}`}
-                          id={`message_-_${index + 1}`}
-                          className="flex items-start gap-2"
-                        >
-                          <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary grid place-items-center text-xs select-none">
-                            {user?.isAdmin ? "user" : "expert"}
-                          </div>
-                          <div className="">
-                            <div className="text-xs bg-gray-300 rounded-t-lg w-fit px-1">
-                              {chatMessage?.userName} |
-                              <span className="text-xs p-1 rounded-lg">
-                                {formatDateToTimeAgo(
-                                  chatMessage?.createdAt || new Date()
-                                )}
-                              </span>
-                            </div>
-                            <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit max-w-[200px] break-words md:max-w-[100%]">
-                              {/* <p className="text-sm">{chatMessage?.message}</p> */}
-                              {chatMessage?.type === "text" && (
-                                <p className="text-sm">
-                                  {chatMessage?.message}
-                                </p>
-                              )}
-                              {chatMessage?.type === "image" && (
-                                <ImageNUI
-                                  src={chatMessage?.message}
-                                  // fill
-                                  isZoomed
-                                  alt="Preview"
-                                  className="w-[150px] h-[150px] static"
-                                />
-                              )}
-                              {chatMessage?.type !== "text" &&
-                                chatMessage?.type !== "image" && (
-                                  <div className="relative">
-                                    <IoMdDocument size={50} />
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
-                                      {chatMessage?.type}
-                                    </div>
-                                  </div>
-                                )}
-                            </div>
-                          </div>
-                        </div>
-                      );
+                        );
+                      }
                     }
                   }
                 })}
@@ -1019,7 +1041,10 @@ const JoinChatButton = ({
         userProfilePicture: "",
       };
       await supabase.from("chat_messages").insert(createChatMessage);
-      await supabase.from("chats").update({ updatedAt: new Date() }).eq("id", chat?.id)
+      await supabase
+        .from("chats")
+        .update({ updatedAt: new Date() })
+        .eq("id", chat?.id);
     }
     scrollLastMsgIntoView();
     setLoading(false);
@@ -1083,7 +1108,10 @@ const MenuContent = ({
         userProfilePicture: "",
       };
       await supabase.from("chat_messages").insert(createChatMessage);
-      await supabase.from("chats").update({ updatedAt: new Date() }).eq("id", chat?.id)
+      await supabase
+        .from("chats")
+        .update({ updatedAt: new Date() })
+        .eq("id", chat?.id);
     }
     scrollLastMsgIntoView && scrollLastMsgIntoView();
     setLoading(false);
