@@ -52,31 +52,32 @@ export default function ChatPage() {
 
   const router = useRouter();
 
+  // Todo: remove this since we'll be listening to chat updatedAt attribute on the chat_view
   // subscribe to chats insert
-  useEffect(() => {
-    if (!user) return;
+  // useEffect(() => {
+  //   if (!user) return;
 
-    const channel = supabase
-      .channel("chats")
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "chats",
-        },
-        async (payload) => {
-          if (payload.new) {
-            user?.isAdmin && setRefreshSelectedChat(true);
-          }
-        }
-      )
-      .subscribe();
+  //   const channel = supabase
+  //     .channel("chats")
+  //     .on(
+  //       "postgres_changes",
+  //       {
+  //         event: "INSERT",
+  //         schema: "public",
+  //         table: "chats",
+  //       },
+  //       async (payload) => {
+  //         if (payload.new) {
+  //           user?.isAdmin && setRefreshSelectedChat(true);
+  //         }
+  //       }
+  //     )
+  //     .subscribe();
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [user]);
+  //   return () => {
+  //     supabase.removeChannel(channel);
+  //   };
+  // }, [user]);
 
   // URLSearchParams
   useEffect(() => {
@@ -232,8 +233,8 @@ export default function ChatPage() {
       `message_-_${chatMessages?.length}`
     );
     if (lastMessage) {
-      // lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
-      lastMessage.scrollIntoView(false);
+      lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+      // lastMessage.scrollIntoView(false);
       // inputRef?.current && inputRef?.current?.focus();
     }
   }
@@ -332,6 +333,7 @@ export default function ChatPage() {
           sender: user.isAdmin ? "expert" : "user",
         };
         await supabase.from("chat_messages").insert(createChatMessage);
+        await supabase.from("chats").update({ updatedAt: new Date() }).eq("id", chatId)
       }
       scrollLastMsgIntoView();
 
@@ -402,6 +404,7 @@ export default function ChatPage() {
       userProfilePicture: "",
     };
     await supabase.from("chat_messages").insert(createChatMessage);
+    await supabase.from("chats").update({ updatedAt: new Date() }).eq("id", chatId)
     scrollLastMsgIntoView();
     const oldList = selectedChat?.chatUsers;
     const c: any = { ...selectedChat, chatUsers: [...oldList, user.id] };
@@ -1016,6 +1019,7 @@ const JoinChatButton = ({
         userProfilePicture: "",
       };
       await supabase.from("chat_messages").insert(createChatMessage);
+      await supabase.from("chats").update({ updatedAt: new Date() }).eq("id", chat?.id)
     }
     scrollLastMsgIntoView();
     setLoading(false);
@@ -1079,6 +1083,7 @@ const MenuContent = ({
         userProfilePicture: "",
       };
       await supabase.from("chat_messages").insert(createChatMessage);
+      await supabase.from("chats").update({ updatedAt: new Date() }).eq("id", chat?.id)
     }
     scrollLastMsgIntoView && scrollLastMsgIntoView();
     setLoading(false);
