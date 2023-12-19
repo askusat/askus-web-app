@@ -58,7 +58,7 @@ export default function ChatPage() {
         async (payload) => {
           console.log("payload");
           console.log(payload);
-          setEditChatTitleProp(null);
+          user?.isAdmin && setEditChatTitleProp(null);
         }
       )
       .subscribe();
