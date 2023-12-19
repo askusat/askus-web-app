@@ -43,7 +43,7 @@ export default function ChatPage() {
   const [messageInput, setMessageInput] = useState("");
   const [chats, setChats] = useState<ChatSummary[]>([]);
   const [sendingMessage, setSendingMessage] = useState(false);
-  const [chatMessages, setchatMessages] = useState<ChatMessage[] | []>([]);
+  const [chatMessages, setchatMessages] = useState<ChatMessage[]>([]);
   const [editChatTitleProp, setEditChatTitleProp] = useState<number | null>(
     null
   );
@@ -197,7 +197,7 @@ export default function ChatPage() {
 
           if (selectedChat.chatUsers?.includes(user.id)) {
             setchatMessages([...chatMessages, payload.new as ChatMessage]);
-            setRefreshSelectedChat(true)
+            setRefreshSelectedChat(true);
           }
         }
       )
@@ -211,13 +211,13 @@ export default function ChatPage() {
   // scrollIntoView last message of a chat
   useEffect(() => {
     // console.log(`message_-_${chatMessages.length}`);
-
+    if (!chatMessages || chatMessages?.length < 1) return;
     const lastMessage = document.getElementById(
       `message_-_${chatMessages?.length}`
     );
     if (lastMessage) {
       lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
-      inputRef?.current && inputRef?.current?.focus();
+      // inputRef?.current && inputRef?.current?.focus();
       return;
     }
     // alert("message not loaded");
@@ -232,7 +232,7 @@ export default function ChatPage() {
     );
     if (lastMessage) {
       lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
-      inputRef?.current && inputRef?.current?.focus();
+      // inputRef?.current && inputRef?.current?.focus();
     }
   }
 
@@ -820,37 +820,39 @@ export default function ChatPage() {
                   handleSubmit();
                 }}
                 onKeyDown={(e: any) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
+                  if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault(); // Prevents new line in textarea if Shift+Enter is pressed
                     handleSubmit(); // Call your submit function here
                   }
                 }}
               >
                 <div className="px-3 flex items-center gap-0 w-full">
-                  {user?.isAdmin && <Popover
-                    showArrow
-                    offset={10}
-                    placement="bottom"
-                    backdrop={"blur"}
-                  >
-                    <PopoverTrigger>
-                      <Button
-                        isIconOnly
-                        color="default"
-                        size="sm"
-                        variant="flat"
-                        className="capitalize"
-                      >
-                        <HiDotsVertical />
-                      </Button>
-                    </PopoverTrigger>
-                    <MenuContent
-                      user={user}
-                      chat={selectedChat}
-                      scrollLastMsgIntoView={scrollLastMsgIntoView}
-                      setSelectedChat={setSelectedChat}
-                    />
-                  </Popover>}
+                  {user?.isAdmin && (
+                    <Popover
+                      showArrow
+                      offset={10}
+                      placement="bottom"
+                      backdrop={"blur"}
+                    >
+                      <PopoverTrigger>
+                        <Button
+                          isIconOnly
+                          color="default"
+                          size="sm"
+                          variant="flat"
+                          className="capitalize"
+                        >
+                          <HiDotsVertical />
+                        </Button>
+                      </PopoverTrigger>
+                      <MenuContent
+                        user={user}
+                        chat={selectedChat}
+                        scrollLastMsgIntoView={scrollLastMsgIntoView}
+                        setSelectedChat={setSelectedChat}
+                      />
+                    </Popover>
+                  )}
                   {seletectedFiles.length > 0 && (
                     <div className="absolute z-[50] bottom-[60px] rounded-lg w-[200px] h-[150px] bg-white shadow-xl text-center">
                       <div className="flex flex-wrap items-center gap-2 p-2">
