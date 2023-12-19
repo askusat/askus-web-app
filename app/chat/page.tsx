@@ -176,7 +176,7 @@ export default function ChatPage() {
 
   // subscribe to chat_messages
   useEffect(() => {
-    if (!user?.id) return;
+    if (!user || ! selectedChat) return;
 
     const chatMessagesChannel = supabase
       .channel("chat messages")
@@ -186,13 +186,14 @@ export default function ChatPage() {
           event: "INSERT",
           schema: "public",
           table: "chat_messages",
-          filter: `userId=eq.${user?.id}`,
+          filter: `userId=eq.${user.id}`,
         },
         (payload) => {
           // console.log("chat_messages payload.new");
           // console.log(payload.new);
-
-          setchatMessages([...chatMessages, payload.new as ChatMessage]);
+          if (selectedChat.chatUsers?.includes(user.id)) {
+            setchatMessages([...chatMessages, payload.new as ChatMessage]);
+          }
         }
       )
       .subscribe();
@@ -200,7 +201,7 @@ export default function ChatPage() {
     return () => {
       supabase.removeChannel(chatMessagesChannel);
     };
-  }, [chatMessages, user?.id]);
+  }, [chatMessages, selectedChat, user]);
 
   // scrollIntoView last message of a chat
   useEffect(() => {
