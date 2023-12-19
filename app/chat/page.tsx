@@ -197,6 +197,7 @@ export default function ChatPage() {
 
           if (selectedChat.chatUsers?.includes(user.id)) {
             setchatMessages([...chatMessages, payload.new as ChatMessage]);
+            setRefreshSelectedChat(true)
           }
         }
       )
