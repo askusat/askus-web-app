@@ -13,7 +13,7 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { FaAngleLeft, FaCheck, FaPen } from "react-icons/fa";
+import { FaAngleLeft, FaCheck, FaPen, FaTimes } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { ImAttachment } from "react-icons/im";
 import { IoIosSend } from "react-icons/io";
@@ -373,11 +373,15 @@ export default function ChatPage() {
               size="sm"
               className="bg-transparent"
               onClick={() => {
-                resetChatScreen();
+                if(selectedChat){
+                  resetChatScreen();
+                }else{
+                  router.push('/')
+                }
               }}
             >
               {/* <div className="w-4 h-4 rounded-full bg-danger text-white grid place-items-center text-xs"></div> */}
-              <FaAngleLeft size={20} className="text-white  " />
+              {selectedChat ? <FaAngleLeft size={20} className="text-white  " /> : <FaTimes size={20} className="text-red-600  " />}
             </Button>
             {/* <Button
               isIconOnly

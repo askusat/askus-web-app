@@ -1,8 +1,11 @@
+'use client'
+
 import { SignUpParam } from "@/app/context/AuthProvider";
 import { useAuth } from "@/app/hooks/useAuth";
 import { supabase } from "@/app/supabaseClient";
 import { Button, Image} from "@nextui-org/react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaArrowRight, FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -23,6 +26,8 @@ export const SignupStepOne = ({
     message: '',
   });
   const [processingSignUp, setProcessingSignUp] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl");
 
   const handleSignUpStep1 = async () => {
     // check if user already has an account with same email
@@ -224,7 +229,7 @@ export const SignupStepOne = ({
       <div className="text-center">
         <p className="text-center text-[#8091A7] italic text-xs">
           Already have an account?{" "}
-          <Link href="/login" className="text-primary">
+          <Link href={`${returnUrl ? `/login?returnUrl=${returnUrl}`: `/login`}`} className="text-primary">
             Login
           </Link>
         </p>

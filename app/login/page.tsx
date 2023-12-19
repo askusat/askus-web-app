@@ -8,6 +8,7 @@ import AuthLayout from "../components/layout/authLayout";
 import { useAuth } from "../hooks/useAuth";
 import { LoginParam } from "../context/AuthProvider";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export default function Login() {
   const auth = useAuth();
@@ -19,6 +20,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl");
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -155,7 +158,7 @@ export default function Login() {
             </Button>
             <p className="text-center text-[#8091A7] italic text-sm mt-3">
               {`Don't have an account?`}{" "}
-              <Link href="/signup" className="text-primary">
+              <Link href={`${returnUrl ? `/signup?returnUrl=${returnUrl}`: `/signup`}`} className="text-primary">
                 Register here
               </Link>
             </p>
