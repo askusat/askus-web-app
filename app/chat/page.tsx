@@ -23,11 +23,18 @@ import { Chat, ChatMessage, ChatSummary, User } from "@/types";
 import { supabase } from "../supabaseClient";
 import { formatDateToTimeAgo, formatDate } from "../utils/helpers";
 import { useRouter } from "next/navigation";
+import LoadingScreen from "../components/loadingScreen";
 
 export default function ChatPage() {
-  const { user, setOnChatPageId, notifications } = useAuth();
+  const {
+    user,
+    loading: authLoading,
+    setOnChatPageId,
+    notifications,
+  } = useAuth();
   const [selectedChatId, setSelectedChatId] = useState(0);
   const [selectedChat, setSelectedChat] = useState<Chat>(null);
+  const [refreshSelectedChat, setRefreshSelectedChat] = useState(false);
   const [isChatPageOpen, setIsChatPageOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [selectedTab, setSelectedTab] = useState<any>("ongoing");
@@ -42,7 +49,7 @@ export default function ChatPage() {
 
   const router = useRouter();
 
-  // subscribe to chat_messages
+  // subscribe to chats insert
   useEffect(() => {
     if (!user) return;
 
@@ -56,9 +63,9 @@ export default function ChatPage() {
           table: "chats",
         },
         async (payload) => {
-          console.log("payload");
-          console.log(payload);
-          user?.isAdmin && setEditChatTitleProp(null);
+          if (payload.new) {
+            user?.isAdmin && setRefreshSelectedChat(true);
+          }
         }
       )
       .subscribe();
@@ -137,9 +144,17 @@ export default function ChatPage() {
           setChats([]);
         }
       }
+      setRefreshSelectedChat(false);
     };
     fetch();
-  }, [selectedTab, user, isChatPageOpen, selectedChatId, editChatTitleProp]);
+  }, [
+    selectedTab,
+    user,
+    isChatPageOpen,
+    selectedChatId,
+    editChatTitleProp,
+    refreshSelectedChat,
+  ]);
 
   // get all messages for a chat
   useEffect(() => {
@@ -343,8 +358,13 @@ export default function ChatPage() {
     router.replace("/chat");
   };
 
+  if (!user && authLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="h-screen w-full">
+      <LoadingScreen />
       <nav className="fixed top-0 left-0 z-10 w-full h-[50px] bg-primary text-white">
         <div className="flex items-center justify-between gap-2 h-full px-2">
           <div className="flex items-center h-full">
@@ -516,7 +536,7 @@ export default function ChatPage() {
                       </p>
                     </div>
                     <div className="w-[20%]">
-                      <div className="whitespace-nowrap text-xs text-slate-600 flex justify-end">
+                      <div className="whitespace-wrap text-xs text-slate-600 flex justify-end">
                         {formatDateToTimeAgo(chat?.createdAt || new Date())}
                       </div>
                       <div className="mt-1 flex justify-end">
@@ -664,6 +684,7 @@ export default function ChatPage() {
                     onClick={() => {
                       inputRef?.current && inputRef?.current?.focus();
                     }}
+                    disabled={user?.isAdmin}
                   >
                     Ask Question
                   </Button>

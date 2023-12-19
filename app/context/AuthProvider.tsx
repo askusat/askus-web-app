@@ -3,10 +3,10 @@
 // ** React Imports
 import React, { ReactNode, useCallback } from "react";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { AuthContext, defaultProvider } from "./AuthContext";
 import { supabase } from "../supabaseClient";
-import { authConfig } from "../config";
+import { PROTECTED_PAGES, authConfig } from "../config";
 import { AuthUser } from "@supabase/supabase-js";
 import { Notification, User } from "@/types";
 
@@ -30,6 +30,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [onChatPageId, setOnChatPageId] = useState<number | null>(null);
   // Router
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const returnUrl = searchParams.get("returnUrl");
 
@@ -90,19 +91,26 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
+  // chechAuth
   useEffect(() => {
     const initAuth = async () => {
       const {
         data: { user },
         error,
       } = await supabase.auth.getUser();
-      if (error || !user) return setLoading(false);
+
+      if (error || !user) {
+        if (PROTECTED_PAGES.includes(pathname)) {
+          router.push(`/login?returnUrl=${pathname.split('/').pop()}`);
+        }
+        return setLoading(false);
+      }
       getAndSetUserData(user.email || "", true);
 
       setLoading(false);
     };
     initAuth();
-  }, [getAndSetUserData, router]);
+  }, [getAndSetUserData, pathname, router]);
 
   useEffect(() => {
     const getNotifications = async () => {
