@@ -1,5 +1,6 @@
 import { Notification, User } from "@/types";
 import { supabase } from "../supabaseClient";
+import moment from 'moment';
 
 export function formatDate(inputDate: Date): string {
   const options: any = {
@@ -17,6 +18,11 @@ export function formatDate(inputDate: Date): string {
 
   // return `${formattedDate} - ${formattedTime}`;
   return `${formattedDate}`;
+}
+
+export function formatDateToTimeAgo(timestamp: Date): string {
+  const timeago = moment(timestamp).fromNow();
+  return timeago
 }
 
 export function formatDateToDMYY(timestamp: Date): string {

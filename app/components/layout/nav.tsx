@@ -20,7 +20,7 @@ import { AnimatePresence } from "framer-motion";
 import { useAuth } from "@/app/hooks/useAuth";
 import Link from "next/link";
 import {
-  formatDateToDMYY,
+  formatDateToTimeAgo,
   markAllNotificationAsRead,
   markNotificationAsRead,
 } from "@/app/utils/helpers";
@@ -226,7 +226,7 @@ export default function Nav() {
                         {notification?.message}
                       </p>
                       <div className="text-[9px] text-gray-600 whitespace-nowrap">
-                        {formatDateToDMYY(
+                        {formatDateToTimeAgo(
                           notification?.updatedAt || new Date()
                         )}
                       </div>
