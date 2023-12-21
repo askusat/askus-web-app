@@ -233,7 +233,7 @@ export default function ChatPageV2() {
       }
     };
     fetch();
-  }, [user, selectedChatId, refreshChatMessage, sendingMessage]);
+  }, [user, selectedChatId, sendingMessage]);
 
   // sendNotification at an interval
   useEffect(() => {
@@ -263,7 +263,7 @@ export default function ChatPageV2() {
         (payload) => {
           // console.log("chat_messages payload.new");
           // console.log(payload.new);
-          
+
           setRefreshChatMessage(false);
           if (
             (user?.isAdmin || selectedChat.chatUsers?.includes(user.id)) &&
