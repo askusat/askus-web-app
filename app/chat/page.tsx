@@ -503,7 +503,7 @@ export default function ChatPageV2() {
   return (
     <>
       <div className="h-screen w-screen overflow-auto">
-        <nav className="fixed top-0 left-0 w-full bg-primary text-white h-[8vh] min-h-[50px]">
+        <nav className="fixed z-50 top-0 left-0 w-full bg-primary text-white h-[8vh] min-h-[50px]">
           <div className="flex items-center justify-between gap-2 h-full px-2">
             <div className="flex items-center h-full">
               <Button
@@ -562,9 +562,9 @@ export default function ChatPageV2() {
             </Link>
           </div>
         </nav>
-        <div className="grid lg:grid-cols-[1fr,3fr] md:grid-cols-[1fr,2fr] w-full h-[92vh] mt-[8vh] pb-3">
+        <div className="grid lg:grid-cols-[1fr,3fr] md:grid-cols-[1fr,2fr] w-full h-screen">
           <aside
-            className={`${selectedChat && "hidden md:block"} bg-red-600 h-full`}
+            className={`${selectedChat && "hidden md:block"} bg-red-600 h-screen pt-[8vh]`}
           >
             <div
               className={`${
@@ -753,11 +753,11 @@ export default function ChatPageV2() {
           <main
             className={`${
               !selectedChat && "hidden md:block"
-            } bg-green-600 h-[92vh]`}
+            } bg-gray-200 h-screen`}
           >
             <div
               id="chatScreenMain"
-              className="h-[calc(92vh-12%)] overflow-auto bg-gray-200"
+              className="h-[88vh] overflow-auto bg-gray-200"
             >
               {chatMessages?.length > 0 && (
                 <div className="flex flex-col gap-4 px-4 py-2">
@@ -906,7 +906,7 @@ export default function ChatPageV2() {
 
             <div
               id="footer"
-              className="hidden absolute md:static bottom-0 h-[12%] min-h-[60px] -mt-3 md:mt-0 bg-gray-200 w-full px-4 md:grid place-items-center"
+              className="absolute md:static bottom-0 h-[12%] min-h-[60px] -mt-3 md:mt-0 bg-gray-200 w-full px-4 md:grid place-items-center"
             >
               {(selectedChat &&
                 !selectedChat.answered &&
@@ -1061,7 +1061,7 @@ export default function ChatPageV2() {
         </div>
       </div>
 
-      <div
+      {/* <div
         id="footer"
         className="md:hidden absolute md:static bottom-0 h-[12%] min-h-[60px] -mt-3 md:mt-0 bg-gray-200 w-full px-4 grid place-items-center"
       >
@@ -1213,7 +1213,7 @@ export default function ChatPageV2() {
             setSelectedChat={setSelectedChat}
           />
         )}
-      </div>
+      </div> */}
     </>
   );
 }
