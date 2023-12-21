@@ -570,10 +570,10 @@ export default function ChatPageV2() {
           >
             <div
               className={`${
-                !user?.isAdmin && "h-[92vh]"
-              } h-[calc(92vh-80px)] overflow-auto bg-white`}
+                !user?.isAdmin && "h-[calc(92vh-80px)]"
+              } h-[92vh] overflow-auto bg-white`}
             >
-              <div className="h-[11%] py-2 flex w-full flex-col items-center">
+              <div className="py-2 flex w-full flex-col items-center">
                 <Tabs
                   aria-label="Options"
                   color="primary"
@@ -601,7 +601,7 @@ export default function ChatPageV2() {
                 </Tabs>
               </div>
 
-              <div className="h-[89%] py-3 overflow-auto bg-white">
+              <div className="py-3 overflow-auto bg-white">
                 {chats.length > 0 ? (
                   <div className="flex flex-col gap-0">
                     {chats.map((chat, index) => (
