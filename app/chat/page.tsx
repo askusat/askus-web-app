@@ -177,11 +177,11 @@ export default function ChatPageV2() {
           .order("updatedAt", { ascending: false });
         if (!error && data.length > 0) {
           setChats(data);
-          if (!document.hasFocus() && !notDelay) {
-            const notificationSound = "/message.mp3";
-            const sound = new Audio(notificationSound);
-            sound.play();
-          }
+          // if (!document.hasFocus() && !notDelay) {
+          //   const notificationSound = "/message.mp3";
+          //   const sound = new Audio(notificationSound);
+          //   sound.play();
+          // }
         } else {
           setChats([]);
         }
@@ -620,7 +620,7 @@ export default function ChatPageV2() {
                   if (selectedChat) {
                     resetChatScreen();
                   } else {
-                    if (window.prompt("Do you want to leave the chat?")) {
+                    if (window.confirm("Do you want to leave the chat?")) {
                       router.push("/");
                     }
                   }
