@@ -466,12 +466,16 @@ export default function ChatPageV2() {
       if (windowHeight > newHeight) {
         // Address bar might have been hidden
         console.log("Address bar might have been hidden.");
-        if(footer) footer.style.display='none'
+        if(footer) {
+          footer.classList.remove("absolute", "md:static", "bottom-2")
+        }
 
       } else if (windowHeight < newHeight) {
         // Address bar might have been shown
         // alert("Address bar might have been shown.");
-        if(footer) footer.style.display='grid'
+        if(footer) {
+          footer.classList.add("absolute", "md:static", "bottom-2")
+        }
         console.log("Address bar might have been shown.");
       }
 
@@ -888,7 +892,7 @@ export default function ChatPageV2() {
             )}
           </div>
 
-          <div id="footer" className="absolute md:static bottom-3 h-[12%] -mt-3 md:mt-0 bg-gray-200 w-full px-4 grid place-items-center">
+          <div id="footer" className="absolute md:static bottom-2 h-[12%] -mt-3 md:mt-0 bg-gray-200 w-full px-4 grid place-items-center">
             {(selectedChat &&
               !selectedChat.answered &&
               selectedChat?.chatUsers?.includes(user?.id)) ||
