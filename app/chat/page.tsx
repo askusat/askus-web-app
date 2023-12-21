@@ -24,7 +24,7 @@ import { supabase } from "../supabaseClient";
 import { formatDateToTimeAgo, formatDate } from "../utils/helpers";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "../components/loadingScreen";
-import uuid4 from "uuid4";
+import { nanoid } from 'nanoid'
 
 export default function ChatPageV2() {
   const {
@@ -364,7 +364,7 @@ export default function ChatPageV2() {
     if (!user) return null;
 
     const createData: Partial<Chat> = {
-      title: `${uuid4()}-${user?.username}`,
+      title: `${nanoid(6)}-${user?.username}`,
       userId: user.id,
       chatUsers: [user.id],
     };
@@ -384,9 +384,10 @@ export default function ChatPageV2() {
 
   // setSendingMessage
   const handleSubmit = async () => {
-    if (!user?.id) return;
+    if (!user?.id || sendingMessage) return;
 
     setSendingMessage(true);
+    setMessageInput("");
     var chatId = selectedChat?.id;
     if (!selectedChatId || selectedChatId === 0) {
       const chat: ChatSummary | any = await createChat();
@@ -504,7 +505,6 @@ export default function ChatPageV2() {
         }
       } catch (error) {}
       setSendingMessage(false);
-      setMessageInput("");
     } else {
       resetChatScreen();
     }
@@ -673,7 +673,7 @@ export default function ChatPageV2() {
           <aside
             className={`${
               isChatPageOpen && "hidden md:block"
-            } bg-primary h-screen`}
+            } bg-primary h-screen w-screen md:w-full`}
           >
             <div
               className={`${
@@ -738,7 +738,7 @@ export default function ChatPageV2() {
                           <div className="w-[17%]">
                             <div className="w-10 h-10 rounded-full bg-primary"></div>
                           </div>
-                          <div className="w-[63%]">
+                          <div className="w-[63%] md:max-w-[200px]">
                             <div className="flex items-center">
                               <input
                                 className={`${
@@ -897,7 +897,7 @@ export default function ChatPageV2() {
                               <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
                                 you
                               </div>
-                              <div className="flex flex-col items-end w-fit">
+                              <div className="flex flex-col items-end w-fit md:max-w-[70%]">
                                 <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit max-w-[200px] break-words md:max-w-[100%]">
                                   {chatMessage?.type === "text" && (
                                     <p className="text-sm">
@@ -949,7 +949,7 @@ export default function ChatPageV2() {
                               <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary text-white grid place-items-center text-xs select-none">
                                 {user?.isAdmin ? "user" : "expert"}
                               </div>
-                              <div className="">
+                              <div className="md:max-w-[70%]">
                                 <div className="text-xs">
                                   {chatMessage?.userName} |
                                   <span className="text-xs p-1 rounded-lg">
@@ -1143,7 +1143,7 @@ export default function ChatPageV2() {
                         placeholder="Enter message here..."
                         value={messageInput}
                         onChange={(e: any) => setMessageInput(e.target.value)}
-                        disabled={sendingMessage}
+                        // disabled={sendingMessage}
                       ></textarea>
                       <Button
                         isIconOnly
