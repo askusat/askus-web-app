@@ -37,8 +37,6 @@ export default function ChatPage() {
   const [selectedChat, setSelectedChat] = useState<Chat>(null);
   const [refreshChatList, setRefreshChatList] = useState(false);
   const [isChatPageOpen, setIsChatPageOpen] = useState(false);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
   const [selectedTab, setSelectedTab] = useState<any>("ongoing");
   const [messageInput, setMessageInput] = useState("");
   const [chats, setChats] = useState<ChatSummary[]>([]);
@@ -49,6 +47,11 @@ export default function ChatPage() {
   );
   const [chatTitle, setChatTitle] = useState("");
   const [seletectedFiles, setSeletectedFiles] = useState<any[]>([]);
+
+  // refs
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const scrollToViewRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
 
@@ -214,6 +217,10 @@ export default function ChatPage() {
           if (selectedChat.chatUsers?.includes(user.id)) {
             setchatMessages([...chatMessages, payload.new as ChatMessage]);
             setRefreshChatList(true);
+            scrollToViewRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "end",
+            });
           }
         }
       )
@@ -815,6 +822,7 @@ export default function ChatPage() {
                       }
                     }
                   }
+                  <div ref={scrollToViewRef} className="h-10"></div>;
                 })}
             </div>
 
