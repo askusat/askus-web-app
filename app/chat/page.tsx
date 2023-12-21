@@ -107,7 +107,7 @@ export default function ChatPageV2() {
           .eq("id", chatId)
           .single();
         if (error) {
-          router.replace("/chatv2");
+          router.replace("/chat");
           return;
         }
         resetChatScreen();
@@ -117,7 +117,7 @@ export default function ChatPageV2() {
         // inputRef?.current && inputRef?.current?.focus();
         router.push(`?chatId=${chat.id}`);
       } else {
-        router.replace("/chatv2");
+        router.replace("/chat");
         return;
       }
     };
@@ -453,7 +453,7 @@ export default function ChatPageV2() {
     setSelectedChat(null);
     setchatMessages([]);
     setIsChatPageOpen(false);
-    router.replace("/chatv2");
+    router.replace("/chat");
   };
 
   if (!user && authLoading) {
@@ -522,490 +522,486 @@ export default function ChatPageV2() {
         </div>
       </nav>
       <div className="grid lg:grid-cols-[1fr,3fr] md:grid-cols-[1fr,2fr] w-full h-[92vh]">
-        {!isChatPageOpen ? (
-          <aside className="bg-red-600 h-full">
-            <div
-              className={`${
-                !user?.isAdmin && "h-[88%]"
-              } h-[100%] overflow-auto bg-white`}
-            >
-              <div className="h-[11%] py-2 flex w-full flex-col items-center">
-                <Tabs
-                  aria-label="Options"
-                  color="primary"
-                  variant="bordered"
-                  onSelectionChange={setSelectedTab}
-                >
-                  <Tab
-                    key="ongoing"
-                    title={
-                      <div className="flex items-center space-x-2">
-                        <TbRotateRectangle />
-                        <span>Ongoing</span>
-                      </div>
-                    }
-                  />
-                  <Tab
-                    key="answered"
-                    title={
-                      <div className="flex items-center space-x-2">
-                        <FaCheck />
-                        <span>Answered</span>
-                      </div>
-                    }
-                  />
-                </Tabs>
-              </div>
-
-              <div className="h-[89%] py-3 overflow-auto bg-white">
-                {chats.length > 0 ? (
-                  <div className="flex flex-col gap-0">
-                    {chats.map((chat, index) => (
-                      <div
-                        key={`convstn_${index + 1}`}
-                        className={`${
-                          chats.length !== index + 1 &&
-                          "border-b border-slate-400"
-                        } ${
-                          selectedChatId === chat?.id && "bg-gray-200"
-                        } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
-                        onClick={() => {
-                          if (editChatTitleProp !== null) return;
-                          resetChatScreen();
-                          if (!chat) {
-                            router.replace("/chat");
-                            return;
-                          }
-                          setSelectedChat(chat);
-                          setSelectedChatId(chat?.id || 0);
-                          setIsChatPageOpen(true);
-                          // inputRef?.current && inputRef?.current?.focus();
-                          router.push(`?chatId=${chat.id}`);
-                        }}
-                      >
-                        <div className="w-[17%]">
-                          <div className="w-10 h-10 rounded-full bg-primary"></div>
-                        </div>
-                        <div className="w-[63%]">
-                          <div className="flex items-center">
-                            <input
-                              className={`${
-                                editChatTitleProp &&
-                                editChatTitleProp === chat?.id &&
-                                "outline-none p-2"
-                              } font-semibold truncate leading-3`}
-                              value={
-                                chatTitle && editChatTitleProp === chat?.id
-                                  ? chatTitle
-                                  : chat?.title
-                              }
-                              onChange={(e: any) =>
-                                setChatTitle(e.target.value)
-                              }
-                              id={`chatMain-${chat?.id}`}
-                              disabled={
-                                !editChatTitleProp ||
-                                editChatTitleProp !== chat?.id
-                              }
-                            />
-
-                            <button
-                              // isIconOnly
-                              className="bg-transparent leading-3"
-                              onClick={async () => {
-                                const inputEl: any = document.getElementById(
-                                  `chatMain-${chat?.id}`
-                                );
-
-                                if (inputEl) {
-                                  inputEl.focus();
-                                  if (editChatTitleProp) {
-                                    const { error } = await supabase
-                                      .from("chats")
-                                      .update({ title: inputEl?.value })
-                                      .eq("id", editChatTitleProp);
-
-                                    if (error) {
-                                      alert(error.message);
-                                    } else {
-                                      setEditChatTitleProp(null);
-                                    }
-                                  } else {
-                                    inputEl.focus();
-                                    setEditChatTitleProp(chat?.id || null);
-                                  }
-                                }
-                              }}
-                            >
-                              {editChatTitleProp !== chat?.id ? (
-                                <FaPen />
-                              ) : (
-                                <FaCheck size={20} className="text-primary" />
-                              )}
-                            </button>
-                          </div>
-                          <p className="truncate text-sm">
-                            {chat?.message || "New message"}
-                          </p>
-                        </div>
-                        <div className="w-[20%]">
-                          <div className="whitespace-wrap text-xs text-slate-600 flex justify-end">
-                            {formatDateToTimeAgo(chat?.createdAt || new Date())}
-                          </div>
-                          <div className="mt-1 flex justify-end">
-                            {notifications.find(
-                              (r) => r?.chatId === chat?.id
-                            ) && (
-                              <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
-                                {
-                                  notifications.filter(
-                                    (r) => r?.chatId === chat?.id
-                                  ).length
-                                }
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="h-full grid place-items-center">
-                    <div className="">
-                      <AvatarGroup isBordered isDisabled max={1000}>
-                        <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-                        <Avatar src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
-                        <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-                        <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026302d" />
-                        <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026702d" />
-                        <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
-                      </AvatarGroup>
-                      <p className="text-center max-w-[200px] text-gray-400 mx-auto mt-2 text-sm">
-                        Join others to get answers to your questions
-                      </p>
+        <aside className={`${selectedChat && "hidden md:block"} bg-red-600 h-full`}>
+          <div
+            className={`${
+              !user?.isAdmin && "h-[88%]"
+            } h-[100%] overflow-auto bg-white`}
+          >
+            <div className="h-[11%] py-2 flex w-full flex-col items-center">
+              <Tabs
+                aria-label="Options"
+                color="primary"
+                variant="bordered"
+                onSelectionChange={setSelectedTab}
+              >
+                <Tab
+                  key="ongoing"
+                  title={
+                    <div className="flex items-center space-x-2">
+                      <TbRotateRectangle />
+                      <span>Ongoing</span>
                     </div>
-                  </div>
-                )}
-              </div>
+                  }
+                />
+                <Tab
+                  key="answered"
+                  title={
+                    <div className="flex items-center space-x-2">
+                      <FaCheck />
+                      <span>Answered</span>
+                    </div>
+                  }
+                />
+              </Tabs>
             </div>
 
-            {!user?.isAdmin && (
-              <footer className="w-full h-[12%] py-4 bg-[#F9F9F9]">
-                <div className="px-6">
-                  <Button
-                    color="primary"
-                    className="text-white w-full"
-                    onClick={() => {
-                      resetChatScreen();
-                      setIsChatPageOpen(true);
-                      inputRef?.current && inputRef?.current?.focus();
-                    }}
-                  >
-                    Ask New Question
-                  </Button>
+            <div className="h-[89%] py-3 overflow-auto bg-white">
+              {chats.length > 0 ? (
+                <div className="flex flex-col gap-0">
+                  {chats.map((chat, index) => (
+                    <div
+                      key={`convstn_${index + 1}`}
+                      className={`${
+                        chats.length !== index + 1 &&
+                        "border-b border-slate-400"
+                      } ${
+                        selectedChatId === chat?.id && "bg-gray-200"
+                      } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
+                      onClick={() => {
+                        if (editChatTitleProp !== null) return;
+                        resetChatScreen();
+                        if (!chat) {
+                          router.replace("/chat");
+                          return;
+                        }
+                        setSelectedChat(chat);
+                        setSelectedChatId(chat?.id || 0);
+                        setIsChatPageOpen(true);
+                        // inputRef?.current && inputRef?.current?.focus();
+                        router.push(`?chatId=${chat.id}`);
+                      }}
+                    >
+                      <div className="w-[17%]">
+                        <div className="w-10 h-10 rounded-full bg-primary"></div>
+                      </div>
+                      <div className="w-[63%]">
+                        <div className="flex items-center">
+                          <input
+                            className={`${
+                              editChatTitleProp &&
+                              editChatTitleProp === chat?.id &&
+                              "outline-none p-2"
+                            } font-semibold truncate leading-3`}
+                            value={
+                              chatTitle && editChatTitleProp === chat?.id
+                                ? chatTitle
+                                : chat?.title
+                            }
+                            onChange={(e: any) => setChatTitle(e.target.value)}
+                            id={`chatMain-${chat?.id}`}
+                            disabled={
+                              !editChatTitleProp ||
+                              editChatTitleProp !== chat?.id
+                            }
+                          />
+
+                          <button
+                            // isIconOnly
+                            className="bg-transparent leading-3"
+                            onClick={async () => {
+                              const inputEl: any = document.getElementById(
+                                `chatMain-${chat?.id}`
+                              );
+
+                              if (inputEl) {
+                                inputEl.focus();
+                                if (editChatTitleProp) {
+                                  const { error } = await supabase
+                                    .from("chats")
+                                    .update({ title: inputEl?.value })
+                                    .eq("id", editChatTitleProp);
+
+                                  if (error) {
+                                    alert(error.message);
+                                  } else {
+                                    setEditChatTitleProp(null);
+                                  }
+                                } else {
+                                  inputEl.focus();
+                                  setEditChatTitleProp(chat?.id || null);
+                                }
+                              }
+                            }}
+                          >
+                            {editChatTitleProp !== chat?.id ? (
+                              <FaPen />
+                            ) : (
+                              <FaCheck size={20} className="text-primary" />
+                            )}
+                          </button>
+                        </div>
+                        <p className="truncate text-sm">
+                          {chat?.message || "New message"}
+                        </p>
+                      </div>
+                      <div className="w-[20%]">
+                        <div className="whitespace-wrap text-xs text-slate-600 flex justify-end">
+                          {formatDateToTimeAgo(chat?.createdAt || new Date())}
+                        </div>
+                        <div className="mt-1 flex justify-end">
+                          {notifications.find(
+                            (r) => r?.chatId === chat?.id
+                          ) && (
+                            <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
+                              {
+                                notifications.filter(
+                                  (r) => r?.chatId === chat?.id
+                                ).length
+                              }
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </footer>
-            )}
-          </aside>
-        ) : (
-          <main className="bg-gray-200 h-[92vh]">
-            <div
-              id="chatScreenMain"
-              className="h-[calc(92vh-12%)] overflow-auto bg-gray-200"
-            >
-              {chatMessages?.length > 0 && (
-                <div className="flex flex-col gap-4 px-4 py-2">
-                  {chatMessages?.map((chatMessage, index) => {
-                    if (chatMessage?.chatId === selectedChat?.id) {
-                      if (chatMessage?.userName === "system") {
+              ) : (
+                <div className="h-full grid place-items-center">
+                  <div className="">
+                    <AvatarGroup isBordered isDisabled max={1000}>
+                      <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+                      <Avatar src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
+                      <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
+                      <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026302d" />
+                      <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026702d" />
+                      <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
+                    </AvatarGroup>
+                    <p className="text-center max-w-[200px] text-gray-400 mx-auto mt-2 text-sm">
+                      Join others to get answers to your questions
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {!user?.isAdmin && (
+            <footer className="w-full h-[12%] py-4 bg-[#F9F9F9]">
+              <div className="px-6">
+                <Button
+                  color="primary"
+                  className="text-white w-full"
+                  onClick={() => {
+                    resetChatScreen();
+                    setIsChatPageOpen(true);
+                    inputRef?.current && inputRef?.current?.focus();
+                  }}
+                >
+                  Ask New Question
+                </Button>
+              </div>
+            </footer>
+          )}
+        </aside>
+
+        <main className={`${!selectedChat && "hidden md:block"} bg-gray-200 h-[92vh]`}>
+          <div
+            id="chatScreenMain"
+            className="h-[calc(92vh-12%)] overflow-auto bg-gray-200"
+          >
+            {chatMessages?.length > 0 && (
+              <div className="flex flex-col gap-4 px-4 py-2">
+                {chatMessages?.map((chatMessage, index) => {
+                  if (chatMessage?.chatId === selectedChat?.id) {
+                    if (chatMessage?.userName === "system") {
+                      return (
+                        <div
+                          key={`message-${chatMessage?.id}`}
+                          id={`message_-_${index + 1}`}
+                          className="border-y border-gray-400/50 py-2 px-4"
+                        >
+                          <p className="text-center text-sm">
+                            {chatMessage?.message}
+                          </p>
+                        </div>
+                      );
+                    } else {
+                      if (chatMessage?.userId === user?.id) {
                         return (
                           <div
                             key={`message-${chatMessage?.id}`}
                             id={`message_-_${index + 1}`}
-                            className="border-y border-gray-400/50 py-2 px-4"
+                            className="flex flex-row-reverse items-end gap-2 w-full"
                           >
-                            <p className="text-center text-sm">
-                              {chatMessage?.message}
-                            </p>
-                          </div>
-                        );
-                      } else {
-                        if (chatMessage?.userId === user?.id) {
-                          return (
-                            <div
-                              key={`message-${chatMessage?.id}`}
-                              id={`message_-_${index + 1}`}
-                              className="flex flex-row-reverse items-end gap-2 w-full"
-                            >
-                              <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
-                                you
-                              </div>
-                              <div className="flex flex-col items-end w-fit">
-                                <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit max-w-[200px] break-words md:max-w-[100%]">
-                                  {chatMessage?.type === "text" && (
-                                    <p className="text-sm">
-                                      {chatMessage?.message}
-                                    </p>
-                                  )}
-                                  {chatMessage?.type === "image" && (
-                                    <ImageNUI
-                                      src={chatMessage?.message}
-                                      // fill
-                                      isZoomed
-                                      alt="Preview"
-                                      className="w-[150px] h-[150px] static"
-                                    />
-                                  )}
-                                  {chatMessage?.type !== "text" &&
-                                    chatMessage?.type !== "image" && (
-                                      <div className="relative">
-                                        <IoMdDocument size={50} />
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
-                                          {chatMessage?.type}
-                                        </div>
-                                      </div>
-                                    )}
-                                </div>
-                                <div className="text-xs text-end flex justify-end">
-                                  <div className="">
-                                    <span className="text-xs p-1 rounded-lg">
-                                      {formatDateToTimeAgo(
-                                        chatMessage?.createdAt || new Date()
-                                      )}
-                                    </span>
-                                    | {chatMessage?.userName}{" "}
-                                    <span className="text-[9px]">
-                                      {user?.isAdmin && `(Expert)`}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
+                            <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
+                              you
                             </div>
-                          );
-                        } else {
-                          return (
-                            <div
-                              key={`message-${chatMessage?.id}`}
-                              id={`message_-_${index + 1}`}
-                              className="flex items-start gap-2"
-                            >
-                              <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary text-white grid place-items-center text-xs select-none">
-                                {user?.isAdmin ? "user" : "expert"}
+                            <div className="flex flex-col items-end w-fit">
+                              <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit max-w-[200px] break-words md:max-w-[100%]">
+                                {chatMessage?.type === "text" && (
+                                  <p className="text-sm">
+                                    {chatMessage?.message}
+                                  </p>
+                                )}
+                                {chatMessage?.type === "image" && (
+                                  <ImageNUI
+                                    src={chatMessage?.message}
+                                    // fill
+                                    isZoomed
+                                    alt="Preview"
+                                    className="w-[150px] h-[150px] static"
+                                  />
+                                )}
+                                {chatMessage?.type !== "text" &&
+                                  chatMessage?.type !== "image" && (
+                                    <div className="relative">
+                                      <IoMdDocument size={50} />
+                                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                        {chatMessage?.type}
+                                      </div>
+                                    </div>
+                                  )}
                               </div>
-                              <div className="">
-                                <div className="text-xs">
-                                  {chatMessage?.userName} |
+                              <div className="text-xs text-end flex justify-end">
+                                <div className="">
                                   <span className="text-xs p-1 rounded-lg">
                                     {formatDateToTimeAgo(
                                       chatMessage?.createdAt || new Date()
                                     )}
                                   </span>
-                                </div>
-                                <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit max-w-[200px] break-words md:max-w-[100%]">
-                                  {chatMessage?.type === "text" && (
-                                    <p className="text-sm">
-                                      {chatMessage?.message}
-                                    </p>
-                                  )}
-                                  {chatMessage?.type === "image" && (
-                                    <ImageNUI
-                                      src={chatMessage?.message}
-                                      // fill
-                                      isZoomed
-                                      alt="Preview"
-                                      className="w-[150px] h-[150px] static"
-                                    />
-                                  )}
-                                  {chatMessage?.type !== "text" &&
-                                    chatMessage?.type !== "image" && (
-                                      <div className="relative">
-                                        <IoMdDocument size={50} />
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
-                                          {chatMessage?.type}
-                                        </div>
-                                      </div>
-                                    )}
+                                  | {chatMessage?.userName}{" "}
+                                  <span className="text-[9px]">
+                                    {user?.isAdmin && `(Expert)`}
+                                  </span>
                                 </div>
                               </div>
                             </div>
-                          );
-                        }
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div
+                            key={`message-${chatMessage?.id}`}
+                            id={`message_-_${index + 1}`}
+                            className="flex items-start gap-2"
+                          >
+                            <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary text-white grid place-items-center text-xs select-none">
+                              {user?.isAdmin ? "user" : "expert"}
+                            </div>
+                            <div className="">
+                              <div className="text-xs">
+                                {chatMessage?.userName} |
+                                <span className="text-xs p-1 rounded-lg">
+                                  {formatDateToTimeAgo(
+                                    chatMessage?.createdAt || new Date()
+                                  )}
+                                </span>
+                              </div>
+                              <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit max-w-[200px] break-words md:max-w-[100%]">
+                                {chatMessage?.type === "text" && (
+                                  <p className="text-sm">
+                                    {chatMessage?.message}
+                                  </p>
+                                )}
+                                {chatMessage?.type === "image" && (
+                                  <ImageNUI
+                                    src={chatMessage?.message}
+                                    // fill
+                                    isZoomed
+                                    alt="Preview"
+                                    className="w-[150px] h-[150px] static"
+                                  />
+                                )}
+                                {chatMessage?.type !== "text" &&
+                                  chatMessage?.type !== "image" && (
+                                    <div className="relative">
+                                      <IoMdDocument size={50} />
+                                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                        {chatMessage?.type}
+                                      </div>
+                                    </div>
+                                  )}
+                              </div>
+                            </div>
+                          </div>
+                        );
                       }
                     }
-                  })}
-                  <div ref={scrollToViewRef} className="h-4"></div>
-                </div>
-              )}
+                  }
+                })}
+                <div ref={scrollToViewRef} className="h-4"></div>
+              </div>
+            )}
 
-              {chatMessages?.length <= 0 && (
-                <div className="grid place-items-center h-full">
-                  <div className="">
-                    <Button
-                      className="bg-primary text-white"
-                      onClick={() => {
-                        inputRef?.current && inputRef?.current?.focus();
-                      }}
-                      disabled={user?.isAdmin}
+            {chatMessages?.length <= 0 && (
+              <div className="grid place-items-center h-full">
+                <div className="">
+                  <Button
+                    className="bg-primary text-white"
+                    onClick={() => {
+                      inputRef?.current && inputRef?.current?.focus();
+                    }}
+                    disabled={user?.isAdmin}
+                  >
+                    Ask Question
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="absolute md:static bottom-3 h-[12%] -mt-3 md:mt-0 bg-gray-200 w-full px-4 grid place-items-center">
+            {(selectedChat &&
+              !selectedChat.answered &&
+              selectedChat?.chatUsers?.includes(user?.id)) ||
+            !selectedChat ? (
+              <form
+                className="w-full py-2 border border-primary rounded-full bg-gray-200 relative z-20"
+                onSubmit={(e: any) => {
+                  e.preventDefault();
+                  handleSubmit();
+                }}
+                onKeyDown={(e: any) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault(); // Prevents new line in textarea if Shift+Enter is pressed
+                    handleSubmit(); // Call your submit function here
+                  }
+                }}
+              >
+                <div className="px-3 flex items-center gap-0 w-full">
+                  {user?.isAdmin && (
+                    <Popover
+                      showArrow
+                      offset={10}
+                      placement="bottom"
+                      backdrop={"blur"}
                     >
-                      Ask Question
+                      <PopoverTrigger>
+                        <Button
+                          isIconOnly
+                          color="default"
+                          size="sm"
+                          variant="flat"
+                          className="capitalize"
+                        >
+                          <HiDotsVertical />
+                        </Button>
+                      </PopoverTrigger>
+                      <MenuContent
+                        user={user}
+                        chat={selectedChat}
+                        scrollLastMsgIntoView={scrollLastMsgIntoView}
+                        setSelectedChat={setSelectedChat}
+                      />
+                    </Popover>
+                  )}
+                  {seletectedFiles.length > 0 && (
+                    <div className="absolute z-[50] bottom-[60px] rounded-lg w-[200px] h-[150px] bg-white shadow-xl text-center">
+                      <div className="flex flex-wrap items-center gap-2 p-2">
+                        {seletectedFiles.map((file: any, index) => {
+                          // console.log("file: ");
+                          // console.log(file);
+                          const imageUrl = URL.createObjectURL(file);
+                          return (
+                            <div
+                              key={`file_-${index + 1}`}
+                              className="relative group"
+                            >
+                              {file.type.startsWith("image") ? (
+                                <ImageNUI
+                                  src={imageUrl}
+                                  isZoomed
+                                  alt="Preview"
+                                  className="w-[50px] h-[50px]"
+                                />
+                              ) : (
+                                <div className="relative">
+                                  <IoMdDocument size={50} />
+                                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                    {
+                                      file.name.split(".")[
+                                        file.name.split(".").length - 1
+                                      ]
+                                    }
+                                  </div>
+                                </div>
+                              )}
+                              <div
+                                className="hidden absolute z-20 top-0 left-0 w-full h-full bg-black/30 group-hover:grid place-items-center cursor-pointer"
+                                onClick={() => {
+                                  const n = seletectedFiles.filter(
+                                    (file, i) => i !== index
+                                  );
+                                  setSeletectedFiles(n);
+                                }}
+                              >
+                                <FaTimes size={18} color="red" />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                  <div className="pr-6 pl-3 flex items-center gap-0 w-full">
+                    <div className="relative w-[18px] h-[18px]">
+                      <input
+                        ref={fileRef}
+                        type="file"
+                        name="file"
+                        id="file"
+                        multiple
+                        className="relative z-20 w-[18px] h-[18px] cursor-pointer opacity-0"
+                        accept=".jpg, .jpeg, .png, .webp, .gif, .pdf, .doc, .docx, .txt"
+                        onChange={(e: any) => {
+                          setSeletectedFiles([
+                            ...seletectedFiles,
+                            ...e.target.files,
+                          ]);
+                        }}
+                      />
+                      <label
+                        htmlFor="file"
+                        id="file"
+                        className="absolute top-0 left-0 z-10 w-[18px] h-[18px]"
+                      >
+                        <ImAttachment size={18} />
+                      </label>
+                    </div>
+                    <textarea
+                      ref={inputRef}
+                      className="bg-transparent outline-none px-2 pb-3 pt-[10px] placeholder:pt-[5px] w-full h-[40px] resize-none placeholder:text-sm scrolled-remove focus:ring-0 focus-visible:ring-0"
+                      tabIndex={0}
+                      placeholder="Enter message here..."
+                      value={messageInput}
+                      onChange={(e: any) => setMessageInput(e.target.value)}
+                      disabled={sendingMessage}
+                    ></textarea>
+                    <Button
+                      isIconOnly
+                      type="submit"
+                      size="sm"
+                      className="bg-primary text-white ml-2"
+                      isLoading={sendingMessage}
+                    >
+                      <IoIosSend size={20} />
                     </Button>
                   </div>
                 </div>
-              )}
-            </div>
-
-            <div className="h-[12%] -mt-3 md:mt-0 bg-gray-200 w-full px-4 grid place-items-center">
-              {(selectedChat &&
-                !selectedChat.answered &&
-                selectedChat?.chatUsers?.includes(user?.id)) ||
-              !selectedChat ? (
-                <form
-                  className="w-full py-2 border border-primary rounded-full bg-gray-200 relative z-20"
-                  onSubmit={(e: any) => {
-                    e.preventDefault();
-                    handleSubmit();
-                  }}
-                  onKeyDown={(e: any) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault(); // Prevents new line in textarea if Shift+Enter is pressed
-                      handleSubmit(); // Call your submit function here
-                    }
-                  }}
-                >
-                  <div className="px-3 flex items-center gap-0 w-full">
-                    {user?.isAdmin && (
-                      <Popover
-                        showArrow
-                        offset={10}
-                        placement="bottom"
-                        backdrop={"blur"}
-                      >
-                        <PopoverTrigger>
-                          <Button
-                            isIconOnly
-                            color="default"
-                            size="sm"
-                            variant="flat"
-                            className="capitalize"
-                          >
-                            <HiDotsVertical />
-                          </Button>
-                        </PopoverTrigger>
-                        <MenuContent
-                          user={user}
-                          chat={selectedChat}
-                          scrollLastMsgIntoView={scrollLastMsgIntoView}
-                          setSelectedChat={setSelectedChat}
-                        />
-                      </Popover>
-                    )}
-                    {seletectedFiles.length > 0 && (
-                      <div className="absolute z-[50] bottom-[60px] rounded-lg w-[200px] h-[150px] bg-white shadow-xl text-center">
-                        <div className="flex flex-wrap items-center gap-2 p-2">
-                          {seletectedFiles.map((file: any, index) => {
-                            // console.log("file: ");
-                            // console.log(file);
-                            const imageUrl = URL.createObjectURL(file);
-                            return (
-                              <div
-                                key={`file_-${index + 1}`}
-                                className="relative group"
-                              >
-                                {file.type.startsWith("image") ? (
-                                  <ImageNUI
-                                    src={imageUrl}
-                                    isZoomed
-                                    alt="Preview"
-                                    className="w-[50px] h-[50px]"
-                                  />
-                                ) : (
-                                  <div className="relative">
-                                    <IoMdDocument size={50} />
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
-                                      {
-                                        file.name.split(".")[
-                                          file.name.split(".").length - 1
-                                        ]
-                                      }
-                                    </div>
-                                  </div>
-                                )}
-                                <div
-                                  className="hidden absolute z-20 top-0 left-0 w-full h-full bg-black/30 group-hover:grid place-items-center cursor-pointer"
-                                  onClick={() => {
-                                    const n = seletectedFiles.filter(
-                                      (file, i) => i !== index
-                                    );
-                                    setSeletectedFiles(n);
-                                  }}
-                                >
-                                  <FaTimes size={18} color="red" />
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                    <div className="pr-6 pl-3 flex items-center gap-0 w-full">
-                      <div className="relative w-[18px] h-[18px]">
-                        <input
-                          ref={fileRef}
-                          type="file"
-                          name="file"
-                          id="file"
-                          multiple
-                          className="relative z-20 w-[18px] h-[18px] cursor-pointer opacity-0"
-                          accept=".jpg, .jpeg, .png, .webp, .gif, .pdf, .doc, .docx, .txt"
-                          onChange={(e: any) => {
-                            setSeletectedFiles([
-                              ...seletectedFiles,
-                              ...e.target.files,
-                            ]);
-                          }}
-                        />
-                        <label
-                          htmlFor="file"
-                          id="file"
-                          className="absolute top-0 left-0 z-10 w-[18px] h-[18px]"
-                        >
-                          <ImAttachment size={18} />
-                        </label>
-                      </div>
-                      <textarea
-                        ref={inputRef}
-                        className="bg-transparent outline-none px-2 pb-3 pt-[10px] placeholder:pt-[5px] w-full h-[40px] resize-none placeholder:text-sm scrolled-remove focus:ring-0 focus-visible:ring-0"
-                        tabIndex={0}
-                        placeholder="Enter message here..."
-                        value={messageInput}
-                        onChange={(e: any) => setMessageInput(e.target.value)}
-                        disabled={sendingMessage}
-                      ></textarea>
-                      <Button
-                        isIconOnly
-                        type="submit"
-                        size="sm"
-                        className="bg-primary text-white ml-2"
-                        isLoading={sendingMessage}
-                      >
-                        <IoIosSend size={20} />
-                      </Button>
-                    </div>
-                  </div>
-                </form>
-              ) : (
-                <JoinChatButton
-                  user={user}
-                  chat={selectedChat}
-                  scrollLastMsgIntoView={scrollLastMsgIntoView}
-                  addUserToChat={addUserToChat}
-                  addingUserToChat={addingUserToChat}
-                  setSelectedChat={setSelectedChat}
-                />
-              )}
-            </div>
-          </main>
-        )}
+              </form>
+            ) : (
+              <JoinChatButton
+                user={user}
+                chat={selectedChat}
+                scrollLastMsgIntoView={scrollLastMsgIntoView}
+                addUserToChat={addUserToChat}
+                addingUserToChat={addingUserToChat}
+                setSelectedChat={setSelectedChat}
+              />
+            )}
+          </div>
+        </main>
       </div>
     </div>
   );
