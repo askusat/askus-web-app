@@ -24,7 +24,7 @@ import { supabase } from "../supabaseClient";
 import { formatDateToTimeAgo, formatDate } from "../utils/helpers";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "../components/loadingScreen";
-import { nanoid } from 'nanoid'
+import { nanoid } from "nanoid";
 
 export default function ChatPageV2() {
   const {
@@ -229,6 +229,11 @@ export default function ChatPageV2() {
       if (!error && data.length > 0) {
         setchatMessages(data);
       }
+      await supabase
+        .from("notifications")
+        .delete()
+        .eq("chatId", selectedChatId)
+        .eq("userId", user?.id);
     };
     fetch();
   }, [user, selectedChatId, sendingMessage]);
@@ -246,9 +251,17 @@ export default function ChatPageV2() {
           schema: "public",
           table: "chat_messages",
         },
-        (payload) => {
+        async (payload) => {
           // console.log("chat_messages payload.new");
           // console.log(payload.new);
+
+          if (selectedChat && document.hasFocus()) {
+            await supabase
+              .from("notifications")
+              .delete()
+              .eq("chatId", selectedChat.id)
+              .eq("userId", user?.id);
+          }
 
           setRefreshChatMessage(false);
 
@@ -288,9 +301,17 @@ export default function ChatPageV2() {
           table: "chat_messages",
           filter: `toUserId=eq.${user.id}`,
         },
-        (payload) => {
+        async (payload) => {
           // console.log("chat_messages payload.new");
           // console.log(payload.new);
+
+          if (selectedChat && document.hasFocus()) {
+            await supabase
+              .from("notifications")
+              .delete()
+              .eq("chatId", selectedChat.id)
+              .eq("userId", user?.id);
+          }
 
           if (
             !user?.isAdmin &&
@@ -488,7 +509,7 @@ export default function ChatPageV2() {
 
             if (chatUserId !== user?.id) {
               const notfcn = {
-                userId: chatUserId,
+                userId: chatUserId, // id of the user to receive notification
                 chatId: selectedChat.id,
                 message: messageInput,
                 title: `New message`,
@@ -1109,7 +1130,7 @@ export default function ChatPageV2() {
                         </div>
                       </div>
                     )}
-                    <div className="pr-6 pl-3 flex items-center gap-0 w-full">
+                    <div className="pr-0 pl-3 flex items-center gap-0 w-full">
                       <div className="relative w-[18px] h-[18px]">
                         <input
                           ref={fileRef}

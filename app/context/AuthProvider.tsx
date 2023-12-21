@@ -155,48 +155,6 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     };
   }, [notifications, user?.id]);
 
-  // // subscribe to chat_messages
-  // useEffect(() => {
-  //   if (!user) return;
-
-  //   const channel = supabase
-  //     .channel("chat messages")
-  //     .on(
-  //       "postgres_changes",
-  //       {
-  //         event: "INSERT",
-  //         schema: "public",
-  //         table: "chat_messages",
-  //       },
-  //       async (payload) => {
-  //         console.log("payload.new");
-  //         console.log(payload.new.userId);
-  //         console.log(user?.id);
-
-  //         if (user?.isAdmin || payload.new?.userId === user?.id) {
-  //           // const notificationSound = "/message.mp3";
-  //           // const sound = new Audio(notificationSound);
-  //           // sound.play();
-  //           console.log('play sound');
-
-  //         }
-
-  //         if (payload.new?.chatId === onChatPageId) {
-  //           await supabase
-  //             .from("notifications")
-  //             .delete()
-  //             .eq("chatId", onChatPageId)
-  //             .eq("userId", user?.id);
-  //         }
-  //       }
-  //     )
-  //     .subscribe();
-
-  //   return () => {
-  //     supabase.removeChannel(channel);
-  //   };
-  // }, [notifications, onChatPageId, user]);
-
   const handleSignup = async (
     params: SignUpParam,
     errorCallback: (error: any) => void,
