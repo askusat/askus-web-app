@@ -503,7 +503,7 @@ export default function ChatPageV2() {
   return (
     <>
       <div className="h-screen w-screen overflow-auto">
-        <nav className="bg-primary text-white h-[8vh] min-h-[50px]">
+        <nav className="fixed top-0 left-0 w-full bg-primary text-white h-[8vh] min-h-[50px]">
           <div className="flex items-center justify-between gap-2 h-full px-2">
             <div className="flex items-center h-full">
               <Button
@@ -562,7 +562,7 @@ export default function ChatPageV2() {
             </Link>
           </div>
         </nav>
-        <div className="grid lg:grid-cols-[1fr,3fr] md:grid-cols-[1fr,2fr] w-full h-[92vh]">
+        <div className="grid lg:grid-cols-[1fr,3fr] md:grid-cols-[1fr,2fr] w-full h-[92vh] mt-[8vh] pb-3">
           <aside
             className={`${selectedChat && "hidden md:block"} bg-red-600 h-full`}
           >
