@@ -294,25 +294,10 @@ export default function ChatPageV2() {
           // console.log("chat_messages payload.new");
           // console.log(payload.new);
 
-          setRefreshChatMessage(false);
-          console.log(
-            "user?.isAdmin && (!document.hasFocus() || selectedChat.id !== payload.new.chatId): "
-          );
-          console.log(
-            user?.isAdmin &&
-              (!document.hasFocus() || selectedChat?.id !== payload.new.chatId)
-          );
-
           if (
-            user?.isAdmin &&
-            (!document.hasFocus() || selectedChat?.id !== payload.new.chatId)
+            payload.new.toUserId === user?.id &&
+            selectedChat?.chatUsers?.includes(user.id)
           ) {
-            // const notificationSound = "/message.mp3";
-            // const sound = new Audio(notificationSound);
-            // sound.play();
-          }
-
-          if (selectedChat?.chatUsers?.includes(user.id)) {
             if (payload.new.userId !== user.id) {
               const notificationSound = "/message.mp3";
               const sound = new Audio(notificationSound);
@@ -324,11 +309,9 @@ export default function ChatPageV2() {
               behavior: "smooth",
               block: "end",
             });
-          } else if (user.isAdmin) {
-            const notificationSound = "/message.mp3";
-            const sound = new Audio(notificationSound);
-            sound.play();
           }
+
+          setRefreshChatMessage(false);
         }
       )
       .subscribe();
@@ -470,10 +453,6 @@ export default function ChatPageV2() {
           userProfilePicture: user.userProfilePicture || "",
           sender: user.isAdmin ? "expert" : "user",
         };
-
-        console.log("createChatMessage: ");
-        console.log(createChatMessage);
-        console.log(selectedChat?.chatUsers);
 
         await supabase.from("chat_messages").insert(createChatMessage);
         await supabase
@@ -1192,160 +1171,6 @@ export default function ChatPageV2() {
           </main>
         </div>
       </div>
-
-      {/* <div
-        id="footer"
-        className="md:hidden absolute md:static bottom-0 h-[12%] min-h-[60px] -mt-3 md:mt-0 bg-gray-200 w-full px-4 grid place-items-center"
-      >
-        {(selectedChat &&
-          !selectedChat.answered &&
-          selectedChat?.chatUsers?.includes(user?.id)) ||
-        !selectedChat ? (
-          <form
-            className="w-full py-2 border border-primary rounded-full bg-gray-200 relative z-20"
-            onSubmit={(e: any) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-            onKeyDown={(e: any) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault(); // Prevents new line in textarea if Shift+Enter is pressed
-                handleSubmit(); // Call your submit function here
-              }
-            }}
-          >
-            <div className="px-3 flex items-center gap-0 w-full">
-              {user?.isAdmin && (
-                <Popover
-                  showArrow
-                  offset={10}
-                  placement="bottom"
-                  backdrop={"blur"}
-                >
-                  <PopoverTrigger>
-                    <Button
-                      isIconOnly
-                      color="default"
-                      size="sm"
-                      variant="flat"
-                      className="capitalize"
-                    >
-                      <HiDotsVertical />
-                    </Button>
-                  </PopoverTrigger>
-                  <MenuContent
-                    user={user}
-                    chat={selectedChat}
-                    scrollLastMsgIntoView={scrollLastMsgIntoView}
-                    setSelectedChat={setSelectedChat}
-                  />
-                </Popover>
-              )}
-              {seletectedFiles.length > 0 && (
-                <div className="absolute z-[50] bottom-[60px] rounded-lg w-[200px] h-[150px] bg-white shadow-xl text-center">
-                  <div className="flex flex-wrap items-center gap-2 p-2">
-                    {seletectedFiles.map((file: any, index) => {
-                      // console.log("file: ");
-                      // console.log(file);
-                      const imageUrl = URL.createObjectURL(file);
-                      return (
-                        <div
-                          key={`file_-${index + 1}`}
-                          className="relative group"
-                        >
-                          {file.type.startsWith("image") ? (
-                            <ImageNUI
-                              src={imageUrl}
-                              isZoomed
-                              alt="Preview"
-                              className="w-[50px] h-[50px]"
-                            />
-                          ) : (
-                            <div className="relative">
-                              <IoMdDocument size={50} />
-                              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
-                                {
-                                  file.name.split(".")[
-                                    file.name.split(".").length - 1
-                                  ]
-                                }
-                              </div>
-                            </div>
-                          )}
-                          <div
-                            className="hidden absolute z-20 top-0 left-0 w-full h-full bg-black/30 group-hover:grid place-items-center cursor-pointer"
-                            onClick={() => {
-                              const n = seletectedFiles.filter(
-                                (file, i) => i !== index
-                              );
-                              setSeletectedFiles(n);
-                            }}
-                          >
-                            <FaTimes size={18} color="red" />
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-              <div className="pr-6 pl-3 flex items-center gap-0 w-full">
-                <div className="relative w-[18px] h-[18px]">
-                  <input
-                    ref={fileRef}
-                    type="file"
-                    name="file"
-                    id="file"
-                    multiple
-                    className="relative z-20 w-[18px] h-[18px] cursor-pointer opacity-0"
-                    accept=".jpg, .jpeg, .png, .webp, .gif, .pdf, .doc, .docx, .txt"
-                    onChange={(e: any) => {
-                      setSeletectedFiles([
-                        ...seletectedFiles,
-                        ...e.target.files,
-                      ]);
-                    }}
-                  />
-                  <label
-                    htmlFor="file"
-                    id="file"
-                    className="absolute top-0 left-0 z-10 w-[18px] h-[18px]"
-                  >
-                    <ImAttachment size={18} />
-                  </label>
-                </div>
-                <textarea
-                  ref={inputRef}
-                  className="bg-transparent outline-none px-2 pb-3 pt-[10px] placeholder:pt-[5px] w-full h-[40px] resize-none placeholder:text-sm scrolled-remove focus:ring-0 focus-visible:ring-0"
-                  tabIndex={0}
-                  placeholder="Enter message here..."
-                  value={messageInput}
-                  onChange={(e: any) => setMessageInput(e.target.value)}
-                  disabled={sendingMessage}
-                ></textarea>
-                <Button
-                  isIconOnly
-                  type="submit"
-                  size="sm"
-                  className="bg-primary text-white ml-2"
-                  isLoading={sendingMessage}
-                >
-                  <IoIosSend size={20} />
-                </Button>
-              </div>
-            </div>
-          </form>
-        ) : (
-          <JoinChatButton
-            user={user}
-            chat={selectedChat}
-            scrollLastMsgIntoView={scrollLastMsgIntoView}
-            addUserToChat={addUserToChat}
-            addingUserToChat={addingUserToChat}
-            setSelectedChat={setSelectedChat}
-          />
-        )}
-      </div> */}
     </>
   );
 }
