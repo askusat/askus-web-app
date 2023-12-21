@@ -462,19 +462,22 @@ export default function ChatPageV2() {
     function handleResize() {
       const newHeight = window.innerHeight;
       const footer = document.getElementById("footer");
+      const footerSpacer = document.getElementById("footerSpacer");
 
       if (windowHeight > newHeight) {
         // Address bar might have been hidden
         console.log("Address bar might have been hidden.");
-        if(footer) {
-          footer.classList.remove("absolute", "md:static", "bottom-2")
+        if(footer && footerSpacer) {
+          footerSpacer.classList.add("h-10")
+          footer.classList.add("absolute", "md:static", "bottom-2")
         }
 
       } else if (windowHeight < newHeight) {
         // Address bar might have been shown
         // alert("Address bar might have been shown.");
-        if(footer) {
-          footer.classList.add("absolute", "md:static", "bottom-2")
+        if(footer && footerSpacer) {
+          footerSpacer.classList.remove("h-10")
+          footer.classList.remove("absolute", "md:static", "bottom-2")
         }
         console.log("Address bar might have been shown.");
       }
@@ -871,7 +874,7 @@ export default function ChatPageV2() {
                     }
                   }
                 })}
-                <div ref={scrollToViewRef} className="h-4"></div>
+                <div ref={scrollToViewRef} id="footerSpacer" className="h-4"></div>
               </div>
             )}
 
