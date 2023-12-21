@@ -451,9 +451,27 @@ export default function ChatPageV2() {
                 sender: user.isAdmin ? "expert" : "user",
               };
 
-              await supabase
+              const {error} = await supabase
                 .from("chat_messages")
                 .insert(createChatFileMessage);
+
+              const receiverId = selectedChat?.chatUsers.find(
+                (uid: number) => uid !== user?.id
+              );
+
+              if (!error && receiverId !== user?.id) {
+                const notfcn = {
+                  userId: receiverId, // id of the user to receive notification
+                  chatId: chatId,
+                  message: messageInput,
+                  title: `New message`,
+                  read: false,
+                };
+                const { error } = await supabase
+                  .from("notifications")
+                  .insert(notfcn);
+                error && console.log(error?.message);
+              }
             } else {
               console.log(`failed to upload media file: ${file.name}`);
             }
@@ -491,43 +509,35 @@ export default function ChatPageV2() {
 
       scrollLastMsgIntoView();
 
-      try {
-        const { error } = await supabase
-          .from("notifications")
-          .delete()
-          .eq("chatId", chatId)
-          .eq("userId", user?.id);
+      const receiverId = selectedChat?.chatUsers.find(
+        (uid: number) => uid !== user?.id
+      );
+
+      if (receiverId !== user?.id) {
+        const notfcn = {
+          userId: receiverId, // id of the user to receive notification
+          chatId: chatId,
+          message: messageInput,
+          title: `New message`,
+          read: false,
+        };
+        const { error } = await supabase.from("notifications").insert(notfcn);
         error && console.log(error?.message);
-      } catch (error) {}
+      }
 
-      try {
-        for (const index in selectedChat?.chatUsers) {
-          if (
-            Object.prototype.hasOwnProperty.call(selectedChat?.chatUsers, index)
-          ) {
-            const chatUserId = selectedChat?.chatUsers[parseInt(index)];
-
-            if (chatUserId !== user?.id) {
-              const notfcn = {
-                userId: chatUserId, // id of the user to receive notification
-                chatId: selectedChat.id,
-                message: messageInput,
-                title: `New message`,
-                read: false,
-              };
-              const { error } = await supabase
-                .from("notifications")
-                .insert(notfcn);
-              error && console.log(error?.message);
-            }
-          }
-        }
-      } catch (error) {}
       setSendingMessage(false);
     } else {
       resetChatScreen();
     }
     setSendingMessage(false);
+    try {
+      const { error } = await supabase
+        .from("notifications")
+        .delete()
+        .eq("chatId", chatId)
+        .eq("userId", user?.id);
+      error && console.log(error?.message);
+    } catch (error) {}
   };
 
   const [addingUserToChat, setAddingUserToChat] = useState(false);
