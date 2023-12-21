@@ -136,7 +136,6 @@ export default function ChatPageV2() {
     };
   }, [selectedChatId, setOnChatPageId]);
 
-  const [notDelay, setNotDelay] = useState(false);
   // get all chats_view for user
   useEffect(() => {
     if (!user?.id) return;
@@ -209,7 +208,6 @@ export default function ChatPageV2() {
     fetch();
   }, [
     selectedTab,
-    notDelay,
     user,
     isChatPageOpen,
     selectedChatId,
@@ -720,7 +718,7 @@ export default function ChatPageV2() {
                             "border-b border-slate-400"
                           } ${
                             selectedChatId === chat?.id && "bg-gray-200"
-                          } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
+                          } flex items-center gap-2 px-3 py-4 cursor-pointer select-none hover:bg-gray-300`}
                           onClick={() => {
                             if (editChatTitleProp !== null) return;
                             resetChatScreen();
