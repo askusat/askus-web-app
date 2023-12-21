@@ -272,7 +272,7 @@ export default function ChatPageV2() {
     if (!user) return null;
 
     const createData: Partial<Chat> = {
-      title: `ASK-${new Date().getTime()}`,
+      title: `${new Date().getTime()}-${user?.username}`,
       userId: user.id,
       chatUsers: [user.id],
     };
@@ -456,9 +456,12 @@ export default function ChatPageV2() {
     router.replace("/chat");
   };
 
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const [windowHeight, setWindowHeight] = useState(0);
 
+  // does nothing
   useEffect(() => {
+    setWindowHeight(window.innerHeight)
+
     function handleResize() {
       const newHeight = window.innerHeight;
       const footer = document.getElementById("footer");
@@ -468,16 +471,16 @@ export default function ChatPageV2() {
         // Address bar might have been hidden
         console.log("Address bar might have been hidden.");
         if(footer && footerSpacer) {
-          footerSpacer.classList.add("h-10")
-          footer.classList.add("absolute", "md:static", "bottom-2")
+          // footerSpacer.classList.add("h-10")
+          // footer.classList.add("absolute", "md:static", "bottom-2")
         }
 
       } else if (windowHeight < newHeight) {
         // Address bar might have been shown
         // alert("Address bar might have been shown.");
         if(footer && footerSpacer) {
-          footerSpacer.classList.remove("h-10")
-          footer.classList.remove("absolute", "md:static", "bottom-2")
+          // footerSpacer.classList.remove("h-10")
+          // footer.classList.remove("absolute", "md:static", "bottom-2")
         }
         console.log("Address bar might have been shown.");
       }
@@ -500,7 +503,7 @@ export default function ChatPageV2() {
 
   return (
     <div className="h-screen w-screen overflow-auto">
-      <nav className="bg-primary text-white h-[8vh]">
+      <nav className="bg-primary text-white h-[8vh] min-h-[50px]">
         <div className="flex items-center justify-between gap-2 h-full px-2">
           <div className="flex items-center h-full">
             <Button
@@ -748,7 +751,7 @@ export default function ChatPageV2() {
         <main
           className={`${
             !selectedChat && "hidden md:block"
-          } bg-gray-200 h-[92vh]`}
+          } bg-green-600 h-[92vh]`}
         >
           <div
             id="chatScreenMain"
@@ -895,7 +898,7 @@ export default function ChatPageV2() {
             )}
           </div>
 
-          <div id="footer" className="absolute md:static bottom-2 h-[12%] -mt-3 md:mt-0 bg-gray-200 w-full px-4 grid place-items-center">
+          <div id="footer" className="absolute md:static bottom-0 h-[12%] min-h-[60px] -mt-3 md:mt-0 bg-gray-200 w-full px-4 grid place-items-center">
             {(selectedChat &&
               !selectedChat.answered &&
               selectedChat?.chatUsers?.includes(user?.id)) ||
