@@ -502,10 +502,10 @@ export default function ChatPageV2() {
 
   return (
     <>
-      <div className="h-screen w-screen overflow-auto">
-        <nav className="fixed z-50 top-0 left-0 w-full bg-primary text-white h-[8vh] min-h-[50px]">
+      <div className="h-screen w-screen overflow-hidden relative">
+        <header className="fixed z-50 top-0 left-0 w-full bg-primary text-white h-[8vh] box-border">
           <div className="flex items-center justify-between gap-2 h-full px-2">
-            <div className="flex items-center h-full">
+            <nav className="flex items-center h-full">
               <Button
                 isIconOnly
                 size="sm"
@@ -521,7 +521,7 @@ export default function ChatPageV2() {
                 }}
               >
                 {/* <div className="w-4 h-4 rounded-full bg-danger text-white grid place-items-center text-xs"></div> */}
-                {selectedChat ? (
+                {isChatPageOpen ? (
                   <FaAngleLeft size={20} className="text-white  " />
                 ) : (
                   <FaTimes size={20} className="text-red-600  " />
@@ -547,7 +547,7 @@ export default function ChatPageV2() {
               >
                 <div className="w-4 h-4 rounded-full bg-success text-white grid place-items-center text-xs"></div>
               </Button>
-            </div>
+            </nav>
 
             <div className="text-xs text-center">{selectedChat?.title}</div>
 
@@ -561,15 +561,17 @@ export default function ChatPageV2() {
               />
             </Link>
           </div>
-        </nav>
-        <div className="grid lg:grid-cols-[1fr,3fr] md:grid-cols-[1fr,2fr] w-full h-screen">
+        </header>
+        <div className="grid lg:grid-cols-[1fr,3fr] md:grid-cols-[1fr,2fr] w-full h-[92vh] mt-[8vh] overflow-hidden">
           <aside
-            className={`${selectedChat && "hidden md:block"} bg-red-600 h-screen pt-[8vh]`}
+            className={`${
+              isChatPageOpen && "hidden md:block"
+            } bg-primary h-screen`}
           >
             <div
               className={`${
-                !user?.isAdmin && "h-[88%]"
-              } h-[100%] overflow-auto bg-white`}
+                !user?.isAdmin && "h-[92vh]"
+              } h-[calc(92vh-80px)] overflow-auto bg-white`}
             >
               <div className="h-[11%] py-2 flex w-full flex-col items-center">
                 <Tabs
@@ -732,7 +734,7 @@ export default function ChatPageV2() {
             </div>
 
             {!user?.isAdmin && (
-              <footer className="w-full h-[12%] py-4 bg-[#F9F9F9]">
+              <footer className="fixed md:static grid place-items-center bottom-0 w-full h-[80px] bg-white">
                 <div className="px-6">
                   <Button
                     color="primary"
@@ -752,12 +754,12 @@ export default function ChatPageV2() {
 
           <main
             className={`${
-              !selectedChat && "hidden md:block"
-            } bg-gray-200 h-screen`}
+              !isChatPageOpen ? "hidden md:block" : ""
+            } bg-green-200 dfixed dtop-0 dleft-0 w-full h-[92vh]`}
           >
             <div
               id="chatScreenMain"
-              className="h-[88vh] overflow-auto bg-gray-200"
+              className="h-[calc(92vh-80px)] overflow-auto py-4 bg-gray-200"
             >
               {chatMessages?.length > 0 && (
                 <div className="flex flex-col gap-4 px-4 py-2">
@@ -882,7 +884,7 @@ export default function ChatPageV2() {
                   <div
                     ref={scrollToViewRef}
                     id="footerSpacer"
-                    className="h-4"
+                    className="h-16"
                   ></div>
                 </div>
               )}
@@ -906,7 +908,7 @@ export default function ChatPageV2() {
 
             <div
               id="footer"
-              className="absolute md:static bottom-0 h-[12%] min-h-[60px] -mt-3 md:mt-0 bg-gray-200 w-full px-4 md:grid place-items-center"
+              className="fixed md:static bottom-0 h-[80px] bg-gray-200 w-full px-4 md: grid place-items-center"
             >
               {(selectedChat &&
                 !selectedChat.answered &&
