@@ -247,10 +247,11 @@ export default function ChatPage() {
     // // alert("message not loaded");
     // console.log("message not loaded");
 
-    scrollToViewRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-    });
+    // scrollToViewRef.current?.scrollIntoView({
+    //   behavior: "smooth",
+    //   block: "end",
+    // });
+    scrollToViewRef.current?.scrollIntoView(false);
   }, [chatMessages]);
 
   function scrollLastMsgIntoView() {
