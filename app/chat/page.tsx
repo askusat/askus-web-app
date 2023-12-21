@@ -24,6 +24,7 @@ import { supabase } from "../supabaseClient";
 import { formatDateToTimeAgo, formatDate } from "../utils/helpers";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "../components/loadingScreen";
+import uuid4 from "uuid4";
 
 export default function ChatPageV2() {
   const {
@@ -35,6 +36,7 @@ export default function ChatPageV2() {
   const [selectedChatId, setSelectedChatId] = useState(0);
   const [selectedChat, setSelectedChat] = useState<Chat>(null);
   const [refreshChatList, setRefreshChatList] = useState(false);
+  const [refreshChatMessage, setRefreshChatMessage] = useState(false);
   const [isChatPageOpen, setIsChatPageOpen] = useState(false);
   const [selectedTab, setSelectedTab] = useState<any>("ongoing");
   const [messageInput, setMessageInput] = useState("");
@@ -69,7 +71,7 @@ export default function ChatPageV2() {
         },
         async (payload) => {
           if (payload.new) {
-            user?.isAdmin && setRefreshChatList(true);
+            setRefreshChatList(true);
           }
         }
       )
@@ -134,12 +136,38 @@ export default function ChatPageV2() {
     };
   }, [selectedChatId, setOnChatPageId]);
 
+  const [notDelay, setNotDelay] = useState(false)
   // get all chats_view for user
   useEffect(() => {
     if (!user?.id) return;
 
     const fetch = async () => {
       if (editChatTitleProp !== null) return;
+      // if (user?.isAdmin) {
+      //   const { data, error } = await supabase
+      //     .from("chat_view") //chats_summary
+      //     .select()
+      //     // .eq("userId", user?.id)
+      //     .eq("answered", selectedTab === "answered")
+      //     .order("updatedAt", { ascending: false });
+      //   if (!error && data.length > 0) {
+      //     setChats(data);
+      //   } else {
+      //     setChats([]);
+      //   }
+      // } else {
+      //   const { data, error } = await supabase
+      //     .from("chats") //chats_summary
+      //     .select()
+      //     .eq("userId", user?.id)
+      //     .eq("answered", selectedTab === "answered");
+
+      //   if (!error && data.length > 0) {
+      //     setChats(data);
+      //   } else {
+      //     setChats([]);
+      //   }
+      // }
       if (user?.isAdmin) {
         const { data, error } = await supabase
           .from("chat_view") //chats_summary
@@ -149,27 +177,39 @@ export default function ChatPageV2() {
           .order("updatedAt", { ascending: false });
         if (!error && data.length > 0) {
           setChats(data);
+          if (!document.hasFocus() && !notDelay) {
+            const notificationSound = "/message.mp3";
+            const sound = new Audio(notificationSound);
+            sound.play();
+          }
         } else {
           setChats([]);
         }
       } else {
         const { data, error } = await supabase
-          .from("chats") //chats_summary
+          .from("chat_view") //chats_summary
           .select()
           .eq("userId", user?.id)
           .eq("answered", selectedTab === "answered");
 
         if (!error && data.length > 0) {
           setChats(data);
+          if (!document.hasFocus() && !notDelay) {
+            const notificationSound = "/message.mp3";
+            const sound = new Audio(notificationSound);
+            sound.play();
+          }
         } else {
           setChats([]);
         }
       }
+      setRefreshChatMessage(false);
       setRefreshChatList(false);
     };
     fetch();
   }, [
     selectedTab,
+    notDelay,
     user,
     isChatPageOpen,
     selectedChatId,
@@ -193,7 +233,18 @@ export default function ChatPageV2() {
       }
     };
     fetch();
-  }, [user, selectedChatId, sendingMessage]);
+  }, [user, selectedChatId, refreshChatMessage, sendingMessage]);
+
+  // sendNotification at an interval
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRefreshChatMessage(prevState => !prevState);
+    }, 300);
+
+    return () => {
+      clearInterval(interval); // Clear the interval when component unmounts
+    };
+  }, []); // Empty dependency array to run this effect only once on mount
 
   // subscribe to chat_messages
   useEffect(() => {
@@ -212,6 +263,16 @@ export default function ChatPageV2() {
         (payload) => {
           // console.log("chat_messages payload.new");
           // console.log(payload.new);
+          
+          setRefreshChatMessage(false);
+          if (
+            (user?.isAdmin || selectedChat.chatUsers?.includes(user.id)) &&
+            !document.hasFocus()
+          ) {
+            // const notificationSound = "/message.mp3";
+            // const sound = new Audio(notificationSound);
+            // sound.play();
+          }
 
           if (selectedChat.chatUsers?.includes(user.id)) {
             setchatMessages([...chatMessages, payload.new as ChatMessage]);
@@ -272,7 +333,7 @@ export default function ChatPageV2() {
     if (!user) return null;
 
     const createData: Partial<Chat> = {
-      title: `${new Date().getTime()}-${user?.username}`,
+      title: `${uuid4()}-${user?.username}`,
       userId: user.id,
       chatUsers: [user.id],
     };
@@ -335,9 +396,6 @@ export default function ChatPageV2() {
                 userProfilePicture: user.userProfilePicture || "",
                 sender: user.isAdmin ? "expert" : "user",
               };
-
-              console.log("createChatFileMessage: ");
-              console.log(createChatFileMessage);
 
               await supabase
                 .from("chat_messages")
@@ -562,6 +620,7 @@ export default function ChatPageV2() {
             </Link>
           </div>
         </header>
+
         <div className="grid lg:grid-cols-[1fr,3fr] md:grid-cols-[1fr,2fr] w-full h-[92vh] mt-[8vh] overflow-hidden">
           <aside
             className={`${
@@ -604,114 +663,116 @@ export default function ChatPageV2() {
               <div className="py-3 overflow-auto bg-white">
                 {chats.length > 0 ? (
                   <div className="flex flex-col gap-0">
-                    {chats.map((chat, index) => (
-                      <div
-                        key={`convstn_${index + 1}`}
-                        className={`${
-                          chats.length !== index + 1 &&
-                          "border-b border-slate-400"
-                        } ${
-                          selectedChatId === chat?.id && "bg-gray-200"
-                        } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
-                        onClick={() => {
-                          if (editChatTitleProp !== null) return;
-                          resetChatScreen();
-                          if (!chat) {
-                            router.replace("/chat");
-                            return;
-                          }
-                          setSelectedChat(chat);
-                          setSelectedChatId(chat?.id || 0);
-                          setIsChatPageOpen(true);
-                          // inputRef?.current && inputRef?.current?.focus();
-                          router.push(`?chatId=${chat.id}`);
-                        }}
-                      >
-                        <div className="w-[17%]">
-                          <div className="w-10 h-10 rounded-full bg-primary"></div>
-                        </div>
-                        <div className="w-[63%]">
-                          <div className="flex items-center">
-                            <input
-                              className={`${
-                                editChatTitleProp &&
-                                editChatTitleProp === chat?.id &&
-                                "outline-none p-2"
-                              } font-semibold truncate leading-3`}
-                              value={
-                                chatTitle && editChatTitleProp === chat?.id
-                                  ? chatTitle
-                                  : chat?.title
-                              }
-                              onChange={(e: any) =>
-                                setChatTitle(e.target.value)
-                              }
-                              id={`chatMain-${chat?.id}`}
-                              disabled={
-                                !editChatTitleProp ||
-                                editChatTitleProp !== chat?.id
-                              }
-                            />
+                    {chats.map((chat, index) => {
+                      return (
+                        <div
+                          key={`convstn_${index + 1}`}
+                          className={`${
+                            chats.length !== index + 1 &&
+                            "border-b border-slate-400"
+                          } ${
+                            selectedChatId === chat?.id && "bg-gray-200"
+                          } flex items-center gap-2 px-3 py-4 cursor-pointer select-none`}
+                          onClick={() => {
+                            if (editChatTitleProp !== null) return;
+                            resetChatScreen();
+                            if (!chat) {
+                              router.replace("/chat");
+                              return;
+                            }
+                            setSelectedChat(chat);
+                            setSelectedChatId(chat?.id || 0);
+                            setIsChatPageOpen(true);
+                            // inputRef?.current && inputRef?.current?.focus();
+                            router.push(`?chatId=${chat.id}`);
+                          }}
+                        >
+                          <div className="w-[17%]">
+                            <div className="w-10 h-10 rounded-full bg-primary"></div>
+                          </div>
+                          <div className="w-[63%]">
+                            <div className="flex items-center">
+                              <input
+                                className={`${
+                                  editChatTitleProp &&
+                                  editChatTitleProp === chat?.id &&
+                                  "outline-none p-2"
+                                } font-semibold truncate leading-3`}
+                                value={
+                                  chatTitle && editChatTitleProp === chat?.id
+                                    ? chatTitle
+                                    : chat?.title
+                                }
+                                onChange={(e: any) =>
+                                  setChatTitle(e.target.value)
+                                }
+                                id={`chatMain-${chat?.id}`}
+                                disabled={
+                                  !editChatTitleProp ||
+                                  editChatTitleProp !== chat?.id
+                                }
+                              />
 
-                            <button
-                              // isIconOnly
-                              className="bg-transparent leading-3"
-                              onClick={async () => {
-                                const inputEl: any = document.getElementById(
-                                  `chatMain-${chat?.id}`
-                                );
+                              <button
+                                // isIconOnly
+                                className="bg-transparent leading-3"
+                                onClick={async () => {
+                                  const inputEl: any = document.getElementById(
+                                    `chatMain-${chat?.id}`
+                                  );
 
-                                if (inputEl) {
-                                  inputEl.focus();
-                                  if (editChatTitleProp) {
-                                    const { error } = await supabase
-                                      .from("chats")
-                                      .update({ title: inputEl?.value })
-                                      .eq("id", editChatTitleProp);
-
-                                    if (error) {
-                                      alert(error.message);
-                                    } else {
-                                      setEditChatTitleProp(null);
-                                    }
-                                  } else {
+                                  if (inputEl) {
                                     inputEl.focus();
-                                    setEditChatTitleProp(chat?.id || null);
+                                    if (editChatTitleProp) {
+                                      const { error } = await supabase
+                                        .from("chats")
+                                        .update({ title: inputEl?.value })
+                                        .eq("id", editChatTitleProp);
+
+                                      if (error) {
+                                        alert(error.message);
+                                      } else {
+                                        setEditChatTitleProp(null);
+                                      }
+                                    } else {
+                                      inputEl.focus();
+                                      setEditChatTitleProp(chat?.id || null);
+                                    }
                                   }
-                                }
-                              }}
-                            >
-                              {editChatTitleProp !== chat?.id ? (
-                                <FaPen />
-                              ) : (
-                                <FaCheck size={20} className="text-primary" />
+                                }}
+                              >
+                                {editChatTitleProp !== chat?.id ? (
+                                  <FaPen />
+                                ) : (
+                                  <FaCheck size={20} className="text-primary" />
+                                )}
+                              </button>
+                            </div>
+                            <p className="truncate text-sm">{chat?.message}</p>
+                          </div>
+                          <div className="w-[20%]">
+                            <div className="whitespace-wrap text-xs text-slate-600 flex justify-end">
+                              {formatDateToTimeAgo(
+                                chat?.createdAt || new Date()
                               )}
-                            </button>
-                          </div>
-                          <p className="truncate text-sm">
-                            {chat?.message || "New message"}
-                          </p>
-                        </div>
-                        <div className="w-[20%]">
-                          <div className="whitespace-wrap text-xs text-slate-600 flex justify-end">
-                            {formatDateToTimeAgo(chat?.createdAt || new Date())}
-                          </div>
-                          <div className="mt-1 flex justify-end">
-                            {notifications.find(
-                              (r) => r?.chatId === chat?.id
-                            ) && (
-                              <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
-                                {
-                                  notifications.filter(
-                                    (r) => r?.chatId === chat?.id
-                                  ).length
-                                }
-                              </div>
-                            )}
+                            </div>
+                            <div className="mt-1 flex justify-end">
+                              {notifications.find(
+                                (r) => r?.chatId === chat?.id
+                              ) && (
+                                <div className="w-6 h-6 rounded-full bg-success text-white grid place-items-center text-xs">
+                                  {
+                                    notifications.filter(
+                                      (r) => r?.chatId === chat?.id
+                                    ).length
+                                  }
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 ) : (
                   <div className="h-full grid place-items-center">
