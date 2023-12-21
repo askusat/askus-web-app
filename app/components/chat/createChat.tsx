@@ -8,7 +8,7 @@ import { LuMessagesSquare } from "react-icons/lu";
 
 export default function CreateChat() {
   const pathname = usePathname();
-  const dontShowList = ["/chat", "/signup", "/login", "/payment"];
+  const dontShowList = ["/chat", "/chatv2", "/signup", "/login", "/payment"];
 
   if (dontShowList.includes(pathname)) {
     return <></>;
