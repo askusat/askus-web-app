@@ -231,34 +231,32 @@ export default function ChatPage() {
     };
   }, [chatMessages, selectedChat, user]);
 
-  // scrollIntoView last message of a chat
-  useEffect(() => {
-    // console.log(`message_-_${chatMessages.length}`);
-    if (!chatMessages || chatMessages?.length < 1) return;
-    const lastMessage = document.getElementById(
-      `message_-_${chatMessages?.length}`
-    );
-    if (lastMessage) {
-      // lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
-      lastMessage.scrollIntoView(false);
-      // inputRef?.current && inputRef?.current?.focus();
-      return;
-    }
-    // alert("message not loaded");
-    console.log("message not loaded");
-
-    return () => {};
-  }, [chatMessages]);
+  // // scrollIntoView last message of a chat
+  // useEffect(() => {
+  //   // console.log(`message_-_${chatMessages.length}`);
+  //   if (!chatMessages || chatMessages?.length < 1) return;
+  //   const lastMessage = document.getElementById(
+  //     `message_-_${chatMessages?.length}`
+  //   );
+  //   if (lastMessage) {
+  //     // lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+  //     lastMessage.scrollIntoView(false);
+  //     // inputRef?.current && inputRef?.current?.focus();
+  //     return;
+  //   }
+  //   // alert("message not loaded");
+  //   console.log("message not loaded");
+  // }, [chatMessages]);
 
   function scrollLastMsgIntoView() {
-    const lastMessage = document.getElementById(
-      `message_-_${chatMessages?.length}`
-    );
-    if (lastMessage) {
-      lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
-      // lastMessage.scrollIntoView(false);
-      // inputRef?.current && inputRef?.current?.focus();
-    }
+    // const lastMessage = document.getElementById(
+    //   `message_-_${chatMessages?.length}`
+    // );
+    // if (lastMessage) {
+    //   lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+    //   // lastMessage.scrollIntoView(false);
+    //   // inputRef?.current && inputRef?.current?.focus();
+    // }
   }
 
   const createChat = async () => {
@@ -467,7 +465,9 @@ export default function ChatPage() {
                 if (selectedChat) {
                   resetChatScreen();
                 } else {
-                  router.push("/");
+                  if (window.prompt("Do you want to leave the chat?")) {
+                    router.push("/");
+                  }
                 }
               }}
             >
@@ -822,8 +822,8 @@ export default function ChatPage() {
                       }
                     }
                   }
-                  <div ref={scrollToViewRef} className="h-10"></div>;
                 })}
+                <div ref={scrollToViewRef} className="h-10"></div>
             </div>
 
             {chatMessages?.length <= 0 && (
