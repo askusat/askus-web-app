@@ -217,6 +217,47 @@ export default function ChatPageV2() {
     refreshChatList,
   ]);
 
+  // get all chats_view for user
+  // no sound
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const fetch = async () => {
+      if (editChatTitleProp !== null) return;
+
+      if (user?.isAdmin) {
+        const { data, error } = await supabase
+          .from("chat_view") //chats_summary
+          .select()
+          // .eq("userId", user?.id)
+          .eq("answered", selectedTab === "answered")
+          .order("updatedAt", { ascending: false });
+        if (!error && data.length > 0) {
+          setChats(data);
+        } else {
+          setChats([]);
+        }
+      } else {
+        const { data, error } = await supabase
+          .from("chat_view") //chats_summary
+          .select()
+          .eq("userId", user?.id)
+          .eq("answered", selectedTab === "answered");
+
+        if (!error && data.length > 0) {
+          setChats(data);
+        } else {
+          setChats([]);
+        }
+      }
+      setRefreshChatMessage(false);
+    };
+    fetch();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    refreshChatMessage,
+  ]);
+
   // get all messages for a chat
   useEffect(() => {
     const fetch = async () => {
