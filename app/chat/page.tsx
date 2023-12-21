@@ -295,6 +295,7 @@ export default function ChatPageV2() {
           // console.log(payload.new);
 
           if (
+            !user?.isAdmin &&
             payload.new.toUserId === user?.id &&
             selectedChat?.chatUsers?.includes(user.id)
           ) {
