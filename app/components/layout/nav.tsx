@@ -214,7 +214,8 @@ export default function Nav() {
                         setNotifications
                       );
                       if(notification?.chatId){
-                        router.push(`/chat?chatId=${notification?.chatId}`)
+                        // router.push(`/chat?chatId=${notification?.chatId}`)
+                        window.location.href = `/chat?chatId=${notification?.chatId}`;
                       }
                     }}
                   >

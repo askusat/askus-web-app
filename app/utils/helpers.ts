@@ -40,7 +40,7 @@ export const markAllNotificationAsRead = async (
 ) => {
   await supabase
     .from("notifications")
-    .update({ read: true })
+    .delete() //.update({ read: true })
     .eq("userId", user?.id);
 
   setNotifications([]);
@@ -54,7 +54,7 @@ export const markNotificationAsRead = async (
 ) => {
   await supabase
     .from("notifications")
-    .update({ read: true })
+    .delete() //.update({ read: true })
     .eq("userId", user?.id)
     .eq("id", notification_id);
 

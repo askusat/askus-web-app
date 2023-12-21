@@ -112,6 +112,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     initAuth();
   }, [getAndSetUserData, pathname, router]);
 
+  // get all notifications
   useEffect(() => {
     const getNotifications = async () => {
       if (!user?.id) return;
@@ -120,7 +121,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         .select()
         .eq("userId", user?.id)
         .eq("read", false)
-        .order("updatedAt", { ascending: true });
+        .order("updatedAt", { ascending: false });
 
       if (!error) {
         const notfs: Notification[] = data || [];
@@ -130,10 +131,12 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     getNotifications();
   }, [user?.id]);
 
-  // subscribe to notifications
+  // subscribe to notifications insert & delete
   useEffect(() => {
+    if(!user) return;
+
     const channel = supabase
-      .channel("realtime notifications")
+      .channel("notifications created")
       .on(
         "postgres_changes",
         {
@@ -144,16 +147,40 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         },
         (payload) => {
           if (payload.new?.userId === user?.id) {
-            setNotifications([...notifications, payload.new as Notification]);
+            setNotifications([payload.new as Notification, ...notifications]);
+            const notificationSound = "/message.mp3";
+            const sound = new Audio(notificationSound);
+            sound.play();
+            console.log("you received a notification");
           }
+        }
+      )
+      .subscribe();
+
+      const channel_ = supabase
+      .channel("notifications deleted")
+      .on(
+        "postgres_changes",
+        {
+          event: "DELETE",
+          schema: "public",
+          table: "notifications",
+          filter: `userId=eq.${user.id}`,
+        },
+        (payload) => {
+          console.log('deleted notification');
+          console.log(payload.new);
+
+          setNotifications([]);
         }
       )
       .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
+      supabase.removeChannel(channel_);
     };
-  }, [notifications, user?.id]);
+  }, [notifications, user]);
 
   const handleSignup = async (
     params: SignUpParam,
