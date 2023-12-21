@@ -231,24 +231,33 @@ export default function ChatPage() {
     };
   }, [chatMessages, selectedChat, user]);
 
-  // // scrollIntoView last message of a chat
-  // useEffect(() => {
-  //   // console.log(`message_-_${chatMessages.length}`);
-  //   if (!chatMessages || chatMessages?.length < 1) return;
-  //   const lastMessage = document.getElementById(
-  //     `message_-_${chatMessages?.length}`
-  //   );
-  //   if (lastMessage) {
-  //     // lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
-  //     lastMessage.scrollIntoView(false);
-  //     // inputRef?.current && inputRef?.current?.focus();
-  //     return;
-  //   }
-  //   // alert("message not loaded");
-  //   console.log("message not loaded");
-  // }, [chatMessages]);
+  // scrollIntoView last message of a chat
+  useEffect(() => {
+    // // console.log(`message_-_${chatMessages.length}`);
+    // if (!chatMessages || chatMessages?.length < 1) return;
+    // const lastMessage = document.getElementById(
+    //   `message_-_${chatMessages?.length}`
+    // );
+    // if (lastMessage) {
+    //   // lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+    //   lastMessage.scrollIntoView(false);
+    //   // inputRef?.current && inputRef?.current?.focus();
+    //   return;
+    // }
+    // // alert("message not loaded");
+    // console.log("message not loaded");
+
+    scrollToViewRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  }, [chatMessages]);
 
   function scrollLastMsgIntoView() {
+    scrollToViewRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
     // const lastMessage = document.getElementById(
     //   `message_-_${chatMessages?.length}`
     // );
@@ -823,7 +832,7 @@ export default function ChatPage() {
                     }
                   }
                 })}
-                <div ref={scrollToViewRef} className="h-10"></div>
+                <div ref={scrollToViewRef} className="h-4"></div>
             </div>
 
             {chatMessages?.length <= 0 && (
