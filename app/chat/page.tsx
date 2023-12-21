@@ -456,6 +456,34 @@ export default function ChatPageV2() {
     router.replace("/chat");
   };
 
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    function handleResize() {
+      const newHeight = window.innerHeight;
+
+      if (windowHeight > newHeight) {
+        // Address bar might have been hidden
+        console.log("Address bar might have been hidden.");
+        alert("Address bar might have been hidden.");
+      } else if (windowHeight < newHeight) {
+        // Address bar might have been shown
+        alert("Address bar might have been shown.");
+        console.log("Address bar might have been shown.");
+      }
+
+      setWindowHeight(newHeight);
+    }
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, [windowHeight]);
+
   if (!user && authLoading) {
     return <LoadingScreen />;
   }
@@ -522,7 +550,9 @@ export default function ChatPageV2() {
         </div>
       </nav>
       <div className="grid lg:grid-cols-[1fr,3fr] md:grid-cols-[1fr,2fr] w-full h-[92vh]">
-        <aside className={`${selectedChat && "hidden md:block"} bg-red-600 h-full`}>
+        <aside
+          className={`${selectedChat && "hidden md:block"} bg-red-600 h-full`}
+        >
           <div
             className={`${
               !user?.isAdmin && "h-[88%]"
@@ -705,7 +735,11 @@ export default function ChatPageV2() {
           )}
         </aside>
 
-        <main className={`${!selectedChat && "hidden md:block"} bg-gray-200 h-[92vh]`}>
+        <main
+          className={`${
+            !selectedChat && "hidden md:block"
+          } bg-gray-200 h-[92vh]`}
+        >
           <div
             id="chatScreenMain"
             className="h-[calc(92vh-12%)] overflow-auto bg-gray-200"
