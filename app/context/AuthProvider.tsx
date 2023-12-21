@@ -101,7 +101,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
       if (error || !user) {
         if (PROTECTED_PAGES.includes(pathname)) {
-          router.push(`/login?returnUrl=${pathname.split('/').pop()}`);
+          router.push(`/login?returnUrl=${pathname.split("/").pop()}`);
         }
         return setLoading(false);
       }
@@ -155,57 +155,47 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     };
   }, [notifications, user?.id]);
 
-  // subscribe to chat_messages
-  useEffect(() => {
-    if (!user) return;
+  // // subscribe to chat_messages
+  // useEffect(() => {
+  //   if (!user) return;
 
-    const channel = supabase
-      .channel("chat messages")
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "chat_messages",
-          // filter: `userId=eq.${user?.id}`,
-          // filter: `chatId=any.${JSON.stringify(user?.chatsJoined)}`,
-        },
-        async (payload) => {
-          // console.log("chat_messages context");
-          // console.log(payload);
+  //   const channel = supabase
+  //     .channel("chat messages")
+  //     .on(
+  //       "postgres_changes",
+  //       {
+  //         event: "INSERT",
+  //         schema: "public",
+  //         table: "chat_messages",
+  //       },
+  //       async (payload) => {
+  //         console.log("payload.new");
+  //         console.log(payload.new.userId);
+  //         console.log(user?.id);
 
-          // if (
-          //   payload.new?.chatId !== onChatPageId
-          // ) {
-          //   const notfcn = {
-          //     userId: user?.id,
-          //     message: payload.new.message,
-          //     title: `New message`,
-          //     read: false,
-          //   };
-          //   setNotifications([...notifications, notfcn as Notification]);
-          // }
+  //         if (user?.isAdmin || payload.new?.userId === user?.id) {
+  //           // const notificationSound = "/message.mp3";
+  //           // const sound = new Audio(notificationSound);
+  //           // sound.play();
+  //           console.log('play sound');
 
-          // console.log("payload.new?.chatId === onChatPageId: ");
-          // console.log(payload.new?.chatId === onChatPageId);
-          // console.log(payload.new?.chatId);
-          // console.log(onChatPageId);
+  //         }
 
-          if (payload.new?.chatId === onChatPageId) {
-            await supabase
-              .from("notifications")
-              .delete()
-              .eq("chatId", onChatPageId)
-              .eq("userId", user?.id);
-          }
-        }
-      )
-      .subscribe();
+  //         if (payload.new?.chatId === onChatPageId) {
+  //           await supabase
+  //             .from("notifications")
+  //             .delete()
+  //             .eq("chatId", onChatPageId)
+  //             .eq("userId", user?.id);
+  //         }
+  //       }
+  //     )
+  //     .subscribe();
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [notifications, onChatPageId, user]);
+  //   return () => {
+  //     supabase.removeChannel(channel);
+  //   };
+  // }, [notifications, onChatPageId, user]);
 
   const handleSignup = async (
     params: SignUpParam,

@@ -62,6 +62,7 @@ export type ChatMessage = {
   replyTo: string | null;
   chatId: number;
   userId: number;
+  toUserId: number;
   userName: string;
   userProfilePicture: string;
   sender: "expert" | "user"; // | string;

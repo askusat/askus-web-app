@@ -136,7 +136,7 @@ export default function ChatPageV2() {
     };
   }, [selectedChatId, setOnChatPageId]);
 
-  const [notDelay, setNotDelay] = useState(false)
+  const [notDelay, setNotDelay] = useState(false);
   // get all chats_view for user
   useEffect(() => {
     if (!user?.id) return;
@@ -194,11 +194,11 @@ export default function ChatPageV2() {
 
         if (!error && data.length > 0) {
           setChats(data);
-          if (!document.hasFocus() && !notDelay) {
-            const notificationSound = "/message.mp3";
-            const sound = new Audio(notificationSound);
-            sound.play();
-          }
+          // if (!document.hasFocus() && !notDelay) {
+          //   const notificationSound = "/message.mp3";
+          //   const sound = new Audio(notificationSound);
+          //   sound.play();
+          // }
         } else {
           setChats([]);
         }
@@ -215,47 +215,6 @@ export default function ChatPageV2() {
     selectedChatId,
     editChatTitleProp,
     refreshChatList,
-  ]);
-
-  // get all chats_view for user
-  // no sound
-  useEffect(() => {
-    if (!user?.id) return;
-
-    const fetch = async () => {
-      if (editChatTitleProp !== null) return;
-
-      if (user?.isAdmin) {
-        const { data, error } = await supabase
-          .from("chat_view") //chats_summary
-          .select()
-          // .eq("userId", user?.id)
-          .eq("answered", selectedTab === "answered")
-          .order("updatedAt", { ascending: false });
-        if (!error && data.length > 0) {
-          setChats(data);
-        } else {
-          setChats([]);
-        }
-      } else {
-        const { data, error } = await supabase
-          .from("chat_view") //chats_summary
-          .select()
-          .eq("userId", user?.id)
-          .eq("answered", selectedTab === "answered");
-
-        if (!error && data.length > 0) {
-          setChats(data);
-        } else {
-          setChats([]);
-        }
-      }
-      setRefreshChatMessage(false);
-    };
-    fetch();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    refreshChatMessage,
   ]);
 
   // get all messages for a chat
@@ -276,20 +235,9 @@ export default function ChatPageV2() {
     fetch();
   }, [user, selectedChatId, sendingMessage]);
 
-  // sendNotification at an interval
+  // subscribe to chat_messages for admins
   useEffect(() => {
-    const interval = setInterval(() => {
-      setRefreshChatMessage(prevState => !prevState);
-    }, 300);
-
-    return () => {
-      clearInterval(interval); // Clear the interval when component unmounts
-    };
-  }, []); // Empty dependency array to run this effect only once on mount
-
-  // subscribe to chat_messages
-  useEffect(() => {
-    if (!user || !selectedChat) return;
+    if (!user || !user?.isAdmin) return;
 
     const chatMessagesChannel = supabase
       .channel("chat messages")
@@ -299,29 +247,87 @@ export default function ChatPageV2() {
           event: "INSERT",
           schema: "public",
           table: "chat_messages",
-          // filter: `userId=eq.${user.id}`,
         },
         (payload) => {
           // console.log("chat_messages payload.new");
           // console.log(payload.new);
 
           setRefreshChatMessage(false);
+
+          if (payload.new.userId !== user.id) {
+            const notificationSound = "/message.mp3";
+            const sound = new Audio(notificationSound);
+            sound.play();
+          }
+          setRefreshChatList(true);
+          if (selectedChat) {
+            setchatMessages([...chatMessages, payload.new as ChatMessage]);
+            scrollToViewRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "end",
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(chatMessagesChannel);
+    };
+  }, [chatMessages, selectedChat, user]);
+
+  // subscribe to chat_messages for user
+  useEffect(() => {
+    if (!user || user?.isAdmin) return;
+
+    const chatMessagesChannel = supabase
+      .channel("chat messages")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "chat_messages",
+          filter: `toUserId=eq.${user.id}`,
+        },
+        (payload) => {
+          // console.log("chat_messages payload.new");
+          // console.log(payload.new);
+
+          setRefreshChatMessage(false);
+          console.log(
+            "user?.isAdmin && (!document.hasFocus() || selectedChat.id !== payload.new.chatId): "
+          );
+          console.log(
+            user?.isAdmin &&
+              (!document.hasFocus() || selectedChat?.id !== payload.new.chatId)
+          );
+
           if (
-            (user?.isAdmin || selectedChat.chatUsers?.includes(user.id)) &&
-            !document.hasFocus()
+            user?.isAdmin &&
+            (!document.hasFocus() || selectedChat?.id !== payload.new.chatId)
           ) {
             // const notificationSound = "/message.mp3";
             // const sound = new Audio(notificationSound);
             // sound.play();
           }
 
-          if (selectedChat.chatUsers?.includes(user.id)) {
+          if (selectedChat?.chatUsers?.includes(user.id)) {
+            if (payload.new.userId !== user.id) {
+              const notificationSound = "/message.mp3";
+              const sound = new Audio(notificationSound);
+              sound.play();
+            }
             setchatMessages([...chatMessages, payload.new as ChatMessage]);
             setRefreshChatList(true);
             scrollToViewRef.current?.scrollIntoView({
               behavior: "smooth",
               block: "end",
             });
+          } else if (user.isAdmin) {
+            const notificationSound = "/message.mp3";
+            const sound = new Audio(notificationSound);
+            sound.play();
           }
         }
       )
@@ -433,6 +439,9 @@ export default function ChatPageV2() {
                 type: file.type.split("/")[0] === "image" ? "image" : "file",
                 replyTo: null,
                 userId: user.id,
+                toUserId: selectedChat?.chatUsers.find(
+                  (u: number) => u !== user.id
+                ),
                 userName: user.username, //getFirstName(user.fullName),
                 userProfilePicture: user.userProfilePicture || "",
                 sender: user.isAdmin ? "expert" : "user",
@@ -456,16 +465,30 @@ export default function ChatPageV2() {
           type: "text",
           replyTo: null,
           userId: user.id,
+          toUserId: selectedChat?.chatUsers.find((u: number) => u !== user.id),
           userName: user.username, //getFirstName(user.fullName),
           userProfilePicture: user.userProfilePicture || "",
           sender: user.isAdmin ? "expert" : "user",
         };
+
+        console.log("createChatMessage: ");
+        console.log(createChatMessage);
+        console.log(selectedChat?.chatUsers);
+
         await supabase.from("chat_messages").insert(createChatMessage);
         await supabase
           .from("chats")
           .update({ updatedAt: new Date() })
           .eq("id", chatId);
       }
+
+      // console.log("window.innerWidth: ");
+      // console.log(window.innerWidth);
+
+      if (window.innerWidth > 500) {
+        inputRef?.current && inputRef?.current?.focus();
+      }
+
       scrollLastMsgIntoView();
 
       try {
@@ -495,7 +518,7 @@ export default function ChatPageV2() {
               const { error } = await supabase
                 .from("notifications")
                 .insert(notfcn);
-              console.log(error?.message);
+              error && console.log(error?.message);
             }
           }
         }
@@ -515,6 +538,9 @@ export default function ChatPageV2() {
     chatId: number | undefined
   ) => {
     if (!user) return;
+    if (selectedChat?.chatUsers.length === 2) {
+      alert("An expert has already joined!");
+    }
     if (!userId || !chatId) return alert("something went wrong");
 
     setAddingUserToChat(true);
@@ -531,6 +557,7 @@ export default function ChatPageV2() {
       type: "text",
       replyTo: null,
       userId: user.id,
+      toUserId: selectedChat?.chatUsers.find((u: number) => u !== user.id),
       userName: "system",
       userProfilePicture: "",
     };
@@ -1157,6 +1184,7 @@ export default function ChatPageV2() {
                   scrollLastMsgIntoView={scrollLastMsgIntoView}
                   addUserToChat={addUserToChat}
                   addingUserToChat={addingUserToChat}
+                  selectedChat={selectedChat}
                   setSelectedChat={setSelectedChat}
                 />
               )}
@@ -1325,6 +1353,7 @@ export default function ChatPageV2() {
 const JoinChatButton = ({
   user,
   chat,
+  selectedChat,
   setSelectedChat,
   scrollLastMsgIntoView,
   addUserToChat,
@@ -1352,6 +1381,7 @@ const JoinChatButton = ({
         type: "text",
         replyTo: null,
         userId: user.id,
+        toUserId: selectedChat?.chatUsers.find((u: number) => u !== user.id),
         userName: "system",
         userProfilePicture: "",
       };
@@ -1387,6 +1417,7 @@ const JoinChatButton = ({
 interface MenuContentProps {
   user: User;
   chat: Chat;
+  selectedChat: Chat;
   setSelectedChat: any;
   scrollLastMsgIntoView: () => void;
   addUserToChat: any;
@@ -1398,6 +1429,7 @@ const MenuContent = ({
   chat,
   scrollLastMsgIntoView,
   setSelectedChat,
+  selectedChat,
 }: Partial<MenuContentProps>) => {
   const [loading, setLoading] = useState(false);
   if (!user || !chat) return;
@@ -1419,6 +1451,7 @@ const MenuContent = ({
         type: "text",
         replyTo: null,
         userId: user.id,
+        toUserId: selectedChat?.chatUsers.find((u: number) => u !== user.id),
         userName: "system",
         userProfilePicture: "",
       };
