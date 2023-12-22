@@ -1089,12 +1089,12 @@ export default function ChatPageV2() {
                                   )}
                                   {chatMessage?.type !== "text" &&
                                     chatMessage?.type !== "image" && (
-                                      <div className="relative">
+                                      <a href={chatMessage?.message} download target="_blank" className="relative">
                                         <IoMdDocument size={50} />
                                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
                                           {chatMessage?.type}
                                         </div>
-                                      </div>
+                                      </a>
                                     )}
                                 </div>
                                 <div className="text-xs text-end flex justify-end">
@@ -1153,12 +1153,12 @@ export default function ChatPageV2() {
                                   )}
                                   {chatMessage?.type !== "text" &&
                                     chatMessage?.type !== "image" && (
-                                      <div className="relative">
+                                      <a href={chatMessage?.message} download target="_blank" className="relative">
                                         <IoMdDocument size={50} />
                                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
                                           {chatMessage?.type}
                                         </div>
-                                      </div>
+                                      </a>
                                     )}
                                 </div>
                               </div>
