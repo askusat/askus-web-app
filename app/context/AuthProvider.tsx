@@ -151,7 +151,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             const notificationSound = "/message.mp3";
             const sound = new Audio(notificationSound);
             sound.play();
-            console.log("you received a notification");
+            // console.log("you received a notification");
           }
         }
       )

@@ -67,3 +67,43 @@ export function getFirstName(fullName: string) {
   const firstName = fullName.split(' ')[0];
   return firstName;
 }
+
+export function IS_GREETING(sentence: string) {
+  const greetings = [
+    "hello",
+    "hi",
+    "hey",
+    "howdy",
+    "greetings",
+    "good morning",
+    "good afternoon",
+    "good evening",
+    "how are you",
+  ];
+
+  const regexPatterns = [
+    /(?:^|\W)hello(?:$|\W)/i,
+    /(?:^|\W)hi(?:$|\W)/i,
+    /(?:^|\W)hey(?:$|\W)/i,
+    /(?:^|\W)howdy(?:$|\W)/i,
+    /(?:^|\W)greetings(?:$|\W)/i,
+    /(?:^|\W)good morning(?:$|\W)/i,
+    /(?:^|\W)good afternoon(?:$|\W)/i,
+    /(?:^|\W)good evening(?:$|\W)/i,
+    /(?:^|\W)how are you(?:$|\W)/i,
+  ];
+
+  const lowerCaseSentence = sentence.toLowerCase();
+
+  // Check for direct greetings
+  if (greetings.some((greeting) => lowerCaseSentence.includes(greeting))) {
+    return true;
+  }
+
+  // Check using regular expressions for more specific patterns
+  if (regexPatterns.some((pattern) => lowerCaseSentence.match(pattern))) {
+    return true;
+  }
+
+  return false;
+}

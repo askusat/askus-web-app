@@ -33,7 +33,7 @@ import { TbRotateRectangle } from "react-icons/tb";
 import { useAuth } from "../hooks/useAuth";
 import { Chat, ChatMessage, ChatSummary, Notification, User } from "@/types";
 import { supabase } from "../supabaseClient";
-import { formatDateToTimeAgo, formatDate } from "../utils/helpers";
+import { formatDateToTimeAgo, formatDate, IS_GREETING } from "../utils/helpers";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "../components/loadingScreen";
 import { nanoid } from "nanoid";
@@ -479,6 +479,107 @@ export default function ChatPageV2() {
     return false;
   };
 
+  const [botResponseState, setBotResponseState] = useState<number>(1);
+
+  useEffect(() => {
+    if (selectedChat?.chatUsers.length > 1) return;
+
+    chatMessages.forEach((message: ChatMessage) => {
+      if (
+        message?.message ===
+        `Understood, thank you. Our expert can certainly assist you with that. Apart from contacting us today, have you spoken to anyone else or taken any other steps in relation to your query?`
+      ) {
+        setBotResponseState(3);
+      }
+      if (
+        message?.message ===
+        `Thank you, I will now pass you to an expert but before I do is there anything relevant you feel the expert should know in order to assist you?`
+      ) {
+        setBotResponseState(4);
+      }
+      if (
+        message?.message ===
+        `Thank you, I will now pass you to an expert but before I do is there anything relevant you feel the expert should know in order to assist you?`
+      ) {
+        setBotResponseState(5);
+      }
+    });
+  }, [chatMessages, selectedChat?.chatUsers.length]);
+
+  const botReply = async (
+    userMessage: string,
+    messageType: "text" | "file",
+    selectedChat: Chat
+  ) => {
+    if (!user || !selectedChat) return;
+    const { data } = await supabase
+      .from("chats")
+      .select()
+      .eq("id", selectedChat.id)
+      .single();
+    const currentChat: Chat | null = data;
+    if (!currentChat) return;
+
+    if (currentChat.chatUsers.length > 1) return;
+
+    var response = "";
+
+    if (messageType !== "text") {
+      response = `Hi ${user.username}, how may we help you?`;
+    } else {
+      const userMessageArray = userMessage.toLowerCase().split(" ");
+
+      if (IS_GREETING(userMessage)) {
+        response = `Hi ${user.username}, how may we help you?`;
+        setBotResponseState(2);
+      } else if (
+        userMessageArray.includes("human") ||
+        userMessageArray.includes("human?") ||
+        userMessageArray.includes("bot") ||
+        userMessageArray.includes("bot?")
+      ) {
+        response = `I am a chatbot, gathering initial information to assist you efficiently. We aim to provide a cost-effective service through this automated process before connecting you to an expert.`;
+        setBotResponseState(2);
+      } else {
+        if (botResponseState < 3) {
+          response = `Understood, thank you. Our expert can certainly assist you with that. Apart from contacting us today, have you spoken to anyone else or taken any other steps in relation to your query?`;
+          setBotResponseState(3);
+        }
+        if (botResponseState === 3) {
+          response = `Thank you, I will now pass you to an expert but before I do is there anything relevant you feel the expert should know in order to assist you?`;
+          setBotResponseState(4);
+        }
+        if (botResponseState === 4) {
+          response = `Thank you, I will now pass you to an expert but before I do is there anything relevant you feel the expert should know in order to assist you?`;
+          setBotResponseState(5);
+        }
+        if (botResponseState === 5) {
+          response = `An expert will join shortly...`;
+        }
+      }
+    }
+
+    const createChatMessage: Partial<ChatMessage> = {
+      chatId: selectedChat.id,
+      message: response,
+      type: "text",
+      replyTo: null,
+      userId: 0,
+      toUserId: user.id,
+      userName: "Juan",
+      userProfilePicture: "",
+      sender: "bot",
+    };
+
+    setTimeout(async () => {
+      await supabase.from("chat_messages").insert(createChatMessage);
+      await supabase
+        .from("chats")
+        .update({ updatedAt: new Date() })
+        .eq("id", selectedChat.id);
+    }, 1000);
+  };
+
   const createChat = async () => {
     if (!user) return null;
 
@@ -558,6 +659,8 @@ export default function ChatPageV2() {
                 .from("chat_messages")
                 .insert(createChatFileMessage);
 
+              await botReply(publicUrl, "file", selectedChat);
+
               const receiverId = selectedChat?.chatUsers.find(
                 (uid: number) => uid !== user?.id
               );
@@ -597,6 +700,7 @@ export default function ChatPageV2() {
         };
 
         await supabase.from("chat_messages").insert(createChatMessage);
+        await botReply(messageInput, "text", selectedChat);
         await supabase
           .from("chats")
           .update({ updatedAt: new Date() })
