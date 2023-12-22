@@ -30,6 +30,10 @@ export interface CreateSubscriptionProps {
   credit: number;
 }
 
+interface getSubscriptionProps {
+  customer_id: string;
+}
+
 export async function POST(req: NextRequest, res: NextResponse) {
   const body: any = await req.json(); // Parse JSON body
   const { route } = body;
@@ -123,7 +127,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         {
           clientSecret: paymentIntent?.client_secret,
           paymentIntent,
-          customer
+          customer,
         },
         { status: 200, statusText: "OK" }
       );
@@ -145,7 +149,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         customer_id,
         payment_method,
         creditMode,
-        credit
+        credit,
       }: CreateSubscriptionProps = body;
 
       if (!customer_id) {
@@ -217,14 +221,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
       // });
 
       await stripe.paymentIntents.create({
-        amount: creditMode ? credit*100 : 500, // £50 if in creditMode
-        currency: 'GBP',
+        amount: creditMode ? credit * 100 : 500, // £50 if in creditMode
+        currency: "GBP",
         automatic_payment_methods: {
           enabled: true,
-          allow_redirects: "never"
+          allow_redirects: "never",
         },
         customer: customer_id,
-        description: creditMode ? `for ${(credit/50)*15} credits` : "Immediate £5 charge",
+        description: creditMode
+          ? `for ${(credit / 50) * 15} credits`
+          : "Immediate £5 charge",
         payment_method,
         confirm: true,
       });
@@ -242,7 +248,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
         expand: ["latest_invoice.payment_intent"],
       };
 
-      const subscription = creditMode ? null : await stripe.subscriptions.create(subData);
+      const subscription = creditMode
+        ? null
+        : await stripe.subscriptions.create(subData);
 
       console.log(`subscription created for ${email}: ${subscription?.id}`);
 
@@ -261,6 +269,49 @@ export async function POST(req: NextRequest, res: NextResponse) {
           creditMode,
           credit,
           clientSecret: lastInvoice?.payment_intent?.client_secret,
+        },
+        { status: 200, statusText: "OK" }
+      );
+    } catch (error) {
+      // console.error(error);
+      return NextResponse.json(
+        { message: `Internal server error: ${error}` },
+        { status: 500, statusText: "Internal server error" }
+      );
+    }
+  }
+
+  if (route === "get_subscription") {
+    try {
+      var { customer_id }: getSubscriptionProps = body;
+
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customer_id,
+        limit: 1,
+      });
+
+      return NextResponse.json(
+        {
+          subscription: subscriptions.data[0],
+        },
+        { status: 200, statusText: "OK" }
+      );
+    } catch (error) {
+      // console.error(error);
+      return NextResponse.json(
+        { message: `Internal server error: ${error}` },
+        { status: 500, statusText: "Internal server error" }
+      );
+    }
+  }
+
+  if (route === "get_customers") {
+    try {
+      const customersRes = await stripe.customers.list();
+
+      return NextResponse.json(
+        {
+          customers: customersRes.data,
         },
         { status: 200, statusText: "OK" }
       );

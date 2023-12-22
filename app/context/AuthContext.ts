@@ -7,7 +7,7 @@ import { LoginParam, SignUpParam } from './AuthProvider';
 import { User, Notification } from '@/types';
 
 interface AuthContextType {
-  user: User | null;
+  user: User;
   notifications: Notification[] | [];
   setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
   setOnChatPageId: React.Dispatch<React.SetStateAction<number | null>>

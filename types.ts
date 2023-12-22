@@ -15,7 +15,7 @@ export type User = {
   chatsJoined: number[];
   username: string;
   // [key: string]: any;
-} | null;
+} | null | undefined;
 
 export type Notification = {
   id: number;

@@ -5,19 +5,25 @@ import { useAuth } from "../hooks/useAuth";
 import LoadingScreen from "../components/loadingScreen";
 import Nav from "../components/layout/nav";
 import { AiOutlineFundView } from "react-icons/ai";
-import { FaCheck, FaCheckCircle, FaHome, FaPen } from "react-icons/fa";
+import { FaCheck, FaCheckCircle, FaHome, FaPen, FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineLoop } from "react-icons/md";
-import { IoCashOutline, IoCreateOutline } from "react-icons/io5";
 import { IoMdHelp } from "react-icons/io";
 import { supabase } from "../supabaseClient";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Image, Input } from "@nextui-org/react";
 import { User } from "@/types";
+import { formatDateToDMYY, formatDateToTimeAgo } from "../utils/helpers";
+import Stripe from "stripe";
+import axios from "axios";
 
 export default function ProfilePage() {
   const auth = useAuth();
   const router = useRouter();
+  const [ongoingQs, setOngoingQs] = useState<number>(0);
+  const [answeredQs, setAnsweredQs] = useState<number>(0);
+  const [subscriptionDetails, setSubscriptionDetails] =
+    useState<Stripe.Subscription | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
@@ -26,6 +32,46 @@ export default function ProfilePage() {
     };
     fetch();
   }, [router]);
+
+  // get users questions history
+  useEffect(() => {
+    const fetch = async () => {
+      if (!auth.user) return;
+      if(auth.user.isAdmin){
+        router.replace('/admin')
+      }
+
+      const { count: answeredCount } = await supabase
+        .from("chats")
+        .select("*", { count: "exact", head: true })
+        .eq("userId", auth.user.id)
+        .eq("answered", true);
+      setAnsweredQs(answeredCount || 0);
+
+      const { count: ongoingCount } = await supabase
+        .from("chats")
+        .select("*", { count: "exact", head: true })
+        .eq("userId", auth.user.id)
+        .eq("answered", false);
+      setOngoingQs(ongoingCount || 0);
+    };
+    fetch();
+  }, [auth.user, router]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (!auth.user?.stripeCustomerId) return;
+      const subscriptionRes = await axios.post(`/api/stripe`, {
+        route: "get_subscription",
+        subscription_id: auth.user?.stripeCustomerId,
+      });
+      // console.log("subscriptionRes.data.subscription");
+      // console.log(subscriptionRes.data.subscription);
+
+      setSubscriptionDetails(subscriptionRes.data.subscription);
+    };
+    fetch();
+  }, [auth.user?.stripeCustomerId]);
 
   if (!auth.user) {
     return <LoadingScreen />;
@@ -55,9 +101,9 @@ export default function ProfilePage() {
                   startContent={<MdOutlineLoop />}
                   className="flex justify-start w-full"
                 >
-                  Ongiong{" "}
+                  Ongoing{" "}
                   <div className="w-6 h-6 grid place-items-center rounded-md bg-primary text-white">
-                    0
+                    {ongoingQs}
                   </div>
                 </Button>
               </Link>
@@ -68,7 +114,7 @@ export default function ProfilePage() {
                 >
                   Answered{" "}
                   <div className="w-6 h-6 grid place-items-center rounded-md bg-primary text-white">
-                    0
+                    {answeredQs}
                   </div>
                 </Button>
               </Link>
@@ -111,15 +157,17 @@ export default function ProfilePage() {
                   <div className="bg-primary w-10 h-10 rounded-full"></div>
                 </Button>
                 <div className="relative">
-                  <div className="w-20 h-20 rounded-full bg-slate-600"></div>
-                  <div className="absolute -bottom-2 -right-3">
+                  <div className="w-20 h-20 rounded-full grid place-items-center bg-primary">
+                  <FaRegUserCircle size={60} color="white" />
+                  </div>
+                  {/* <div className="absolute -bottom-2 -right-3">
                     <Button
                       className="w-7 h-7 min-w-6 min-h-6 rounded-full grid place-items-center"
                       isIconOnly
                     >
                       <FaPen size={12} />
                     </Button>
-                  </div>
+                  </div> */}
                 </div>
                 <DisplayUserName user={auth.user} setUser={auth.setUser} />
                 <Button
@@ -149,7 +197,7 @@ export default function ProfilePage() {
               <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
                 <div className="h-[150px] min-w-[215px] flex flex-col justify-between bg-white shadow-xl rounded-md border-b-[5px] border-[#EBA125] text-center px-8 py-4">
                   <div className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
-                    0
+                    {ongoingQs}
                   </div>
                   <div className="text-[#2B2B2B] text-[28px] font-bold font-MontserratBold">
                     Ongoing
@@ -157,7 +205,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="h-[150px] min-w-[215px] flex flex-col justify-between bg-white shadow-xl rounded-md border-b-[5px] border-success text-center px-8 py-4">
                   <div className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
-                    0
+                    {answeredQs}
                   </div>
                   <div className="text-[#2B2B2B] text-[28px] font-bold font-MontserratBold">
                     Answered
@@ -168,26 +216,43 @@ export default function ProfilePage() {
                     <div className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
                       {auth.user?.credit || 0}
                     </div>
-                    <div className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
+                    <Link href={`/payment#credit`} className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
                       +
-                    </div>
+                    </Link>
                   </div>
 
                   <div className="text-[#2B2B2B] pt-6 text-[28px] font-bold font-MontserratBold">
                     Credits
                   </div>
-                  <div className="flex items-center justify-center">
-                    <div className=" text-[10px] text-gray-500 justify-center">
-                      Expires on 21-12-23
+                  {auth.user?.credit ? (
+                    <div className="flex items-center justify-center">
+                      <div className=" text-[10px] text-gray-500 justify-center">
+                        Expires on{" "}
+                        {formatDateToDMYY(auth.user?.creditExpiresOn)}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className="h-[150px] min-w-[215px] flex flex-col justify-between bg-white shadow-xl rounded-md border-b-[5px] border-primary text-center px-8 py-4">
                   <div className="text-[20px] font-bold">
-                    {auth.user?.isSubscribed ? "Active" : "Unsubscribed"}
-                    <div className=" text-[10px] font-normal text-gray-500 justify-start">
-                      Renewing on 21-12-23
-                    </div>
+                    <span className="capitalize">
+                      {subscriptionDetails?.status}
+                    </span>
+                    {auth.user?.isSubscribed ? (
+                      <div className=" text-[10px] font-normal text-gray-500 justify-start">
+                        <span className="">Renewing</span>{" "}
+                        {subscriptionDetails &&
+                          formatDateToTimeAgo(
+                            new Date(
+                              subscriptionDetails?.current_period_end * 1000
+                            )
+                          )}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                   <div className="text-[#2B2B2B] text-[28px] font-bold font-MontserratBold">
                     Subscription
@@ -314,16 +379,17 @@ const DisplayUserName = ({ user, setUser }: DisplayUserNameProp) => {
     if (!user) return;
     if (loading) return;
 
-
     setLoading(true);
     const { data: newUser, error } = await supabase
       .from("users")
       .update({ username: newUsername })
-      .eq("id", user.id).select().single();
+      .eq("id", user.id)
+      .select()
+      .single();
     if (error) {
       seterrorMsg(error.message);
     }
-    !error && newUser && setUser(newUser)
+    !error && newUser && setUser(newUser);
     setLoading(false);
     setEditMode(false);
   };

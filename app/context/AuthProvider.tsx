@@ -24,7 +24,7 @@ export interface SignUpParam {
 
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // ** States
-  const [user, setUser] = useState<User | null>(defaultProvider.user);
+  const [user, setUser] = useState<User>(defaultProvider.user);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState<boolean>(defaultProvider.loading);
   const [onChatPageId, setOnChatPageId] = useState<number | null>(null);
@@ -49,7 +49,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         if (check) return;
         router.replace("/login");
       }
-      const authUserData: User | null = authUserDataM as User | null;
+      const authUserData: User = authUserDataM as User;
       setUser(authUserData);
       if (check) return;
       window.localStorage.setItem("userData", JSON.stringify(authUserData));
@@ -82,7 +82,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       if (errorCallback) errorCallback(error);
       return;
     } else {
-      const authUserData: User | null = authUserDataM as User | null;
+      const authUserData: User = authUserDataM as User;
       setUser(authUserData);
       window.localStorage.setItem("userData", JSON.stringify(authUserData));
       const redirectURL =

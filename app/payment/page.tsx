@@ -29,7 +29,7 @@ const stripePromise = loadStripe(STRIPE_Pk || "");
 
 export default function PaymentPage() {
   const { user } = useAuth();
-  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
+  const [authUser, setAuthUser] = useState<AuthUser>(null);
   const [progress, setProgress] = useState("30%");
   const [clientSecret, setClientSecret] = useState("");
   const [proccessingSetupIntent, setProccessingSetupIntent] = useState(false);

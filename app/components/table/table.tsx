@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 import {
@@ -27,6 +27,7 @@ import { ChevronDownIcon } from "./ChevronDownIcon";
 import { SearchIcon } from "./SearchIcon";
 import { columns, users, statusOptions } from "./data";
 import { capitalize } from "./utils";
+import { Customers } from "@/app/admin/page";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   active: "success",
@@ -38,7 +39,12 @@ const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
 
 type User = (typeof users)[0];
 
-export default function TableC() {
+interface TableCProps {
+  customers: Customers[];
+}
+
+export default function TableC({ customers }: TableCProps) {
+// export default function TableC() {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
     new Set([])
@@ -275,7 +281,13 @@ export default function TableC() {
         </div>
       </div>
     );
-  }, [filterValue, statusFilter, visibleColumns, onSearchChange, onRowsPerPageChange]);
+  }, [
+    filterValue,
+    statusFilter,
+    visibleColumns,
+    onSearchChange,
+    onRowsPerPageChange,
+  ]);
   // }, [
   //   filterValue,
   //   statusFilter,
