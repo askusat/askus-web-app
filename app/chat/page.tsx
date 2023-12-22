@@ -511,6 +511,10 @@ export default function ChatPageV2() {
     messageType: "text" | "file",
     selectedChat: Chat
   ) => {
+    console.log('Bot reply1');
+    console.log(user, selectedChat);
+
+
     if (!user || !selectedChat) return;
     const { data } = await supabase
       .from("chats")
@@ -518,9 +522,15 @@ export default function ChatPageV2() {
       .eq("id", selectedChat.id)
       .single();
     const currentChat: Chat | null = data;
+
+    console.log("currentChat");
+    console.log(currentChat);
+
     if (!currentChat) return;
 
     if (currentChat.chatUsers.length > 1) return;
+
+    console.log('Bot reply2');
 
     var response = "";
 
@@ -612,10 +622,12 @@ export default function ChatPageV2() {
     setSendingMessage(true);
     setMessageInput("");
     var chatId = selectedChat?.id;
+    var _selectedChat: Chat = selectedChat;
     if (!selectedChatId || selectedChatId === 0) {
       const chat: ChatSummary | any = await createChat();
 
       if (chat) {
+        _selectedChat = chat
         chatId = chat?.id;
         setSelectedChatId(chat.id);
         setSelectedChat(chat);
@@ -659,7 +671,7 @@ export default function ChatPageV2() {
                 .from("chat_messages")
                 .insert(createChatFileMessage);
 
-              await botReply(publicUrl, "file", selectedChat);
+              await botReply(publicUrl, "file", _selectedChat);
 
               const receiverId = selectedChat?.chatUsers.find(
                 (uid: number) => uid !== user?.id
@@ -700,7 +712,7 @@ export default function ChatPageV2() {
         };
 
         await supabase.from("chat_messages").insert(createChatMessage);
-        await botReply(messageInput, "text", selectedChat);
+        await botReply(messageInput, "text", _selectedChat);
         await supabase
           .from("chats")
           .update({ updatedAt: new Date() })
