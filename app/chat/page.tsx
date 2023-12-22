@@ -31,7 +31,7 @@ import { ImAttachment } from "react-icons/im";
 import { IoIosSend, IoMdDocument } from "react-icons/io";
 import { TbRotateRectangle } from "react-icons/tb";
 import { useAuth } from "../hooks/useAuth";
-import { Chat, ChatMessage, ChatSummary, User } from "@/types";
+import { Chat, ChatMessage, ChatSummary, Notification, User } from "@/types";
 import { supabase } from "../supabaseClient";
 import { formatDateToTimeAgo, formatDate } from "../utils/helpers";
 import { useRouter } from "next/navigation";
@@ -265,6 +265,49 @@ export default function ChatPageV2() {
     };
     fetch();
   }, [user, selectedChatId, sendingMessage]);
+
+  // subscribe to chats update to check if it has been closed
+  useEffect(() => {
+    if (!user || !user?.isAdmin) return;
+
+    const chatsChannel = supabase
+      .channel("chats update")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "chats",
+          filter: "status=eq.answered",
+        },
+        async (payload: any) => {
+          // console.log("chat_messages payload.new");
+          // console.log(payload.new);
+
+          const chat: Chat = payload.new;
+          if (chat?.chatUsers.includes(user.id)) {
+            const notificationSound = "/message.mp3";
+            const sound = new Audio(notificationSound);
+            sound.play();
+
+            setRefreshChatList(true);
+
+            if (selectedChat && selectedChat.id === chat.id) {
+              setRefreshChatMessage(false);
+              scrollToViewRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "end",
+              });
+            }
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(chatsChannel);
+    };
+  }, [chatMessages, selectedChat, user]);
 
   // subscribe to chat_messages for admins
   useEffect(() => {
@@ -971,7 +1014,7 @@ export default function ChatPageV2() {
                           <div className="w-[20%]">
                             <div className="whitespace-wrap text-xs text-slate-600 flex justify-end">
                               {formatDateToTimeAgo(
-                                chat?.createdAt || new Date()
+                                chat?.updatedAt || new Date()
                               )}
                             </div>
                             <div className="mt-1 flex justify-end">
@@ -1089,7 +1132,12 @@ export default function ChatPageV2() {
                                   )}
                                   {chatMessage?.type !== "text" &&
                                     chatMessage?.type !== "image" && (
-                                      <a href={chatMessage?.message} download target="_blank" className="relative">
+                                      <a
+                                        href={chatMessage?.message}
+                                        download
+                                        target="_blank"
+                                        className="relative"
+                                      >
                                         <IoMdDocument size={50} />
                                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
                                           {chatMessage?.type}
@@ -1153,7 +1201,12 @@ export default function ChatPageV2() {
                                   )}
                                   {chatMessage?.type !== "text" &&
                                     chatMessage?.type !== "image" && (
-                                      <a href={chatMessage?.message} download target="_blank" className="relative">
+                                      <a
+                                        href={chatMessage?.message}
+                                        download
+                                        target="_blank"
+                                        className="relative"
+                                      >
                                         <IoMdDocument size={50} />
                                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
                                           {chatMessage?.type}
@@ -1442,6 +1495,8 @@ const MenuContent = ({
   if (!user || !chat) return;
 
   const handEndConversation = async () => {
+    if(!chat) return;
+
     setLoading(true);
     const { data, error } = await supabase
       .from("chats")
@@ -1467,6 +1522,15 @@ const MenuContent = ({
         .from("chats")
         .update({ updatedAt: new Date() })
         .eq("id", chat?.id);
+
+        const notfcn: Notification = {
+          chatId: chat.id || 0,
+          message: `${chat.title} has been marked answered`,
+          read: false,
+          title: "Conversation marked as answered",
+          userId: selectedChat?.chatUsers.find((u: number) => u !== user.id),
+        };
+        await supabase.from("notifications").insert(notfcn);
     }
     scrollLastMsgIntoView && scrollLastMsgIntoView();
     setLoading(false);

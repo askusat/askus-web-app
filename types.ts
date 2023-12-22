@@ -1,5 +1,5 @@
 export type User = {
-  id: number;
+  id?: number;
   createdAt?: Date;
   updatedAt?: Date;
   authUserId: string;
@@ -18,7 +18,7 @@ export type User = {
 } | null | undefined;
 
 export type Notification = {
-  id: number;
+  id?: number;
   createdAt?: Date;
   updatedAt?: Date;
   userId: number;
@@ -29,7 +29,7 @@ export type Notification = {
 } | null;
 
 export type Chat = {
-  id: number;
+  id?: number;
   userId: number; // chat creator
   status: "ongoing" | "answered" | "cancelled" | "reported"; // | string;
   answered: boolean;
@@ -41,7 +41,7 @@ export type Chat = {
 } | null;
 
 export type ChatSummary = {
-  id: number;
+  id?: number;
   userId: number; // chat creator
   status: "ongoing" | "answered" | "cancelled" | "reported"; // | string;
   answered: boolean;
@@ -54,7 +54,7 @@ export type ChatSummary = {
 } | null;
 
 export type ChatMessage = {
-  id: number;
+  id?: number;
   createdAt: Date;
   updatedAt: Date;
   message: string;
