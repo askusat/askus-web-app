@@ -5,15 +5,27 @@ import {
   AvatarGroup,
   Button,
   Image as ImageNUI,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   Popover,
   PopoverContent,
   PopoverTrigger,
   Tab,
   Tabs,
+  useDisclosure,
 } from "@nextui-org/react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import { FaAngleLeft, FaCheck, FaPen, FaTimes } from "react-icons/fa";
+import {
+  FaAngleLeft,
+  FaCheck,
+  FaDownload,
+  FaPen,
+  FaTimes,
+} from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { ImAttachment } from "react-icons/im";
 import { IoIosSend, IoMdDocument } from "react-icons/io";
@@ -25,6 +37,8 @@ import { formatDateToTimeAgo, formatDate } from "../utils/helpers";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "../components/loadingScreen";
 import { nanoid } from "nanoid";
+import axios from "axios";
+import Stripe from "stripe";
 
 export default function ChatPageV2() {
   const {
@@ -48,11 +62,25 @@ export default function ChatPageV2() {
   );
   const [chatTitle, setChatTitle] = useState("");
   const [seletectedFiles, setSeletectedFiles] = useState<any[]>([]);
+  const [imageToPreview, setImageToPreview] = useState<string>(
+    "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+  );
 
   // refs
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const scrollToViewRef = useRef<HTMLInputElement>(null);
+
+  const {
+    isOpen: isOpenNoAssessModal,
+    onOpen: onOpenNoAssessModal,
+    onClose: onCloseNoAssessModal,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenPreviewImage,
+    onOpen: onOpenPreviewImage,
+    onClose: onClosePreviewImage,
+  } = useDisclosure();
 
   const router = useRouter();
 
@@ -379,6 +407,31 @@ export default function ChatPageV2() {
     // }
   }
 
+  const checkAccessibility = async () => {
+    if (!user) return false;
+    if (user.isAdmin) return true;
+
+    if (user?.credit > 0) {
+      return true;
+    }
+
+    if (user.credit !== 0 && user.isSubscribed) {
+      const subscriptionRes = await axios.post(`/api/stripe`, {
+        route: "get_subscription",
+        subscription_id: user.stripeCustomerId,
+      });
+      const subscription: Stripe.Subscription =
+        subscriptionRes.data.subscription;
+      const allowedStatus = ["active", "trialing"];
+      if (allowedStatus.includes(subscription.status)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return false;
+  };
+
   const createChat = async () => {
     if (!user) return null;
 
@@ -404,6 +457,9 @@ export default function ChatPageV2() {
   // setSendingMessage
   const handleSubmit = async () => {
     if (!user?.id || sendingMessage) return;
+
+    const isPermitted = checkAccessibility();
+    if (!isPermitted) return onOpenNoAssessModal();
 
     setSendingMessage(true);
     setMessageInput("");
@@ -451,7 +507,7 @@ export default function ChatPageV2() {
                 sender: user.isAdmin ? "expert" : "user",
               };
 
-              const {error} = await supabase
+              const { error } = await supabase
                 .from("chat_messages")
                 .insert(createChatFileMessage);
 
@@ -637,6 +693,91 @@ export default function ChatPageV2() {
 
   return (
     <>
+      <Modal
+        backdrop={"blur"}
+        isOpen={isOpenNoAssessModal}
+        onClose={onCloseNoAssessModal}
+      >
+        <ModalContent>
+          {(onCloseNoAssessModal) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Not Subscribed!
+              </ModalHeader>
+              <ModalBody>
+                <p>
+                  Sorry you are not allowed to access this feature because you
+                  do not have an active subscription nor any question credit.
+                  Please subscribe to continue.
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={onCloseNoAssessModal}
+                >
+                  Close
+                </Button>
+                <Link href={"/payment"}>
+                  <Button color="primary" onPress={onCloseNoAssessModal}>
+                    Subscribe
+                  </Button>
+                </Link>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        backdrop={"opaque"}
+        isOpen={isOpenPreviewImage}
+        onClose={() => {
+          setImageToPreview("");
+          onClosePreviewImage();
+        }}
+      >
+        <ModalContent>
+          {(onClosePreviewImage) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Image preview
+              </ModalHeader>
+              <ModalBody>
+                <a href={imageToPreview} download={true} target="_blank">
+                  <ImageNUI src={imageToPreview} alt="" />
+                </a>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={() => {
+                    setImageToPreview("");
+                    onClosePreviewImage();
+                  }}
+                >
+                  Close
+                </Button>
+                <a href={imageToPreview} download={true} target="_blank">
+                  <Button
+                    color="primary"
+                    isIconOnly
+                    onPress={() => {
+                      setImageToPreview("");
+                      onClosePreviewImage();
+                    }}
+                  >
+                    <FaDownload size={20} />
+                  </Button>
+                </a>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
       <div className="h-screen w-screen overflow-hidden relative">
         <header className="fixed z-50 top-0 left-0 w-full bg-primary text-white h-[8vh] box-border">
           <div className="flex items-center justify-between gap-2 h-full px-2">
@@ -935,11 +1076,15 @@ export default function ChatPageV2() {
                                   )}
                                   {chatMessage?.type === "image" && (
                                     <ImageNUI
+                                      onClick={() => {
+                                        setImageToPreview(chatMessage.message);
+                                        onOpenPreviewImage();
+                                      }}
                                       src={chatMessage?.message}
                                       // fill
                                       isZoomed
                                       alt="Preview"
-                                      className="w-[150px] h-[150px] static"
+                                      className="w-[150px] h-[150px] static cursor-pointer"
                                     />
                                   )}
                                   {chatMessage?.type !== "text" &&
@@ -995,11 +1140,15 @@ export default function ChatPageV2() {
                                   )}
                                   {chatMessage?.type === "image" && (
                                     <ImageNUI
+                                      onClick={() => {
+                                        setImageToPreview(chatMessage.message);
+                                        onOpenPreviewImage();
+                                      }}
                                       src={chatMessage?.message}
                                       // fill
                                       isZoomed
                                       alt="Preview"
-                                      className="w-[150px] h-[150px] static"
+                                      className="w-[150px] h-[150px] static cursor-pointer"
                                     />
                                   )}
                                   {chatMessage?.type !== "text" &&
@@ -1180,6 +1329,9 @@ export default function ChatPageV2() {
                         size="sm"
                         className="bg-primary text-white ml-2"
                         isLoading={sendingMessage}
+                        onPress={() => {
+                          handleSubmit();
+                        }}
                       >
                         <IoIosSend size={20} />
                       </Button>
