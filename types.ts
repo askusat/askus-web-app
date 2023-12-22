@@ -57,6 +57,7 @@ export type ChatMessage = {
   id?: number;
   createdAt: Date;
   updatedAt: Date;
+  endedAt: Date;
   message: string;
   type: string;
   replyTo: string | null;

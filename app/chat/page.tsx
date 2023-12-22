@@ -268,7 +268,7 @@ export default function ChatPageV2() {
 
   // subscribe to chats update to check if it has been closed
   useEffect(() => {
-    if (!user || !user?.isAdmin) return;
+    if (!user) return;
 
     const chatsChannel = supabase
       .channel("chats update")
@@ -285,15 +285,19 @@ export default function ChatPageV2() {
           // console.log(payload.new);
 
           const chat: Chat = payload.new;
+          if (selectedChat?.id === chat?.id) {
+            setSelectedChat(chat);
+          }
+
           if (chat?.chatUsers.includes(user.id)) {
             const notificationSound = "/message.mp3";
             const sound = new Audio(notificationSound);
-            sound.play();
+            !user.isAdmin && sound.play();
 
             setRefreshChatList(true);
+            setRefreshChatMessage(true);
 
             if (selectedChat && selectedChat.id === chat.id) {
-              setRefreshChatMessage(false);
               scrollToViewRef.current?.scrollIntoView({
                 behavior: "smooth",
                 block: "end",
@@ -1495,7 +1499,7 @@ const MenuContent = ({
   if (!user || !chat) return;
 
   const handEndConversation = async () => {
-    if(!chat) return;
+    if (!chat) return;
 
     setLoading(true);
     const { data, error } = await supabase
@@ -1517,20 +1521,26 @@ const MenuContent = ({
         userName: "system",
         userProfilePicture: "",
       };
-      await supabase.from("chat_messages").insert(createChatMessage);
-      await supabase
+      const { error } = await supabase
+        .from("chat_messages")
+        .insert(createChatMessage);
+      const { error: e1 } = await supabase
         .from("chats")
-        .update({ updatedAt: new Date() })
+        .update({
+          status: "answered",
+          endedAt: new Date(),
+          updatedAt: new Date(),
+        })
         .eq("id", chat?.id);
 
-        const notfcn: Notification = {
-          chatId: chat.id || 0,
-          message: `${chat.title} has been marked answered`,
-          read: false,
-          title: "Conversation marked as answered",
-          userId: selectedChat?.chatUsers.find((u: number) => u !== user.id),
-        };
-        await supabase.from("notifications").insert(notfcn);
+      const notfcn: Notification = {
+        chatId: chat.id || 0,
+        message: `${chat.title} has been marked answered`,
+        read: false,
+        title: "Conversation marked as answered",
+        userId: selectedChat?.chatUsers.find((u: number) => u !== user.id),
+      };
+      const { error: e2 } = await supabase.from("notifications").insert(notfcn);
     }
     scrollLastMsgIntoView && scrollLastMsgIntoView();
     setLoading(false);
