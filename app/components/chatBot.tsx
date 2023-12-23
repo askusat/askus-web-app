@@ -3,8 +3,10 @@
 import { Button, Image, Textarea } from "@nextui-org/react";
 import React, { useRef, useState } from "react";
 import ChatBotAnimText from "./home/ChatBotAnimText";
+import { useRouter } from "next/navigation";
 
 export default function ChatBot() {
+  const router = useRouter()
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -62,6 +64,9 @@ export default function ChatBot() {
         <Button
           className="mt-3 bg-primary text-white rounded-[10px] w-[calc(100%-56px)] mx-7 absolute bottom-6 left-0"
           size="lg"
+          onClick={() =>  {
+            router.push(`/chat?message=${inputRef.current ? inputRef.current.value : ''}`)
+          }}
         >
           Start Conservation
         </Button>

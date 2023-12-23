@@ -66,5 +66,5 @@ export type ChatMessage = {
   toUserId: number;
   userName: string;
   userProfilePicture: string;
-  sender: "expert" | "user" | "bot"; // | string;
+  sender: "expert" | "user" | "Assistant" | "bot"; // | string;
 } | null;

@@ -576,7 +576,7 @@ export default function ChatPageV2() {
       replyTo: null,
       userId: 0,
       toUserId: user.id,
-      userName: "Juan",
+      userName: "Mary",
       userProfilePicture: "",
       sender: "bot",
     };
@@ -1289,7 +1289,8 @@ export default function ChatPageV2() {
                               className="flex items-start gap-2"
                             >
                               <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary text-white grid place-items-center text-xs select-none">
-                                {user?.isAdmin ? "user" : "expert"}
+                                {/* {user?.isAdmin ? "user" : "expert"} */}
+                                {chatMessage?.sender}
                               </div>
                               <div className="md:max-w-[70%]">
                                 <div className="text-xs">
