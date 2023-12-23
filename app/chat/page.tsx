@@ -1381,12 +1381,12 @@ export default function ChatPageV2() {
                     e.preventDefault();
                     handleSubmit();
                   }}
-                  onKeyDown={(e: any) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault(); // Prevents new line in textarea if Shift+Enter is pressed
-                      handleSubmit(); // Call your submit function here
-                    }
-                  }}
+                  // onKeyDown={(e: any) => {
+                  //   if (e.key === "Enter" && !e.shiftKey) {
+                  //     e.preventDefault(); // Prevents new line in textarea if Shift+Enter is pressed
+                  //     handleSubmit(); // Call your submit function here
+                  //   }
+                  // }}
                 >
                   <div className="px-3 flex items-center gap-0 w-full">
                     {user?.isAdmin && (
@@ -1490,7 +1490,7 @@ export default function ChatPageV2() {
                       </div>
                       <textarea
                         ref={inputRef}
-                        className="bg-transparent outline-none px-2 pb-3 pt-[10px] placeholder:pt-[5px] w-full h-[40px] resize-none placeholder:text-sm scrolled-remove focus:ring-0 focus-visible:ring-0"
+                        className="bg-transparent outline-none px-2 pt-[10px] placeholder:pt-[5px] w-full h-[40px] resize-none placeholder:text-sm scrolled-remove focus:ring-0 focus-visible:ring-0"
                         tabIndex={0}
                         placeholder="Enter message here..."
                         value={messageInput}
