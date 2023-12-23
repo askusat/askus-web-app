@@ -1227,7 +1227,7 @@ export default function ChatPageV2() {
                               id={`message_-_${index + 1}`}
                               className="flex flex-row-reverse items-end gap-2 w-full"
                             >
-                              <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
+                              <div className="mb-4 w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
                                 you
                               </div>
                               <div className="flex flex-col items-end w-fit md:max-w-[70%]">
@@ -1288,7 +1288,7 @@ export default function ChatPageV2() {
                               id={`message_-_${index + 1}`}
                               className="flex items-start gap-2"
                             >
-                              <div className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary text-white grid place-items-center text-xs select-none">
+                              <div className="mt-4 w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary text-white grid place-items-center text-xs select-none">
                                 {/* {user?.isAdmin ? "user" : "expert"} */}
                                 {chatMessage?.sender}
                               </div>
