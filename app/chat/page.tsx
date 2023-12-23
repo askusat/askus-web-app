@@ -1381,12 +1381,12 @@ export default function ChatPageV2() {
                     e.preventDefault();
                     handleSubmit();
                   }}
-                  // onKeyDown={(e: any) => {
-                  //   if (e.key === "Enter" && !e.shiftKey) {
-                  //     e.preventDefault(); // Prevents new line in textarea if Shift+Enter is pressed
-                  //     handleSubmit(); // Call your submit function here
-                  //   }
-                  // }}
+                  onKeyDown={(e: any) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault(); // Prevents new line in textarea if Shift+Enter is pressed
+                      handleSubmit(); // Call your submit function here
+                    }
+                  }}
                 >
                   <div className="px-3 flex items-center gap-0 w-full">
                     {user?.isAdmin && (
