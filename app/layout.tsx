@@ -3,10 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Footer from "./components/layout/footer";
-import { Button } from "@nextui-org/react";
-import { IoCreateOutline } from "react-icons/io5";
-import Link from "next/link";
 import CreateChat from "./components/chat/createChat";
+// import { Notifications } from "react-push-notification";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +26,7 @@ export default function RootLayout({
         <Providers>
           <CreateChat />
           <div className="bg-[#f9f9f9]">
+            {/* <Notifications /> */}
             {children}
             <Footer />
           </div>

@@ -39,6 +39,8 @@ import LoadingScreen from "../components/loadingScreen";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import Stripe from "stripe";
+import { MdNotificationsActive, MdNotificationsOff } from "react-icons/md";
+import addNotification from "react-push-notification";
 
 export default function ChatPageV2() {
   const {
@@ -868,6 +870,27 @@ export default function ChatPageV2() {
     };
   }, [windowHeight]);
 
+  const [grantedNotficationPermission, setGrantedNotficationPermission] =
+    useState(false);
+  useEffect(() => {
+    const f = () => {
+      // addNotification({
+      //   title: "Warning",
+      //   subtitle: "This is a subtitle",
+      //   message: "This is a very long message",
+      //   theme: "darkblue",
+      //   native: true, // when using native, your OS will handle theming.
+      // });
+      // console.log('done');
+
+    };
+    f();
+
+    if (window.Notification.permission === "granted") {
+      setGrantedNotficationPermission(true);
+    }
+  }, []);
+
   if (!user && authLoading) {
     return <LoadingScreen />;
   }
@@ -984,25 +1007,39 @@ export default function ChatPageV2() {
                   <FaTimes size={20} className="text-red-600  " />
                 )}
               </Button>
-              {/* <Button
-              isIconOnly
-              size="sm"
-              className="bg-transparent"
-              onClick={() => {
-                resetChatScreen();
-              }}
-            >
-              <div className="w-4 h-4 rounded-full bg-warning text-white grid place-items-center text-xs"></div>
-            </Button> */}
               <Button
                 isIconOnly
                 size="sm"
                 className="bg-transparent"
                 onClick={() => {
-                  resetChatScreen();
+                  // resetChatScreen();
+                  console.log('....');
+
+                  addNotification({
+                    title: "Warning",
+                    subtitle: "This is a subtitle",
+                    message: "This is a very long message",
+                    theme: "darkblue",
+                    native: true, // when using native, your OS will handle theming.
+                  });
+                  console.log('....d');
+                  return;
+                  window.Notification.requestPermission().then((permission) => {
+                    console.log("permission");
+                    console.log(permission);
+                    if (permission === "granted") {
+                      setGrantedNotficationPermission(true);
+                    } else {
+                      setGrantedNotficationPermission(false);
+                    }
+                  });
                 }}
               >
-                <div className="w-4 h-4 rounded-full bg-success text-white grid place-items-center text-xs"></div>
+                {grantedNotficationPermission ? (
+                  <MdNotificationsOff size={20} color="white" />
+                ) : (
+                  <MdNotificationsActive size={20} color="white" />
+                )}
               </Button>
             </nav>
 
