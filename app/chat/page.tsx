@@ -129,6 +129,20 @@ export default function ChatPageV2() {
   // URLSearchParams
   useEffect(() => {
     const fetch = async () => {
+      const msg = new URLSearchParams(window.location.search).get("message");
+      if (msg) {
+        resetChatScreen(false);
+        setSelectedChat(null);
+        setSelectedChatId(0);
+        setIsChatPageOpen(true);
+
+        setMessageInput(msg);
+        // setTimeout(() => {
+        //   handleSubmit();
+        // }, 2000);
+        return;
+      }
+
       const chatId = new URLSearchParams(window.location.search).get("chatId");
       if (chatId) {
         const { data: chat, error } = await supabase
@@ -147,6 +161,10 @@ export default function ChatPageV2() {
         // inputRef?.current && inputRef?.current?.focus();
         router.push(`?chatId=${chat.id}`);
       } else {
+        resetChatScreen();
+        setSelectedChat(null);
+        setSelectedChatId(0);
+        setIsChatPageOpen(false);
         router.replace("/chat");
         return;
       }
@@ -217,7 +235,8 @@ export default function ChatPageV2() {
           .from("chat_view") //chats_summary
           .select()
           .eq("userId", user?.id)
-          .eq("answered", selectedTab === "answered");
+          .eq("answered", selectedTab === "answered")
+          .order("updatedAt", { ascending: false });
 
         if (!error && data.length > 0) {
           setChats(data);
@@ -511,9 +530,8 @@ export default function ChatPageV2() {
     messageType: "text" | "file",
     selectedChat: Chat
   ) => {
-    console.log('Bot reply1');
+    console.log("Bot reply1");
     console.log(user, selectedChat);
-
 
     if (!user || !selectedChat) return;
     const { data } = await supabase
@@ -530,7 +548,7 @@ export default function ChatPageV2() {
 
     if (currentChat.chatUsers.length > 1) return;
 
-    console.log('Bot reply2');
+    console.log("Bot reply2");
 
     var response = "";
 
@@ -627,7 +645,7 @@ export default function ChatPageV2() {
       const chat: ChatSummary | any = await createChat();
 
       if (chat) {
-        _selectedChat = chat
+        _selectedChat = chat;
         chatId = chat?.id;
         setSelectedChatId(chat.id);
         setSelectedChat(chat);
@@ -802,12 +820,12 @@ export default function ChatPageV2() {
     setAddingUserToChat(false);
   };
 
-  const resetChatScreen = () => {
+  const resetChatScreen = (goHome: boolean = true) => {
     setSelectedChatId(0);
     setSelectedChat(null);
     setchatMessages([]);
     setIsChatPageOpen(false);
-    router.replace("/chat");
+    goHome && router.replace("/chat");
   };
 
   const [windowHeight, setWindowHeight] = useState(0);
