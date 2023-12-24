@@ -17,7 +17,7 @@ export type User = {
   // [key: string]: any;
 } | null | undefined;
 
-export type Notification = {
+export type NotificationType = {
   id?: number;
   createdAt?: Date;
   updatedAt?: Date;

@@ -31,7 +31,7 @@ import { ImAttachment } from "react-icons/im";
 import { IoIosSend, IoMdDocument } from "react-icons/io";
 import { TbRotateRectangle } from "react-icons/tb";
 import { useAuth } from "../hooks/useAuth";
-import { Chat, ChatMessage, ChatSummary, Notification, User } from "@/types";
+import { Chat, ChatMessage, ChatSummary, NotificationType, User } from "@/types";
 import { supabase } from "../supabaseClient";
 import { formatDateToTimeAgo, formatDate, IS_GREETING } from "../utils/helpers";
 import { useRouter } from "next/navigation";
@@ -882,7 +882,6 @@ export default function ChatPageV2() {
       //   native: true, // when using native, your OS will handle theming.
       // });
       // console.log('done');
-
     };
     f();
 
@@ -991,7 +990,7 @@ export default function ChatPageV2() {
                 size="sm"
                 className="bg-transparent"
                 onClick={() => {
-                  if (selectedChat) {
+                  if (isChatPageOpen) {
                     resetChatScreen();
                   } else {
                     if (window.confirm("Do you want to leave the chat?")) {
@@ -1011,23 +1010,27 @@ export default function ChatPageV2() {
                 isIconOnly
                 size="sm"
                 className="bg-transparent"
-                onClick={() => {
+                onClick={async () => {
                   // resetChatScreen();
-                  console.log('....');
+                  // addNotification({
+                  //   title: "Warning",
+                  //   // subtitle: "This is a subtitle",
+                  //   message: "This is a very long message",
+                  //   duration: 3000,
+                  //   // theme: "darkblue",
+                  //   native: true, // when using native, your OS will handle theming.
+                  // });
 
-                  addNotification({
-                    title: "Warning",
-                    subtitle: "This is a subtitle",
-                    message: "This is a very long message",
-                    theme: "darkblue",
-                    native: true, // when using native, your OS will handle theming.
-                  });
-                  console.log('....d');
-                  return;
                   window.Notification.requestPermission().then((permission) => {
                     console.log("permission");
                     console.log(permission);
+                    new Notification("Thanks");
                     if (permission === "granted") {
+                      if (typeof Notification !== "undefined") {
+                        new Notification("Thanks2");
+                      } else {
+                        console.error("Notification API is not available");
+                      }
                       setGrantedNotficationPermission(true);
                     } else {
                       setGrantedNotficationPermission(false);
@@ -1705,7 +1708,7 @@ const MenuContent = ({
         })
         .eq("id", chat?.id);
 
-      const notfcn: Notification = {
+      const notfcn: NotificationType = {
         chatId: chat.id || 0,
         message: `${chat.title} has been marked answered`,
         read: false,

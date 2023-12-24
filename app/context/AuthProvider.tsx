@@ -8,7 +8,7 @@ import { AuthContext, defaultProvider } from "./AuthContext";
 import { supabase } from "../supabaseClient";
 import { PROTECTED_PAGES, authConfig } from "../config";
 import { AuthUser } from "@supabase/supabase-js";
-import { Notification, User } from "@/types";
+import { NotificationType, User } from "@/types";
 
 export interface LoginParam {
   email: string;
@@ -25,7 +25,7 @@ export interface SignUpParam {
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // ** States
   const [user, setUser] = useState<User>(defaultProvider.user);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
   const [loading, setLoading] = useState<boolean>(defaultProvider.loading);
   const [onChatPageId, setOnChatPageId] = useState<number | null>(null);
   // Router
@@ -124,7 +124,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         .order("updatedAt", { ascending: false });
 
       if (!error) {
-        const notfs: Notification[] = data || [];
+        const notfs: NotificationType[] = data || [];
         setNotifications(notfs);
       }
     };
@@ -147,7 +147,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         },
         (payload) => {
           if (payload.new?.userId === user?.id) {
-            setNotifications([payload.new as Notification, ...notifications]);
+            setNotifications([payload.new as NotificationType, ...notifications]);
             const notificationSound = "/message.mp3";
             const sound = new Audio(notificationSound);
             sound.play();
