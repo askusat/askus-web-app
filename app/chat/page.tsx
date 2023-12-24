@@ -360,6 +360,7 @@ export default function ChatPageV2() {
           }
 
           setRefreshChatMessage(false);
+          notifyMe()
 
           if (payload.new.userId !== user.id) {
             const notificationSound = "/message.mp3";
@@ -408,6 +409,8 @@ export default function ChatPageV2() {
               .eq("chatId", selectedChat.id)
               .eq("userId", user?.id);
           }
+
+          notifyMe()
 
           if (
             !user?.isAdmin &&
@@ -890,6 +893,32 @@ export default function ChatPageV2() {
     }
   }, []);
 
+  function notifyMe() {
+    console.log("notifyMe");
+
+    if (!("Notification" in window)) {
+      // Check if the browser supports notifications
+      alert("This browser does not support desktop notification");
+    } else if (Notification.permission === "granted") {
+      // Check whether notification permissions have already been granted;
+      // if so, create a notification
+      const notification = new Notification("Hi there!");
+      // …
+    } else if (Notification.permission !== "denied") {
+      // We need to ask the user for permission
+      Notification.requestPermission().then((permission) => {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          const notification = new Notification("Hi there!");
+          // …
+        }
+      });
+    }
+
+    // At last, if the user has denied notifications, and you
+    // want to be respectful there is no need to bother them anymore.
+  }
+
   if (!user && authLoading) {
     return <LoadingScreen />;
   }
@@ -1021,21 +1050,24 @@ export default function ChatPageV2() {
                   //   native: true, // when using native, your OS will handle theming.
                   // });
 
-                  window.Notification.requestPermission().then((permission) => {
-                    console.log("permission");
-                    console.log(permission);
-                    new Notification("Thanks");
-                    if (permission === "granted") {
-                      if (typeof Notification !== "undefined") {
-                        new Notification("Thanks2");
-                      } else {
-                        console.error("Notification API is not available");
-                      }
-                      setGrantedNotficationPermission(true);
-                    } else {
-                      setGrantedNotficationPermission(false);
-                    }
-                  });
+                  notifyMe()
+                  return
+
+                  // window.Notification.requestPermission().then((permission) => {
+                  //   console.log("permission");
+                  //   console.log(permission);
+                  //   new Notification("Thanks");
+                  //   if (permission === "granted") {
+                  //     if (typeof Notification !== "undefined") {
+                  //       new Notification("Thanks2");
+                  //     } else {
+                  //       console.error("Notification API is not available");
+                  //     }
+                  //     setGrantedNotficationPermission(true);
+                  //   } else {
+                  //     setGrantedNotficationPermission(false);
+                  //   }
+                  // });
                 }}
               >
                 {grantedNotficationPermission ? (
