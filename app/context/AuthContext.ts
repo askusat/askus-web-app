@@ -4,12 +4,12 @@
 import React from 'react';
 import { createContext } from 'react'
 import { LoginParam, SignUpParam } from './AuthProvider';
-import { User, Notification } from '@/types';
+import { User, NotificationType } from '@/types';
 
 interface AuthContextType {
   user: User;
-  notifications: Notification[] | [];
-  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
+  notifications: NotificationType[] | [];
+  setNotifications: React.Dispatch<React.SetStateAction<NotificationType[]>>
   setOnChatPageId: React.Dispatch<React.SetStateAction<number | null>>
   loading: boolean;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;

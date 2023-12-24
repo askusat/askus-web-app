@@ -1,4 +1,4 @@
-import { Notification, User } from "@/types";
+import { NotificationType, User } from "@/types";
 import { supabase } from "../supabaseClient";
 import moment from 'moment';
 
@@ -36,7 +36,7 @@ export function formatDateToDMYY(timestamp: Date): string {
 
 export const markAllNotificationAsRead = async (
   user: User,
-  setNotifications: (newNotifications: Notification[]) => void
+  setNotifications: (newNotifications: NotificationType[]) => void
 ) => {
   await supabase
     .from("notifications")
@@ -49,8 +49,8 @@ export const markAllNotificationAsRead = async (
 export const markNotificationAsRead = async (
   user: User,
   notification_id: number,
-  notifications: Notification[],
-  setNotifications: (newNotifications: Notification[]) => void
+  notifications: NotificationType[],
+  setNotifications: (newNotifications: NotificationType[]) => void
 ) => {
   await supabase
     .from("notifications")
