@@ -1,4 +1,25 @@
 /** @type {import('next').NextConfig} */
+
+// const withSerwist = require("@serwist/next").default({
+//   swSrc: "app/sw.ts",
+//   swDest: "public/sw.js",
+// });
+
+const withPWA = require("@ducanh2912/next-pwa").default({
+  dest: "public",
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  swcMinify: true,
+  // disable: process.env.NODE_ENV !== "production",
+  disable: false,
+  workboxOptions:{
+    disableDevLogs: true,
+  }
+});
+
+// import withSerwist from "@serwist/next";
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -12,4 +33,7 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+// module.exports = nextConfig
+
+// module.exports = withSerwist(nextConfig);
+module.exports = withPWA(nextConfig);

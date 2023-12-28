@@ -359,15 +359,15 @@ export default function ChatPageV2() {
               .eq("userId", user?.id);
           }
 
-          setRefreshChatMessage(false);
           notifyMe()
+          setRefreshChatList(true);
+          setRefreshChatMessage(false);
 
           if (payload.new.userId !== user.id) {
             const notificationSound = "/message.mp3";
             const sound = new Audio(notificationSound);
             sound.play();
           }
-          setRefreshChatList(true);
           if (selectedChat) {
             setchatMessages([...chatMessages, payload.new as ChatMessage]);
             scrollToViewRef.current?.scrollIntoView({
@@ -835,7 +835,7 @@ export default function ChatPageV2() {
 
   const [windowHeight, setWindowHeight] = useState(0);
 
-  // does nothing
+  // todo: delete this useeffect it does nothing
   useEffect(() => {
     setWindowHeight(window.innerHeight);
 
@@ -877,14 +877,14 @@ export default function ChatPageV2() {
     useState(false);
   useEffect(() => {
     const f = () => {
-      // addNotification({
-      //   title: "Warning",
-      //   subtitle: "This is a subtitle",
-      //   message: "This is a very long message",
-      //   theme: "darkblue",
-      //   native: true, // when using native, your OS will handle theming.
-      // });
-      // console.log('done');
+      addNotification({
+        title: "Warning",
+        subtitle: "This is a subtitle",
+        message: "This is a very long message",
+        theme: "darkblue",
+        native: true, // when using native, your OS will handle theming.
+      });
+      console.log('done');
     };
     f();
 

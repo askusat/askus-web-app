@@ -9,6 +9,7 @@ import CreateChat from "./components/chat/createChat";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  manifest: '/manifest.json',
   title: "Askus | Anytime",
   description: "We are ready to answer your questions, day or night.",
 };
