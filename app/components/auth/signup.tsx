@@ -3,7 +3,7 @@
 import { SignUpParam } from "@/app/context/AuthProvider";
 import { useAuth } from "@/app/hooks/useAuth";
 import { supabase } from "@/app/supabaseClient";
-import { Button, Image} from "@nextui-org/react";
+import { Button, Image as ImageNUI} from "@nextui-org/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -54,7 +54,7 @@ export const SignupStepOne = ({
   return (
     <div className="">
       <Link href="/">
-        <Image src="/logo-2.svg" alt="logo" width={200} height={40} />
+        <ImageNUI src="/logo-2.svg" alt="logo" width={200} height={40} className="h-auto" />
       </Link>
 
       <h5 className="font-bold font-PlusJakartaSansBold text-black/80 text-[18px] md:text-[25px] mt-4 mb-1 -ml-2">
@@ -204,6 +204,7 @@ export const SignupStepOne = ({
         </div>
 
         <Button
+        aria-label="Submit signup form"
           type="submit"
           onClick={() => {}}
           className={`bg-primary w-full flex items-center gap-3 justify-center text-white`}

@@ -23,7 +23,7 @@ export default function AuthLayout({ children }: any) {
             />
           </Link>
           <h3 className="mt-4 text-[2rem] lg:text-[2rem] xl:text-[2.2rem] font-bold font-PlusJakartaSansBold text-center lg:text-start">
-            Join for £5 and get your answer in few minutes
+            Join for £5 and get your answer in a few minutes
           </h3>
 
           <div className="py-6 flex justify-center lg:justify-start">

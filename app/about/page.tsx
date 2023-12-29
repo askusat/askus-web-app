@@ -26,6 +26,7 @@ export default function AboutPage() {
           </div>
           <Link href="#aboutus">
             <Button
+            aria-label="dropdown"
               isIconOnly
               variant="flat"
               className="flex items-center justify-center mt-20 bg-none border-2 border-white  z-10 rounded-full"
@@ -55,6 +56,7 @@ export default function AboutPage() {
             </h1>
             <Link href={"/chat"}>
               <Button
+              aria-label="Get started button"
                 className=" bg-white mt-10 mb-10 text-primary rounded-[10px]"
                 size="lg"
               >
@@ -149,6 +151,7 @@ export default function AboutPage() {
           </p>
           <Link href={"/chat"}>
             <Button
+            aria-label="Get started button" 
               className="mt-3 text-primary bg-white rounded-[10px] border-none"
               size="lg"
             >

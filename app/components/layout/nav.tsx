@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "@nextui-org/react";
+import { Button, Image as ImageNUI } from "@nextui-org/react";
 import Image from "next/image";
 import {
   FaAngleDown,
@@ -88,7 +88,7 @@ export default function Nav() {
   return (
     <nav className="flex items-center justify-between gap-[46px]">
       <Link href="/">
-        <Image
+        <ImageNUI
           src="/logo-2.svg"
           alt="logo"
           width={200}

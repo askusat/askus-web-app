@@ -13,13 +13,13 @@ const steps = [
   {
     id: 2,
     title: "Connect with an expert",
-    img: "/step2.JPG",
+    img: "/step2.svg",
     desc: "You can be chatting to a legal expert in minutes.",
   },
   {
     id: 3,
     title: "Get response immediately",
-    img: "/step3.JPG",
+    img: "/step3.svg",
     desc: "You can ask follow up questions and clarifications until you are satisfied with the answer. We are available 24/7.",
   },
 ];
@@ -72,7 +72,6 @@ export default function HowItWorks() {
                   src={stepz.img}
                   alt=""
                   width={300}
-                  height={300}
                   className="w-[300px] h-auto transition-all duration-300"
                 />
               </div>

@@ -94,20 +94,24 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // chechAuth
   useEffect(() => {
     const initAuth = async () => {
-      const {
-        data: { user },
-        error,
-      } = await supabase.auth.getUser();
+      try {
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
 
-      if (error || !user) {
-        if (PROTECTED_PAGES.includes(pathname)) {
-          router.push(`/login?returnUrl=${pathname.split("/").pop()}`);
+        if (error || !user) {
+          if (PROTECTED_PAGES.includes(pathname)) {
+            router.push(`/login?returnUrl=${pathname.split("/").pop()}`);
+          }
+          return setLoading(false);
         }
-        return setLoading(false);
-      }
-      getAndSetUserData(user.email || "", true);
+        getAndSetUserData(user.email || "", true);
 
-      setLoading(false);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
     };
     initAuth();
   }, [getAndSetUserData, pathname, router]);
@@ -133,7 +137,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   // subscribe to notifications insert & delete
   useEffect(() => {
-    if(!user) return;
+    if (!user) return;
 
     const channel = supabase
       .channel("notifications created")
@@ -147,7 +151,10 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         },
         (payload) => {
           if (payload.new?.userId === user?.id) {
-            setNotifications([payload.new as NotificationType, ...notifications]);
+            setNotifications([
+              payload.new as NotificationType,
+              ...notifications,
+            ]);
             const notificationSound = "/message.mp3";
             const sound = new Audio(notificationSound);
             sound.play();
@@ -157,7 +164,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       )
       .subscribe();
 
-      const channel_ = supabase
+    const channel_ = supabase
       .channel("notifications deleted")
       .on(
         "postgres_changes",
@@ -168,7 +175,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           filter: `userId=eq.${user.id}`,
         },
         (payload) => {
-          console.log('deleted notification');
+          console.log("deleted notification");
           console.log(payload.new);
 
           setNotifications([]);

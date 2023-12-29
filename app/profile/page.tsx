@@ -5,7 +5,13 @@ import { useAuth } from "../hooks/useAuth";
 import LoadingScreen from "../components/loadingScreen";
 import Nav from "../components/layout/nav";
 import { AiOutlineFundView } from "react-icons/ai";
-import { FaCheck, FaCheckCircle, FaHome, FaPen, FaRegUserCircle } from "react-icons/fa";
+import {
+  FaCheck,
+  FaCheckCircle,
+  FaHome,
+  FaPen,
+  FaRegUserCircle,
+} from "react-icons/fa";
 import { MdOutlineLoop } from "react-icons/md";
 import { IoMdHelp } from "react-icons/io";
 import { supabase } from "../supabaseClient";
@@ -27,8 +33,12 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const fetch = async () => {
-      const authUser = await supabase.auth.getUser();
-      if (!authUser.data.user) return router.push("/login");
+      try {
+        const authUser = await supabase.auth.getUser();
+        if (!authUser.data.user) return router.push("/login");
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetch();
   }, [router]);
@@ -37,8 +47,8 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetch = async () => {
       if (!auth.user) return;
-      if(auth.user.isAdmin){
-        router.replace('/admin')
+      if (auth.user.isAdmin) {
+        router.replace("/admin");
       }
 
       const { count: answeredCount } = await supabase
@@ -90,6 +100,7 @@ export default function ProfilePage() {
             <div className="flex flex-col gap-6 mt-8 px-8 w-full">
               <Link href="">
                 <Button
+                  aria-label="Overview"
                   startContent={<AiOutlineFundView />}
                   className="flex justify-start w-full"
                 >
@@ -98,6 +109,7 @@ export default function ProfilePage() {
               </Link>
               <Link href={"#ongoing"}>
                 <Button
+                  aria-label="ongoing"
                   startContent={<MdOutlineLoop />}
                   className="flex justify-start w-full"
                 >
@@ -109,6 +121,7 @@ export default function ProfilePage() {
               </Link>
               <Link href={"#answered"}>
                 <Button
+                  aria-label="answered"
                   startContent={<FaCheckCircle />}
                   className="flex justify-start w-full"
                 >
@@ -120,14 +133,16 @@ export default function ProfilePage() {
               </Link>
               {/* <Link href={"#subscription"}>
                 <Button
-                  startContent={<IoCashOutline />}
-                  className="flex justify-start w-full"
+                aria-label="answered"
+                startContent={<IoCashOutline />}
+                className="flex justify-start w-full"
                 >
-                  Subscription / Credit
+                Subscription / Credit
                 </Button>
               </Link> */}
               <Link href={"/faq"}>
                 <Button
+                  aria-label="faq"
                   startContent={<IoMdHelp />}
                   className="flex justify-start w-full"
                 >
@@ -138,7 +153,10 @@ export default function ProfilePage() {
 
             <div className="absolute bottom-0 py-6 left-0 w-full flex justify-center bg-[#F9F9F9]">
               <Link href="/chat">
-                <Button className="bg-primary text-white">
+                <Button
+                  aria-label="Get started button"
+                  className="bg-primary text-white"
+                >
                   Start Conversation
                 </Button>
               </Link>
@@ -151,6 +169,7 @@ export default function ProfilePage() {
             <div className="flex flex-col items-center justify-center">
               <div className="md:mt-16 mt-4 w-full max-w-[400px] mx-4 h-[300px] rounded-xl overflow-hidden border-b-[8px] border-primary shadow-xl flex flex-col justify-center items-center text-[18px] relative">
                 <Button
+                  aria-label="circle"
                   className="bg-transparent absolute top-3 right-2"
                   isIconOnly
                 >
@@ -158,10 +177,11 @@ export default function ProfilePage() {
                 </Button>
                 <div className="relative">
                   <div className="w-20 h-20 rounded-full grid place-items-center bg-primary">
-                  <FaRegUserCircle size={60} color="white" />
+                    <FaRegUserCircle size={60} color="white" />
                   </div>
                   {/* <div className="absolute -bottom-2 -right-3">
-                    <Button
+
+                    aria-label="Get started button"
                       className="w-7 h-7 min-w-6 min-h-6 rounded-full grid place-items-center"
                       isIconOnly
                     >
@@ -171,6 +191,7 @@ export default function ProfilePage() {
                 </div>
                 <DisplayUserName user={auth.user} setUser={auth.setUser} />
                 <Button
+                  aria-label="Get started button"
                   variant="ghost"
                   className="mt-3 border border-[#CBCBCB] py-2 px-4 rounded-xl"
                 >
@@ -181,13 +202,16 @@ export default function ProfilePage() {
               {!auth.user?.isSubscribed && (
                 <div className="flex items-center justify-center gap-2 mt-10">
                   <Link href={"/payment"}>
-                    <Button className="border-2 border-primary bg-primary text-white">
+                    <Button
+                      aria-label="subscribe"
+                      className="border-2 border-primary bg-primary text-white"
+                    >
                       Subscribe
                     </Button>
                   </Link>
                   {/* <span className="text-gray-500">or</span>
                   <Link href={"/payment#credit"}>
-                    <Button className="border-2 border-primary bg-white">
+                    <Button aria-label="Get started button"  className="border-2 border-primary bg-white">
                       Buy Credit
                     </Button>
                   </Link> */}
@@ -216,7 +240,10 @@ export default function ProfilePage() {
                     <div className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
                       {auth.user?.credit || 0}
                     </div>
-                    <Link href={`/payment#credit`} className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold">
+                    <Link
+                      href={`/payment#credit`}
+                      className="text-[16px] w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold"
+                    >
                       +
                     </Link>
                   </div>
@@ -265,7 +292,7 @@ export default function ProfilePage() {
       </div>
 
       {/* <div className="fixed z-[999999] bottom-20 right-2">
-        <Button className="bg-primary text-white w-[50px] h-[50px]" isIconOnly>
+        <Button aria-label="Get started button" className="bg-primary text-white w-[50px] h-[50px]" isIconOnly>
           <IoCreateOutline size={24} />
         </Button>
       </div> */}
@@ -399,6 +426,7 @@ const DisplayUserName = ({ user, setUser }: DisplayUserNameProp) => {
       <div className="mt-6 flex items-center -mr-6">
         <h3 className="">{user?.username}</h3>
         <Button
+          aria-label="edit"
           className="bg-transparent"
           isIconOnly
           onClick={() => {
@@ -420,6 +448,7 @@ const DisplayUserName = ({ user, setUser }: DisplayUserNameProp) => {
             onChange={(e: any) => setNewUsername(e.target.value)}
           />
           <Button
+            aria-label="confirm"
             className="bg-primary text-white"
             isIconOnly
             type="submit"

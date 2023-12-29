@@ -110,6 +110,7 @@ export default function Home() {
               </p>
               <Link href={"/chat"}>
                 <Button
+                aria-label="Get started button"
                   className="mt-3 bg-primary text-white rounded-[10px]"
                   size="lg"
                 >
@@ -155,8 +156,10 @@ export default function Home() {
             </p>
             <Link href={"/chat"}>
               <Button
+              aria-label="Get started button"
                 className="xl:mt-3 mt-1 bg-primary text-white rounded-[10px]"
                 size="lg"
+
               >
                 Get started
               </Button>
@@ -184,7 +187,7 @@ export default function Home() {
           <div className="hidden md:flex justify-center">
             <div className="flex flex-col gap-12">
               <div className="h-[135px] flex items-center">
-                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-[#b2cefe] uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                   01
                 </h2>
                 <Image
@@ -209,7 +212,7 @@ export default function Home() {
               </div>
 
               <div className="h-[135px] flex items-center">
-                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-[#b2cefe] uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                   03
                 </h2>
                 <Image
@@ -234,7 +237,7 @@ export default function Home() {
               </div>
 
               <div className="h-[135px] flex items-center">
-                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-[#b2cefe] uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                   05
                 </h2>
                 <Image
@@ -270,7 +273,7 @@ export default function Home() {
                   height={100}
                   className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
                 />
-                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:ml-7 ml-4">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-[#b2cefe] uppercase lg:ml-7 ml-4">
                   02
                 </h2>
               </div>
@@ -295,7 +298,7 @@ export default function Home() {
                   height={100}
                   className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
                 />
-                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:ml-7 ml-4">
+                <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-[#b2cefe] uppercase lg:ml-7 ml-4">
                   04
                 </h2>
               </div>
@@ -321,7 +324,7 @@ export default function Home() {
                     (i + 1) % 2 === 0 && "flex-row-reverse"
                   } flex items-center justify-center`}
                 >
-                  <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-primary/10 uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
+                  <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-[#b2cefe] uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                     {service.id}
                   </h2>
                   <Image
@@ -361,6 +364,7 @@ export default function Home() {
           </p>
           <Link href={"/chat"}>
             <Button
+            aria-label="Get started button" 
               className="mt-3 text-primary bg-white rounded-[10px] border-none"
               size="lg"
             >

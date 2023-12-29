@@ -37,8 +37,12 @@ export default function PaymentPage() {
   useEffect(() => {
     setProgress("70%");
     const f = async () => {
-      const aUserRes = await supabase.auth.getUser();
-      setAuthUser(aUserRes.data.user || null);
+      try {
+        const aUserRes = await supabase.auth.getUser();
+        setAuthUser(aUserRes.data.user || null);
+      } catch (error) {
+        console.log(error);
+      }
     };
     f();
   }, []);
@@ -246,7 +250,7 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
               credit:
                 (createSubscription.data?.credit / createAmountPerUnit) *
                 credits,
-                creditExpiresOn: new Date()
+              creditExpiresOn: new Date(),
             };
           }
 
@@ -437,6 +441,7 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
 
       <div className="mt-4">
         <Button
+        aria-label="continue or proceesing"
           className={`${
             processingPayment ? "cursor-wait" : "cursor-pointer"
           } bg-primary text-white font-MontserratSemiBold text-[.8rem] xl:text-[1.125rem] "mt-5" w-full py-4 rounded-[10px] font-[600] mb-4`}

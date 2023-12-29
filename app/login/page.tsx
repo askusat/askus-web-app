@@ -45,7 +45,7 @@ export default function Login() {
       <AuthLayout>
         <div className="w-full px-[5%] md:px-[10%] lg:px-[15%] xl:px-[20%]">
           <Link href="/">
-            <Image src="/logo-2.svg" alt="logo" width={200} height={40} />
+            <Image src="/logo-2.svg" alt="logo" width={200} height={40} className="h-auto" />
           </Link>
 
           <h5 className="font-bold font-PlusJakartaSansBold text-black/80 text-[18px] md:text-[25px] mt-4 mb-1 -ml-2">
@@ -149,6 +149,7 @@ export default function Login() {
             </div>
 
             <Button
+            aria-label="signin or loading"
               type="submit"
               className={`w-full`}
               color="primary"

@@ -207,6 +207,7 @@ export default function TableC({ customers }: TableCProps) {
             <Dropdown>
               <DropdownTrigger className="flex">
                 <Button
+                aria-label="status"
                   endContent={<ChevronDownIcon className="text-small" />}
                   size="sm"
                   variant="flat"
@@ -232,6 +233,7 @@ export default function TableC({ customers }: TableCProps) {
             <Dropdown>
               <DropdownTrigger className="flex">
                 <Button
+                aria-label="cols"
                   endContent={<ChevronDownIcon className="text-small" />}
                   size="sm"
                   variant="flat"
@@ -255,6 +257,7 @@ export default function TableC({ customers }: TableCProps) {
               </DropdownMenu>
             </Dropdown>
             {/* <Button
+            aria-label=".."
               className="bg-foreground text-background"
               endContent={<PlusIcon />}
               size="sm"

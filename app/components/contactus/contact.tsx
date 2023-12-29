@@ -97,6 +97,7 @@ export default function ContactForm() {
         </div>
         <div className="flex items-center justify-center ">
           <Button
+          aria-label="submit button"
             type="submit"
             className=" bg-primary mb-10 text-white rounded-[10px] w-full"
             size="lg"

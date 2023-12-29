@@ -35,7 +35,12 @@ export default function SampleQuestionsSlider() {
     null
   );
 
-  const clonedQuestions = [...questions, ...questions, ...questions, ...questions]; // Duplicate questions
+  const clonedQuestions = [
+    ...questions,
+    ...questions,
+    ...questions,
+    ...questions,
+  ]; // Duplicate questions
 
   const scroll = (scrollOffset: number) => {
     if (sliderRef.current) {
@@ -124,12 +129,14 @@ export default function SampleQuestionsSlider() {
 
       <div className="flex items-center gap-6 absolute right-0 -bottom-12">
         <Button
+          aria-label="left"
           className="min-w-[60px] min-h-[60px] rounded-full grid place-items-center bg-white hover:bg-primary hover:text-white shadow-lg"
           onClick={() => scroll(-200)} // Adjust scroll value as needed
         >
           <FaAngleLeft size={22} />
         </Button>
         <Button
+          aria-label="right"
           className="min-w-[60px] min-h-[60px] rounded-full grid place-items-center bg-white hover:bg-primary hover:text-white shadow-lg"
           onClick={() => scroll(200)} // Adjust scroll value as needed
         >

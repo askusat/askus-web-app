@@ -62,6 +62,7 @@ export default function ChatBot() {
         )}
 
         <Button
+        aria-label="Start Conversation"
           className="mt-3 bg-primary text-white rounded-[10px] w-[calc(100%-56px)] mx-7 absolute bottom-6 left-0"
           size="lg"
           onClick={() =>  {
