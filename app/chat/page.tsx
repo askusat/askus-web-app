@@ -31,7 +31,13 @@ import { ImAttachment } from "react-icons/im";
 import { IoIosSend, IoMdDocument } from "react-icons/io";
 import { TbRotateRectangle } from "react-icons/tb";
 import { useAuth } from "../hooks/useAuth";
-import { Chat, ChatMessage, ChatSummary, NotificationType, User } from "@/types";
+import {
+  Chat,
+  ChatMessage,
+  ChatSummary,
+  NotificationType,
+  User,
+} from "@/types";
 import { supabase } from "../supabaseClient";
 import { formatDateToTimeAgo, formatDate, IS_GREETING } from "../utils/helpers";
 import { useRouter } from "next/navigation";
@@ -39,8 +45,16 @@ import LoadingScreen from "../components/loadingScreen";
 import { nanoid } from "nanoid";
 import axios from "axios";
 import Stripe from "stripe";
-import { MdNotificationsActive, MdNotificationsOff } from "react-icons/md";
-import addNotification from "react-push-notification";
+import { MdNotificationsActive } from "react-icons/md";
+import { VscBellSlashDot } from "react-icons/vsc";
+// import addNotification from "react-push-notification";
+import { registerServiceWorker } from "../utils/serviceWorker";
+import {
+  getCurrentPushSubscription,
+  registerPushSubscription,
+  sendPushSubscriptionToServer,
+  unregisterPushNotifications,
+} from "../notifications/pushService";
 
 export default function ChatPageV2() {
   const {
@@ -359,7 +373,7 @@ export default function ChatPageV2() {
               .eq("userId", user?.id);
           }
 
-          notifyMe()
+          notifyMe();
           setRefreshChatList(true);
           setRefreshChatMessage(false);
 
@@ -410,7 +424,7 @@ export default function ChatPageV2() {
               .eq("userId", user?.id);
           }
 
-          notifyMe()
+          notifyMe();
 
           if (
             !user?.isAdmin &&
@@ -875,22 +889,82 @@ export default function ChatPageV2() {
 
   const [grantedNotficationPermission, setGrantedNotficationPermission] =
     useState(false);
-  useEffect(() => {
-    const f = () => {
-      addNotification({
-        title: "Warning",
-        subtitle: "This is a subtitle",
-        message: "This is a very long message",
-        theme: "darkblue",
-        native: true, // when using native, your OS will handle theming.
-      });
-      console.log('done');
-    };
-    f();
+  const [processingNotfSub, setProcessingNotfSub] = useState(false);
 
-    if (window.Notification.permission === "granted") {
-      setGrantedNotficationPermission(true);
+  async function toggleEnablePushNotification(enabled: boolean) {
+    if (processingNotfSub) return;
+    setProcessingNotfSub(true);
+    try {
+      if (enabled) {
+        await registerPushSubscription(user);
+      } else {
+        await unregisterPushNotifications(user);
+      }
+      setProcessingNotfSub(false);
+      setGrantedNotficationPermission(enabled);
+    } catch (error) {
+      setProcessingNotfSub(false);
+      console.log(error);
+      if (enabled && Notification.permission === "denied") {
+        alert(
+          "Please enable push notification in your browser settings to receive notifications when there's a new message"
+        );
+      } else {
+        alert("Something went wrong. please try againg.");
+      }
     }
+  }
+
+  // useEffect(() => {
+  //   const f = () => {
+  //     addNotification({
+  //       title: "Warning",
+  //       subtitle: "This is a subtitle",
+  //       message: "This is a very long message",
+  //       theme: "darkblue",
+  //       native: true, // when using native, your OS will handle theming.
+  //     });
+  //     console.log("done");
+  //   };
+  //   f();
+
+  //   if (window.Notification.permission === "granted") {
+  //     setGrantedNotficationPermission(true);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    async function setUpServiceWorker() {
+      try {
+        await registerServiceWorker();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    setUpServiceWorker();
+  }, []);
+
+  useEffect(() => {
+    if(!user) return;
+    async function syncPushSubscription() {
+      try {
+        const subscription = await getCurrentPushSubscription();
+        if (subscription) {
+          await sendPushSubscriptionToServer(subscription, user);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    syncPushSubscription();
+  }, [user]);
+
+  useEffect(() => {
+    async function getActivePushSubscription() {
+      const subscription = await getCurrentPushSubscription();
+      setGrantedNotficationPermission(!!subscription);
+    }
+    getActivePushSubscription();
   }, []);
 
   function notifyMe() {
@@ -945,7 +1019,7 @@ export default function ChatPageV2() {
               </ModalBody>
               <ModalFooter>
                 <Button
-                aria-label="Close"
+                  aria-label="Close"
                   color="danger"
                   variant="light"
                   onPress={onCloseNoAssessModal}
@@ -953,7 +1027,11 @@ export default function ChatPageV2() {
                   Close
                 </Button>
                 <Link href={"/payment"}>
-                  <Button aria-label="Subscribe button"  color="primary" onPress={onCloseNoAssessModal}>
+                  <Button
+                    aria-label="Subscribe button"
+                    color="primary"
+                    onPress={onCloseNoAssessModal}
+                  >
                     Subscribe
                   </Button>
                 </Link>
@@ -978,13 +1056,18 @@ export default function ChatPageV2() {
                 Image preview
               </ModalHeader>
               <ModalBody>
-                <a href={imageToPreview} download={true} target="_blank">
+                <a
+                  href={imageToPreview}
+                  download={true}
+                  target="_blank"
+                  title={imageToPreview}
+                >
                   <ImageNUI src={imageToPreview} alt="" />
                 </a>
               </ModalBody>
               <ModalFooter>
                 <Button
-                aria-label="Close"
+                  aria-label="Close"
                   color="danger"
                   variant="light"
                   onPress={() => {
@@ -994,9 +1077,14 @@ export default function ChatPageV2() {
                 >
                   Close
                 </Button>
-                <a href={imageToPreview} download={true} target="_blank">
+                <a
+                  href={imageToPreview}
+                  download={true}
+                  target="_blank"
+                  title={imageToPreview}
+                >
                   <Button
-                  aria-label="download file"
+                    aria-label="download file"
                     color="primary"
                     isIconOnly
                     onPress={() => {
@@ -1018,7 +1106,7 @@ export default function ChatPageV2() {
           <div className="flex items-center justify-between gap-2 h-full px-2">
             <nav className="flex items-center h-full">
               <Button
-              aria-label="Leave chat page"
+                aria-label="Leave chat page"
                 isIconOnly
                 size="sm"
                 className="bg-transparent"
@@ -1039,11 +1127,14 @@ export default function ChatPageV2() {
                   <FaTimes size={20} className="text-red-600  " />
                 )}
               </Button>
+
               <Button
-              aria-label="Notification"
+                aria-label="Notification"
                 isIconOnly
                 size="sm"
-                className="bg-transparent"
+                className={`bg-transparent ${
+                  processingNotfSub && "animate-pulse"
+                }`}
                 onClick={async () => {
                   // resetChatScreen();
                   // addNotification({
@@ -1055,8 +1146,11 @@ export default function ChatPageV2() {
                   //   native: true, // when using native, your OS will handle theming.
                   // });
 
-                  notifyMe()
-                  return
+                  // notifyMe();
+                  toggleEnablePushNotification(
+                    grantedNotficationPermission ? false : true
+                  );
+                  return;
 
                   // window.Notification.requestPermission().then((permission) => {
                   //   console.log("permission");
@@ -1076,9 +1170,17 @@ export default function ChatPageV2() {
                 }}
               >
                 {grantedNotficationPermission ? (
-                  <MdNotificationsOff size={20} color="white" />
+                  <MdNotificationsActive
+                    size={20}
+                    color="white"
+                    title="Push notification is enabled"
+                  />
                 ) : (
-                  <MdNotificationsActive size={20} color="white" />
+                  <VscBellSlashDot
+                    size={20}
+                    color="white"
+                    title="Push notification is disabled"
+                  />
                 )}
               </Button>
             </nav>
@@ -1190,7 +1292,7 @@ export default function ChatPageV2() {
                               />
 
                               <button
-                              aria-label="Edit Chat tag"
+                                aria-label="Edit Chat tag"
                                 // isIconOnly
                                 className="bg-transparent leading-3"
                                 onClick={async () => {
@@ -1275,7 +1377,7 @@ export default function ChatPageV2() {
               <footer className="fixed md:static grid place-items-center bottom-0 w-full h-[80px] bg-white">
                 <div className="px-6">
                   <Button
-                  aria-label="Ask new question"
+                    aria-label="Ask new question"
                     color="primary"
                     className="text-white w-full"
                     onClick={() => {
@@ -1451,7 +1553,7 @@ export default function ChatPageV2() {
                 <div className="grid place-items-center h-full">
                   <div className="">
                     <Button
-                    aria-label="Ask new question"
+                      aria-label="Ask new question"
                       className="bg-primary text-white"
                       onClick={() => {
                         inputRef?.current && inputRef?.current?.focus();
@@ -1496,7 +1598,7 @@ export default function ChatPageV2() {
                       >
                         <PopoverTrigger>
                           <Button
-                          aria-label="Vertical menu dots"
+                            aria-label="Vertical menu dots"
                             isIconOnly
                             color="default"
                             size="sm"
@@ -1597,7 +1699,7 @@ export default function ChatPageV2() {
                         // disabled={sendingMessage}
                       ></textarea>
                       <Button
-                      aria-label="Sent message"
+                        aria-label="Sent message"
                         isIconOnly
                         type="submit"
                         size="sm"
@@ -1679,7 +1781,7 @@ const JoinChatButton = ({
   return (
     <div className="flex justify-center">
       <Button
-      aria-label="Re open chat"
+        aria-label="Re open chat"
         onClick={() => {
           if (!chat?.answered) {
             addUserToChat(user?.id, chat?.id);
@@ -1777,7 +1879,7 @@ const MenuContent = ({
 
           <div className="flex flex-col gap-4">
             <Button
-            aria-label="End conversation"
+              aria-label="End conversation"
               color="warning"
               className=""
               onClick={handEndConversation}

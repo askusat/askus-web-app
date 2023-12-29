@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { PUBLIC_URL } from './config'
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://askus.vercel.app/sitemap.xml',
+    sitemap: `${PUBLIC_URL}/sitemap.xml`,
   }
 }

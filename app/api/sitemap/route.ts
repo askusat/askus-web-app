@@ -23,31 +23,31 @@ import { NextResponse } from "next/server";
 
 //     const maps = [
 //         {
-//             url: 'https://askus.vercel.app',
+//             url: `${PUBLIC_URL}`,
 //             lastModified: new Date(),
 //             changeFrequency: 'yearly',
 //             priority: 1,
 //         },
 //         {
-//             url: 'https://askus.vercel.app/about-us',
+//             url: `${PUBLIC_URL}/about-us`,
 //             lastModified: new Date(),
 //             changeFrequency: 'monthly',
 //             priority: 0.8,
 //         },
 //         {
-//             url: 'https://askus.vercel.app/faq',
+//             url: `${PUBLIC_URL}/faq`,
 //             lastModified: new Date(),
 //             changeFrequency: 'monthly',
 //             priority: 0.8,
 //         },
 //         {
-//             url: 'https://askus.vercel.app/contact-us',
+//             url: `${PUBLIC_URL}/contact-us`,
 //             lastModified: new Date(),
 //             changeFrequency: 'monthly',
 //             priority: 0.8,
 //         },
 //         {
-//             url: 'https://aaskus.vercel.app/blog',
+//             url: `${PUBLIC_URL}/blog`,
 //             lastModified: new Date(),
 //             changeFrequency: 'weekly',
 //             priority: 0.5,
@@ -56,7 +56,7 @@ import { NextResponse } from "next/server";
 
 //     posts.forEach((post: any) => {
 //         maps.push({
-//             url: `https://askus.vercel.app/${post.attributes.slug}`,
+//             url: `${PUBLIC_URL}/${post.attributes.slug}`,
 //             lastModified: new Date(),
 //             changeFrequency: 'yearly',
 //             priority: 1,

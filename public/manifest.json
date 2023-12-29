@@ -2,8 +2,24 @@
   "display_override": ["window-controls-overlay"],
   "protocol_handlers": [
     { "protocol": "mailto", "url": "/newEmail?to=%s" },
-    { "protocol": "chat", "url": "/chat?chatId=%s" }
+    { "protocol": "web+chat", "url": "/chat?chatId=%s" }
   ],
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
+  "related_applications": [
+    {
+      "platform": "windows",
+      "url": "https://www.example-app.com",
+      "id": "example.ExampleApp"
+    },
+    {
+      "platform": "play",
+      "url": "https://www.example-app-2.com"
+    }
+  ],
+  "prefer_related_applications": false,
   "categories": ["consulting", "legal", "government", "education"],
   "shortcuts": [
     {
@@ -13,7 +29,7 @@
       "description": "Ask your question now and get answers in a few minutes.",
       "icons": [
         {
-          "src": "android/android-launchericon-144-144.png",
+          "src": "android/android-launchericon-192-192.png",
           "sizes": "192x192"
         }
       ]
@@ -24,7 +40,7 @@
       "description": "A place to ask legal question now and get answers in a few minutes.",
       "icons": [
         {
-          "src": "android/android-launchericon-144-144.png",
+          "src": "android/android-launchericon-192-192.png",
           "sizes": "192x192"
         }
       ]
@@ -35,7 +51,9 @@
       "src": "site-screenshot.png",
       "sizes": "2598x1428",
       "type": "image/png",
-      "description": "Home Screen"
+      "form_factor": "wide",
+      "label": "We are ready to answer your questions, day or night. Install the app for quick access.",
+      "description": "We are ready to answer your questions, day or night. Install the app for quick access."
     },
     {
       "src": "chat-page-screenshot.png",

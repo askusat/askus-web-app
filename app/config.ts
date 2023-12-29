@@ -18,3 +18,5 @@ export const authConfig = {
   afterLogin: "/profile",
   afterSignup: "/payment",
 };
+
+export const PUBLIC_URL = 'https://askus.vercel.app'

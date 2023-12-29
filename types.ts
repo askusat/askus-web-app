@@ -14,6 +14,7 @@ export type User = {
   userProfilePicture?: string;
   chatsJoined: number[];
   username: string;
+  pushSubscriptions: []
   // [key: string]: any;
 } | null | undefined;
 
