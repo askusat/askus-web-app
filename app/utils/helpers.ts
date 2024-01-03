@@ -1,6 +1,7 @@
 import { NotificationType, User } from "@/types";
 import { supabase } from "../supabaseClient";
-import moment from 'moment';
+import moment from "moment";
+import { toast } from "react-toastify";
 
 export function formatDate(inputDate: Date): string {
   const options: any = {
@@ -22,7 +23,7 @@ export function formatDate(inputDate: Date): string {
 
 export function formatDateToTimeAgo(timestamp: Date): string {
   const timeago = moment(timestamp).fromNow();
-  return timeago
+  return timeago;
 }
 
 export function formatDateToDMYY(timestamp: Date): string {
@@ -64,7 +65,7 @@ export const markNotificationAsRead = async (
 };
 
 export function getFirstName(fullName: string) {
-  const firstName = fullName.split(' ')[0];
+  const firstName = fullName.split(" ")[0];
   return firstName;
 }
 
@@ -107,3 +108,5 @@ export function IS_GREETING(sentence: string) {
 
   return false;
 }
+
+export const sAlert = (message: string) => toast(message);

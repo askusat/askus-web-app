@@ -5,6 +5,8 @@ import { Providers } from "./providers";
 import Footer from "./components/layout/footer";
 import CreateChat from "./components/chat/createChat";
 // import { Notifications } from "react-push-notification";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 const APP_NAME = "ASKUS";
@@ -62,6 +64,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} font-MontserratRegular bg-white text-black`}
       >
+      <ToastContainer />
         <Providers>
           <CreateChat />
           <div className="bg-[#f9f9f9]">

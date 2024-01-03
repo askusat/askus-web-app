@@ -6,6 +6,10 @@
 // });
 
 const withPWA = require("@ducanh2912/next-pwa").default({
+  disable: true,
+  register: false,
+  customWorkerSrc: "worker",
+  customWorkerDest: "public",
   dest: "public",
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
@@ -13,6 +17,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   swcMinify: true,
   workboxOptions:{
     disableDevLogs: true,
+    // swSrc: 'public/sw.js',
   },
 });
 

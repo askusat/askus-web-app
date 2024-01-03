@@ -20,3 +20,5 @@ export const authConfig = {
 };
 
 export const PUBLIC_URL = 'https://askus.vercel.app'
+
+export const MAILTO = 'paulinnocent05@gmail.com';

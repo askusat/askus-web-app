@@ -6,7 +6,7 @@ export type User = {
   email: string;
   fullName: string;
   isSubscribed?: boolean;
-  credit: number;
+  credit: number | 0;
   creditExpiresOn: Date;
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;

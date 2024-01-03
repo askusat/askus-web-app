@@ -39,7 +39,12 @@ import {
   User,
 } from "@/types";
 import { supabase } from "../supabaseClient";
-import { formatDateToTimeAgo, formatDate, IS_GREETING } from "../utils/helpers";
+import {
+  formatDateToTimeAgo,
+  formatDate,
+  IS_GREETING,
+  sAlert,
+} from "../utils/helpers";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "../components/loadingScreen";
 import { nanoid } from "nanoid";
@@ -629,6 +634,17 @@ export default function ChatPageV2() {
 
   const createChat = async () => {
     if (!user) return null;
+    if (user.isAdmin) {
+      sAlert("You're an admin");
+    }
+
+    if (!user.isSubscribed && user.credit <= 0) {
+      sAlert("You have to subscribe to use this feature");
+      setTimeout(() => {
+        // router.push('/payment')
+      }, 5000);
+      return;
+    }
 
     const createData: Partial<Chat> = {
       title: `${nanoid(6)}-${user?.username}`,
@@ -643,6 +659,12 @@ export default function ChatPageV2() {
       .single();
 
     if (!error && data) {
+      if (user.credit > 0) {
+        await supabase
+          .from("users")
+          .update({ credit: user.credit - 1 })
+          .eq("id", user.id);
+      }
       return data;
     } else {
       return null;
@@ -657,13 +679,13 @@ export default function ChatPageV2() {
     if (!isPermitted) return onOpenNoAssessModal();
 
     setSendingMessage(true);
-    setMessageInput("");
     var chatId = selectedChat?.id;
     var _selectedChat: Chat = selectedChat;
     if (!selectedChatId || selectedChatId === 0) {
       const chat: ChatSummary | any = await createChat();
 
       if (chat) {
+        setMessageInput("");
         _selectedChat = chat;
         chatId = chat?.id;
         setSelectedChatId(chat.id);
@@ -736,6 +758,7 @@ export default function ChatPageV2() {
       }
 
       if (messageInput) {
+        setMessageInput("");
         const createChatMessage: Partial<ChatMessage> = {
           chatId,
           message: messageInput,
@@ -945,7 +968,7 @@ export default function ChatPageV2() {
   }, []);
 
   useEffect(() => {
-    if(!user) return;
+    if (!user) return;
     async function syncPushSubscription() {
       try {
         const subscription = await getCurrentPushSubscription();
@@ -967,30 +990,43 @@ export default function ChatPageV2() {
     getActivePushSubscription();
   }, []);
 
+  useEffect(() => {
+    const messageListener = (event: MessageEvent) => {
+      console.log("recieved message from sw:", event.data);
+      const chatId = event.data.chatId;
+      if (chatId) {
+        window.location.href = `/chat?chatId=${chatId}`;
+      }
+    };
+    navigator.serviceWorker.addEventListener("message", messageListener);
+    return () =>
+      navigator.serviceWorker.removeEventListener("message", messageListener);
+  }, []);
+
   function notifyMe() {
-    console.log("notifyMe");
+    // console.log("notifyMe");
 
-    if (!("Notification" in window)) {
-      // Check if the browser supports notifications
-      alert("This browser does not support desktop notification");
-    } else if (Notification.permission === "granted") {
-      // Check whether notification permissions have already been granted;
-      // if so, create a notification
-      const notification = new Notification("Hi there!");
-      // …
-    } else if (Notification.permission !== "denied") {
-      // We need to ask the user for permission
-      Notification.requestPermission().then((permission) => {
-        // If the user accepts, let's create a notification
-        if (permission === "granted") {
-          const notification = new Notification("Hi there!");
-          // …
-        }
-      });
-    }
+    // if (!("Notification" in window)) {
+    //   // Check if the browser supports notifications
+    //   alert("This browser does not support desktop notification");
+    // } else if (Notification.permission === "granted") {
+    //   // Check whether notification permissions have already been granted;
+    //   // if so, create a notification
+    //   const notification = new Notification("Hi there!");
+    //   // …
+    // } else if (Notification.permission !== "denied") {
+    //   // We need to ask the user for permission
+    //   Notification.requestPermission().then((permission) => {
+    //     // If the user accepts, let's create a notification
+    //     if (permission === "granted") {
+    //       const notification = new Notification("Hi there!");
+    //       // …
+    //     }
+    //   });
+    // }
 
-    // At last, if the user has denied notifications, and you
-    // want to be respectful there is no need to bother them anymore.
+    // // At last, if the user has denied notifications, and you
+    // // want to be respectful there is no need to bother them anymore.
   }
 
   if (!user && authLoading) {
@@ -1185,7 +1221,16 @@ export default function ChatPageV2() {
               </Button>
             </nav>
 
-            <div className="text-xs text-center">{selectedChat?.title}</div>
+            {selectedChat?.title && (
+              <div className="text-xs text-center">{selectedChat?.title}</div>
+            )}
+
+            {user?.credit === undefined ||
+              (!user?.isSubscribed && user?.credit <= 0 && (
+                <Link href={"/payment?returnUrl=/chat"}>
+                  <Button>Subscribe</Button>
+                </Link>
+              ))}
 
             <Link href={"/"}>
               <ImageNUI
