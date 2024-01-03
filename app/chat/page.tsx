@@ -829,7 +829,7 @@ export default function ChatPageV2() {
     if (selectedChat?.chatUsers.length === 2) {
       alert("An expert has already joined!");
     }
-    if (!userId || !chatId) return alert("something went wrong");
+    if (!userId || !chatId) return sAlert("something went wrong");
 
     setAddingUserToChat(true);
     const currentUsers: any = selectedChat?.chatUsers;
@@ -925,7 +925,7 @@ export default function ChatPageV2() {
       }
       setProcessingNotfSub(false);
       setGrantedNotficationPermission(enabled);
-    } catch (error) {
+    } catch (error: any) {
       setProcessingNotfSub(false);
       console.log(error);
       if (enabled && Notification.permission === "denied") {
@@ -933,7 +933,7 @@ export default function ChatPageV2() {
           "Please enable push notification in your browser settings to receive notifications when there's a new message"
         );
       } else {
-        alert("Something went wrong. please try againg.");
+        sAlert(`Something went wrong. please try againg. (${error && error.message && error.message})`);
       }
     }
   }
