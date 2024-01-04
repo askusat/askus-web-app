@@ -839,7 +839,7 @@ export default function ChatPageV2() {
     // Send message
     const createChatMessage: Partial<ChatMessage> = {
       chatId,
-      message: `${user?.fullName} just joined the chat ${formatDate(
+      message: `${user?.username} just joined the chat ${formatDate(
         new Date()
       )}`,
       type: "text",
@@ -1803,7 +1803,7 @@ const JoinChatButton = ({
       // Send message
       const createChatMessage: Partial<ChatMessage> = {
         chatId: chat.id,
-        message: `${user?.fullName} re-opend the chat ${formatDate(
+        message: `${user?.username} re-opend the chat ${formatDate(
           new Date()
         )}`,
         type: "text",
@@ -1878,7 +1878,7 @@ const MenuContent = ({
       // Send message
       const createChatMessage: Partial<ChatMessage> = {
         chatId: chat.id,
-        message: `${user?.fullName} ended the chat ${formatDate(new Date())}`,
+        message: `${user?.username} ended the chat ${formatDate(new Date())}`,
         type: "text",
         replyTo: null,
         userId: user.id,

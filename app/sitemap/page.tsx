@@ -27,7 +27,7 @@ export default function SitemapPage() {
             <div className="flex flex-col  leading-[40px]  pl-8">
               <Link href="/" className="font-[500] text-[18px] hover:underline">Home</Link>
               <Link href="/about" className="font-[500] text-[18px] hover:underline">About</Link>
-              <Link href="#" className="font-[500] text-[18px] hover:underline">Chat With Expert</Link>
+              <Link href="/chat" className="font-[500] text-[18px] hover:underline">Chat With Expert</Link>
            </div>
           </div>
 

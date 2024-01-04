@@ -19,8 +19,12 @@ export async function POST(req: Request) {
 
     const userReceiver: User = data;
 
-    console.log("receiver email: ");
-    console.log(userReceiver?.email);
+    if (!userReceiver?.email)
+      return NextResponse.json({ error: "User not found" }, { status: 500 });
+
+    // console.log("receiver email: ");
+    // console.log(userReceiver?.email);
+    // console.log(userReceiver?.pushSubscriptions?.length);
 
     if (error) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -28,8 +32,10 @@ export async function POST(req: Request) {
     const subscriptions = userReceiver?.pushSubscriptions || [];
 
     const pushPromises = subscriptions
-      .map((subscription) => {
-        return webPush
+      .map(async (subscription, i) => {
+        console.log(`sending ${i + 1}/${subscriptions.length} to ${userReceiver?.username}`);
+
+        return await webPush
           .sendNotification(
             subscription,
             JSON.stringify({
@@ -76,12 +82,7 @@ export async function POST(req: Request) {
       })
       .flat();
 
-    // console.log("pushPromises");
-    // console.log(pushPromises);
-
-    const sd = await Promise.all(pushPromises);
-    console.log("sd");
-    console.log(sd);
+    await Promise.all(pushPromises);
 
     return NextResponse.json(
       { error: "push notification sent" },

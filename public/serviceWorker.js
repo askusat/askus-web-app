@@ -69,7 +69,7 @@ const sw = /** @type {ServiceWorkerGlobalScope & typeof globalThis} */ {
 // });
 
 self.addEventListener("push", (event) => {
-  console.log('sw js push', event);
+  console.log("sw js push", event);
   const data = event.data?.json() ?? {};
 
   console.log("data: ");
@@ -77,8 +77,7 @@ self.addEventListener("push", (event) => {
 
   const { body, icon, image, chatId } = data;
   const title = data?.title || "Something Has Happened";
-  const message =
-    body || "Here's something you might want to check out.";
+  const message = body || "Here's something you might want to check out.";
   // const icon = "http://localhost:3000/logo.svg";
 
   const options = {
@@ -93,4 +92,23 @@ self.addEventListener("push", (event) => {
   };
 
   event.waitUntil(self.registration.showNotification(title, options));
+
+  // const notification = new self.Notification(title, options);
+  const notification = self.registration.showNotification(title, options)
+
+  notification.addEventListener("click", (event) => {
+    console.log(`notification.addEventListener: ${event}`);
+    clients.openWindow("https://example.blog.com/2015/03/04/something-new.html");
+  });
 });
+
+self.addEventListener("click", (event) => {
+  console.log(`self.addEventListener('click: ${event}`);
+});
+
+// const notification = new self.Notification('Something Has Happened', {});
+
+// notification.addEventListener("click", (event) => {
+//   console.log(`notification.addEventListener2: ${event}`);
+//   clients.openWindow("https://example.blog.com/2015/03/04/something-new.html");
+// });

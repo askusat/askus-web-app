@@ -19,7 +19,7 @@ export default function ChatBot() {
             <Image src={"/juris.svg"} alt="" />
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3">
-                <h2 className="text-2xl font-semibold">Juris</h2>
+                <h2 className="text-2xl font-semibold">Legal Eagle</h2>
                 <p className="">- Consultant</p>
               </div>
               <p className="text-sm font-bold">184 Satisfied Customer</p>

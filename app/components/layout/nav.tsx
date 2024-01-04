@@ -305,7 +305,7 @@ export default function Nav() {
                   className="w-full"
                 >
                   <Link
-                    href="/#chat"
+                    href="/chat"
                     className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary"
                   >
                     <MdSupportAgent

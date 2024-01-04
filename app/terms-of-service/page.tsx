@@ -175,7 +175,7 @@ export default function TermsPage() {
 
               <b>
                 <span lang="EN-GB">
-                  2.1 <span className="SpellE">AskUs</span>
+                  2.1 <span className="SpellE">AskUs</span>{" "}
                   is a venue
                 </span>
               </b>
@@ -226,12 +226,12 @@ export default function TermsPage() {
                 <span className="SpellE">AskUs</span> cannot and does not edit,
                 modify, filter, screen, monitor, endorse or guarantee the
                 content of Posts. <span className="SpellE">AskUs</span>
-                shall not be liable for any acts or omissions of Experts,
+                {" "} shall not be liable for any acts or omissions of Experts,
                 content in Posts, the ability of Experts to answer questions or
                 the ability of Customers to pay for answers. We cannot ensure
                 that a Customer or Expert will complete a transaction.
                 Notwithstanding the foregoing,{' '}
-                <span className="SpellE">AskUs</span>
+                <span className="SpellE">AskUs</span>{' '}
                 {`reserves the right, but is not obligated, to refuse to post or
                 to remove any content and/or remove any user's access to the
                 Site.`}
@@ -363,7 +363,7 @@ export default function TermsPage() {
             <p className="MsoNormal">
               <span lang="EN-GB">
                 2.4.2 Regarding the verification process,{' '}
-                <span className="SpellE">AskUs</span>
+                <span className="SpellE">AskUs</span>{' '}
                 contracts with third-party service providers to perform the
                 verifications described above;{' '}
                 <span className="SpellE">AskUs</span> does not itself verify the
@@ -763,7 +763,7 @@ export default function TermsPage() {
             <p className="MsoNormal">
               <span lang="EN-GB">
                 3.3.2 At any time, without notice, for any or no reason,{' '}
-                <span className="SpellE">AskUs</span> reserves the right to
+                <span className="SpellE">AskUs</span>{' '}reserves the right to
                 refuse service to anyone, to modify and discontinue any portion
                 or all of the Service, and to restrict, suspend and terminate
                 users’ accounts (including yours).
@@ -891,7 +891,7 @@ export default function TermsPage() {
                 3.5.1 <span className="SpellE">AskUs</span> subscriptions are
                 intended and authorised only for personal, non-transferrable,
                 not-for-resale use only. Notwithstanding any other terms,{' '}
-                <span className="SpellE">AskUs</span> reserves the right to
+                <span className="SpellE">AskUs</span>{' '}reserves the right to
                 cancel your <span className="SpellE">AskUs</span> subscription
                 in its entirety at any time and for any reason. In the event
                 that <span className="SpellE">AskUs</span>
@@ -1001,7 +1001,7 @@ export default function TermsPage() {
 
             <p className="MsoNormal">
               <span lang="EN-GB">
-                3.7.3 <span className="SpellE">AskUs</span> reserves the right
+                3.7.3 <span className="SpellE">AskUs</span>{' '}reserves the right
                 to offer special incentive, price, subscription and other
                 programmes. Such programmes can, at the sole discretion of{' '}
                 <span className="SpellE">AskUs</span>, be limited to a specific
