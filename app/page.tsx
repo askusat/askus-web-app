@@ -41,12 +41,12 @@ const testimonials = [
     user: "Junior",
   },
   {
-    title: "Best site I’ve ever been on",
+    title: "Amazing Service",
     desc: "This service is the best, it is like having a personal lawyer on speed dial. I recommend this service to all my family and friends.",
     user: "JK",
   },
   {
-    title: "Best site I’ve ever been on",
+    title: "Bargain Service",
     desc: "I thought the service could not be as good as it looks but I have been pleasantly surprised. This is now my go to site whenever I have an issue and I need reliable, answers fast",
     user: "LS",
   },

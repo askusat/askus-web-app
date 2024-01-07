@@ -21,12 +21,12 @@ export default function AboutPage() {
         >
           <div className="text-white lg:text-[60px] text-[26px] text-center w-full font-MontserratBold">
             <h1 className="max-w-[600px] mx-auto">
-              Revolutionizing the manner in which individuals seek legal aid
+              Revolutionizing the manner in which individuals seek expert help
             </h1>
           </div>
           <Link href="#aboutus">
             <Button
-            aria-label="dropdown"
+              aria-label="dropdown"
               isIconOnly
               variant="flat"
               className="flex items-center justify-center mt-20 bg-none border-2 border-white  z-10 rounded-full"
@@ -56,7 +56,7 @@ export default function AboutPage() {
             </h1>
             <Link href={"/chat"}>
               <Button
-              aria-label="Get started button"
+                aria-label="Get started button"
                 className=" bg-white mt-10 mb-10 text-primary rounded-[10px]"
                 size="lg"
               >
@@ -151,7 +151,7 @@ export default function AboutPage() {
           </p>
           <Link href={"/chat"}>
             <Button
-            aria-label="Get started button" 
+              aria-label="Get started button"
               className="mt-3 text-primary bg-white rounded-[10px] border-none"
               size="lg"
             >

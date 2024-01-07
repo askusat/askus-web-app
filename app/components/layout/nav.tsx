@@ -101,7 +101,7 @@ export default function Nav() {
         <Link href="/" className="text-black hover:text-primary">
           Home
         </Link>
-        <Link href="#" className="text-black hover:text-primary">
+        <Link href="/chat" className="text-black hover:text-primary">
           Chat With Expert
         </Link>
         <Link href="/about" className="text-black hover:text-primary">
