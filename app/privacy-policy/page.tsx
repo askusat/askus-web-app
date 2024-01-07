@@ -1,6 +1,7 @@
 import React from 'react'
 import Layout from '../components/layout'
 import { FaCircle } from "react-icons/fa";
+import { Link as LinkUI } from '@nextui-org/react';
 import Link from 'next/link';
 
 export default function PrivacyPage() {
@@ -21,7 +22,7 @@ export default function PrivacyPage() {
         </header>
 
         <div className="lg:max-w-[60%] md:max-w-[80%] mt-0 mx-auto flex  items-center justify-center flex-col gap-10 mb-20">
-          <div className=""><span className="font-bold">Ask Us</span> Anytime Limited is a company domiciled in the United Kingdom (“AskUs”, “we”, “our”, “us”). Any questions related to this policy can be directed to  <Link href="/contact-us">dpo@askusat.co.uk</Link> AskUs operates the site askusat.co.uk   <Link href="/">(“the Site”)</Link></div>
+          <div className=""><span className="font-bold">Ask Us</span> Anytime Limited is a company domiciled in the United Kingdom (“AskUs”, “we”, “our”, “us”). Any questions related to this policy can be directed to  <LinkUI href="mailto:dpo@askusat.co.uk">dpo@askusat.co.uk</LinkUI> AskUs operates the site askusat.co.uk <Link href="/">(“the Site”)</Link></div>
 
           <div className="flex flex-col">
             <h1 className="font-PoppinsBold mb-4">Overview</h1>
@@ -74,25 +75,25 @@ export default function PrivacyPage() {
             <h1 className="ml-0 flex  font-bold">6. Your Rights</h1>
             <p className="mt-4">Under data protection law you have a number of rights in relation to your data including but not limited to: </p>
 
-            <div className=" flex mt-6 gap-3 items-center justify-center  ">
-              <FaCircle size={7} />
+            <div className=" flex mt-6 gap-3 items-center  ">
+              <FaCircle size={7} className="min-w-[7px] max-w-[7px] min-h-[7px] max-h-[7px]" />
               <p className=""><span className="font-bold">Your right of access -</span> You have the right to ask us for copies of your personal information.  </p>
             </div>
-            <div className=" flex mt-3 gap-3 items-start justify-center  ml-0">
-              <FaCircle size={15} className="mt-1" />
+            <div className=" flex mt-3 gap-3 items-start  ml-0">
+              <FaCircle size={15} className="mt-1 min-w-[7px] max-w-[7px] min-h-[7px] max-h-[7px]" />
               <p className=""><span className="font-bold">Your right to rectification -</span> You have the right to ask us to rectify personal information you think is inaccurate. You also have the right to ask us to complete information you think is incomplete.   </p>
             </div>
-            <div className=" flex mt-3 gap-3 items-start justify-center  ml-0">
-              <FaCircle size={15} className="mt-1" />
+            <div className=" flex mt-3 gap-3 items-start  ml-0">
+              <FaCircle size={15} className="mt-1 min-w-[7px] max-w-[7px] min-h-[7px] max-h-[7px]" />
               <p className=""><span className="font-bold">Your right to restriction of processing - </span> You have the right to ask us to restrict the processing of your personal information in certain circumstances.  </p>
             </div>
 
-            <div className=" flex mt-3 gap-3 items-start justify-center  ml-0">
-              <FaCircle size={15} className="mt-1" />
+            <div className=" flex mt-3 gap-3 items-start  ml-0">
+              <FaCircle size={15} className="mt-1 min-w-[7px] max-w-[7px] min-h-[7px] max-h-[7px]" />
               <p className=""><span className="font-bold">Your right to data portability - </span> You have the right to ask that we transfer the personal information you gave us to another organisation, or to you, in certain circumstances. </p>
             </div>
             <div className="mt-8 space-y-3">
-              <p className="">If you wish to exercise any such rights please email dpo@askusat.co.uk. </p>
+              <p className="">If you wish to exercise any such rights please email <LinkUI href={`mailto:dpo@askusat.co.uk`}>dpo@askusat.co.uk</LinkUI>. </p>
               <p className="">We reserve the right to update this privacy notice at any time. </p>
               <p className="">The data controller of your personal information is AskUs Anytime Limited</p>
             </div>
