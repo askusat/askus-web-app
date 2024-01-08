@@ -633,9 +633,9 @@ export default function ChatPageV2() {
   };
 
   const checkIfCreditHasExpired = (user: User): boolean => {
-    if (!user) return false;
+    if (!user || !user.creditExpiresOn) return false;
 
-    if (user?.creditExpiresOn.getTime() >= new Date().getTime()) {
+    if (user.creditExpiresOn?.getTime() >= new Date().getTime()) {
       return true;
     }
     return false;
