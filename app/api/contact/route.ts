@@ -5,10 +5,10 @@ export async function GET() {
   return NextResponse.json({ name: "Paul Innocent" });
 }
 
-console.log("process.env.SMTP_LOGIN");
-console.log(process.env.STRIPE_SECRET_KEY);
-console.log(process.env.SMTP_LOGIN);
-console.log(process.env.SMTP_KEY);
+// console.log("process.env.SMTP_LOGIN");
+// console.log(process.env.STRIPE_SECRET_KEY);
+// console.log(process.env.SMTP_LOGIN);
+// console.log(process.env.SMTP_KEY);
 
 const transporter = NodeMailer.createTransport({
   host: "smtp-relay.brevo.com",
@@ -69,8 +69,8 @@ const send_email = async (
 
 export async function POST(request: NextRequest) {
   const { from, subject, content } = await request.json();
-  // const to = "contact@askusat.co.uk";
-  const to = "paulinnocent05@gmail.com";
+  const to = "contact@askusat.co.uk";
+  // const to = "paulinnocent05@gmail.com";
   // console.log({ from, subject, content, to });
 
   try {

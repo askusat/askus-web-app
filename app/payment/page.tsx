@@ -191,10 +191,10 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
         return setConfirmingSetUpIntent(false);
       }
 
-      console.log("clientSecret");
-      console.log(clientSecret);
+      // console.log("clientSecret");
+      // console.log(clientSecret);
 
-      console.log("setup_intent_client_secret success!");
+      // console.log("setup_intent_client_secret success!");
       const paymentIntent = await stripe.retrieveSetupIntent(clientSecret);
       switch (paymentIntent?.setupIntent?.status) {
         case "succeeded":

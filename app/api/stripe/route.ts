@@ -275,7 +275,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         { status: 200, statusText: "OK" }
       );
     } catch (error) {
-      // console.error(error);
+      console.error('failed to create subscription: '+error);
       return NextResponse.json(
         { message: `Internal server error: ${error}` },
         { status: 500, statusText: "Internal server error" }
