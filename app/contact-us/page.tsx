@@ -32,7 +32,7 @@ export default function ContactUsPage() {
               <div className="flex justify-center items-center lg:items-start flex-col">
                 <IoMdMail size={30} className="text-primary " />
                 <h1 className="font-bold text-[15px] mb-4 mt-6">Email</h1>
-                <Link href="mailto:contact@Askus.com" className="text-primary">contact@askusat.co.uk</Link>
+                <Link href="mailto:contact@askusat.co.uk" className="text-primary">contact@askusat.co.uk</Link>
               </div>
             </div>
           </div>

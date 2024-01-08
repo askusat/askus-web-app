@@ -5,6 +5,11 @@ export async function GET() {
   return NextResponse.json({ name: "Paul Innocent" });
 }
 
+console.log("process.env.SMTP_LOGIN");
+console.log(process.env.STRIPE_SECRET_KEY);
+console.log(process.env.SMTP_LOGIN);
+console.log(process.env.SMTP_KEY);
+
 const transporter = NodeMailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
@@ -12,6 +17,8 @@ const transporter = NodeMailer.createTransport({
   auth: {
     user: process.env.SMTP_LOGIN,
     pass: process.env.SMTP_KEY,
+    // user: "askusat1@gmail.com",
+    // pass: "xsmtpsib-2feda7f3b8b25d08eac0e06e2c6b31aa48bc4acac5e44e023e921a29d60d3397-8b9cS70ZEYCHFhG2",
   },
 });
 
@@ -44,9 +51,9 @@ const send_email = async (
   return new Promise(async (resolve, reject) => {
     try {
       const info = await transporter.sendMail({
-        from: from,
-        to: to,
-        subject: subject,
+        from,
+        to,
+        subject,
         html: content,
         // sender: { name: 'Aralingual', email: 'contact@aralingual.com' },
       });
@@ -61,22 +68,32 @@ const send_email = async (
 };
 
 export async function POST(request: NextRequest) {
-  const { from, to, subject, content } = await request.json();
+  const { from, subject, content } = await request.json();
+  // const to = "contact@askusat.co.uk";
+  const to = "paulinnocent05@gmail.com";
+  // console.log({ from, subject, content, to });
+
   try {
     const re: any = await send_email(from, to, subject, content).catch(
       (err) => {
         if (!err.success) {
-          return { status: "error", message: err.message };
+          console.log(err);
+
+          return NextResponse.json(
+            { status: "error", message: err },
+            { status: 500 }
+          );
         }
       }
     );
+
     if (!re.success) {
       return NextResponse.json(
         { status: "error", message: re.message },
         { status: 500 }
       );
     } else {
-      return NextResponse.json({ status: "success" });
+      return NextResponse.json({ status: "success" }, { status: 200 });
     }
   } catch (error: any) {
     return NextResponse.json(
