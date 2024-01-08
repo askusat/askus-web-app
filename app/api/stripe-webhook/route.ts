@@ -7,6 +7,8 @@ const SK = process.env.STRIPE_SECRET_KEY;
 const stripe = new Stripe(SK || "");
 
 export async function GET() {
+  console.log('paul innocent');
+
   return NextResponse.json({ name: "Paul Innocent" });
 }
 
