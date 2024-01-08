@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { ReactNode, useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -15,36 +15,54 @@ import {
   DropdownMenu,
   DropdownItem,
   Chip,
-  User,
+  User as UserComp,
   Pagination,
   Selection,
   ChipProps,
   SortDescriptor,
 } from "@nextui-org/react";
-import { PlusIcon } from "./PlusIcon";
-import { VerticalDotsIcon } from "./VerticalDotIcons";
+// import { PlusIcon } from "./PlusIcon";
+// import { VerticalDotsIcon } from "./VerticalDotIcons";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import { SearchIcon } from "./SearchIcon";
-import { columns, users, statusOptions } from "./data";
+import { columns, statusOptions } from "./data";
 import { capitalize } from "./utils";
-import { Customers } from "@/app/admin/page";
+import { User } from "@/types";
+import { formatDateToTimeAgo } from "@/app/utils/helpers";
+// import { Customers } from "@/app/admin/page";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   active: "success",
-  paused: "danger",
-  vacation: "warning",
+  paused: "warning",
+  canceled: "danger",
+  incomplete: "danger",
+  incomplete_expired: "danger",
+  past_due: "danger",
+  trialing: "secondary",
+  unpaid: "danger",
+  "": "default",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = [
+  // "email",
+  "fullName",
+  "username",
+  "updatedAt",
+  "subscription_status",
+  "credit",
+];
 
-type User = (typeof users)[0];
+// type User = (typeof users)[0];
 
 interface TableCProps {
-  customers: Customers[];
+  customers: User[];
 }
 
 export default function TableC({ customers }: TableCProps) {
-// export default function TableC() {
+  // export default function TableC() {
+  const users = customers;
+
+  // type User = (typeof users)[0];
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
     new Set([])
@@ -55,7 +73,7 @@ export default function TableC({ customers }: TableCProps) {
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
-    column: "age",
+    column: "status",
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
@@ -77,7 +95,7 @@ export default function TableC({ customers }: TableCProps) {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase())
+        user?.fullName.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
     if (
@@ -85,12 +103,12 @@ export default function TableC({ customers }: TableCProps) {
       Array.from(statusFilter).length !== statusOptions.length
     ) {
       filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status)
+        Array.from(statusFilter).includes(user?.subscription_status || "")
       );
     }
 
     return filteredUsers;
-  }, [hasSearchFilter, statusFilter, filterValue]);
+  }, [users, hasSearchFilter, statusFilter, filterValue]);
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -101,6 +119,7 @@ export default function TableC({ customers }: TableCProps) {
 
   const sortedItems = React.useMemo(() => {
     return [...items].sort((a: User, b: User) => {
+      if (!a || !b) return -1;
       const first = a[sortDescriptor.column as keyof User] as number;
       const second = b[sortDescriptor.column as keyof User] as number;
       const cmp = first < second ? -1 : first > second ? 1 : 0;
@@ -110,59 +129,52 @@ export default function TableC({ customers }: TableCProps) {
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof User];
+    const cellValue = user?.[columnKey as keyof User];
 
     switch (columnKey) {
-      case "name":
+      case "fullName":
         return (
-          <User
-            avatarProps={{ radius: "full", size: "sm", src: user.avatar }}
+          <UserComp
+            // avatarProps={{ radius: "full", size: "sm", src: user?.avatar }}
             classNames={{
               description: "text-default-500",
             }}
-            description={user.email}
-            name={cellValue}
+            description={user?.email}
+            name={cellValue as ReactNode}
           >
-            {user.email}
-          </User>
+            {user?.email}
+          </UserComp>
         );
-      case "role":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-500">
-              {user.team}
-            </p>
-          </div>
-        );
-      case "status":
+      case "updatedAt":
+        return <p className="text-bold text-small capitalize">{formatDateToTimeAgo(new Date(cellValue || ''))}</p>;
+      case "subscription_status":
         return (
           <Chip
             className="capitalize border-none gap-1 text-default-600"
-            color={statusColorMap[user.status]}
+            color={statusColorMap[user?.subscription_status || ""]}
             size="sm"
             variant="dot"
           >
-            {cellValue}
+            {cellValue as ReactNode}
           </Chip>
         );
-      case "actions":
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown className="bg-background border-1 border-default-200">
-              <DropdownTrigger>
-                <Button isIconOnly radius="full" size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-400" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        );
+      // case "actions":
+      //   return (
+      //     <div className="relative flex justify-end items-center gap-2">
+      //       <Dropdown className="bg-background border-1 border-default-200">
+      //         <DropdownTrigger>
+      //           <Button isIconOnly radius="full" size="sm" variant="light">
+      //             <VerticalDotsIcon className="text-default-400" />
+      //           </Button>
+      //         </DropdownTrigger>
+      //         <DropdownMenu>
+      //           <DropdownItem>View</DropdownItem>
+      //           <DropdownItem>Edit</DropdownItem>
+      //           <DropdownItem>Delete</DropdownItem>
+      //         </DropdownMenu>
+      //       </Dropdown>
+      //     </div>
+      //   );
       default:
         return cellValue;
     }
@@ -207,7 +219,7 @@ export default function TableC({ customers }: TableCProps) {
             <Dropdown>
               <DropdownTrigger className="flex">
                 <Button
-                aria-label="status"
+                  aria-label="status"
                   endContent={<ChevronDownIcon className="text-small" />}
                   size="sm"
                   variant="flat"
@@ -233,7 +245,7 @@ export default function TableC({ customers }: TableCProps) {
             <Dropdown>
               <DropdownTrigger className="flex">
                 <Button
-                aria-label="cols"
+                  aria-label="cols"
                   endContent={<ChevronDownIcon className="text-small" />}
                   size="sm"
                   variant="flat"
@@ -284,12 +296,15 @@ export default function TableC({ customers }: TableCProps) {
         </div>
       </div>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     filterValue,
+    onSearchChange,
     statusFilter,
     visibleColumns,
-    onSearchChange,
+    users.length,
     onRowsPerPageChange,
+    hasSearchFilter,
   ]);
   // }, [
   //   filterValue,
@@ -378,9 +393,9 @@ export default function TableC({ customers }: TableCProps) {
       </TableHeader>
       <TableBody emptyContent={"No users found"} items={sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item?.id}>
             {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
+              <TableCell>{renderCell(item, columnKey) as ReactNode}</TableCell>
             )}
           </TableRow>
         )}

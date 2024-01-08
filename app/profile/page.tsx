@@ -25,6 +25,7 @@ import axios from "axios";
 
 export default function ProfilePage() {
   const auth = useAuth();
+  const user = auth.user;
   const router = useRouter();
   const [ongoingQs, setOngoingQs] = useState<number>(0);
   const [answeredQs, setAnsweredQs] = useState<number>(0);
@@ -47,9 +48,9 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetch = async () => {
       if (!auth.user) return;
-      if (auth.user.isAdmin) {
-        router.replace("/admin");
-      }
+      // if (auth.user.isAdmin) {
+      //   router.replace("/admin");
+      // }
 
       const { count: answeredCount } = await supabase
         .from("chats")
@@ -152,14 +153,25 @@ export default function ProfilePage() {
             </div>
 
             <div className="absolute bottom-0 py-6 left-0 w-full flex justify-center bg-[#F9F9F9]">
-              <Link href="/chat">
-                <Button
-                  aria-label="Get started button"
-                  className="bg-primary text-white"
-                >
-                  Start Conversation
-                </Button>
-              </Link>
+              {user?.isAdmin ? (
+                <Link href="/admin">
+                  <Button
+                    aria-label="Get started button"
+                    className="bg-primary text-white"
+                  >
+                    Go to admin dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/chat">
+                  <Button
+                    aria-label="Get started button"
+                    className="bg-primary text-white"
+                  >
+                    Start Conversation
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </aside>

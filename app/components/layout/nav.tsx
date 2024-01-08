@@ -150,7 +150,7 @@ export default function Nav() {
         )}
       </div>
 
-      <div className="flex items-center gap-3 xl:hidden">
+      <div className={`flex items-center gap-3 xl:hidden`}>
         {user && <Button
           isIconOnly
           className=" bg-transparent -mb-2"
@@ -177,6 +177,71 @@ export default function Nav() {
         </Button>
 
         {open && (
+          <div className="">
+            <div
+              className="fixed bg-cover w-full h-screen z-5  top-0 left-0 bg-black/10"
+              onClick={() => {
+                setOpen(false);
+              }}
+            ></div>
+
+            <div
+              className={`fixed place-items-center origin-top md:right-10 right-2 bg-white primary z-[99999] w-full top-[12%] flex-col justify-center items-center max-w-[300px] text-black shadow-lg rounded-lg font-normal`}
+            >
+              <div className="shadow-xl py-3 px-4 text-gray-700j flex items-center justify-between gap-4">
+                Notifications ({notifications.length})
+                <Button
+                  isIconOnly
+                  title="mark as read"
+                  className="bg-transparent"
+                  onClick={() => {
+                    markAllNotificationAsRead(user, setNotifications);
+                  }}
+                >
+                  <FaCheckDouble />
+                </Button>
+              </div>
+              <div className="flex flex-col gap-6 py-4 max-h-[350px] overflow-auto px-4">
+                {notifications.map((notification) => (
+                  <div
+                    key={`notfn_${notification?.id}`}
+                    className="rounded-lg py-1 px-3 bg-slate-200 cursor-pointer"
+                    onClick={() => {
+                      markNotificationAsRead(
+                        user,
+                        notification?.id || 1,
+                        notifications,
+                        setNotifications
+                      );
+                      if(notification?.chatId){
+                        // router.push(`/chat?chatId=${notification?.chatId}`)
+                        window.location.href = `/chat?chatId=${notification?.chatId}`;
+                      }
+                    }}
+                  >
+                    <div className="text-xs truncate">
+                      {notification?.title}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className="truncate text-[10px]">
+                        {notification?.message}
+                      </p>
+                      <div className="text-[9px] text-gray-600 whitespace-nowrap">
+                        {formatDateToTimeAgo(
+                          notification?.updatedAt || new Date()
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="hidden xl:block absolute z-50">
+      {open && (
           <div className="">
             <div
               className="fixed bg-cover w-full h-screen z-5  top-0 left-0 bg-black/10"
@@ -449,7 +514,7 @@ const ProfileButton = ({ toggleMenu }: any) => {
       </div>
 
       {show && (
-        <div className="lg:absolute w-fit top-full right-0 min-w-[100px] z-[9999999999] flex justify-end py-3 px-4 shadow-lg bg-whiterounded-lg">
+        <div className="lg:absolute w-fit top-full right-0 min-w-[100px] z-[9999999999] flex justify-end py-3 px-4 shadow-lg bg-white rounded-lg">
           <div className="flex flex-col gap-3">
             <Link
               href="/profile"

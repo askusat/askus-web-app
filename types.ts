@@ -1,3 +1,5 @@
+import Stripe from "stripe";
+
 export type User = {
   id?: number;
   createdAt?: Date;
@@ -6,6 +8,7 @@ export type User = {
   email: string;
   fullName: string;
   isSubscribed?: boolean;
+  subscription_status: Stripe.Subscription.Status
   credit: number | 0;
   creditExpiresOn: Date;
   stripeCustomerId?: string;

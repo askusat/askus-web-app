@@ -16,7 +16,7 @@ export default function AboutPage() {
           className=" flex items-center flex-col  justify-center bg-cover bg-no-repeat bg-center lg:w-full h-screen w-full bg-gradient-to-br from-red-400 via-blue-700 to-transparent relative text-white"
           style={{
             backgroundImage:
-              "linear-gradient(45deg, rgba(245,70,66, 0.75), rgba(8,83,156, 0.75)), url(team2.jpg)",
+                "linear-gradient(45deg, rgba(0, 112, 240, 0.75), rgba(0, 112, 240, 0.6), rgba(0, 112, 240, 0.45), rgba(0, 112, 240, 0.3), rgba(0, 112, 240, 0.15)), url(team2.jpg)",
           }}
         >
           <div className="text-white lg:text-[60px] text-[26px] text-center w-full font-MontserratBold">
