@@ -7,7 +7,7 @@ const SK = process.env.STRIPE_SECRET_KEY;
 const stripe = new Stripe(SK || "");
 
 export async function GET() {
-  console.log('paul innocent');
+  console.log("paul innocent");
 
   return NextResponse.json({ name: "Paul Innocent" });
 }
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     console.log(" ");
     console.log(" ");
 
-    await supabase
+    const { error } = await supabase
       .from("users")
       .update({
         stripeSubscriptionId: subscription.id,
@@ -51,11 +51,11 @@ export async function POST(request: Request) {
       })
       .eq("stripeCustomerId", subscription.customer);
 
+    if (error) {
+      return new Response(null, { status: 404 });
+    }
     return new Response(null, { status: 200 });
   }
 
-  return new Response(
-    `Webhook Error: ${"Unknown Event"}`,
-    { status: 400 }
-  );
+  return new Response(`Webhook Error: ${"Unknown Event"}`, { status: 400 });
 }
