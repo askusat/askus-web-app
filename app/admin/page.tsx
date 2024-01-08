@@ -239,7 +239,7 @@ const AdminDashboard = () => {
             <div className="flex items-center hover:text-white hover:bg-primary justify-between w-full max-w-[250px] h-[100px] px-4  bg-white shadow-xl rounded-xl group transition-all duration-700">
               <div className="">
                 <h1 className="text-[25px] font-semibold text-primary group-hover:text-white">
-                  2
+                  {admins.length || 0}
                 </h1>
                 <p className="hover:text-white">Staff</p>
               </div>
