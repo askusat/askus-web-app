@@ -7,7 +7,7 @@ export const BACKEND_URL =
 
 export const STRIPE_Pk = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
 
-export const PRICE_ID = "price_1OM5DLFl4zfP5z2zZGNq9ljz";
+export const PRICE_ID = process.env.STRIPE_PRICE_ID;
 
 export const authConfig = {
   meEndpoint: "/auth/me",
