@@ -2,7 +2,7 @@ import { supabase } from "@/app/supabaseClient";
 import { headers } from "next/headers";
 import Stripe from "stripe";
 
-const SK =process.env.STRIPE_SECRET_KEY
+const SK = process.env.STRIPE_SECRET_KEY;
 const stripe = new Stripe(SK || "");
 
 export async function POST(request: Request) {
@@ -24,32 +24,31 @@ export async function POST(request: Request) {
     );
   }
 
-  const session = event.data.object as Stripe.Checkout.Session;
+  const subscription: any = event.data.object;
+  console.log("subscription1");
+  console.log(subscription);
 
-  if (!session?.metadata?.userId) {
-    return new Response(null, {
-      status: 200,
-    });
+  if (subscription?.object === "subscription") {
+    console.log("subscription");
+    console.log(subscription);
+    console.log(event.type);
+    console.log(" ");
+    console.log(" ");
+
+    await supabase
+      .from("users")
+      .update({
+        stripeSubscriptionId: subscription.id,
+        subscription_status: subscription.status,
+        updatedAt: new Date(),
+      })
+      .eq("stripeCustomerId", subscription.customer);
+
+    return new Response(null, { status: 200 });
   }
 
-  const subscription = await stripe.subscriptions.retrieve(
-    session.subscription as string
+  return new Response(
+    `Webhook Error: ${"Unknown Event"}`,
+    { status: 400 }
   );
-
-  console.log("subscription");
-  console.log(subscription);
-  console.log(event.type);
-  console.log(' ');
-  console.log(' ');
-
-  await supabase
-    .from("users")
-    .update({
-      stripeSubscriptionId: subscription.id,
-      subscription_status: subscription.status,
-      updatedAt: new Date(),
-    })
-    .eq("stripeCustomerId", subscription.customer);
-
-  return new Response(null, { status: 200 });
 }
