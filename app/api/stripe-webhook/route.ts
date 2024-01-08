@@ -32,21 +32,19 @@ export async function POST(request: Request) {
   }
 
   const subscription: any = event.data.object;
-  console.log("subscription1");
-  console.log(subscription);
-
   if (subscription?.object === "subscription") {
-    console.log("subscription");
-    console.log(subscription);
-    console.log(event.type);
-    console.log(" ");
-    console.log(" ");
+    // console.log("subscription");
+    // console.log(subscription);
+    // console.log(event.type);
+    // console.log(" ");
+    // console.log(" ");
 
     const { error } = await supabase
       .from("users")
       .update({
         stripeSubscriptionId: subscription.id,
         subscription_status: subscription.status,
+        isSubscribed: subscription.status === "active" ? true : false,
         updatedAt: new Date(),
       })
       .eq("stripeCustomerId", subscription.customer);

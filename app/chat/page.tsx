@@ -632,10 +632,26 @@ export default function ChatPageV2() {
     }, 1000);
   };
 
+  const checkIfCreditHasExpired = (user: User): boolean => {
+    if (!user) return false;
+
+    if (user?.creditExpiresOn.getTime() >= new Date().getTime()) {
+      return true;
+    }
+    return false;
+  };
+
   const createChat = async () => {
     if (!user) return null;
     if (user.isAdmin) {
       sAlert("You're an admin");
+    }
+
+    if (checkIfCreditHasExpired(user) && !user.isSubscribed) {
+      sAlert(
+        "Your credit has expired. and you have not active subscription please subscribe."
+      );
+      return;
     }
 
     if (!user.isSubscribed && user.credit <= 0) {
@@ -933,7 +949,11 @@ export default function ChatPageV2() {
           "Please enable push notification in your browser settings to receive notifications when there's a new message"
         );
       } else {
-        sAlert(`Something went wrong. please try againg. (${error && error.message && error.message})`);
+        sAlert(
+          `Something went wrong. please try againg. (${
+            error && error.message && error.message
+          })`
+        );
       }
     }
   }
@@ -1005,7 +1025,6 @@ export default function ChatPageV2() {
 
   function notifyMe() {
     // console.log("notifyMe");
-
     // if (!("Notification" in window)) {
     //   // Check if the browser supports notifications
     //   alert("This browser does not support desktop notification");
@@ -1024,7 +1043,6 @@ export default function ChatPageV2() {
     //     }
     //   });
     // }
-
     // // At last, if the user has denied notifications, and you
     // // want to be respectful there is no need to bother them anymore.
   }
