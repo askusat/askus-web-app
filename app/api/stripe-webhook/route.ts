@@ -1,9 +1,14 @@
 import { supabase } from "@/app/supabaseClient";
 import { headers } from "next/headers";
 import Stripe from "stripe";
+import { NextResponse } from "next/server";
 
 const SK = process.env.STRIPE_SECRET_KEY;
 const stripe = new Stripe(SK || "");
+
+export async function GET() {
+  return NextResponse.json({ name: "Paul Innocent" });
+}
 
 export async function POST(request: Request) {
   const body = await request.text();
