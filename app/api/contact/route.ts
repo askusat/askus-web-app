@@ -15,10 +15,10 @@ const transporter = NodeMailer.createTransport({
   port: 587,
   debug: true,
   auth: {
-    user: process.env.SMTP_LOGIN,
-    pass: process.env.SMTP_KEY,
-    // user: "askusat1@gmail.com",
-    // pass: "xsmtpsib-2feda7f3b8b25d08eac0e06e2c6b31aa48bc4acac5e44e023e921a29d60d3397-8b9cS70ZEYCHFhG2",
+    // user: process.env.SMTP_LOGIN,
+    // pass: process.env.SMTP_KEY,
+    user: "askusat1@gmail.com",
+    pass: "xsmtpsib-2feda7f3b8b25d08eac0e06e2c6b31aa48bc4acac5e44e023e921a29d60d3397-8b9cS70ZEYCHFhG2",
   },
 });
 
