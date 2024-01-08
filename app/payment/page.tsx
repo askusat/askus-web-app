@@ -241,6 +241,7 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
             stripeSubscriptionId: createSubscription?.data?.subscription?.id,
             stripeCustomerId: createSubscription?.data?.customer_id,
             isSubscribed: true,
+            subscription_status: createSubscription?.data?.subscription?.status,
           };
           if (createSubscription.data?.creditMode) {
             delete d.stripeSubscriptionId;
