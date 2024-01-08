@@ -2,10 +2,7 @@ import { supabase } from "@/app/supabaseClient";
 import { headers } from "next/headers";
 import Stripe from "stripe";
 
-const SK =
-  process.env.NODE_ENV === "production"
-    ? process.env.STRIPE_SECRET_KEY
-    : "sk_test_51LY8WXGqRSmA1tlMkLI09WQj5UZGO70XiSETYHWo27q4pxK8ywZCA867dJAfj7hKjeuBqHGeDl8WDAJpbcKxVxC200lcwZynJz";
+const SK =process.env.STRIPE_SECRET_KEY
 const stripe = new Stripe(SK || "");
 
 export async function POST(request: Request) {

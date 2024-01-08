@@ -54,7 +54,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       if (check) return;
       window.localStorage.setItem("userData", JSON.stringify(authUserData));
       const redirectURL =
-        returnUrl && returnUrl !== "/" ? returnUrl : authConfig.afterLogin;
+        returnUrl && returnUrl !== "/" ? returnUrl : authUserData?.isAdmin ? "/admin" : authConfig.afterLogin;
       router.replace(redirectURL as string);
     },
     [router, returnUrl]
