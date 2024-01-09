@@ -17,6 +17,7 @@
     "@stripe/stripe-js": "^2.2.1",
     "@supabase/supabase-js": "^2.39.0",
     "@types/web-push": "^3.6.3",
+    "@vercel/speed-insights": "^1.0.2",
     "axios": "^1.6.2",
     "framer-motion": "^10.16.12",
     "moment": "^2.29.4",

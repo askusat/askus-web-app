@@ -7,6 +7,7 @@ import CreateChat from "./components/chat/createChat";
 // import { Notifications } from "react-push-notification";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 const APP_NAME = "ASKUS";
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     default: APP_DEFAULT_TITLE,
     template: APP_TITLE_TEMPLATE,
   },
-  manifest: '/manifest.json',
+  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -64,8 +65,9 @@ export default function RootLayout({
       <body
         className={`${inter.className} font-MontserratRegular bg-white text-black`}
       >
-      <ToastContainer />
+        <ToastContainer />
         <Providers>
+          <SpeedInsights />
           <CreateChat />
           <div className="bg-[#f9f9f9]">
             {/* <Notifications /> */}

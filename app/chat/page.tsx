@@ -1323,11 +1323,13 @@ export default function ChatPageV2() {
                               router.replace("/chat");
                               return;
                             }
-                            setSelectedChat(chat);
-                            setSelectedChatId(chat?.id || 0);
-                            setIsChatPageOpen(true);
-                            // inputRef?.current && inputRef?.current?.focus();
-                            router.push(`?chatId=${chat.id}`);
+                            if (selectedChatId !== chat?.id) {
+                              setSelectedChat(chat);
+                              setSelectedChatId(chat?.id || 0);
+                              setIsChatPageOpen(true);
+                              // inputRef?.current && inputRef?.current?.focus();
+                              router.push(`?chatId=${chat.id}`);
+                            }
                           }}
                         >
                           <div className="w-[17%]">
