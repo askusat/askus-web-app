@@ -565,8 +565,8 @@ export default function ChatPageV2() {
       .single();
     const currentChat: Chat | null = data;
 
-    console.log("currentChat");
-    console.log(currentChat);
+    // console.log("currentChat");
+    // console.log(currentChat);
 
     if (!currentChat) return;
 
@@ -620,7 +620,7 @@ export default function ChatPageV2() {
       toUserId: user.id,
       userName: "Mary",
       userProfilePicture: "",
-      sender: "bot",
+      sender: "mary",
     };
 
     setTimeout(async () => {

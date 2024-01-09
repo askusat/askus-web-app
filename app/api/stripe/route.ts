@@ -220,7 +220,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       //   description: "Immediate £5 charge",
       // });
 
-      if (email !== "paulinnocent04@gmail.com" || email.startsWith('_testz')) {
+      if (email !== "paulinnocent04@gmail.com" || email.startsWith("_testz")) {
         await stripe.paymentIntents.create({
           amount: creditMode ? credit * 100 : 500, // £50 if in creditMode
           currency: "GBP",
@@ -275,7 +275,31 @@ export async function POST(req: NextRequest, res: NextResponse) {
         { status: 200, statusText: "OK" }
       );
     } catch (error) {
-      console.error('failed to create subscription: '+error);
+      console.error("failed to create subscription: " + error);
+      return NextResponse.json(
+        { message: `Internal server error: ${error}` },
+        { status: 500, statusText: "Internal server error" }
+      );
+    }
+  }
+
+  if (route === "delete_subscription") {
+    try {
+      var {
+        subscription_id
+      }: {subscription_id: string} = body;
+
+      await stripe.subscriptions.cancel(subscription_id);
+      console.log(`Subscription: ${subscription_id} has been cancelled! \n`);
+
+      return NextResponse.json(
+        {
+          message: `Subscription cancelled successful!`,
+        },
+        { status: 200, statusText: "OK" }
+      );
+    } catch (error) {
+      console.error("failed to create subscription: " + error);
       return NextResponse.json(
         { message: `Internal server error: ${error}` },
         { status: 500, statusText: "Internal server error" }

@@ -9,6 +9,7 @@ import {
   FaCheck,
   FaCheckCircle,
   FaHome,
+  FaLock,
   FaPen,
   FaRegUserCircle,
 } from "react-icons/fa";
@@ -16,12 +17,24 @@ import { MdOutlineLoop } from "react-icons/md";
 import { IoMdHelp } from "react-icons/io";
 import { supabase } from "../supabaseClient";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { Button, Image, Input } from "@nextui-org/react";
 import { User } from "@/types";
-import { formatDateToDMYY, formatDateToTimeAgo } from "../utils/helpers";
+import {
+  formatDateToDMYY,
+  formatDateToTimeAgo,
+  sAlert,
+} from "../utils/helpers";
 import Stripe from "stripe";
 import axios from "axios";
+import Link from "next/link";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
 
 export default function ProfilePage() {
   const auth = useAuth();
@@ -31,6 +44,8 @@ export default function ProfilePage() {
   const [answeredQs, setAnsweredQs] = useState<number>(0);
   const [subscriptionDetails, setSubscriptionDetails] =
     useState<Stripe.Subscription | null>(null);
+  const { isOpen, onClose, onOpen, onOpenChange } = useDisclosure();
+  const [cancellingSub, setCancellingSub] = useState<boolean>(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -84,12 +99,60 @@ export default function ProfilePage() {
     fetch();
   }, [auth.user?.stripeCustomerId]);
 
+  const handleCancelSubscription = async () => {
+    setCancellingSub(true);
+    try {
+      const response = await axios
+        .post(`/api/stripe`, {
+          route: "delete_subscription",
+          subscription_id: auth.user?.stripeCustomerId,
+        })
+        .then((response: any) => response.data);
+      console.log("handleCancelSubscriptionj response: ");
+      console.log(response);
+
+      sAlert("Subscription cancelled successfully!");
+    } catch (error) {
+      sAlert("Subscription cancelled successfully!");
+    }
+    setTimeout(() => {
+      setCancellingSub(false);
+      onClose();
+    }, 2000);
+  };
+
   if (!auth.user) {
     return <LoadingScreen />;
   }
 
   return (
     <>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Cancel Subscription
+              </ModalHeader>
+              <ModalBody>
+                <p>
+                  <strong>@{auth.user?.username}</strong>, Are you sure you want
+                  to cancel your subscription
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={handleCancelSubscription}>
+                  Action
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
       <LoadingScreen />
       <nav className="max-h-[6rem] sticky top-0 z-20 col-[1/-1] row-[1] md:px-8 px-4 py-3 bg-[#F9F9F9] shadow-lg">
         <Nav />
@@ -148,6 +211,16 @@ export default function ProfilePage() {
                   className="flex justify-start w-full"
                 >
                   Help
+                </Button>
+              </Link>
+
+              <Link href={"/reset-password"}>
+                <Button
+                  aria-label="reset-password"
+                  startContent={<FaLock />}
+                  className="flex justify-start w-full"
+                >
+                  Reset Password
                 </Button>
               </Link>
             </div>
@@ -279,7 +352,7 @@ export default function ProfilePage() {
                     <span className="capitalize">
                       {subscriptionDetails?.status}
                     </span>
-                    {auth.user?.isSubscribed ? (
+                    {auth.user?.isSubscribed && subscriptionDetails ? (
                       <div className=" text-[10px] font-normal text-gray-500 justify-start">
                         <span className="">Renewing</span>{" "}
                         {subscriptionDetails &&
@@ -299,6 +372,25 @@ export default function ProfilePage() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="flex justify-center items-center gap-4">
+            <Link href={"/reset-password"} className="lg:hidden">
+              <Button
+                color="primary"
+                aria-label="reset-password"
+                startContent={<FaLock />}
+                className="flex justify-start w-full"
+              >
+                Reset Password
+              </Button>
+            </Link>
+
+            {auth.user.isSubscribed && (
+              <Button color="danger" onPress={onOpen}>
+                Cancel Subscription
+              </Button>
+            )}
           </div>
         </main>
       </div>
