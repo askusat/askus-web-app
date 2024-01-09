@@ -10,20 +10,21 @@ import { FaThumbsUp } from "react-icons/fa";
 
 export default function AuthLayout({ children }: any) {
   const pathname = usePathname();
+  const list = ["/login", "/reset-password", "/forget-password"];
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 font-PlusJakartaSansRegular">
       <div className="lg:col-span-7 py-3 lg:py-0 w-full min-h-screen lg:h-screen lg:overflow-auto bg-[#e8e8e8] grid place-items-center relative">
         {children}
       </div>
-      {pathname === "/login" ? (
+      {list.includes(pathname) ? (
         <>
           <div
             className="lg:col-span-5 w-full h-full lg:h-screen overflow-auto bg-primary text-white py-10 lg:py-[10px] px-4 lg:px-[50px] lg:grid lg:place-items-center"
             style={{
               backgroundImage:
                 "linear-gradient(45deg, rgba(0, 112, 240, 0.75), rgba(0, 112, 240, 0.6), rgba(0, 112, 240, 0.45), rgba(0, 112, 240, 0.3), rgba(0, 112, 240, 0.15)), url(team2.jpg)",
-                backgroundSize: "cover"
+              backgroundSize: "cover",
             }}
           ></div>
         </>
