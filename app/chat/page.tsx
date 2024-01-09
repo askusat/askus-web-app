@@ -97,6 +97,7 @@ export default function ChatPageV2() {
     onOpen: onOpenNoAssessModal,
     onClose: onCloseNoAssessModal,
   } = useDisclosure();
+
   const {
     isOpen: isOpenPreviewImage,
     onOpen: onOpenPreviewImage,
@@ -844,6 +845,7 @@ export default function ChatPageV2() {
     if (!user) return;
     if (selectedChat?.chatUsers.length === 2) {
       alert("An expert has already joined!");
+      return;
     }
     if (!userId || !chatId) return sAlert("something went wrong");
 
