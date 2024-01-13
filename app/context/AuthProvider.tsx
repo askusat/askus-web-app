@@ -103,7 +103,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
         if (error || !user) {
           if (PROTECTED_PAGES.includes(pathname)) {
-            router.push(`/login?returnUrl=${pathname.split("/").pop()}`);
+            router.push(`/signup?returnUrl=${pathname.split("/").pop()}`);
           }
           return setLoading(false);
         }
