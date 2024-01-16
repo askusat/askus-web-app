@@ -21,11 +21,11 @@ export default function PopUp() {
   const { user } = useAuth();
 
   useEffect(() => {
+    if (user) {
+      onClose();
+      return;
+    }
     setTimeout(() => {
-      if (user) {
-        onClose();
-        return;
-      }
       if (showOn.includes(pathname) && !user) onOpen();
     }, 3000);
   }, [onOpen, pathname, user, onClose]);
