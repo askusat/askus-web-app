@@ -53,6 +53,7 @@ export const metadata: Metadata = {
   },
   other: {
     "facebook-domain-verification": "794mkkv0g1djy10teis3fuf98fqqna",
+    "canonical": "https://askusat.co.uk"
   },
 };
 
@@ -60,22 +61,22 @@ export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug} = params;
-  const siteURL = 'https://askusat.co.uk';
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: { slug: string };
+// }) {
+//   const { slug} = params;
+//   const siteURL = 'https://askusat.co.uk';
 
-  return {
-    title: `Askus Anytime`,
-    description: `Askus Anytime`,
-    alternates: {
-      canonical: `${siteURL}/${slug}`,
-    },
-  };
-}
+//   return {
+//     title: `Askus Anytime`,
+//     description: `Askus Anytime`,
+//     alternates: {
+//       canonical: `${siteURL}/${slug}`,
+//     },
+//   };
+// }
 
 export default function RootLayout({
   children,
