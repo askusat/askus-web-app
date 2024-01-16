@@ -12,17 +12,23 @@ import {
 } from "@nextui-org/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "../hooks/useAuth";
 
 const showOn = ["/", "/about"];
 export default function PopUp() {
   const pathname = usePathname();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const { user } = useAuth();
 
   useEffect(() => {
     setTimeout(() => {
-      if (showOn.includes(pathname)) onOpen();
+      if (user) {
+        onClose();
+        return;
+      }
+      if (showOn.includes(pathname) && !user) onOpen();
     }, 3000);
-  }, [onOpen, pathname]);
+  }, [onOpen, pathname, user, onClose]);
 
   return (
     <>
