@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     default: APP_DEFAULT_TITLE,
     template: APP_TITLE_TEMPLATE,
   },
+  robots: "all",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -58,6 +59,23 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { slug} = params;
+  const siteURL = 'https://askusat.co.uk';
+
+  return {
+    title: `Askus Anytime`,
+    description: `Askus Anytime`,
+    alternates: {
+      canonical: `${siteURL}/${slug}`,
+    },
+  };
+}
 
 export default function RootLayout({
   children,
