@@ -1,7 +1,0 @@
-# Block all crawlers for /chat
-User-agent: *
-Disallow: /chat
-
-# Allow all crawlers
-User-agent: *
-Allow: /

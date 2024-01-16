@@ -19,6 +19,6 @@ export const authConfig = {
   afterSignup: "/payment",
 };
 
-export const PUBLIC_URL = 'https://askus.vercel.app'
+export const PUBLIC_URL = 'https://askusat.co.uk'
 
 export const MAILTO = 'paulinnocent05@gmail.com';
