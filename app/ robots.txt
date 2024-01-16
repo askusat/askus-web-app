@@ -1,5 +1,7 @@
-User-Agent: *
-Allow: /
+# Block all crawlers for /chat
+User-agent: *
 Disallow: /chat
 
-Sitemap: https://acme.com/sitemap.xml
+# Allow all crawlers
+User-agent: *
+Allow: /
