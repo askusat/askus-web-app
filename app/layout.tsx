@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
+import PopUp from "./components/PopUp";
 
 const inter = Inter({ subsets: ["latin"] });
 const APP_NAME = "ASKUS";
@@ -110,6 +111,7 @@ fbq('track', 'PageView');
         <ToastContainer />
         <Providers>
           <SpeedInsights />
+          <PopUp />
           <CreateChat />
           <div className="bg-[#f9f9f9]">
             {/* <Notifications /> */}
