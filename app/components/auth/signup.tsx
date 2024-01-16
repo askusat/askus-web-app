@@ -234,6 +234,7 @@ export const SignupStepOne = ({
             Login
           </Link>
         </p>
+        <p className="text-[10px] italic">Billed £50/Month</p>
       </div>
     </div>
   );
