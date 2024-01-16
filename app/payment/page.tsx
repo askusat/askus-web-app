@@ -406,7 +406,7 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
       >
         <p className="text-xs text-center md:max-w-[320px] mx-auto border">
           {selectedTab === "subscription" ? (
-            "Join for £5, Billed £50/month"
+            "Join for £5"
           ) : (
             <span>
               Purchase question credit 15 credits/unit for{" "}

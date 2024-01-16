@@ -5,6 +5,10 @@ import { Button } from "@nextui-org/react";
 import Nav from "../components/layout/nav";
 import Link from "next/link";
 
+export const metadata = {
+  title: 'About',
+}
+
 export default function AboutPage() {
   return (
     <div className="">

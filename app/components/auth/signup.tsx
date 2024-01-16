@@ -62,7 +62,7 @@ export const SignupStepOne = ({
       </h5>
 
       <p className="mb-4 text-[17px]">
-        Try 3 days for just £5. Then £50/month. Cancel anytime. Start getting
+        Try 3 days for just £5. Cancel anytime. Start getting
         answers to your questions.
       </p>
 

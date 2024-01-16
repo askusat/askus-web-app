@@ -4,6 +4,10 @@ import Faq from "../components/faq/faq";
 import Link from "next/link";
 // import { usePathname } from "next/navigation";
 
+export const metadata = {
+  title: 'FAQ',
+}
+
 export default function FAQPage() {
   return (
     <div>

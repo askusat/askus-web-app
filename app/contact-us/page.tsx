@@ -6,6 +6,10 @@ import { IoMdMail } from "react-icons/io";
 import { IoCall } from "react-icons/io5";
 import { Button, Link } from "@nextui-org/react";
 
+export const metadata = {
+  title: 'Contact us',
+}
+
 export default function ContactUsPage() {
   return (
     <div className="mb-20">
