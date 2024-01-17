@@ -1,7 +1,9 @@
 "use client";
 
 import { useAuth } from "@/app/hooks/useAuth";
-import { Chat, User } from "@/types";
+import { supabase } from "@/app/supabaseClient";
+import { sAlert } from "@/app/utils/helpers";
+import { Chat, ChatMessage, User } from "@/types";
 import {
   Modal,
   ModalContent,
@@ -35,13 +37,41 @@ export default function RequestForCall({
 
   const handRequestForCall = async () => {
     if (!chat) return;
+    const callReqData = {
+      status: "requested",
+      customer: user,
+      admin: chat.chatUsers.find((id: number) => id !== user?.id),
+    };
+    const { error } = await supabase.from("callRequests").insert(callReqData);
+    
+    if (error) {
+      console.log(error);
+      sAlert(error.message);
+    } else {
+      try {
+        const createChatMessage: Partial<ChatMessage> = {
+          chatId: chat.id,
+          message: `${user?.username} requested for a call`,
+          type: `system`,
+          replyTo: null,
+          userId: user.id,
+          toUserId: chat.chatUsers.find((id: number) => id !== user?.id),
+          userName: user.username, //getFirstName(user.fullName),
+          userProfilePicture: user?.userProfilePicture || "",
+          sender: "user",
+        };
+        await supabase.from("chat_messages").insert(createChatMessage);
+        await supabase
+          .from("chats")
+          .update({ updatedAt: new Date() })
+          .eq("id", chat.id);
+        sAlert("You have successfully requested a call");
+      } catch (error: any) {
+        sAlert(error.message);
+      }
+    }
 
-    setLoading(true);
-    // setIsCallReqOpen(false);
-    // setLoading(false);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    setLoading(false);
   };
 
   return (
@@ -79,7 +109,7 @@ export default function RequestForCall({
                   onPress={handRequestForCall}
                   isLoading={loading}
                 >
-                  Continue
+                  Request
                 </Button>
               </ModalFooter>
             </>
