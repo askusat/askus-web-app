@@ -1,7 +1,14 @@
-import { NotificationType, User } from "@/types";
+import {
+  ChatMessage,
+  NotificationType,
+  Offer,
+  User,
+  createOfferProps,
+} from "@/types";
 import { supabase } from "../supabaseClient";
 import moment from "moment";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export function formatDate(inputDate: Date): string {
   const options: any = {
@@ -110,3 +117,115 @@ export function IS_GREETING(sentence: string) {
 }
 
 export const sAlert = (message: string) => toast(message);
+
+export const handleOffer = async (
+  accept: boolean,
+  message_id: number,
+  chatMessage: ChatMessage,
+  user: User,
+  withdrawOffer: boolean,
+  setRefreshChatMessage: any,
+  setOfferProcessing: any
+) => {
+  if (!user) return { statusText: "failed", message: "user not found!" };
+  const amount = Number(chatMessage?.type.split("_")[1]);
+
+  const { data, error } = await supabase
+    .from("offers")
+    .select("*")
+    .eq("description", chatMessage?.message)
+    .eq("amount", amount)
+    .order("createdAt", { ascending: false });
+
+  const offerData: Offer = data?.[0];
+  if (error || !offerData) {
+    console.log(error, offerData);
+
+    return { statusText: "failed", message: "data incomplete" };
+  }
+
+  const updateOfferStatus = async () => {
+    const { error: e1 } = await supabase
+      .from("offers")
+      .update({
+        status: withdrawOffer ? "withdrawn" : accept ? "accepted" : "declined",
+        updatedAt: new Date(),
+      } as Partial<Offer>)
+      .eq("id", offerData?.id);
+
+    e1 && console.log("failed to update offer table e1");
+    e1 && console.log(e1);
+    e1 && console.log(e1?.message);
+
+    const { error: e2 } = await supabase
+      .from("chat_messages")
+      .update({
+        userProfilePicture: withdrawOffer
+          ? "withdrawn"
+          : accept
+          ? "accepted"
+          : "declined",
+        updatedAt: new Date(),
+      } as Partial<ChatMessage>)
+      .eq("id", message_id);
+
+    e2 && console.log("failed to update chat_messages table e2");
+    e2 && console.log(e2);
+    e2 && console.log(e2?.message);
+
+    if (e1 && e2) {
+      setOfferProcessing(false);
+      sAlert("failed");
+      return {
+        statusText: "failed",
+        message: "something went wrong",
+      };
+    } else {
+      setRefreshChatMessage(true);
+      setOfferProcessing(false);
+      sAlert("success");
+      return {
+        statusText: "success",
+        message: "success",
+      };
+    }
+  };
+
+  if (withdrawOffer) {
+    await updateOfferStatus();
+  } else if (accept) {
+    try {
+      // create customer and subscription
+      const createOfferData: createOfferProps = {
+        route: "create_offer",
+        customer_id: user.stripeCustomerId || "",
+        amount: offerData.amount,
+        email: user.email,
+        description: chatMessage?.message || "",
+      };
+
+      const createOfferRes = await axios.post(`/api/stripe`, createOfferData);
+
+      if (createOfferRes.status === 200) {
+        await updateOfferStatus();
+      } else {
+        console.log("createOfferRes");
+        console.log(createOfferRes);
+        sAlert("something went wrong");
+        setOfferProcessing(false);
+      }
+      return;
+    } catch (error: any) {
+      setOfferProcessing(false);
+      sAlert(`${error?.response?.data?.message || error.message}`);
+      console.log("failed to create offer due to: ");
+      console.log(error);
+      return {
+        statusText: "failed",
+        message: error?.response?.data?.message || error.message,
+      };
+    }
+  } else {
+    await updateOfferStatus();
+  }
+};

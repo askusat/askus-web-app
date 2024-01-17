@@ -267,7 +267,7 @@ export default function Home() {
                 <div className="w-4 h-4 rounded-full -ml-[10px] bg-primary relative z-10"></div>
                 <div className="lg:min-w-[210px] min-w-[189px] border border-dashed"></div>
                 <Image
-                  src={"Icon2.svg"}
+                  src={"icon2.svg"}
                   alt=""
                   width={100}
                   height={100}
@@ -364,7 +364,7 @@ export default function Home() {
           </p>
           <Link href={"/chat"}>
             <Button
-            aria-label="Get started button" 
+            aria-label="Get started button"
               className="mt-3 text-primary bg-white rounded-[10px] border-none"
               size="lg"
             >

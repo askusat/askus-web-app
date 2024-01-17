@@ -7,7 +7,10 @@ export const BACKEND_URL =
 
 export const STRIPE_Pk = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
 
-export const PRICE_ID = process.env.STRIPE_PRICE_ID || "price_1OWHcvJHPrBY6EDQXh2sP9pv";
+export const PRICE_ID =
+  process.env.NODE_ENV !== "production"
+    ? "price_1OZbkPJHPrBY6EDQY3VVjwGK"
+    : process.env.NEXT_PUBLIC_STRIPE_PRICE_ID;
 
 export const authConfig = {
   meEndpoint: "/auth/me",
@@ -19,6 +22,6 @@ export const authConfig = {
   afterSignup: "/payment",
 };
 
-export const PUBLIC_URL = 'https://askusat.co.uk'
+export const PUBLIC_URL = "https://askusat.co.uk";
 
-export const MAILTO = 'paulinnocent05@gmail.com';
+export const MAILTO = "paulinnocent05@gmail.com";

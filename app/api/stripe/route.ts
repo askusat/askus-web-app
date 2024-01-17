@@ -1,3 +1,4 @@
+import { createOfferProps } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -285,9 +286,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   if (route === "delete_subscription") {
     try {
-      var {
-        subscription_id
-      }: {subscription_id: string} = body;
+      var { subscription_id }: { subscription_id: string } = body;
 
       await stripe.subscriptions.cancel(subscription_id);
       console.log(`Subscription: ${subscription_id} has been cancelled! \n`);
@@ -343,6 +342,86 @@ export async function POST(req: NextRequest, res: NextResponse) {
       );
     } catch (error) {
       // console.error(error);
+      return NextResponse.json(
+        { message: `Internal server error: ${error}` },
+        { status: 500, statusText: "Internal server error" }
+      );
+    }
+  }
+
+  if (route === "create_offer") {
+    try {
+      var { customer_id, amount, email, description }: createOfferProps = body;
+
+      if (!customer_id) {
+        return NextResponse.json(
+          {
+            message: `User do not have a payment id`,
+          },
+          { status: 500, statusText: "Internal server error" }
+        );
+      }
+
+      let customer: any = null;
+      try {
+        customer = await stripe.customers.retrieve(customer_id);
+      } catch (error: any) {
+        return NextResponse.json(
+          {
+            message: `failed to get user details: ${error.message}`,
+          },
+          { status: 500, statusText: "Internal server error" }
+        );
+      }
+
+      if (!customer.invoice_settings.default_payment_method) {
+        return NextResponse.json(
+          {
+            message: `Customer did not have any payment method saved so can't be billed`,
+          },
+          { status: 400, statusText: "Invalid payment method" }
+        );
+      }
+
+      var pi;
+      if (
+        process.env.NODE_ENV !== "production" ||
+        email !== "paulinnocent04@gmail.com" ||
+        email.startsWith("_testz")
+      ) {
+        try {
+          pi = await stripe.paymentIntents.create({
+            amount: amount * 100,
+            currency: "GBP",
+            automatic_payment_methods: {
+              enabled: true,
+              allow_redirects: "never",
+            },
+            customer: customer_id,
+            description,
+            payment_method: customer.invoice_settings.default_payment_method,
+            confirm: true,
+          });
+        } catch (error: any) {
+          return NextResponse.json(
+            {
+              error,
+              message: `failed to collect payment: ${error.message}`,
+            },
+            { status: error.statusCode, statusText: error.code }
+          );
+        }
+      }
+
+      return NextResponse.json(
+        {
+          message: `Offer created successful!`,
+          pi,
+        },
+        { status: 200, statusText: "OK" }
+      );
+    } catch (error) {
+      console.error("failed to create subscription: " + error);
       return NextResponse.json(
         { message: `Internal server error: ${error}` },
         { status: 500, statusText: "Internal server error" }

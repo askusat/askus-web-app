@@ -44,6 +44,7 @@ import {
   formatDate,
   IS_GREETING,
   sAlert,
+  handleOffer,
 } from "../utils/helpers";
 import { useRouter } from "next/navigation";
 import LoadingScreen from "../components/loadingScreen";
@@ -60,6 +61,8 @@ import {
   sendPushSubscriptionToServer,
   unregisterPushNotifications,
 } from "../notifications/pushService";
+import RequestForCall from "./components/requestForCall";
+import CreatOfferModel from "./components/creatOfferModel";
 
 export default function ChatPageV2() {
   const {
@@ -86,6 +89,10 @@ export default function ChatPageV2() {
   const [imageToPreview, setImageToPreview] = useState<string>(
     "https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
   );
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const [isCallReqOpen, setIsCallReqOpen] = useState(false);
+  const [isCreatOfferOpen, setIsCreatOfferOpen] = useState(false);
+  const [offerProcessing, setOfferProcessing] = useState(false);
 
   // refs
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -274,6 +281,7 @@ export default function ChatPageV2() {
       setRefreshChatMessage(false);
       setRefreshChatList(false);
     };
+
     fetch();
   }, [
     selectedTab,
@@ -304,8 +312,16 @@ export default function ChatPageV2() {
         .eq("chatId", selectedChatId)
         .eq("userId", user?.id);
     };
-    fetch();
-  }, [user, selectedChatId, sendingMessage]);
+
+    if (refreshChatMessage) {
+      setTimeout(() => {
+        fetch();
+        setSendingMessage(false);
+      }, 500);
+    } else {
+      fetch();
+    }
+  }, [user, selectedChatId, sendingMessage, refreshChatMessage]);
 
   // subscribe to chats update to check if it has been closed
   useEffect(() => {
@@ -1157,6 +1173,24 @@ export default function ChatPageV2() {
         </ModalContent>
       </Modal>
 
+      {isCallReqOpen && (
+        <RequestForCall
+          chat={selectedChat}
+          setIsPopoverOpen={setIsPopoverOpen}
+          isCallReqOpen={isCallReqOpen}
+          setIsCallReqOpen={setIsCallReqOpen}
+        />
+      )}
+
+      {isCreatOfferOpen && (
+        <CreatOfferModel
+          chat={selectedChat}
+          setIsPopoverOpen={setIsPopoverOpen}
+          isCreatOfferOpen={isCreatOfferOpen}
+          setIsCreatOfferOpen={setIsCreatOfferOpen}
+        />
+      )}
+
       <div className="h-screen w-screen overflow-hidden relative">
         <header className="fixed z-50 top-0 left-0 w-full bg-primary text-white h-[8vh] box-border">
           <div className="flex items-center justify-between gap-2 h-full px-2">
@@ -1485,126 +1519,258 @@ export default function ChatPageV2() {
                             </p>
                           </div>
                         );
-                      } else {
-                        if (chatMessage?.userId === user?.id) {
-                          return (
-                            <div
-                              key={`message-${chatMessage?.id}`}
-                              id={`message_-_${index + 1}`}
-                              className="flex flex-row-reverse items-end gap-2 w-full"
-                            >
-                              <div className="mb-4 w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
-                                you
-                              </div>
-                              <div className="flex flex-col items-end w-fit md:max-w-[70%]">
-                                <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit max-w-[200px] break-words md:max-w-[100%]">
-                                  {chatMessage?.type === "text" && (
-                                    <p className="text-sm">
-                                      {chatMessage?.message}
-                                    </p>
-                                  )}
-                                  {chatMessage?.type === "image" && (
-                                    <ImageNUI
-                                      onClick={() => {
-                                        setImageToPreview(chatMessage.message);
-                                        onOpenPreviewImage();
-                                      }}
-                                      src={chatMessage?.message}
-                                      // fill
-                                      isZoomed
-                                      alt="Preview"
-                                      className="w-[150px] h-[150px] static cursor-pointer"
-                                    />
-                                  )}
-                                  {chatMessage?.type !== "text" &&
-                                    chatMessage?.type !== "image" && (
-                                      <a
-                                        href={chatMessage?.message}
-                                        download
-                                        target="_blank"
-                                        className="relative"
-                                      >
-                                        <IoMdDocument size={50} />
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
-                                          {chatMessage?.type}
-                                        </div>
-                                      </a>
-                                    )}
-                                </div>
-                                <div className="text-xs text-end flex justify-end">
-                                  <div className="">
-                                    <span className="text-xs p-1 rounded-lg">
-                                      {formatDateToTimeAgo(
-                                        chatMessage?.createdAt || new Date()
-                                      )}
-                                    </span>
-                                    | {chatMessage?.userName}{" "}
-                                    <span className="text-[9px]">
-                                      {user?.isAdmin && `(Expert)`}
-                                    </span>
-                                  </div>
-                                </div>
-                              </div>
+                      } else if (chatMessage?.type.startsWith("offer")) {
+                        return (
+                          <div
+                            key={`message-offer_-${chatMessage?.id}`}
+                            className="m-3 rounded-lg shadow-lg bg-white w-full max-w-[400px] mx-auto py-2"
+                          >
+                            <div className="flex justify-between flex-wrap gap-4 border-b py-2 px-6">
+                              <h3 className="text-lg font-bold">
+                                Custom offer
+                              </h3>
+                              <p className="text-lg font-semibold">
+                                £{chatMessage?.type.split("_")[1]}
+                              </p>
                             </div>
-                          );
-                        } else {
-                          return (
-                            <div
-                              key={`message-${chatMessage?.id}`}
-                              id={`message_-_${index + 1}`}
-                              className="flex items-start gap-2"
-                            >
-                              <div className="mt-4 w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary text-white grid place-items-center text-xs select-none">
-                                {/* {user?.isAdmin ? "user" : "expert"} */}
-                                {chatMessage?.sender}
+
+                            <div className="px-6 py-2">
+                              <p className="">{chatMessage.message}</p>
+                            </div>
+
+                            {chatMessage?.userProfilePicture === "pending" ? (
+                              <div className="mt-3 px-6 py-2">
+                                {user?.isAdmin ? (
+                                  <div className="flex justify-end">
+                                    <Button
+                                      color="danger"
+                                      isLoading={offerProcessing}
+                                      onClick={() => {
+                                        setOfferProcessing(true);
+                                        const accept = false;
+                                        const message_id = chatMessage.id || 0;
+                                        const withdrawOffer = true;
+
+                                        handleOffer(
+                                          accept,
+                                          message_id,
+                                          chatMessage,
+                                          user,
+                                          withdrawOffer,
+                                          setRefreshChatMessage,
+                                          setOfferProcessing
+                                        ).then(() => {
+                                          // console.log("res");
+                                          // console.log(res);
+                                          // setOfferProcessing(false);
+                                          // if (res?.statusText === "success") {
+                                          //   setRefreshChatMessage(true);
+                                          // }
+                                          console.log("wo done");
+                                          setRefreshChatMessage(true);
+                                          setSendingMessage(true);
+                                        });
+                                      }}
+                                    >
+                                      Withdraw Offer
+                                    </Button>
+                                  </div>
+                                ) : (
+                                  <div className="flex justify-end gap-3">
+                                    <Button
+                                      color="danger"
+                                      isLoading={offerProcessing}
+                                      onClick={() => {
+                                        setOfferProcessing(true);
+                                        const accept = false;
+                                        const message_id = chatMessage.id || 0;
+                                        const withdrawOffer = false;
+
+                                        handleOffer(
+                                          accept,
+                                          message_id,
+                                          chatMessage,
+                                          user,
+                                          withdrawOffer,
+                                          setRefreshChatMessage,
+                                          setOfferProcessing
+                                        ).then(() => {
+                                          setRefreshChatMessage(true);
+                                        });
+                                      }}
+                                    >
+                                      Decline
+                                    </Button>
+                                    <Button
+                                      color="primary"
+                                      isLoading={offerProcessing}
+                                      onClick={() => {
+                                        setOfferProcessing(true);
+                                        const accept = true;
+                                        const message_id = chatMessage.id || 0;
+                                        const withdrawOffer = false;
+
+                                        handleOffer(
+                                          accept,
+                                          message_id,
+                                          chatMessage,
+                                          user,
+                                          withdrawOffer,
+                                          setRefreshChatMessage,
+                                          setOfferProcessing
+                                        ).then(() => {
+                                          setRefreshChatMessage(true);
+                                        });
+                                      }}
+                                    >
+                                      Accept
+                                    </Button>
+                                  </div>
+                                )}
                               </div>
-                              <div className="md:max-w-[70%]">
-                                <div className="text-xs">
-                                  {chatMessage?.userName} |
+                            ) : (
+                              <div className="text-center text-sm">
+                                {chatMessage?.userProfilePicture ===
+                                  "withdrawn" && (
+                                  <p className="text-red-600">
+                                    This offer was withdrawn
+                                  </p>
+                                )}
+                                {chatMessage?.userProfilePicture ===
+                                  "declined" && (
+                                  <p className="text-red-600">
+                                    This offer was Declined
+                                  </p>
+                                )}
+                                {chatMessage?.userProfilePicture ===
+                                  "accepted" && (
+                                  <p className="text-green-600">
+                                    Offer accepted
+                                  </p>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      } else if (chatMessage?.userId === user?.id) {
+                        return (
+                          <div
+                            key={`message-${chatMessage?.id}`}
+                            id={`message_-_${index + 1}`}
+                            className="flex flex-row-reverse items-end gap-2 w-full"
+                          >
+                            <div className="mb-4 w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-warning grid place-items-center text-xs select-none">
+                              you
+                            </div>
+                            <div className="flex flex-col items-end w-fit md:max-w-[70%]">
+                              <div className="px-4 py-2 bg-gray-300/70 rounded-xl rounded-br-none w-fit max-w-[200px] break-words md:max-w-[100%]">
+                                {chatMessage?.type === "text" && (
+                                  <p className="text-sm">
+                                    {chatMessage?.message}
+                                  </p>
+                                )}
+                                {chatMessage?.type === "image" && (
+                                  <ImageNUI
+                                    onClick={() => {
+                                      setImageToPreview(chatMessage.message);
+                                      onOpenPreviewImage();
+                                    }}
+                                    src={chatMessage?.message}
+                                    // fill
+                                    isZoomed
+                                    alt="Preview"
+                                    className="w-[150px] h-[150px] static cursor-pointer"
+                                  />
+                                )}
+                                {chatMessage?.type !== "text" &&
+                                  chatMessage?.type !== "offer" &&
+                                  chatMessage?.type !== "image" && (
+                                    <a
+                                      href={chatMessage?.message}
+                                      download
+                                      target="_blank"
+                                      className="relative"
+                                    >
+                                      <IoMdDocument size={50} />
+                                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                        {chatMessage?.type}
+                                      </div>
+                                    </a>
+                                  )}
+                              </div>
+                              <div className="text-xs text-end flex justify-end">
+                                <div className="">
                                   <span className="text-xs p-1 rounded-lg">
                                     {formatDateToTimeAgo(
                                       chatMessage?.createdAt || new Date()
                                     )}
                                   </span>
-                                </div>
-                                <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit max-w-[200px] break-words md:max-w-[100%]">
-                                  {chatMessage?.type === "text" && (
-                                    <p className="text-sm">
-                                      {chatMessage?.message}
-                                    </p>
-                                  )}
-                                  {chatMessage?.type === "image" && (
-                                    <ImageNUI
-                                      onClick={() => {
-                                        setImageToPreview(chatMessage.message);
-                                        onOpenPreviewImage();
-                                      }}
-                                      src={chatMessage?.message}
-                                      // fill
-                                      isZoomed
-                                      alt="Preview"
-                                      className="w-[150px] h-[150px] static cursor-pointer"
-                                    />
-                                  )}
-                                  {chatMessage?.type !== "text" &&
-                                    chatMessage?.type !== "image" && (
-                                      <a
-                                        href={chatMessage?.message}
-                                        download
-                                        target="_blank"
-                                        className="relative"
-                                      >
-                                        <IoMdDocument size={50} />
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
-                                          {chatMessage?.type}
-                                        </div>
-                                      </a>
-                                    )}
+                                  | {chatMessage?.userName}{" "}
+                                  <span className="text-[9px]">
+                                    {user?.isAdmin && `(Expert)`}
+                                  </span>
                                 </div>
                               </div>
                             </div>
-                          );
-                        }
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div
+                            key={`message-${chatMessage?.id}`}
+                            id={`message_-_${index + 1}`}
+                            className="flex items-start gap-2"
+                          >
+                            <div className="mt-4 w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-primary text-white grid place-items-center text-xs select-none">
+                              {/* {user?.isAdmin ? "user" : "expert"} */}
+                              {chatMessage?.sender}
+                            </div>
+                            <div className="md:max-w-[70%]">
+                              <div className="text-xs">
+                                {chatMessage?.userName} |
+                                <span className="text-xs p-1 rounded-lg">
+                                  {formatDateToTimeAgo(
+                                    chatMessage?.createdAt || new Date()
+                                  )}
+                                </span>
+                              </div>
+                              <div className="px-4 py-2 bg-gray-300 rounded-xl rounded-tl-none w-fit max-w-[200px] break-words md:max-w-[100%]">
+                                {chatMessage?.type === "text" && (
+                                  <p className="text-sm">
+                                    {chatMessage?.message}
+                                  </p>
+                                )}
+                                {chatMessage?.type === "image" && (
+                                  <ImageNUI
+                                    onClick={() => {
+                                      setImageToPreview(chatMessage.message);
+                                      onOpenPreviewImage();
+                                    }}
+                                    src={chatMessage?.message}
+                                    // fill
+                                    isZoomed
+                                    alt="Preview"
+                                    className="w-[150px] h-[150px] static cursor-pointer"
+                                  />
+                                )}
+                                {chatMessage?.type !== "text" &&
+                                  chatMessage?.type !== "image" && (
+                                    <a
+                                      href={chatMessage?.message}
+                                      download
+                                      target="_blank"
+                                      className="relative"
+                                    >
+                                      <IoMdDocument size={50} />
+                                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 uppercase text-[9px] text-center text-white mt-1">
+                                        {chatMessage?.type}
+                                      </div>
+                                    </a>
+                                  )}
+                              </div>
+                            </div>
+                          </div>
+                        );
                       }
                     }
                   })}
@@ -1656,33 +1822,37 @@ export default function ChatPageV2() {
                   }}
                 >
                   <div className="px-3 flex items-center gap-0 w-full">
-                    {user?.isAdmin && (
-                      <Popover
-                        showArrow
-                        offset={10}
-                        placement="bottom"
-                        backdrop={"blur"}
-                      >
-                        <PopoverTrigger>
-                          <Button
-                            aria-label="Vertical menu dots"
-                            isIconOnly
-                            color="default"
-                            size="sm"
-                            variant="flat"
-                            className="capitalize"
-                          >
-                            <HiDotsVertical />
-                          </Button>
-                        </PopoverTrigger>
-                        <MenuContent
-                          user={user}
-                          chat={selectedChat}
-                          scrollLastMsgIntoView={scrollLastMsgIntoView}
-                          setSelectedChat={setSelectedChat}
-                        />
-                      </Popover>
-                    )}
+                    <Popover
+                      showArrow
+                      offset={10}
+                      placement="bottom"
+                      backdrop={"blur"}
+                      isOpen={isPopoverOpen}
+                      onOpenChange={(open) => setIsPopoverOpen(open)}
+                    >
+                      <PopoverTrigger>
+                        <Button
+                          aria-label="Vertical menu dots"
+                          isIconOnly
+                          color="default"
+                          size="sm"
+                          variant="flat"
+                          className="capitalize"
+                        >
+                          <HiDotsVertical />
+                        </Button>
+                      </PopoverTrigger>
+                      <MenuContent
+                        user={user}
+                        chat={selectedChat}
+                        scrollLastMsgIntoView={scrollLastMsgIntoView}
+                        setSelectedChat={setSelectedChat}
+                        setIsPopoverOpen={setIsPopoverOpen}
+                        setIsCallReqOpen={setIsCallReqOpen}
+                        setIsCreatOfferOpen={setIsCreatOfferOpen}
+                      />
+                    </Popover>
+
                     {seletectedFiles.length > 0 && (
                       <div className="absolute z-[50] bottom-[60px] rounded-lg w-[200px] h-[150px] bg-white shadow-xl text-center">
                         <div className="flex flex-wrap items-center gap-2 p-2">
@@ -1790,6 +1960,9 @@ export default function ChatPageV2() {
                   addingUserToChat={addingUserToChat}
                   selectedChat={selectedChat}
                   setSelectedChat={setSelectedChat}
+                  setIsPopoverOpen={setIsPopoverOpen}
+                  setIsCallReqOpen={setIsCallReqOpen}
+                  setIsCreatOfferOpen={setIsCreatOfferOpen}
                 />
               )}
             </div>
@@ -1873,6 +2046,9 @@ interface MenuContentProps {
   scrollLastMsgIntoView: () => void;
   addUserToChat: any;
   addingUserToChat: any;
+  setIsPopoverOpen: any;
+  setIsCallReqOpen: any;
+  setIsCreatOfferOpen: any;
 }
 
 const MenuContent = ({
@@ -1881,6 +2057,9 @@ const MenuContent = ({
   scrollLastMsgIntoView,
   setSelectedChat,
   selectedChat,
+  setIsPopoverOpen,
+  setIsCallReqOpen,
+  setIsCreatOfferOpen,
 }: Partial<MenuContentProps>) => {
   const [loading, setLoading] = useState(false);
   if (!user || !chat) return;
@@ -1945,15 +2124,47 @@ const MenuContent = ({
           </p>
 
           <div className="flex flex-col gap-4">
-            <Button
-              aria-label="End conversation"
-              color="warning"
-              className=""
-              onClick={handEndConversation}
-              isLoading={loading}
-            >
-              End Conversation
-            </Button>
+            {!user?.isAdmin && (
+              <Button
+                aria-label="End conversation"
+                color="primary"
+                className=""
+                onClick={() => {
+                  setIsPopoverOpen(false);
+                  setIsCallReqOpen(true);
+                }}
+                isLoading={loading}
+              >
+                Request for a call
+              </Button>
+            )}
+
+            {user?.isAdmin && (
+              <Button
+                aria-label="End conversation"
+                color="primary"
+                className=""
+                onClick={() => {
+                  setIsPopoverOpen(false);
+                  setIsCreatOfferOpen(true);
+                }}
+                isLoading={loading}
+              >
+                Create offer
+              </Button>
+            )}
+
+            {user?.isAdmin && (
+              <Button
+                aria-label="End conversation"
+                color="danger"
+                className=""
+                onClick={handEndConversation}
+                isLoading={loading}
+              >
+                End Conversation
+              </Button>
+            )}
           </div>
         </div>
       )}
