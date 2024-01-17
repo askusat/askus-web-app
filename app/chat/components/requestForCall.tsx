@@ -43,7 +43,7 @@ export default function RequestForCall({
       admin: chat.chatUsers.find((id: number) => id !== user?.id),
     };
     const { error } = await supabase.from("callRequests").insert(callReqData);
-    
+
     if (error) {
       console.log(error);
       sAlert(error.message);
@@ -52,11 +52,11 @@ export default function RequestForCall({
         const createChatMessage: Partial<ChatMessage> = {
           chatId: chat.id,
           message: `${user?.username} requested for a call`,
-          type: `system`,
+          type: `text`,
           replyTo: null,
           userId: user.id,
           toUserId: chat.chatUsers.find((id: number) => id !== user?.id),
-          userName: user.username, //getFirstName(user.fullName),
+          userName: 'system',
           userProfilePicture: user?.userProfilePicture || "",
           sender: "user",
         };
