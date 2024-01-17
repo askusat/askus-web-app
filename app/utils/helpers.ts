@@ -197,7 +197,7 @@ export const handleOffer = async (
     try {
       // create customer and subscription
       const createOfferData: createOfferProps = {
-        route: "create_offer",
+        route: "pay_for_custom_offer",
         customer_id: user.stripeCustomerId || "",
         amount: offerData.amount,
         email: user.email,

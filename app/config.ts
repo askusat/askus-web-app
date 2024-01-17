@@ -25,3 +25,5 @@ export const authConfig = {
 export const PUBLIC_URL = "https://askusat.co.uk";
 
 export const MAILTO = "paulinnocent05@gmail.com";
+
+export const AMOUNT_FOR_CALL_REQUEST = 50;

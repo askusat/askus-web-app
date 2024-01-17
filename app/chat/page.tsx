@@ -1179,6 +1179,8 @@ export default function ChatPageV2() {
           setIsPopoverOpen={setIsPopoverOpen}
           isCallReqOpen={isCallReqOpen}
           setIsCallReqOpen={setIsCallReqOpen}
+          setRefreshChatMessage={setRefreshChatMessage}
+          setSendingMessage={setSendingMessage}
         />
       )}
 
@@ -2124,7 +2126,7 @@ const MenuContent = ({
           </p>
 
           <div className="flex flex-col gap-4">
-            {/* {!user?.isAdmin && (
+            {!user?.isAdmin && (
               <Button
                 aria-label="End conversation"
                 color="primary"
@@ -2137,7 +2139,7 @@ const MenuContent = ({
               >
                 Request for a call
               </Button>
-            )} */}
+            )}
 
             {user?.isAdmin && (
               <Button

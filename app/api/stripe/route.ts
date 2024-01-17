@@ -349,7 +349,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
   }
 
-  if (route === "create_offer") {
+  if (route === "pay_for_custom_offer") {
     try {
       var { customer_id, amount, email, description }: createOfferProps = body;
 
