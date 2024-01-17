@@ -176,8 +176,8 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           filter: `userId=eq.${user.id}`,
         },
         (payload) => {
-          console.log("deleted notification");
-          console.log(payload.new);
+          // console.log("deleted notification");
+          // console.log(payload.new);
 
           setNotifications([]);
         }

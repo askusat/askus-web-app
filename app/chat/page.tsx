@@ -424,6 +424,28 @@ export default function ChatPageV2() {
   useEffect(() => {
     if (!user || user?.isAdmin) return;
 
+    const displayReqCallCheck = async (messages: ChatMessage[]) => {
+      // console.log(messages);
+      // Check if the call request is already open or if there are less than two messages
+      if (
+        isCallReqOpen ||
+        messages.filter((message) => message?.sender === "expert").length < 2
+      ) {
+        return;
+      }
+      // Check if the request has already been made for this chat using localStorage
+      const chatId = messages[0]?.chatId;
+      const hasRequestBeenMade = localStorage.getItem(`callRequest_${chatId}`);
+
+      if (hasRequestBeenMade) {
+        return;
+      }
+
+      // Update the state and set the call request to open
+      setIsCallReqOpen(true);
+      localStorage.setItem(`callRequest_${chatId}`, "true");
+    };
+
     const chatMessagesChannel = supabase
       .channel("chat messages")
       .on(
@@ -437,16 +459,18 @@ export default function ChatPageV2() {
         async (payload) => {
           // console.log("chat_messages payload.new");
           // console.log(payload.new);
-
-          if (selectedChat && document.hasFocus()) {
-            await supabase
-              .from("notifications")
-              .delete()
-              .eq("chatId", selectedChat.id)
-              .eq("userId", user?.id);
+          try {
+            if (selectedChat && document.hasFocus()) {
+              await supabase
+                .from("notifications")
+                .delete()
+                .eq("chatId", selectedChat.id)
+                .eq("userId", user?.id);
+            }
+            notifyMe();
+          } catch (error: any) {
+            console.log(error.message);
           }
-
-          notifyMe();
 
           if (
             !user?.isAdmin &&
@@ -459,6 +483,7 @@ export default function ChatPageV2() {
               sound.play();
             }
             setchatMessages([...chatMessages, payload.new as ChatMessage]);
+            displayReqCallCheck([...chatMessages, payload.new as ChatMessage]);
             setRefreshChatList(true);
             scrollToViewRef.current?.scrollIntoView({
               behavior: "smooth",
@@ -571,8 +596,8 @@ export default function ChatPageV2() {
     messageType: "text" | "file",
     selectedChat: Chat
   ) => {
-    console.log("Bot reply1");
-    console.log(user, selectedChat);
+    // console.log("Bot reply1");
+    // console.log(user, selectedChat);
 
     if (!user || !selectedChat) return;
     const { data } = await supabase
