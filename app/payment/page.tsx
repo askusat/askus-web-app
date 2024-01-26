@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { AuthUser } from "@supabase/supabase-js";
 import { TbRotateRectangle } from "react-icons/tb";
 import { BsCashCoin } from "react-icons/bs";
+import { sAlert } from "../utils/helpers";
 
 const stripePromise = loadStripe(STRIPE_Pk || "");
 
@@ -214,7 +215,6 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
             console.log("PRICE_ID");
             console.log(PRICE_ID);
 
-
             // create customer and subscription
             const createSubscriptionData = {
               route: "create_subscription",
@@ -233,8 +233,16 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
               `/api/stripe`,
               createSubscriptionData
             );
+
+            if (createSubscription.status === 400) {
+              sAlert("failded to create subscription");
+              sAlert(createSubscription.data.message);
+              return setConfirmingSetUpIntent(false);
+            }
           } catch (error: any) {
+            sAlert("failded to create subscription");
             // alert(error?.message);
+            sAlert(error.message);
             return setConfirmingSetUpIntent(false);
           }
 
@@ -446,7 +454,7 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
 
       <div className="mt-4">
         <Button
-        aria-label="continue or proceesing"
+          aria-label="continue or proceesing"
           className={`${
             processingPayment ? "cursor-wait" : "cursor-pointer"
           } bg-primary text-white font-MontserratSemiBold text-[.8rem] xl:text-[1.125rem] "mt-5" w-full py-4 rounded-[10px] font-[600] mb-4`}

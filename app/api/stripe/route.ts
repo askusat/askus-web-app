@@ -222,7 +222,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       // });
 
       if (email !== "paulinnocent04@gmail.com" || email.startsWith("_testz")) {
-        await stripe.paymentIntents.create({
+        const chargeRes = await stripe.paymentIntents.create({
           amount: creditMode ? credit * 100 : 500, // £50 if in creditMode
           currency: "GBP",
           automatic_payment_methods: {
@@ -236,6 +236,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
           payment_method,
           confirm: true,
         });
+        if(chargeRes.status !== 'succeeded'){
+          return NextResponse.json(
+            { message: `Failed to collect payment`, chargeRes },
+            { status: 400, statusText: "Bad Request" }
+          );
+        }
+
       }
 
       const trial_end = getUnixTimestampForSevenDaysLater(); //# 3 days free trial
