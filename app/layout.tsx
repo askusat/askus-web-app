@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     default: APP_DEFAULT_TITLE,
     template: APP_TITLE_TEMPLATE,
   },
-  robots: "all",
+  // robots: "all",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
