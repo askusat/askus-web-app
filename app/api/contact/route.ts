@@ -33,7 +33,7 @@ const send_email = async (
         to,
         subject,
         html: content,
-        // sender: { name: 'Aralingual', email: 'contact@aralingual.com' },
+        // sender: { name: 'Askusat', email: 'contact@askusat.com' },
       });
 
       // If sending email is successful, resolve the promise with success message
@@ -52,18 +52,7 @@ export async function POST(request: NextRequest) {
   // console.log({ from, subject, content, to });
 
   try {
-    const re: any = await send_email(from, to, subject, content).catch(
-      (err) => {
-        if (!err.success) {
-          console.log(err);
-
-          return NextResponse.json(
-            { status: "error", message: err },
-            { status: 500 }
-          );
-        }
-      }
-    );
+    const re: any = await send_email(from, to, subject, content)
 
     if (!re.success) {
       return NextResponse.json(
@@ -74,8 +63,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ status: "success" }, { status: 200 });
     }
   } catch (error: any) {
+    console.log('failed to send email');
+    console.log(error);
+
     return NextResponse.json(
-      { status: "error", message: error.message },
+      { status: "error", message: error.message, error },
       { status: 500 }
     );
   }
