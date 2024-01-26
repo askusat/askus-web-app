@@ -3,7 +3,7 @@
 // ** React Imports
 import React, { ReactNode, useCallback } from "react";
 import { useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AuthContext, defaultProvider } from "./AuthContext";
 import { supabase } from "../supabaseClient";
 import { PROTECTED_PAGES, authConfig } from "../config";
@@ -31,7 +31,10 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Router
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
+  const searchParams = new URLSearchParams(
+    typeof window !== 'undefined' ? window.location.search : '',
+  );
   const returnUrl = searchParams.get("returnUrl");
 
   const getAndSetUserData = useCallback(

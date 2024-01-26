@@ -5,7 +5,7 @@ import { useAuth } from "@/app/hooks/useAuth";
 import { supabase } from "@/app/supabaseClient";
 import { Button, Image as ImageNUI} from "@nextui-org/react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FaArrowRight, FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -26,7 +26,10 @@ export const SignupStepOne = ({
     message: '',
   });
   const [processingSignUp, setProcessingSignUp] = useState<boolean>(false);
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
+  const searchParams = new URLSearchParams(
+    typeof window !== 'undefined' ? window.location.search : '',
+  );
   const returnUrl = searchParams.get("returnUrl");
 
   const handleSignUpStep1 = async () => {

@@ -6,7 +6,7 @@ import { Button, Image } from "@nextui-org/react";
 import AuthLayout from "../components/layout/authLayout";
 // ** Hooks
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { supabase } from "../supabaseClient";
 
 export default function Login() {

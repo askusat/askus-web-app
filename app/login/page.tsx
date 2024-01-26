@@ -8,7 +8,7 @@ import AuthLayout from "../components/layout/authLayout";
 import { useAuth } from "../hooks/useAuth";
 import { LoginParam } from "../context/AuthProvider";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 export default function Login() {
   const auth = useAuth();
@@ -20,7 +20,10 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
+  const searchParams = new URLSearchParams(
+    typeof window !== 'undefined' ? window.location.search : '',
+  );
   const returnUrl = searchParams.get("returnUrl");
 
   const handleLogin = async (e: any) => {
