@@ -235,17 +235,26 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
                 console.log(
                   "_faild to create subscription, Please contact support."
                 );
+                console.log("error");
+                console.log(error);
+
                 // alert(error?.message);
                 sAlert(error.message);
-                return setConfirmingSetUpIntent(false);
+                setConfirmingSetUpIntent(false);
+                return;
               });
+
+              console.log("createSubscription");
+              console.log(createSubscription);
+
 
             if (createSubscription?.status !== 200) {
               console.log(
                 "faild to create subscription, Please contact support._"
               );
               sAlert(createSubscription?.data?.message);
-              return setConfirmingSetUpIntent(false);
+              setConfirmingSetUpIntent(false);
+              return;
             }
           } catch (error: any) {
             sAlert("faild to create subscription, Please contact support.");
