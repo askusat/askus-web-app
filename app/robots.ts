@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/chat',
     },
-    sitemap: `/sitemap.xml`,
+    // sitemap: `/sitemap.xml`,
   }
 }

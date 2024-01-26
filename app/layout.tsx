@@ -31,9 +31,9 @@ export const metadata: Metadata = {
     title: APP_DEFAULT_TITLE,
     // startUpImage: [],
   },
-  formatDetection: {
-    // telephone: false,
-  },
+  // formatDetection: {
+  //   telephone: false,
+  // },
   description: APP_DESCRIPTION,
   openGraph: {
     type: "website",

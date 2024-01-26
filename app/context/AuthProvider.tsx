@@ -54,7 +54,11 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       if (check) return;
       window.localStorage.setItem("userData", JSON.stringify(authUserData));
       const redirectURL =
-        returnUrl && returnUrl !== "/" ? returnUrl : authUserData?.isAdmin ? "/admin" : authConfig.afterLogin;
+        returnUrl && returnUrl !== "/"
+          ? returnUrl
+          : authUserData?.isAdmin
+          ? "/admin"
+          : authConfig.afterLogin;
       router.replace(redirectURL as string);
     },
     [router, returnUrl]
@@ -87,7 +91,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       window.localStorage.setItem("userData", JSON.stringify(authUserData));
       // const redirectURL =
       //   returnUrl && returnUrl !== "/" ? returnUrl : authConfig.afterSignup;
-      const redirectURL = authConfig.afterSignup
+      const redirectURL = authConfig.afterSignup;
       router.replace(redirectURL as string);
     }
   };
@@ -110,8 +114,8 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         getAndSetUserData(user.email || "", true);
 
         setLoading(false);
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        console.log(error?.message);
       }
     };
     initAuth();
