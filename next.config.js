@@ -5,21 +5,21 @@
 //   swDest: "public/sw.js",
 // });
 
-// const withPWA = require("@ducanh2912/next-pwa").default({
-//   disable: true,
-//   register: false,
-//   customWorkerSrc: "worker",
-//   customWorkerDest: "public",
-//   dest: "public",
-//   cacheOnFrontEndNav: true,
-//   aggressiveFrontEndNavCaching: true,
-//   reloadOnOnline: true,
-//   swcMinify: true,
-//   workboxOptions:{
-//     disableDevLogs: true,
-//     // swSrc: 'public/sw.js',
-//   },
-// });
+const withPWA = require("@ducanh2912/next-pwa").default({
+  disable: true,
+  register: false,
+  customWorkerSrc: "worker",
+  customWorkerDest: "public",
+  dest: "public",
+  cacheOnFrontEndNav: true,
+  aggressiveFrontEndNavCaching: true,
+  reloadOnOnline: true,
+  swcMinify: true,
+  workboxOptions:{
+    disableDevLogs: true,
+    // swSrc: 'public/sw.js',
+  },
+});
 
 // import withSerwist from "@serwist/next";
 
@@ -36,7 +36,7 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+// module.exports = nextConfig
 
 // module.exports = withSerwist(nextConfig);
-// module.exports = withPWA(nextConfig);
+module.exports = withPWA(nextConfig);
