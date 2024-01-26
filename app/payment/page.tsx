@@ -205,47 +205,54 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
             return console.log("processing subscription already");
           setProcessingSubscription(true);
           var createSubscription = null;
-          // try {
-          const creditAmount = new URLSearchParams(window.location.search).get(
-            "credit"
-          );
-          const hash = window.location.hash;
-          const creditMode = hash.substring(1) === "credit";
+          try {
+            const creditAmount = new URLSearchParams(
+              window.location.search
+            ).get("credit");
+            const hash = window.location.hash;
+            const creditMode = hash.substring(1) === "credit";
 
-          console.log("PRICE_ID");
-          console.log(PRICE_ID);
+            console.log("PRICE_ID");
+            console.log(PRICE_ID);
 
-          // create customer and subscription
-          const createSubscriptionData = {
-            route: "create_subscription",
-            name: user?.fullName,
-            email: user?.email,
-            price: PRICE_ID,
-            customer_id: user?.stripeCustomerId,
-            payment_method, //attach_payment_method_to_customer
-            creditMode,
-            credit:
-              (parseInt(creditAmount?.split("?")[0] || "15") / credits) *
-              createAmountPerUnit,
-          };
+            // create customer and subscription
+            const createSubscriptionData = {
+              route: "create_subscription",
+              name: user?.fullName,
+              email: user?.email,
+              price: PRICE_ID,
+              customer_id: user?.stripeCustomerId,
+              payment_method, //attach_payment_method_to_customer
+              creditMode,
+              credit:
+                (parseInt(creditAmount?.split("?")[0] || "15") / credits) *
+                createAmountPerUnit,
+            };
 
-          createSubscription = await axios.post(
-            `/api/stripe`,
-            createSubscriptionData
-          );
+            createSubscription = await axios
+              .post(`/api/stripe`, createSubscriptionData)
+              .catch((error) => {
+                console.log(
+                  "_faild to create subscription, Please contact support."
+                );
+                // alert(error?.message);
+                sAlert(error.message);
+                return setConfirmingSetUpIntent(false);
+              });
 
-          if (createSubscription.status !== 200) {
-            console.log("failded to create subscription");
-            sAlert(createSubscription.data.message);
+            if (createSubscription?.status !== 200) {
+              console.log(
+                "faild to create subscription, Please contact support._"
+              );
+              sAlert(createSubscription?.data?.message);
+              return setConfirmingSetUpIntent(false);
+            }
+          } catch (error: any) {
+            sAlert("faild to create subscription, Please contact support.");
+            // alert(error?.message);
+            sAlert(error.message);
             return setConfirmingSetUpIntent(false);
           }
-
-          // } catch (error: any) {
-          //   sAlert("failded to create subscription");
-          //   // alert(error?.message);
-          //   sAlert(error.message);
-          //   return setConfirmingSetUpIntent(false);
-          // }
 
           // console.log("createSubscription: ");
           // console.log(createSubscription);
