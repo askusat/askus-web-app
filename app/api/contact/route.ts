@@ -15,32 +15,10 @@ const transporter = NodeMailer.createTransport({
   port: 587,
   debug: true,
   auth: {
-    // user: process.env.SMTP_LOGIN,
-    // pass: process.env.SMTP_KEY,
-    user: "askusat1@gmail.com",
-    pass: "xsmtpsib-2feda7f3b8b25d08eac0e06e2c6b31aa48bc4acac5e44e023e921a29d60d3397-8b9cS70ZEYCHFhG2",
+    user: process.env.SMTP_LOGIN,
+    pass: process.env.SMTP_KEY,
   },
 });
-
-// const send_email = async (from, to, subject, content) => {
-//     var res;
-//     while (!res) {
-
-//     }
-//     await transporter.sendMail(
-//         { from: from, to, subject, html: content, sender: { name: "Aralingual", email: "contact@aralingual.com" }, },
-//         (error, info) => {
-//             if (error) {
-//                 console.log(error);
-//                 res = { success: false, message: error }
-//             } else {
-//                 // console.log("email sent to: " + info.accepted[0]);
-//                 res ={ success: true, message: info.response }
-//             }
-//         }
-//     )
-//     return res
-// }
 
 const send_email = async (
   from: string,
@@ -69,7 +47,7 @@ const send_email = async (
 
 export async function POST(request: NextRequest) {
   const { from, subject, content } = await request.json();
-  const to = "contact@askusat.co.uk";
+  const to = "contactus@askusat.co.uk";
   // const to = "paulinnocent05@gmail.com";
   // console.log({ from, subject, content, to });
 
