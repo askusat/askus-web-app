@@ -244,6 +244,9 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
               );
               sAlert(createSubscription.data.message);
               setConfirmingSetUpIntent(false);
+              setTimeout(() => {
+                window.location.href = `/payment`
+              }, 2000);
               return;
             }
           } catch (error: any) {
