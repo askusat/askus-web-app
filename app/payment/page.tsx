@@ -232,27 +232,17 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
             createSubscription = await axios
               .post(`/api/stripe`, createSubscriptionData)
               .catch((error) => {
-                console.log(
-                  "_faild to create subscription, Please contact support."
-                );
-                console.log("error");
-                console.log(error);
-
-                // alert(error?.message);
-                sAlert(error.message);
-                setConfirmingSetUpIntent(false);
-                return;
+                return {
+                  status: error.response.status,
+                  data: error.response.data,
+                };
               });
 
-              console.log("createSubscription");
-              console.log(createSubscription);
-
-
-            if (createSubscription?.status !== 200) {
+            if (createSubscription.status !== 200) {
               console.log(
                 "faild to create subscription, Please contact support._"
               );
-              sAlert(createSubscription?.data?.message);
+              sAlert(createSubscription.data.message);
               setConfirmingSetUpIntent(false);
               return;
             }
