@@ -17,50 +17,50 @@ const APP_DEFAULT_TITLE = "Askus Anytime";
 const APP_TITLE_TEMPLATE = "%s - ASKUS";
 const APP_DESCRIPTION = "We are ready to answer your questions, day or night.";
 
-export const metadata: Metadata = {
-  applicationName: APP_NAME,
-  title: {
-    default: APP_DEFAULT_TITLE,
-    template: APP_TITLE_TEMPLATE,
-  },
-  // robots: "all",
-  manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: APP_DEFAULT_TITLE,
-    // startUpImage: [],
-  },
-  // formatDetection: {
-  //   telephone: false,
-  // },
-  description: APP_DESCRIPTION,
-  openGraph: {
-    type: "website",
-    siteName: APP_NAME,
-    title: {
-      default: APP_DEFAULT_TITLE,
-      template: APP_TITLE_TEMPLATE,
-    },
-    description: APP_DESCRIPTION,
-  },
-  twitter: {
-    card: "summary",
-    title: {
-      default: APP_DEFAULT_TITLE,
-      template: APP_TITLE_TEMPLATE,
-    },
-    description: APP_DESCRIPTION,
-  },
-  other: {
-    "facebook-domain-verification": "794mkkv0g1djy10teis3fuf98fqqna",
-    "canonical": "https://askusat.co.uk"
-  },
-};
+// export const metadata: Metadata = {
+//   applicationName: APP_NAME,
+//   title: {
+//     default: APP_DEFAULT_TITLE,
+//     template: APP_TITLE_TEMPLATE,
+//   },
+//   robots: "all",
+//   manifest: "/manifest.json",
+//   appleWebApp: {
+//     capable: true,
+//     statusBarStyle: "default",
+//     title: APP_DEFAULT_TITLE,
+//     // startUpImage: [],
+//   },
+//   // formatDetection: {
+//   //   telephone: false,
+//   // },
+//   description: APP_DESCRIPTION,
+//   openGraph: {
+//     type: "website",
+//     siteName: APP_NAME,
+//     title: {
+//       default: APP_DEFAULT_TITLE,
+//       template: APP_TITLE_TEMPLATE,
+//     },
+//     description: APP_DESCRIPTION,
+//   },
+//   twitter: {
+//     card: "summary",
+//     title: {
+//       default: APP_DEFAULT_TITLE,
+//       template: APP_TITLE_TEMPLATE,
+//     },
+//     description: APP_DESCRIPTION,
+//   },
+//   other: {
+//     "facebook-domain-verification": "794mkkv0g1djy10teis3fuf98fqqna",
+//     "canonical": "https://askusat.co.uk"
+//   },
+// };
 
-export const viewport: Viewport = {
-  themeColor: "#FFFFFF",
-};
+// export const viewport: Viewport = {
+//   themeColor: "#FFFFFF",
+// };
 
 // export async function generateMetadata({
 //   params,
