@@ -221,7 +221,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
       //   description: "Immediate £5 charge",
       // });
 
-      if (email !== "paulinnocent04@gmail.com" || email.startsWith("_testz")) {
+      const dontSkip = false
+      // || email !== "paulinnocent04@gmail.com" || email.startsWith("_testz")
+      if (dontSkip) {
         const chargeRes = await stripe.paymentIntents.create({
           amount: creditMode ? credit * 100 : 500, // £50 if in creditMode
           currency: "GBP",
