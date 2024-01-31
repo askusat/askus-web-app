@@ -221,8 +221,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
       //   description: "Immediate £5 charge",
       // });
 
-      const dontSkip = false
-      // || email !== "paulinnocent04@gmail.com" || email.startsWith("_testz")
+      // email !== "paulinnocent04@gmail.com" || email.startsWith("_testz")
+      // const dontSkip = true
+      const dontSkip =
+        email !== "paulinnocent04@gmail.com" || !email.startsWith("_testz");
+
       if (dontSkip) {
         const chargeRes = await stripe.paymentIntents.create({
           amount: creditMode ? credit * 100 : 500, // £50 if in creditMode
@@ -238,13 +241,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
           payment_method,
           confirm: true,
         });
-        if(chargeRes.status !== 'succeeded'){
+        if (chargeRes.status !== "succeeded") {
           return NextResponse.json(
             { message: `Failed to collect payment`, chargeRes },
             { status: 400, statusText: "Bad Request" }
           );
         }
-
       }
 
       const trial_end = getUnixTimestampForSevenDaysLater(); //# 3 days free trial
