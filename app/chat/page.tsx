@@ -1159,7 +1159,7 @@ export default function ChatPageV2() {
                   target="_blank"
                   title={imageToPreview}
                 >
-                  <ImageNUI src={imageToPreview} alt="" />
+                  <ImageNUI src={imageToPreview} alt="image" />
                 </a>
               </ModalBody>
               <ModalFooter>
@@ -1316,7 +1316,7 @@ export default function ChatPageV2() {
             <Link href={"/"}>
               <ImageNUI
                 src="/footer.svg"
-                alt=""
+                alt="logo"
                 width={132}
                 height={29}
                 className="w-auto h-[35px] md:mr-2 mr-4"

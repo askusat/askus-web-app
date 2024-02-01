@@ -81,9 +81,9 @@ export default function ContactForm() {
       >
         <div className="md:flex justify-center sm:flex-col md:flex-row  items-center gap-4">
           <div className="flex w-full flex-col">
-            <h1 className="text-black font-medium pl-2">
+            <label className="text-black font-medium pl-2">
               First Name <span className="text-danger">*</span>
-            </h1>
+            </label>
             <Input
               type="text"
               required
@@ -95,9 +95,9 @@ export default function ContactForm() {
             />
           </div>
           <div className="flex w-full flex-col">
-            <h1 className="text-black font-medium pl-2">
+            <label className="text-black font-medium pl-2">
               Last Name <span className="text-danger">*</span>
-            </h1>
+            </label>
             <Input
               type="text"
               required
@@ -111,9 +111,9 @@ export default function ContactForm() {
         </div>
 
         <div className="flex flex-col">
-          <h1 className="text-black font-medium pl-2">
+          <label className="text-black font-medium pl-2">
             Email <span className="text-danger">*</span>
-          </h1>
+          </label>
           <Input
             type="Email"
             required
@@ -125,9 +125,9 @@ export default function ContactForm() {
           />
         </div>
         <div className="flex flex-col">
-          <h1 className="text-black font-medium pl-2">
+          <label className="text-black font-medium pl-2">
             Subject <span className="text-danger">*</span>
-          </h1>
+          </label>
           <Input
             type="text"
             required
@@ -139,9 +139,9 @@ export default function ContactForm() {
           />
         </div>
         <div className="flex flex-col">
-          <h1 className="text-black font-medium pl-2">
+          <label className="text-black font-medium pl-2">
             How can we help? <span className="text-danger">*</span>
-          </h1>
+          </label>
           <Textarea
             required
             label="Enter your message..."

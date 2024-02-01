@@ -42,8 +42,8 @@
       "sizes": "2598x1428",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "We are ready to answer your questions, day or night. Install the app for quick access.",
-      "description": "We are ready to answer your questions, day or night. Install the app for quick access."
+      "label": "We're here to assist, day or night, answering your questions promptly. Install the app for quick access.",
+      "description": "We're here to assist, day or night, answering your questions promptly. Install the app for quick access."
     },
     {
       "src": "chat-page-screenshot.png",
@@ -53,7 +53,7 @@
     }
   ],
   "id": "3",
-  "description": "We are ready to answer your questions, day or night.",
+  "description": "We're here to assist, day or night, answering your questions promptly.",
   "name": "Askusat",
   "short_name": "Askusat",
   "icons": [

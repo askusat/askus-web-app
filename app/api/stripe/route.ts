@@ -224,9 +224,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
       // email !== "paulinnocent04@gmail.com" || email.startsWith("_testz")
       // const dontSkip = true
 
-      const dontSkip = false;
-      // const dontSkip =
-      //   email !== "paulinnocent04@gmail.com" || !email.startsWith("_testz");
+      // const dontSkip = false;
+      const dontSkip =
+        email !== "paulinnocent04@gmail.com" || !email.startsWith("_testz");
 
       if (dontSkip) {
         const chargeRes = await stripe.paymentIntents.create({

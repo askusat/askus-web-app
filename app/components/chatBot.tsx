@@ -16,7 +16,7 @@ export default function ChatBot() {
       <div className="w-full max-w-[440px] h-[470px] rounded-[26px] bg-white shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] relative overflow-hidden">
         <div className="rounded-t-[26px] bg-primary text-white min-h-[120px] w-full">
           <div className="py-4 px-7 flex gap-3">
-            <Image src={"/juris.svg"} alt="" />
+            <Image src={"/juris.svg"} alt="leagal eagle" />
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3">
                 <h2 className="text-2xl font-semibold">Legal Eagle</h2>

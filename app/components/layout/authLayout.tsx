@@ -35,7 +35,7 @@ export default function AuthLayout({ children }: any) {
               <Link href={"/"}>
                 <Image
                   src="/footer.svg"
-                  alt=""
+                  alt="logo"
                   width={132}
                   height={29}
                   className="pt-[30px]"

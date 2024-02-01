@@ -23,14 +23,14 @@ export default function Footer() {
         <div className="flex flex-col lg:items-start md:items-center">
           <Image
             src="/footer.svg"
-            alt=""
+            alt="logo"
             width={132}
             height={29}
             className="pt-[30px]"
           />
-          <h1 className="text-[#FFF] lg:mt-[29px] mt-[18px] md:w-[400px] lg:font-PoppinsBold font-PoppinsSemiBold lg:font-[700] lg:tracking-[1px] lg:leading-[50.3px] text-[24px] md:text-center pr-4 md:pr-0 lg:text-start">
+          <h5 className="text-[#FFF] lg:mt-[29px] mt-[18px] md:w-[400px] lg:font-PoppinsBold font-PoppinsSemiBold lg:font-[700] lg:tracking-[1px] lg:leading-[50.3px] text-[24px] md:text-center pr-4 md:pr-0 lg:text-start">
             If you have a question, AskUs
-          </h1>
+          </h5>
           <Link href={"/chat"}>
             <Button
               className="lg:mt-[35px] mt-[20px] text-primary max-w-[175px] w-full h-[50px] bg-white rounded-[10px]"

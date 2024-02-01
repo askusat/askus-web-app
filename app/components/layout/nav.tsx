@@ -320,7 +320,7 @@ export default function Nav() {
               <div className="flex h-full ">
                 <Image
                   src="/logo.svg"
-                  alt=""
+                  alt="logo"
                   width={132}
                   height={29}
                   className=""

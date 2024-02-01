@@ -40,9 +40,9 @@ export default function HowItWorks() {
   return (
     <section className="w-full h-auto bg-[url(/works.svg)] bg-cover bg-no-repeat bg-center lg:py-[62px] lg:px-[60px] px-[5%]">
       <div className="flex flex-col lg:flex-row items-center gap-4 justify-around">
-        <h1 className="font-PoppinsBold text-center max-w-[500px] xl:text-[60px] text-[36px] mb-10 font-bold xl:leading-[66.15px] leading-[40px]">
+        <h2 className="font-PoppinsBold text-center max-w-[500px] xl:text-[60px] text-[36px] mb-10 font-bold xl:leading-[66.15px] leading-[40px]">
           Expert support in 3 easy steps
-        </h1>
+        </h2>
 
         <div className="flex flex-col-reverse md:flex-row items-center gap-8">
           <div className="flex md:flex-col items-center gap-4">
@@ -70,15 +70,15 @@ export default function HowItWorks() {
                 {" "}
                 <Image
                   src={stepz.img}
-                  alt=""
+                  alt="steps-image"
                   width={300}
                   className="w-[300px] h-auto transition-all duration-300"
                 />
               </div>
               <div className="flex justify-center items-center flex-col">
-                <h1 className="font-PoppinsBold mt-[20px] xl:text-[32px] text-[24px] font-700 text-center md:text-start">
+                <div className="font-PoppinsBold mt-[20px] xl:text-[32px] text-[24px] font-700 text-center md:text-start">
                   {stepz.title}
-                </h1>
+                </div>
                 <p className="xl:mt-[22px] mt-[18px] w-full xl:max-w-[400px] max-w-[300px] min-h-[80px]  text-center xl:text-base text-sm">
                   {stepz.desc}
                 </p>

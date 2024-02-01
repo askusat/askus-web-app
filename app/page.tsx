@@ -121,7 +121,7 @@ export default function Home() {
               <div className="mt-20">
                 <Image
                   src="/review.svg"
-                  alt=""
+                  alt="reviews"
                   width={616}
                   height={104}
                   className="w-[300px] h-auto"
@@ -147,9 +147,9 @@ export default function Home() {
           className="bg-[url(/sample-questions-bg.svg)] bg-no-repeat bg-cover bg-center w-full flex flex-col md:flex-row items-center justify-between gap-4 lg:px-[60px] px-[5%]"
         >
           <div className="md:w-[40%]">
-            <h1 className="font-PoppinsBold xl:text-[58px] md:text-[36px] text-[28px] font-bold xl:leading-[60px] leading-[40px] tracking-[1px] max-w-[500px]">
+            <h4 className="font-PoppinsBold xl:text-[58px] md:text-[36px] text-[28px] font-bold xl:leading-[60px] leading-[40px] tracking-[1px] max-w-[500px]">
               Ask us anything anytime!
-            </h1>
+            </h4>
             <p className="xl:mt-[28px] mt-[18px] mb-[15px] w-full max-w-[500px] xl:tracking-[1px] xl:text-[20px] text-[16px]">
               The Experts at AskUs are ready to answer your questions, day or
               night.
@@ -192,7 +192,7 @@ export default function Home() {
                 </h2>
                 <Image
                   src={"circle-check.svg"}
-                  alt=""
+                  alt="circle-check-icon"
                   width={100}
                   height={100}
                   className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
@@ -217,7 +217,7 @@ export default function Home() {
                 </h2>
                 <Image
                   src={"icon3.svg"}
-                  alt=""
+                  alt="connect with an expert"
                   width={100}
                   height={100}
                   className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
@@ -242,7 +242,7 @@ export default function Home() {
                 </h2>
                 <Image
                   src={"icon5.svg"}
-                  alt=""
+                  alt="fast and reliable"
                   width={100}
                   height={100}
                   className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
@@ -268,7 +268,7 @@ export default function Home() {
                 <div className="lg:min-w-[210px] min-w-[189px] border border-dashed"></div>
                 <Image
                   src={"icon2.svg"}
-                  alt=""
+                  alt="available 24/7"
                   width={100}
                   height={100}
                   className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
@@ -293,7 +293,7 @@ export default function Home() {
                 <div className="lg:min-w-[210px] min-w-[189px] border border-dashed"></div>
                 <Image
                   src={"icon4.svg"}
-                  alt=""
+                  alt="tailored answer"
                   width={100}
                   height={100}
                   className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
@@ -329,7 +329,7 @@ export default function Home() {
                   </h2>
                   <Image
                     src={service.icon}
-                    alt=""
+                    alt="our service"
                     width={100}
                     height={100}
                     className="w-[70px] h-[70px] lg:w-[100px] lg:h-[100px]"
@@ -396,7 +396,7 @@ export default function Home() {
                   <div className="">
                     <Image
                       src="/FaGrinStars.svg"
-                      alt=""
+                      alt="avatar-icon"
                       width={24}
                       height={24}
                       className="w-[24px] h-auto"
@@ -417,7 +417,7 @@ export default function Home() {
 
                     <Image
                       src="/FaQuoteLeft.svg"
-                      alt=""
+                      alt="qoute-left-icon"
                       width={50}
                       height={50}
                       className="w-[50px] h-[50px] absolute bottom-0 right-0 opacity-20"

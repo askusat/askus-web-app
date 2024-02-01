@@ -153,14 +153,7 @@ const AdminDashboard = () => {
                       href={"/profile"}
                       className="bg-white flex border-t-5 border-b-5 rounded-xl border-primary max-w-[300px] w-full overflow-hidden items-center justify-center shadow-xl   h-auto flex-col"
                     >
-                      <div className="pt-[10px] ">
-                        {/* <Image
-                          src="/juris.svg"
-                          alt=""
-                          width={132}
-                          height={52}
-                          className="object-cover rounded-full w-[132px] h-[132px] object-center"
-                        /> */}
+                      <div className="pt-[10px]">
                         <FaRegUserCircle size={132} className="text-primary" />
                       </div>
                       <h1 className="mt-4 text-[20px] font-[500]">

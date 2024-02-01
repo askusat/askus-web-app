@@ -13,7 +13,7 @@ export default function LoadingScreen() {
           <div className="animate-pulse">
             <Image
               src="/footer.svg"
-              alt=""
+              alt="logo"
               width={132}
               height={29}
               className=""
