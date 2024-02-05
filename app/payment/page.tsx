@@ -287,7 +287,8 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
             progressbarEl.style.width = "100%";
           }
 
-          window.location.href = user?.isAdmin ? "/admin" : "/profile";
+          // window.location.href = user?.isAdmin ? "/admin" : "/profile";
+          window.location.href = "/thankyou";
 
           setConfirmingSetUpIntent(false);
           break;
