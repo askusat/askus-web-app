@@ -7,7 +7,8 @@ import { IoCall } from "react-icons/io5";
 import { Button, Link } from "@nextui-org/react";
 
 export const metadata = {
-  title: 'Contact us',
+  title: 'Contact AskUs - Submit Your Inquiries & Feedback',
+  discription: `Have questions or feedback? Use our contact form to get in touch with the AskUs team. We're committed to providing the support you need.`
 }
 
 export default function ContactUsPage() {

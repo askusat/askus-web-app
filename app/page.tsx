@@ -90,6 +90,11 @@ const services = [
   },
 ];
 
+export const metadata = {
+  title: '24/7 Legal Chat - Instant Online Lawyer Consults | AskUs',
+  discription: `Need legal advice? Chat with expert lawyers anytime, 24/7. Confidential and instant online consultations for all your legal questions with AskUs`
+}
+
 export default function Home() {
   return (
     <>

@@ -10,6 +10,11 @@ import { LoginParam } from "../context/AuthProvider";
 import Link from "next/link";
 // import { useSearchParams } from "next/navigation";
 
+export const metadata = {
+  title: 'Login to Your AskUs Account - Access Services Now',
+  discription: 'Sign in to AskUs to connect with expert advice and services. Secure and easy access to your account and resources.'
+}
+
 export default function Login() {
   const auth = useAuth();
   const [loading, setLoading] = useState(false);

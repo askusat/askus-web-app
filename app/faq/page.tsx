@@ -5,7 +5,8 @@ import Link from "next/link";
 // import { usePathname } from "next/navigation";
 
 export const metadata = {
-  title: 'FAQ',
+  title: 'AskUs Insights - Quick Answers to Your Queries',
+  discription: 'Dive into our FAQs for swift, clear answers about using AskUs. Understand our services, get support tips, and more—all in one place.'
 }
 
 export default function FAQPage() {

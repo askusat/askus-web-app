@@ -2,6 +2,11 @@ import React from 'react';
 import Layout from '../components/layout';
 import Link from 'next/link'
 
+export const metadata = {
+  title: 'AskUs Terms of Service',
+  discription: `Review AskUs's clear and concise Terms of Service. Understand our guidelines for a seamless experience. Your trust, our commitment.`
+}
+
 export default function TermsPage() {
   return (
     <div className="">

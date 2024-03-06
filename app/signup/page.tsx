@@ -4,6 +4,11 @@ import React, { useEffect, useState } from "react";
 import AuthLayout from "../components/layout/authLayout";
 import { SignupStepOne } from "../components/auth/signup";
 
+export const metadata = {
+  title: 'Sign Up for 24/7 Expert Legal Support - AskUs',
+  discription: 'Get instant access to expert lawyers anytime, anywhere. Sign up now for round-the-clock support with AskUs.'
+}
+
 export default function RegisterPage() {
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");

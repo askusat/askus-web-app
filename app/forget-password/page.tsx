@@ -8,6 +8,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "../supabaseClient";
 
+export const metadata = {
+  title: 'Reset Your Password - Easy Recovery | AskUs',
+  discription: 'Quickly reset your AskUs password with our straightforward recovery process. Regain access to your account now.'
+}
+
 export default function Login() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
