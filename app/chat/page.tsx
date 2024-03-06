@@ -4,7 +4,7 @@ import {
   Avatar,
   AvatarGroup,
   Button,
-  Image as ImageNUI,
+  Image as ImageNUI, 
   Modal,
   ModalBody,
   ModalContent,
