@@ -10,10 +10,10 @@ import { LoginParam } from "../context/AuthProvider";
 import Link from "next/link";
 // import { useSearchParams } from "next/navigation";
 
-export const metadata = {
-  title: 'Login to Your AskUs Account - Access Services Now',
-  discription: 'Sign in to AskUs to connect with expert advice and services. Secure and easy access to your account and resources.'
-}
+// export const metadata = {
+//   title: 'Login to Your AskUs Account - Access Services Now',
+//   description: 'Sign in to AskUs to connect with expert advice and services. Secure and easy access to your account and resources.'
+// }
 
 export default function Login() {
   const auth = useAuth();
@@ -50,6 +50,10 @@ export default function Login() {
 
   return (
     <>
+      <head>
+        <title>Login to Your AskUs Account - Access Services Now</title>
+        <meta name="description" content="Sign in to AskUs to connect with expert advice and services. Secure and easy access to your account and resources." />
+      </head>
       <AuthLayout>
         <div className="w-full px-[5%] md:px-[10%] lg:px-[15%] xl:px-[20%]">
           <Link href="/">
@@ -125,11 +129,10 @@ export default function Login() {
                   {showPassword && (
                     <FaEyeSlash
                       color="#8094AE"
-                      className={`${
-                        showPassword
+                      className={`${showPassword
                           ? "opacity-100 pointer-events-auto"
                           : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
-                      } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                        } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
                       width={25}
                       height={25}
                       onClick={() => {
@@ -140,11 +143,10 @@ export default function Login() {
                   {!showPassword && (
                     <FaEye
                       color="#8094AE"
-                      className={`${
-                        !showPassword
+                      className={`${!showPassword
                           ? "opacity-100 pointer-events-auto"
                           : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
-                      } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                        } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
                       width={25}
                       height={25}
                       onClick={() => {
@@ -157,7 +159,7 @@ export default function Login() {
             </div>
 
             <Button
-            aria-label="signin or loading"
+              aria-label="signin or loading"
               type="submit"
               className={`w-full`}
               color="primary"
@@ -167,7 +169,7 @@ export default function Login() {
             </Button>
             <p className="text-center text-[#8091A7] italic text-sm mt-3">
               {`Don't have an account?`}{" "}
-              <Link href={`${returnUrl ? `/signup?returnUrl=${returnUrl}`: `/signup`}`} className="text-primary">
+              <Link href={`${returnUrl ? `/signup?returnUrl=${returnUrl}` : `/signup`}`} className="text-primary">
                 Register here
               </Link>
             </p>

@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: 'About AskUs - Revolutionizing 24/7 Legal Expert Access',
-  discription: 'Discover how AskUs is changing the way you get legal help. Connect with expert lawyers 24/7, anywhere, with the assurance and convenience you need.'
+  description: 'Discover how AskUs is changing the way you get legal help. Connect with expert lawyers 24/7, anywhere, with the assurance and convenience you need.'
 }
 
 export default function AboutPage() {

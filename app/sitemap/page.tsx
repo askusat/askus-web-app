@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: 'AskUs Sitemap',
-  discription: 'Explore the sitemap of AskUs for easy navigation and quick access to valuable information. Find what you need effortlessly.'
+  description: 'Explore the sitemap of AskUs for easy navigation and quick access to valuable information. Find what you need effortlessly.'
 }
 
 export default function SitemapPage() {
