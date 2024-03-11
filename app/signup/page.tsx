@@ -25,7 +25,6 @@ export default function RegisterPage() {
       <head>
         <title>Sign Up for 24/7 Expert Legal Support - AskUs</title>
         <meta name="description" content="Get instant access to expert lawyers anytime, anywhere. Sign up now for round-the-clock support with AskUs." />
-        <link rel="canonical" href={window.location.href} />
       </head>
       <AuthLayout>
         <div className="absolute top-0 left-0 w-full h-[8px]">
