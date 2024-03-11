@@ -14,9 +14,9 @@ import PopUp from "./components/PopUp";
 const inter = Inter({ subsets: ["latin"] });
 const APP_NAME = "ASKUS";
 const APP_DEFAULT_TITLE = "Askus Anytime";
-const APP_TITLE_TEMPLATE = "%s - ASKUS";
-const APP_DESCRIPTION = "We're here to assist, day or night, answering your questions promptly.";
-
+const APP_TITLE_TEMPLATE = "%s";
+const APP_DESCRIPTION = "";
+   
 export const metadata: Metadata = {
   applicationName: APP_NAME,
   title: {
