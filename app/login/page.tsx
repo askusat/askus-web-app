@@ -53,6 +53,7 @@ export default function Login() {
       <head>
         <title>Login to Your AskUs Account - Access Services Now</title>
         <meta name="description" content="Sign in to AskUs to connect with expert advice and services. Secure and easy access to your account and resources." />
+        <link rel="canonical" href={window.location.href} />
       </head>
       <AuthLayout>
         <div className="w-full px-[5%] md:px-[10%] lg:px-[15%] xl:px-[20%]">

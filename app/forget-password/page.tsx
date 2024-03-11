@@ -83,6 +83,7 @@ export default function Login() {
       <head>
         <title>Reset Your Password - Easy Recovery | AskUs</title>
         <meta name="description" content="Quickly reset your AskUs password with our straightforward recovery process. Regain access to your account now." />
+        <link rel="canonical" href={window.location.href} />
       </head>
       <AuthLayout>
         <div className="w-full px-[5%] md:px-[10%] lg:px-[15%] xl:px-[20%]">
