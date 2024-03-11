@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: 'AskUs Insights - Quick Answers to Your Queries',
-  discription: 'Dive into our FAQs for swift, clear answers about using AskUs. Understand our services, get support tips, and more—all in one place.'
+  description: 'Dive into our FAQs for swift, clear answers about using AskUs. Understand our services, get support tips, and more—all in one place.'
 }
 
 export default function FAQPage() {

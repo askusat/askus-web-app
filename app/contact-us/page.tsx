@@ -8,7 +8,7 @@ import { Button, Link } from "@nextui-org/react";
 
 export const metadata = {
   title: 'Contact AskUs - Submit Your Inquiries & Feedback',
-  discription: `Have questions or feedback? Use our contact form to get in touch with the AskUs team. We're committed to providing the support you need.`
+  description: `Have questions or feedback? Use our contact form to get in touch with the AskUs team. We're committed to providing the support you need.`
 }
 
 export default function ContactUsPage() {
