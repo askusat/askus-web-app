@@ -40,7 +40,7 @@ export default function SitemapPage() {
           <div className="flex flex-col leading-[50.3px] tracking-[1px] ">
             <Link href="/" className="font-bold hover:underline cursor-pointer text-[25px] text-black">How to Subscribe</Link>
             <div className="flex flex-col leading-[40px] pl-8">
-              <Link href="/why-ask-us" className="font-[500] text-[18px] hover:underline">Why Use AskUs</Link>
+              {/* <Link href="/why-ask-us" className="font-[500] text-[18px] hover:underline">Why Use AskUs</Link> */}
               <Link href="/login" className="font-[500] text-[18px] hover:underline">Subscriber Login</Link>
               <Link href="/login" className="font-[500] text-[18px] hover:underline">Sign Up</Link>
               <Link href="/login" className="font-[500] text-[18px] hover:underline">Sign In</Link>
@@ -49,7 +49,7 @@ export default function SitemapPage() {
           </div>
 
           <div className="flex flex-col leading-[50.3px] tracking-[1px]">
-            <Link href="/help" className="font-bold hover:underline  text-[25px] cursor-pointer text-black">Help</Link>
+            {/* <Link href="/help" className="font-bold hover:underline  text-[25px] cursor-pointer text-black">Help</Link> */}
             <div className="flex flex-col leading-[40px]  pl-8">
               <Link href="/faq" className="font-[500] text-[18px] hover:underline">FAQ</Link>
               <Link href="/contact-us" className="font-[500] text-[18px] hover:underline">Contact Us</Link>
