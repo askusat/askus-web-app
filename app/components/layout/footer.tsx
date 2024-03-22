@@ -67,7 +67,7 @@ export default function Footer() {
               href="/online-legal-advice"
               className="lg:text-[18px] text-[16px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]"
             >
-              Online-legal-advice
+              Online Legal Advice
             </Link>
           </div>
 
