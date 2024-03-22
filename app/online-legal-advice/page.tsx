@@ -193,51 +193,51 @@ export default function page() {
                 <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom text-center">
                     {`Ask us anything, and we'll offer you the best legal advice we can`}
                 </p>
-                <div className="lg:max-w-[60%] md:max-w-[80%]  mx-auto mt-10  md:flex-row gap-12 mb-20">
+                <div className="lg:max-w-[60%] md:max-w-[80%]  mx-auto mt-8  md:flex-row gap-12 mb-20">
                     <div className=" space-y-5">
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
+                            <h2 className="text-[30px]  mx-custom font-PoppinsBold">
                                 Solicitor Advice & Legal Consultation Online
                             </h2>
-                            <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                            <p className="text-[17px]  font-PoppinsRegular mx-custom md:text-start">
                                 {`Gain instant access to online legal advice UK with our expert lawyers. Our team of solicitors is here to provide personalized guidance and support for your legal matters, all from the comfort of your own home. Whether you're dealing with family law issues, personal injury claims, business disputes, or any other legal concerns, ask a solicitor online for a convenient and efficient solution to meet your needs.`}
                             </p>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
+                            <h2 className="text-[30px]  mx-custom font-PoppinsBold">
                                 Understanding Online Legal Advice UK
                             </h2>
-                            <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                            <p className="text-[17px]  font-PoppinsRegular mx-custom md:text-start">
                                 Legal advice online plays a crucial role in various legal matters, offering guidance and expertise to individuals navigating complex legal issues. Traditionally, seeking online solicitor advice involved scheduling in-person consultations with lawyers, often accompanied by long wait times and geographical limitations. However, with <a href="https://www.askusat.co.uk/" className="underline decoration-blue-600 text-blue-600">Askus Anytime</a>, individuals now have the opportunity to access professional legal guidance remotely, from the comfort of their own homes or offices.
                             </p>
 
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
+                            <h2 className="text-[30px]  mx-custom font-PoppinsBold">
                                 Benefits of Seeking Legal Advice Online
                             </h2>
-                            <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                            <p className="text-[17px]  font-PoppinsRegular mx-custom md:text-start">
                                 There are numerous benefits to seeking online legal advice UK through our platform. By offering legal advice online, we aim to provide our clients with a convenient and efficient way to access expert legal guidance whenever they need it, empowering them to navigate their legal matters with confidence and peace of mind.
                             </p>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">Convenience:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">  Access legal advice online from anywhere, at any time, without the need for in-person meetings or travel.
+                            <h2 className="text-[17px]  mx-custom font-PoppinsBold">Convenience:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">  Access legal advice online from anywhere, at any time, without the need for in-person meetings or travel.
                             </span>
                             </h2>
                         </div>
 
-                        <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">Accessibility:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Overcome geographical barriers and reach expert lawyers nationwide, ensuring that individuals have access to <a href="https://www.askusat.co.uk/chat" className="underline decoration-blue-600 text-blue-600">online law advice UK</a> they need, regardless of their location.
+                        <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-6">
+                            <h2 className="text-[17px]  mx-custom font-PoppinsBold">Accessibility:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Overcome geographical barriers and reach expert lawyers nationwide, ensuring that individuals have access to <a href="https://www.askusat.co.uk/chat" className="underline decoration-blue-600 text-blue-600">online law advice UK</a> they need, regardless of their location.
                             </span>
                             </h2>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">Cost-Effectiveness:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Save time and money compared to traditional in-person consultations, with transparent pricing and flexible payment options available.
+                            <h2 className="text-[17px]  mx-custom font-PoppinsBold">Cost-Effectiveness:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Save time and money compared to traditional in-person consultations, with transparent pricing and flexible payment options available.
                             </span>
                             </h2>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">Confidentiality:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Ensure privacy and confidentiality of sensitive legal matters, with robust security measures in place to protect client information.
+                            <h2 className="text-[17px]  mx-custom font-PoppinsBold">Confidentiality:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Ensure privacy and confidentiality of sensitive legal matters, with robust security measures in place to protect client information.
                             </span>
                             </h2>
                         </div>
@@ -264,13 +264,13 @@ export default function page() {
 
                         {column.map((item, index) => (
                             <div className="flex flex-col justify-center item-center px-6 md:px-0 mt-6" key={index}>
-                                <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
+                                <h2 className="text-[30px]  mx-custom font-PoppinsBold">
                                     {item.heading}
                                 </h2>
                                 {item.peragraph.includes('<a') ? (
-                                    <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start" dangerouslySetInnerHTML={{ __html: item.peragraph }}></p>
+                                    <p className="text-[17px]  font-PoppinsRegular mx-custom md:text-start" dangerouslySetInnerHTML={{ __html: item.peragraph }}></p>
                                 ) : (
-                                    <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                                    <p className="text-[17px] font-PoppinsRegular mx-custom md:text-start">
                                         {item.peragraph}
                                     </p>
                                 )}
@@ -302,7 +302,7 @@ export default function page() {
                         {column2.map((item, index) => {
                             return (
                                 <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
-                                    <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">{item.peragraph}
+                                    <h2 className="text-[17px]  mx-custom font-PoppinsBold">{item.heading}<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">{item.peragraph}
                                     </span>
                                     </h2>
                                 </div>
@@ -333,7 +333,7 @@ export default function page() {
                         {column3.map((item, index) => {
                             return (
                                 <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
-                                    <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">
+                                    <h2 className="text-[17px]  mx-custom font-PoppinsBold">
                                         {item.heading}
                                         {item.peragraph.includes('<a') ? (
                                             <span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2" dangerouslySetInnerHTML={{ __html: item.peragraph }}></span>
@@ -356,17 +356,17 @@ export default function page() {
                         {column4.map((item, index) => {
                             return (
                                 <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
-                                    <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold" >
+                                    <h2 className="text-[30px]  mx-custom font-PoppinsBold" >
                                         {item.id}.<span className="ml-2">{item.heading}</span>
                                     </h2>
-                                    <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                                    <p className="text-[17px]  font-PoppinsRegular mx-custom md:text-start">
                                         {item.peragraph}
                                     </p>
                                 </div>
                             )
                         })}
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold text-center mt-8 mb-8">
+                            <h2 className="text-[30px]  mx-custom font-PoppinsBold text-center mt-8 ">
                                 Case Studies: Real-Life Examples of Legal Advice Online
                             </h2>
                             <p className="text-[17px]  font-PoppinsRegular mx-custom text-center mb-8">
@@ -376,10 +376,10 @@ export default function page() {
                         {column5.map((item, index) => {
                             return (
                                 <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
-                                    <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[17px] leading-[40px] mx-custom font-PoppinsBold ml-2">{item.heading2}
+                                    <h2 className="text-[17px]  mx-custom font-PoppinsBold">{item.heading}<span className="text-[17px]  mx-custom font-PoppinsBold ml-2">{item.heading2}
                                     </span>
                                     </h2>
-                                    <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">{item.peragraph}</p>
+                                    <p className="text-[17px] font-PoppinsRegular mx-custom md:text-start mt-2">{item.peragraph}</p>
                                 </div>
                             )
                         })}
