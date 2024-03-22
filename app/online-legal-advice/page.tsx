@@ -191,7 +191,7 @@ export default function page() {
                     </div>
                 </div>
                 <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom text-center">
-                    Ask us anything, and we'll offer you the best legal advice we can
+                    {`Ask us anything, and we'll offer you the best legal advice we can`}
                 </p>
                 <div className="lg:max-w-[60%] md:max-w-[80%]  mx-auto mt-10  md:flex-row gap-12 mb-20">
                     <div className=" space-y-5">
@@ -200,7 +200,7 @@ export default function page() {
                                 Solicitor Advice & Legal Consultation Online
                             </h1>
                             <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start">
-                                Gain instant access to online legal advice UK with our expert lawyers. Our team of solicitors is here to provide personalized guidance and support for your legal matters, all from the comfort of your own home. Whether you're dealing with family law issues, personal injury claims, business disputes, or any other legal concerns, ask a solicitor online for a convenient and efficient solution to meet your needs.
+                                {`Gain instant access to online legal advice UK with our expert lawyers. Our team of solicitors is here to provide personalized guidance and support for your legal matters, all from the comfort of your own home. Whether you're dealing with family law issues, personal injury claims, business disputes, or any other legal concerns, ask a solicitor online for a convenient and efficient solution to meet your needs.`}
                             </p>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
@@ -264,7 +264,7 @@ export default function page() {
 
                         {column.map((item, index) => {
                             return (
-                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mt-6">
+                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mt-6" key={index}>
                                     <h1 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold" >
                                         {item.heading}
                                     </h1>
@@ -293,12 +293,12 @@ export default function page() {
                                 </div>
                             </div>
                             <p className="text-[18px] mt-6 font-PoppinsRegular mx-custom text-center">
-                                When it comes to selecting an online legal advice UK provider, making the right choice is crucial. Here's why you should choose us:
+                                {`When it comes to selecting an online legal advice UK provider, making the right choice is crucial. Here's why you should choose us:`}
                             </p>
                         </div>
-                        {column2.map((item) => {
+                        {column2.map((item,index) => {
                             return (
-                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
+                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
                                     <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">{item.peragraph}
                                     </span>
                                     </h1>
@@ -324,12 +324,12 @@ export default function page() {
                                 </div>
                             </div>
                             <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom text-center mb-8">
-                                Accessing legal advice online through our platform is quick and easy. Here's how it works:
+                                {`Accessing legal advice online through our platform is quick and easy. Here's how it works:`}
                             </p>
                         </div>
-                        {column3.map((item) => {
+                        {column3.map((item,index) => {
                             return (
-                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
+                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
                                     <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">{item.peragraph}
                                     </span>
                                     </h1>
@@ -346,7 +346,7 @@ export default function page() {
                         </div>
                         {column4.map((item, index) => {
                             return (
-                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
+                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
                                     <h1 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold" >
                                         {item.id}.<span className="ml-2">{item.heading}</span>
                                     </h1>
@@ -364,9 +364,9 @@ export default function page() {
                                 Still not convinced that legal advice online is right for you? Take a look at some real-life examples of clients who have benefited from our online legal advice UK service.
                             </p>
                         </div>
-                        {column5.map((item) => {
+                        {column5.map((item,index) => {
                             return (
-                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
+                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
                                     <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[18px] leading-[40px] mx-custom font-PoppinsBold ml-2">{item.heading2}
                                     </span>
                                     </h1>
