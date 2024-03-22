@@ -15,12 +15,12 @@ export default function page() {
         {
             "id": 1,
             "heading": "Family Law",
-            "peragraph": "Navigating family law matters can be challenging, but our online legal advice UK makes it easier. From divorce proceedings to child custody disputes and adoption processes, our online legal advice UK is here to provide guidance and support every step of the way. Trust us to handle your family law concerns with care and expertise."
+            "peragraph": "Navigating <a href='https://www.law.ac.uk/employability/legal-practice-areas/family-law/' style='text-decoration: underline; color: #0b69ff;'>family law</a> matters can be challenging, but our online legal advice UK makes it easier. From divorce proceedings to child custody disputes and adoption processes, our online legal advice UK is here to provide guidance and support every step of the way. Trust us to handle your family law concerns with care and expertise."
         },
         {
             "id": 2,
             "heading": "Personally Injury",
-            "peragraph": "If you've suffered a personal injury, ask a solicitor online to seek justice. Whether it's filing compensation claims for accidents or addressing cases of medical negligence, our skilled legal team will work tirelessly to ensure you receive the compensation and support you deserve."
+            "peragraph": "If you've suffered a <a href='https://www.law.ac.uk/employability/legal-practice-areas/personal-injury-and-clinical-negligence-law/' style='text-decoration: underline; color: #0b69ff;'>personal injury</a>, ask a solicitor online to seek justice. Whether it's filing compensation claims for accidents or addressing cases of medical negligence, our skilled legal team will work tirelessly to ensure you receive the compensation and support you deserve."
         },
         {
             "id": 3,
@@ -35,7 +35,7 @@ export default function page() {
         {
             "id": 5,
             "heading": "Criminal Law",
-            "peragraph": "In matters of criminal law, our platform offers online law advice UK and representation. From DUI charges to assault and theft cases, our experienced legal team provides steadfast support to navigate the complexities of the legal system and defend your rights effectively. Trust us to advocate for your best interests in criminal matters."
+            "peragraph": "In matters of <a href='https://en.wikipedia.org/wiki/English_criminal_law' style='text-decoration: underline; color: #0b69ff;'>Criminal Law</a>, our platform offers online law advice UK and representation. From DUI charges to assault and theft cases, our experienced legal team provides steadfast support to navigate the complexities of the legal system and defend your rights effectively. Trust us to advocate for your best interests in criminal matters."
         }
     ];
 
@@ -66,7 +66,7 @@ export default function page() {
         {
             "id": 1,
             "heading": "Registration:",
-            "peragraph": "Sign up for an account on our platform by providing basic information about yourself and your legal issue."
+            "peragraph": "<a href='https://www.askusat.co.uk/signup' style='text-decoration: underline; color: #0b69ff;'>Sign up</a> for an account on our platform by providing basic information about yourself and your legal issue."
         },
         {
             "id": 2,
@@ -190,60 +190,60 @@ export default function page() {
                         />
                     </div>
                 </div>
-                <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom text-center">
+                <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom text-center">
                     {`Ask us anything, and we'll offer you the best legal advice we can`}
                 </p>
                 <div className="lg:max-w-[60%] md:max-w-[80%]  mx-auto mt-10  md:flex-row gap-12 mb-20">
                     <div className=" space-y-5">
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h1 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
+                            <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
                                 Solicitor Advice & Legal Consultation Online
-                            </h1>
-                            <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                            </h2>
+                            <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
                                 {`Gain instant access to online legal advice UK with our expert lawyers. Our team of solicitors is here to provide personalized guidance and support for your legal matters, all from the comfort of your own home. Whether you're dealing with family law issues, personal injury claims, business disputes, or any other legal concerns, ask a solicitor online for a convenient and efficient solution to meet your needs.`}
                             </p>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h1 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
+                            <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
                                 Understanding Online Legal Advice UK
-                            </h1>
-                            <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start">
-                                Legal advice online plays a crucial role in various legal matters, offering guidance and expertise to individuals navigating complex legal issues. Traditionally, seeking online solicitor advice involved scheduling in-person consultations with lawyers, often accompanied by long wait times and geographical limitations. However, with Askus Anytime, individuals now have the opportunity to access professional legal guidance remotely, from the comfort of their own homes or offices.
-
+                            </h2>
+                            <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                                Legal advice online plays a crucial role in various legal matters, offering guidance and expertise to individuals navigating complex legal issues. Traditionally, seeking online solicitor advice involved scheduling in-person consultations with lawyers, often accompanied by long wait times and geographical limitations. However, with <a href="https://www.askusat.co.uk/" className="underline decoration-blue-600 text-blue-600">Askus Anytime</a>, individuals now have the opportunity to access professional legal guidance remotely, from the comfort of their own homes or offices.
                             </p>
+
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h1 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
+                            <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
                                 Benefits of Seeking Legal Advice Online
-                            </h1>
-                            <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                            </h2>
+                            <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
                                 There are numerous benefits to seeking online legal advice UK through our platform. By offering legal advice online, we aim to provide our clients with a convenient and efficient way to access expert legal guidance whenever they need it, empowering them to navigate their legal matters with confidence and peace of mind.
                             </p>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">Convenience:<span className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">  Access legal advice online from anywhere, at any time, without the need for in-person meetings or travel.
+                            <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">Convenience:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">  Access legal advice online from anywhere, at any time, without the need for in-person meetings or travel.
                             </span>
-                            </h1>
+                            </h2>
                         </div>
 
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">Accessibility:<span className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Overcome geographical barriers and reach expert lawyers nationwide, ensuring that individuals have access to online law advice UK they need, regardless of their location.
+                            <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">Accessibility:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Overcome geographical barriers and reach expert lawyers nationwide, ensuring that individuals have access to <a href="https://www.askusat.co.uk/chat" className="underline decoration-blue-600 text-blue-600">online law advice UK</a> they need, regardless of their location.
                             </span>
-                            </h1>
+                            </h2>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">Cost-Effectiveness:<span className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Save time and money compared to traditional in-person consultations, with transparent pricing and flexible payment options available.
+                            <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">Cost-Effectiveness:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Save time and money compared to traditional in-person consultations, with transparent pricing and flexible payment options available.
                             </span>
-                            </h1>
+                            </h2>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">Confidentiality:<span className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Ensure privacy and confidentiality of sensitive legal matters, with robust security measures in place to protect client information.
+                            <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">Confidentiality:<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">Ensure privacy and confidentiality of sensitive legal matters, with robust security measures in place to protect client information.
                             </span>
-                            </h1>
+                            </h2>
                         </div>
-                        <h1 className="text-[40px] border-b-2 font-bold  border-white border-1 mt-8  border-l-0 border-r-0 border-t-0 text-center" >
+                        <h2 className="text-[40px] border-b-2 font-bold  border-white border-1 mt-8  border-l-0 border-r-0 border-t-0 text-center" >
                             Types of Legal Issues Addressed Online
-                        </h1>
+                        </h2>
                         <div
                             className="flex md:px-20 items-center mb-8  justify-center"
                             id="aboutus"
@@ -258,26 +258,29 @@ export default function page() {
                                 />
                             </div>
                         </div>
-                        <p className="text-[18px]  font-PoppinsRegular mx-custom text-center mb-8">
+                        <p className="text-[17px]  font-PoppinsRegular mx-custom text-center mb-8">
                             Our platform caters to a wide range of legal issues, including but not limited to:
                         </p>
 
-                        {column.map((item, index) => {
-                            return (
-                                <div className="flex flex-col justify-center item-center px-6 md:px-0 mt-6" key={index}>
-                                    <h1 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold" >
-                                        {item.heading}
-                                    </h1>
-                                    <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                        {column.map((item, index) => (
+                            <div className="flex flex-col justify-center item-center px-6 md:px-0 mt-6" key={index}>
+                                <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold">
+                                    {item.heading}
+                                </h2>
+                                {item.peragraph.includes('<a') ? (
+                                    <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start" dangerouslySetInnerHTML={{ __html: item.peragraph }}></p>
+                                ) : (
+                                    <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
                                         {item.peragraph}
                                     </p>
-                                </div>
-                            )
-                        })}
+                                )}
+                            </div>
+                        ))}
+
                         <div className="justify-center items-center mt-4">
-                            <h1 className="text-[40px] border-b-2 font-bold mb-8  mt-8 border-white border-1  border-l-0 border-r-0 border-t-0 text-center">
+                            <h2 className="text-[40px] border-b-2 font-bold mb-8  mt-8 border-white border-1  border-l-0 border-r-0 border-t-0 text-center">
                                 Why Choose Us as Your Online Legal Service Provider?
-                            </h1>
+                            </h2>
                             <div
                                 className="flex md:px-20 items-center  mb-4 overflow-hidden justify-center"
                                 id="aboutus"
@@ -292,23 +295,23 @@ export default function page() {
                                     />
                                 </div>
                             </div>
-                            <p className="text-[18px] mt-6 font-PoppinsRegular mx-custom text-center">
-                                {`When it comes to selecting an online legal advice UK provider, making the right choice is crucial. Here's why you should choose us:`}
+                            <p className="text-[17px] mt-6 font-PoppinsRegular mx-custom text-center">
+                                When it comes to selecting an online legal advice UK provider, making the right choice is crucial. {`Here's`} <a href="https://www.askusat.co.uk/#why-ask-us" className="underline decoration-blue-600 text-blue-600">why you should choose us</a>:
                             </p>
                         </div>
-                        {column2.map((item,index) => {
+                        {column2.map((item, index) => {
                             return (
                                 <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
-                                    <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">{item.peragraph}
+                                    <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">{item.peragraph}
                                     </span>
-                                    </h1>
+                                    </h2>
                                 </div>
                             )
                         })}
                         <div className="justify-center items-center">
-                            <h1 className="text-[40px] border-b-2 font-bold mb-4 border-white border-1  border-l-0 border-r-0 border-t-0 text-center mt-8 mb-8">
+                            <h2 className="text-[40px] border-b-2 font-bold mb-4 border-white border-1  border-l-0 border-r-0 border-t-0 text-center mt-8 mb-8">
                                 How to Access Legal Advice Online in the UK ?
-                            </h1>
+                            </h2>
                             <div
                                 className="flex md:px-20 items-center  mb-4 overflow-hidden justify-center"
                                 id="aboutus"
@@ -323,54 +326,60 @@ export default function page() {
                                     />
                                 </div>
                             </div>
-                            <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom text-center mb-8">
+                            <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom text-center mb-8">
                                 {`Accessing legal advice online through our platform is quick and easy. Here's how it works:`}
                             </p>
                         </div>
-                        {column3.map((item,index) => {
+                        {column3.map((item, index) => {
                             return (
                                 <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
-                                    <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">{item.peragraph}
-                                    </span>
-                                    </h1>
+                                    <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">
+                                        {item.heading}
+                                        {item.peragraph.includes('<a') ? (
+                                            <span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2" dangerouslySetInnerHTML={{ __html: item.peragraph }}></span>
+                                        ) : (
+                                            <span className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start ml-2">{item.peragraph}</span>
+                                        )}
+                                    </h2>
                                 </div>
-                            )
+                            );
                         })}
+
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h1 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold text-center mt-8 mb-2">
+                            <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold text-center mt-8 mb-2">
                                 FAQs About Legal Advice Online
-                            </h1>
-                            <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom  text-center mb-8">
-                                Still have questions about legal advice online? Check out our FAQs section for answers to common queries and concerns:
+                            </h2>
+                            <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom  text-center mb-8">
+                                Still have questions about legal advice online? Check out our <a href="https://www.askusat.co.uk/faq" className="underline decoration-blue-600 text-blue-600">FAQs</a> section for answers to common queries and concerns:
                             </p>
                         </div>
                         {column4.map((item, index) => {
                             return (
                                 <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
-                                    <h1 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold" >
+                                    <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold" >
                                         {item.id}.<span className="ml-2">{item.heading}</span>
-                                    </h1>
-                                    <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start">
+                                    </h2>
+                                    <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">
                                         {item.peragraph}
                                     </p>
                                 </div>
                             )
                         })}
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
-                            <h1 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold text-center mt-8 mb-8">
+                            <h2 className="text-[30px] leading-[40px] mx-custom font-PoppinsBold text-center mt-8 mb-8">
                                 Case Studies: Real-Life Examples of Legal Advice Online
-                            </h1>
-                            <p className="text-[18px]  font-PoppinsRegular mx-custom text-center mb-8">
+                            </h2>
+                            <p className="text-[17px]  font-PoppinsRegular mx-custom text-center mb-8">
                                 Still not convinced that legal advice online is right for you? Take a look at some real-life examples of clients who have benefited from our online legal advice UK service.
                             </p>
                         </div>
-                        {column5.map((item,index) => {
+                        {column5.map((item, index) => {
                             return (
                                 <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8" key={index}>
-                                    <h1 className="text-[18px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[18px] leading-[40px] mx-custom font-PoppinsBold ml-2">{item.heading2}
+                                    <h2 className="text-[17px] leading-[40px] mx-custom font-PoppinsBold">{item.heading}<span className="text-[17px] leading-[40px] mx-custom font-PoppinsBold ml-2">{item.heading2}
                                     </span>
-                                    </h1>
-                                    <p className="text-[18px] mt-4 font-PoppinsRegular mx-custom md:text-start">{item.peragraph}</p>
+                                    </h2>
+                                    <p className="text-[17px] mt-4 font-PoppinsRegular mx-custom md:text-start">{item.peragraph}</p>
                                 </div>
                             )
                         })}
