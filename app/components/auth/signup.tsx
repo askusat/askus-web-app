@@ -61,7 +61,7 @@ export const SignupStepOne = ({
       </Link>
 
       <h5 className="font-bold font-PlusJakartaSansBold text-black/80 text-[18px] md:text-[25px] mt-4 mb-1 -ml-2">
-        ⚡ Setup & Start 3-Day Free Trial
+        ⚡ Setup & Start 3-Day  Trial
       </h5>
 
       <p className="mb-4 text-[17px]">
@@ -216,6 +216,7 @@ export const SignupStepOne = ({
           {processingSignUp ? `processing...` : `Continue`}
           <FaArrowRight />
         </Button>
+        
         <p className="text-center text-[#8091A7] italic text-xs">
           I agree to Askusat’s{" "}
           <Link
@@ -237,7 +238,7 @@ export const SignupStepOne = ({
             Login
           </Link>
         </p>
-        <p className="text-[10px] italic">Billed £50/Month</p>
+        {/* <p className="text-[10px] italic">Billed £50/Month</p> */}
       </div>
     </div>
   );
