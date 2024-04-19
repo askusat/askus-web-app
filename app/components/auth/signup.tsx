@@ -216,6 +216,7 @@ export const SignupStepOne = ({
           {processingSignUp ? `processing...` : `Continue`}
           <FaArrowRight />
         </Button>
+        
         <p className="text-center text-[#8091A7] italic text-xs">
           I agree to Askusat’s{" "}
           <Link
