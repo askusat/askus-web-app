@@ -104,18 +104,37 @@ export default function ProfilePage() {
     try {
       const response = await axios.post(`/api/stripe`, {
         route: "delete_subscription",
-        subscription_id: auth.user?.stripeCustomerId,
+        subscription_id: auth.user?.stripeSubscriptionId,
       });
-      if (response.status === 200) {
-        console.log("handleCancelSubscriptionj response: ");
-        console.log(response);
+      // console.log("handleCancelSubscriptionj response: ");
+      // console.log(response);
 
+      if (response.status === 200) {
         sAlert("Subscription cancelled successfully!");
+        await supabase
+          .from("users")
+          .update({ isSubscribed: false })
+          .eq("id", user?.id);
       } else {
         sAlert("Subscription cancellation failed!", true);
       }
-    } catch (error) {
-      sAlert("Subscription cancelled successfully!");
+    } catch (error: any) {
+      console.log("error");
+      console.log(error?.response?.data?.message);
+      if (error?.response?.data?.message?.toLowerCase().startsWith("no such subscription")) {
+        sAlert("Subscription already cancelled");
+        await supabase
+          .from("users")
+          .update({ isSubscribed: false })
+          .eq("id", user?.id);
+          window.location.reload();
+      } else {
+        sAlert(
+          "Subscription cancellation failed! \n" +
+            error?.response?.data?.message,
+          true
+        );
+      }
     }
     setTimeout(() => {
       setCancellingSub(false);

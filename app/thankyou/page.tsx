@@ -1,22 +1,9 @@
 "use client";
-import React, { useEffect } from "react";
-import { useAuth } from "../hooks/useAuth";
 import { FaCheck } from "react-icons/fa";
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
 
 export default function Thankyou() {
-  const { user } = useAuth();
-
-  useEffect(() => {
-    console.log("user");
-    console.log(user);
-
-    // if (!user?.isSubscribed || (user.credit !== undefined && user.credit < 1)) {
-    //   window.location.href = user?.isAdmin ? "/admin" : "/profile";
-    // }
-  }, [user]);
-
   return (
     <div
       className="h-screen w-full fixed top-0 left-0 z-10 bg-center bg-cover bg-no-repeat"

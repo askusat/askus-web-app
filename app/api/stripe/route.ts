@@ -310,10 +310,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
         },
         { status: 200, statusText: "OK" }
       );
-    } catch (error) {
+    } catch (error: any) {
       console.error("failed to create subscription: " + error);
       return NextResponse.json(
-        { message: `Internal server error: ${error}` },
+        { message: error.message },
         { status: 500, statusText: "Internal server error" }
       );
     }

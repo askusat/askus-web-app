@@ -212,8 +212,8 @@ const StripeCont = ({ user, clientSecret }: StripeContProps) => {
             const hash = window.location.hash;
             const creditMode = hash.substring(1) === "credit";
 
-            console.log("PRICE_ID");
-            console.log(PRICE_ID);
+            // console.log("PRICE_ID");
+            // console.log(PRICE_ID);
 
             // create customer and subscription
             const createSubscriptionData = {
