@@ -7,18 +7,20 @@ import React from "react";
 
 export default function Footer() {
   const pathname = usePathname();
-  const list = ["/chat","/chatv2",];
+  const list = ["/chat", "/chatv2",];
 
   if (list.includes(pathname)) {
     return <></>;
   }
 
   return (
+
     <footer
-      className={`${
-        pathname === "/profile" && "mb-16 lg:mb-0"
-      } flex flex-col bg-[#0580FE] w-full lg:px-[60px] px-[5%]`}
+      className={`${pathname === "/profile" && "mb-16 lg:mb-0"
+        } flex flex-col bg-[#0580FE] w-full lg:px-[60px] px-[5%]`}
     >
+      <head>
+        <link rel="canonical" href={`https://www.askusat.co.uk${pathname}`} /></head>
       <div className="flex flex-col lg:flex-row justify-between w-full">
         <div className="flex flex-col lg:items-start md:items-center">
           <Image
@@ -60,6 +62,12 @@ export default function Footer() {
               className="lg:text-[18px] text-[16px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]"
             >
               About
+            </Link>
+            <Link
+              href="/online-legal-advice"
+              className="lg:text-[18px] text-[16px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]"
+            >
+              Online Legal Advice
             </Link>
           </div>
 

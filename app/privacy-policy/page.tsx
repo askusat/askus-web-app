@@ -4,6 +4,11 @@ import { FaCircle } from "react-icons/fa";
 import { Link as LinkUI } from '@nextui-org/react';
 import Link from 'next/link';
 
+export const metadata = {
+  title: 'Secure Privacy Practices at AskUs',
+  description: 'Discover how AskUs prioritizes your privacy. Your trusted IT solutions partner. Contact us for expert assistance.'
+}
+
 export default function PrivacyPage() {
   return (
     <div>

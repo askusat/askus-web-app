@@ -6,7 +6,8 @@ import Nav from "../components/layout/nav";
 import Link from "next/link";
 
 export const metadata = {
-  title: 'About',
+  title: 'About AskUs - Revolutionizing 24/7 Legal Expert Access',
+  description: 'Discover how AskUs is changing the way you get legal help. Connect with expert lawyers 24/7, anywhere, with the assurance and convenience you need.'
 }
 
 export default function AboutPage() {
@@ -20,7 +21,7 @@ export default function AboutPage() {
           className=" flex items-center flex-col  justify-center bg-cover bg-no-repeat bg-center lg:w-full h-screen w-full bg-gradient-to-br from-red-400 via-blue-700 to-transparent relative text-white"
           style={{
             backgroundImage:
-                "linear-gradient(45deg, rgba(0, 112, 240, 0.75), rgba(0, 112, 240, 0.6), rgba(0, 112, 240, 0.45), rgba(0, 112, 240, 0.3), rgba(0, 112, 240, 0.15)), url(team2.jpg)",
+              "linear-gradient(45deg, rgba(0, 112, 240, 0.75), rgba(0, 112, 240, 0.6), rgba(0, 112, 240, 0.45), rgba(0, 112, 240, 0.3), rgba(0, 112, 240, 0.15)), url(team2.jpg)",
           }}
         >
           <div className="text-white lg:text-[60px] text-[26px] text-center w-full font-MontserratBold">

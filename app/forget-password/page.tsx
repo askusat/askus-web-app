@@ -8,6 +8,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "../supabaseClient";
 
+// export const metadata = {
+//   title: 'Reset Your Password - Easy Recovery | AskUs',
+//   description: 'Quickly reset your AskUs password with our straightforward recovery process. Regain access to your account now.'
+// }
+
 export default function Login() {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -75,6 +80,10 @@ export default function Login() {
 
   return (
     <>
+      <head>
+        <title>Reset Your Password - Easy Recovery | AskUs</title>
+        <meta name="description" content="Quickly reset your AskUs password with our straightforward recovery process. Regain access to your account now." />
+      </head>
       <AuthLayout>
         <div className="w-full px-[5%] md:px-[10%] lg:px-[15%] xl:px-[20%]">
           <Link href="/" className="w-fit">
