@@ -4,7 +4,7 @@ import {
   Avatar,
   AvatarGroup,
   Button,
-  Image as ImageNUI, 
+  Image as ImageNUI,
   Modal,
   ModalBody,
   ModalContent,
@@ -64,7 +64,7 @@ import {
 import RequestForCall from "./components/requestForCall";
 import CreatOfferModel from "./components/creatOfferModel";
 
-export default function ChatPageV2() {
+export default function ChatPage() {
   const {
     user,
     loading: authLoading,
@@ -717,6 +717,37 @@ export default function ChatPageV2() {
       .single();
 
     if (!error && data) {
+      try {
+        const chat: Chat = data
+        await axios.post(`/api/send-email`, {
+          // to: ["paulinnocent05@gmail.com", "paulinnocent04@gmail.com"],
+          to: ["oxford_lawyer@yahoo.co.uk", 'nancy.josee.smith@gmail.com'],
+          subject: `New conversation started by ${user?.username}`,
+          content: `<div style="font-size: 16px;">
+            <p>${user.fullName} (${user.username}) just started a conversation, please join now.</p>
+            <p>message: ${messageInput}</p>
+            <a href="https://www.askusat.co.uk/chat?chatId=${chat?.id}">
+              <button type="button" style="
+              outline: 2px solid transparent;
+              outline-offset: 2px;
+              -webkit-font-smoothing: auto;
+              -moz-osx-font-smoothing: auto;
+              color: white;
+              font-weight: 400;
+              padding: 0.5rem 1rem;
+              background-color: #0070f0;
+              white-space: nowrap;
+              border: none;
+              border-radius: 12px;
+              cursor: pointer;
+              ">Go to chat</button>
+            </a>
+          </div>`,
+        });
+      } catch (error) {
+        console.log("failed to send email noticication");
+        console.log(error);
+      }
       if (user.credit > 0) {
         await supabase
           .from("users")
