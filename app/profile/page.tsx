@@ -102,16 +102,18 @@ export default function ProfilePage() {
   const handleCancelSubscription = async () => {
     setCancellingSub(true);
     try {
-      const response = await axios
-        .post(`/api/stripe`, {
-          route: "delete_subscription",
-          subscription_id: auth.user?.stripeCustomerId,
-        })
-        .then((response: any) => response.data);
-      console.log("handleCancelSubscriptionj response: ");
-      console.log(response);
+      const response = await axios.post(`/api/stripe`, {
+        route: "delete_subscription",
+        subscription_id: auth.user?.stripeCustomerId,
+      });
+      if (response.status === 200) {
+        console.log("handleCancelSubscriptionj response: ");
+        console.log(response);
 
-      sAlert("Subscription cancelled successfully!");
+        sAlert("Subscription cancelled successfully!");
+      } else {
+        sAlert("Subscription cancellation failed!", true);
+      }
     } catch (error) {
       sAlert("Subscription cancelled successfully!");
     }
@@ -145,7 +147,7 @@ export default function ProfilePage() {
                   Close
                 </Button>
                 <Button color="primary" onPress={handleCancelSubscription}>
-                  Action
+                  Cancel
                 </Button>
               </ModalFooter>
             </>

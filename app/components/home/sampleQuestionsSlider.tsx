@@ -135,6 +135,7 @@ export default function SampleQuestionsSlider() {
         >
           <FaAngleLeft size={22} />
         </Button>
+
         <Button
           aria-label="right"
           className="min-w-[60px] min-h-[60px] rounded-full grid place-items-center bg-white hover:bg-primary hover:text-white shadow-lg"

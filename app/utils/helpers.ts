@@ -116,7 +116,13 @@ export function IS_GREETING(sentence: string) {
   return false;
 }
 
-export const sAlert = (message: string) => toast(message);
+export const sAlert = (message: string, error?: boolean) => {
+  if (error) {
+    toast.error(message);
+  } else {
+    toast(message);
+  }
+};
 
 export const handleOffer = async (
   accept: boolean,
