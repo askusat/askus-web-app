@@ -11,44 +11,52 @@ import Link from "next/link";
 
 const testimonials = [
   {
-    title: "Best site I’ve ever been on",
-    desc: "Very knowledgeable about any question, and they answer within minutes.",
-    user: "Kelvin",
+    // title: "Best site I’ve ever been on",
+    id: 0,
+    desc: `Exceptional Service and Expertise by Legal Eagle" I recently had the pleasure of using Legal Eagle for legal consultation and was thoroughly impressed by the exceptional service provided. From the outset, Legal Eagle delivered a response that was not only timely but also replete with knowledge and clarity. Their advice was comprehensive and tailored to address my specific legal concerns, demonstrating a deep understanding of the relevant laws and practical implications. The professionals at Legal Eagle were courteous and attentive, ensuring that all my questions were answered thoroughly. Their insightful guidance was invaluable in navigating my legal issues, making complex legal principles accessible and understandable. I would unreservedly recommend Legal Eagle to anyone in need of reliable and effective legal advice. Their expertise and professionalism make them a standout provider in the online legal services arena. Whether you are dealing with a straightforward query or a complex legal dilemma, Legal Eagle is equipped to provide top-notch support and guidance.`,
+    user: "Rob",
   },
   {
-    title: "Fast & Reliable",
-    desc: "the service provided by AskUs is quick and efficient with excellent knowledge and helpful insights.",
-    user: "JL",
+    id: 1,
+    // title: "Fast & Reliable",
+    desc: "I asked some questions about my employment contract, and AskUsAnytime not only answered my questions but also provided me with valuable advice.",
+    user: "Shimena",
   },
   {
+    id: 2,
     title: "Trusted & Fast Response",
     desc: "I had a trust issue that I needed to talk to someone about urgently. The expert I spoke to responded in minutes and provided clear and detailed answers to all of my questions even when I had multiple follow up queries.",
-    user: "PS",
+    user: "George",
   },
   {
+    id: 3,
     title: "Efficient Service",
     desc: "This is an amazing service, I have asked multiple questions and have saved thousands in legal fees whilst receiving a far more convenient service. I have been able to talk to a lawyer at the office and on my sofa or even in bed at home. I cannot recommend AskUs more highly",
-    user: "IMK",
+    user: "Thomas",
   },
   {
+    id: 4,
     title: "Knowledgeable Expert",
     desc: "I had a sensitive query that I needed answers to and I found the expert I spoke to was empathetic, calm and reassuring. They helped me to feel soothed within minutes as a result of both their in depth knowledge and the tone and manner of their responses, I would not hesitate to use this service again",
-    user: "BC",
+    user: "Jack",
   },
   {
+    id: 5,
     title: "Timely Response",
     desc: "Fast effective responses and for a low price, what a bargain",
-    user: "Junior",
+    user: "Oscar",
   },
   {
+    id: 6,
     title: "Amazing Service",
     desc: "This service is the best, it is like having a personal lawyer on speed dial. I recommend this service to all my family and friends.",
-    user: "JK",
+    user: "James",
   },
   {
+    id: 7,
     title: "Bargain Service",
     desc: "I thought the service could not be as good as it looks but I have been pleasantly surprised. This is now my go to site whenever I have an issue and I need reliable, answers fast",
-    user: "LS",
+    user: "Joseph",
   },
 ];
 
@@ -115,7 +123,7 @@ export default function Home() {
               </p>
               <Link href={"/chat"}>
                 <Button
-                aria-label="Get started button"
+                  aria-label="Get started button"
                   className="mt-3 bg-primary text-white rounded-[10px]"
                   size="lg"
                 >
@@ -161,7 +169,7 @@ export default function Home() {
             </p>
             <Link href={"/chat"}>
               <Button
-              aria-label="Get started button"
+                aria-label="Get started button"
                 className="xl:mt-3 mt-1 bg-primary text-white rounded-[10px]"
                 size="lg"
 
@@ -325,9 +333,8 @@ export default function Home() {
             {services.map((service, i) => (
               <div key={`services_mobile${service.id}`} className="">
                 <div
-                  className={`${
-                    (i + 1) % 2 === 0 && "flex-row-reverse"
-                  } flex items-center justify-center`}
+                  className={`${(i + 1) % 2 === 0 && "flex-row-reverse"
+                    } flex items-center justify-center`}
                 >
                   <h2 className="font-PoppinsBold lg:text-[60px] text-[50px] font-bold leading-[60px] tracking-[1px] text-[#b2cefe] uppercase lg:mr-7 mr-4 ml-8 lg:ml-0">
                     {service.id}
@@ -369,7 +376,7 @@ export default function Home() {
           </p>
           <Link href={"/chat"}>
             <Button
-            aria-label="Get started button"
+              aria-label="Get started button"
               className="mt-3 text-primary bg-white rounded-[10px] border-none"
               size="lg"
             >
@@ -395,7 +402,7 @@ export default function Home() {
             {testimonials.map((testomial, index) => (
               <div
                 key={`testimonials_t-${index}`}
-                className="shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] rounded-3xl max-w-[300px] h-fit md:h-[320px] bg-white px-[14px] py-[18px] relative"
+                className="shadow-[0px_0px_17.7px_3px_rgba(0,_0,_0,_0.09)] rounded-3xl max-w-[300px] h-fit md:h-[320px] bg-white px-[14px] py-[18px] relative overflow-y-auto"
               >
                 <div className="flex items-center gap-3">
                   <div className="">
@@ -409,9 +416,9 @@ export default function Home() {
                   </div>
                   <div className="font-bold ">{testomial.user}</div>
                 </div>
-                <div className="h-full grid place-items-center">
+                <div className="grid place-items-center">
                   <div className="">
-                    <div className="">
+                    <div className="pt-8">
                       <h4 className="font-bold font-PoppinsBold text-[17px] text-center mb-2 mt-3 md:mt-0">
                         {testomial.title}
                       </h4>

@@ -3,7 +3,7 @@
 import { SignUpParam } from "@/app/context/AuthProvider";
 import { useAuth } from "@/app/hooks/useAuth";
 import { supabase } from "@/app/supabaseClient";
-import { Button, Image as ImageNUI} from "@nextui-org/react";
+import { Button, Image as ImageNUI } from "@nextui-org/react";
 import Link from "next/link";
 // import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -65,8 +65,7 @@ export const SignupStepOne = ({
       </h5>
 
       <p className="mb-4 text-[17px]">
-        Try 3 days for just £5. Cancel anytime. Start getting
-        answers to your questions.
+        Unlimited Questions, Unlimited Answers just £5 for 3 days!
       </p>
 
       {errorMsg?.message && (
@@ -92,46 +91,46 @@ export const SignupStepOne = ({
         }}
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 w-full">
-        <div className="flex flex-col w-full">
-          <label
-            htmlFor="full_name"
-            className="font-PlusJakartaSansSemiBold font-semibold text-[#344357] text-[15px] mb-[8px]"
-          >
-            Full Name (First name first)
-          </label>
-          <div className="flex items-center gap-3 px-4 border border-[#DBDFEA] bg-white rounded-[8.8px] focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(0,_112,_239,_0.10)] w-full">
-            <input
-              type="text"
-              name="full_name"
-              id="full_name"
-              className="w-full py-3 outline-none border-none"
-              placeholder="Enter your full name"
-              required
-              value={fullName}
-              onChange={({ target }) => setFullName(target.value)}
-            />
+          <div className="flex flex-col w-full">
+            <label
+              htmlFor="full_name"
+              className="font-PlusJakartaSansSemiBold font-semibold text-[#344357] text-[15px] mb-[8px]"
+            >
+              Full Name (First name first)
+            </label>
+            <div className="flex items-center gap-3 px-4 border border-[#DBDFEA] bg-white rounded-[8.8px] focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(0,_112,_239,_0.10)] w-full">
+              <input
+                type="text"
+                name="full_name"
+                id="full_name"
+                className="w-full py-3 outline-none border-none"
+                placeholder="Enter your full name"
+                required
+                value={fullName}
+                onChange={({ target }) => setFullName(target.value)}
+              />
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col w-full">
-          <label
-            htmlFor="full_name"
-            className="font-PlusJakartaSansSemiBold font-semibold text-[#344357] text-[15px] mb-[8px]"
-          >
-            username
-          </label>
-          <div className="flex items-center gap-3 px-4 border border-[#DBDFEA] bg-white rounded-[8.8px] focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(0,_112,_239,_0.10)] w-full">
-            <input
-              type="text"
-              name="username"
-              id="username"
-              className="w-full py-3 outline-none border-none"
-              placeholder="Choose a username"
-              required
-              value={username}
-              onChange={({ target }) => setUsername(target.value)}
-            />
+          <div className="flex flex-col w-full">
+            <label
+              htmlFor="full_name"
+              className="font-PlusJakartaSansSemiBold font-semibold text-[#344357] text-[15px] mb-[8px]"
+            >
+              username
+            </label>
+            <div className="flex items-center gap-3 px-4 border border-[#DBDFEA] bg-white rounded-[8.8px] focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(0,_112,_239,_0.10)] w-full">
+              <input
+                type="text"
+                name="username"
+                id="username"
+                className="w-full py-3 outline-none border-none"
+                placeholder="Choose a username"
+                required
+                value={username}
+                onChange={({ target }) => setUsername(target.value)}
+              />
+            </div>
           </div>
-        </div>
         </div>
         <div className="flex flex-col">
           <label
@@ -175,11 +174,10 @@ export const SignupStepOne = ({
               {showPassword && (
                 <FaEyeSlash
                   color="#8094AE"
-                  className={`${
-                    showPassword
+                  className={`${showPassword
                       ? "opacity-100 pointer-events-auto"
                       : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
-                  } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                    } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
                   width={25}
                   height={25}
                   onClick={() => {
@@ -190,11 +188,10 @@ export const SignupStepOne = ({
               {!showPassword && (
                 <FaEye
                   color="#8094AE"
-                  className={`${
-                    !showPassword
+                  className={`${!showPassword
                       ? "opacity-100 pointer-events-auto"
                       : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
-                  } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                    } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
                   width={25}
                   height={25}
                   onClick={() => {
@@ -207,16 +204,16 @@ export const SignupStepOne = ({
         </div>
 
         <Button
-        aria-label="Submit signup form"
+          aria-label="Submit signup form"
           type="submit"
-          onClick={() => {}}
+          onClick={() => { }}
           className={`bg-primary w-full flex items-center gap-3 justify-center text-white`}
           isLoading={processingSignUp}
         >
           {processingSignUp ? `processing...` : `Continue`}
           <FaArrowRight />
         </Button>
-        
+
         <p className="text-center text-[#8091A7] italic text-xs">
           I agree to Askusat’s{" "}
           <Link
@@ -234,7 +231,7 @@ export const SignupStepOne = ({
       <div className="text-center">
         <p className="text-center text-[#8091A7] italic text-xs">
           Already have an account?{" "}
-          <Link href={`${returnUrl ? `/login?returnUrl=${returnUrl}`: `/login`}`} className="text-primary">
+          <Link href={`${returnUrl ? `/login?returnUrl=${returnUrl}` : `/login`}`} className="text-primary">
             Login
           </Link>
         </p>
