@@ -37,6 +37,10 @@ const Experts: React.FC<ExpertsProps> = ({ data }) => {
 
     return (
         <div>
+            <h2 className="font-PoppinsBold text-center xl:text-[48px]  lg:flex-[3] text-[36px] font-bold xl:leading-[58.09px] leading-[40px] p-[5rem] max-sm:p-[1rem] max-sm:pb-[2rem]">
+                Meet Our Expert
+            </h2>
+            {/* max-sm:block hidden lg:block */}
             <div ref={containerRef} className='max-md:flex max-md:overflow-auto'>
                 {/* {heading &&
                 <h2 className="font-PoppinsBold text-center xl:text-[48px] hidden lg:block lg:flex-[3] text-[36px] font-bold xl:leading-[58.09px] leading-[40px] p-[5rem]">
@@ -64,12 +68,6 @@ const Experts: React.FC<ExpertsProps> = ({ data }) => {
             </section>  */}
                 {data.map((expert) => (
                     <>
-                        {
-                            expert.heading &&
-                            <h2 className="font-PoppinsBold text-center xl:text-[48px] hidden lg:block lg:flex-[3] text-[36px] font-bold xl:leading-[58.09px] leading-[40px] p-[5rem]">
-                                {expert.heading}
-                            </h2>
-                        }
                         <div className="max-sm:hidden left_sade bg-[url(/left-sade.png)]"></div>
                         <div className="max-sm:hidden right_sade bg-[url(/right-sade.png)]"></div>
                         < section
@@ -98,16 +96,16 @@ const Experts: React.FC<ExpertsProps> = ({ data }) => {
             </div>
             <div className="flex md:flex-col hidden max-md:flex mt-[18px] justify-center items-center gap-4">
                 <div
-                    className="bg-white text-blue-500 shadow-md rounded-full md:w-[50px] md:h-[50px] w-[50px] h-[50px] flex items-center justify-center cursor-pointer hover:bg-[#0580FE] hover:scale-105 hover:text-white ease-in duration-1000 transition-all"
+                    className="bg-white max-sm:p-[12px] text-blue-500 shadow-md rounded-full md:w-[50px] md:h-[50px] w-[50px] h-[50px] flex items-center justify-center cursor-pointer hover:bg-[#0580FE] hover:scale-105 hover:text-white ease-in duration-1000 transition-all"
                     onClick={scrollLeft}
                 >
-                    <p className="w-full text-center text-[20px]"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                    <p className="w-full  text-center text-[20px]"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                     </svg>
                     </p>
                 </div>
                 <div
-                    className="bg-white text-blue-500 shadow-md rounded-full md:w-[50px] md:h-[50px] w-[50px] h-[50px] flex items-center justify-center cursor-pointer hover:bg-[#0580FE] hover:scale-105 hover:text-white ease-in duration-1000 transition-all"
+                    className="bg-white max-sm:p-[12px] text-blue-500 shadow-md rounded-full md:w-[50px] md:h-[50px] w-[50px] h-[50px] flex items-center justify-center cursor-pointer hover:bg-[#0580FE] hover:scale-105 hover:text-white ease-in duration-1000 transition-all"
                     onClick={scrollRight}
                 >
                     <p className="w-full text-center text-[20px]"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">

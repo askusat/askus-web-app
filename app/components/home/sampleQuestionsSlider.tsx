@@ -127,7 +127,7 @@ export default function SampleQuestionsSlider() {
         {/* </div> */}
       </div>
 
-      <div className="flex items-center gap-6 absolute right-0 -bottom-12">
+      <div className="flex items-center gap-6 absolute right-0 -bottom-12 max-sm:inset-x-0  max-sm:justify-center	  ">
         <Button
           aria-label="left"
           className="min-w-[60px] min-h-[60px] rounded-full grid place-items-center bg-white hover:bg-primary hover:text-white shadow-lg"
