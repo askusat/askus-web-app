@@ -56,7 +56,24 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-
+.right_sade {
+  width: 18%;
+  height: 69%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 0; 
+  bottom: 0;
+}
+  .left_sade{
+  width: 10%;
+  height: 70%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 .scrolled-remove {
   /* Hide scrollbar for Chrome, Safari, and Edge */
   -ms-overflow-style: none; /* For Internet Explorer */
