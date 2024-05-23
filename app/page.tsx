@@ -6,6 +6,7 @@ import Spacer from "./components/spacer";
 import SampleQuestionsSlider from "./components/home/sampleQuestionsSlider";
 import Nav from "./components/layout/nav";
 import AnimText from "./components/home/AnimText";
+import Experts from './components/experts'
 import Link from "next/link";
 // import CreateChat from "./components/chat/createChat";
 
@@ -19,7 +20,7 @@ const testimonials = [
   {
     id: 1,
     // title: "Fast & Reliable",
-    desc: "I asked some questions about my employment contract, and AskUsAnytime not only answered my questions but also provided me with valuable advice.",
+    desc: "I asked some questions about my employment contract, and AskUs Anytime not only answered my questions but also provided me with valuable advice.",
     user: "Shimena",
   },
   {
@@ -104,6 +105,29 @@ export const metadata = {
 }
 
 export default function Home() {
+
+  const columnDirection: React.CSSProperties = {
+    flexDirection: "row-reverse",
+  };
+
+  const expertsData = [
+    {
+      id: 1,
+      heading: "Meet Our Experts",
+      styled: { ...columnDirection },
+      head1: "Myles Edwards",
+      paragraph: "Myles is a qualified lawyer in both the UK and USA, having obtained undergraduate and postgraduate degrees from universities in both the UK and the USA. Myles has nearly two decades experience of working at some of the largest law firms in the world, as well as inhouse at major FTSE 100 companies. Myles has spent the past few years providing guidance to tens of thousands of people on wide ranging legal issues. Myles has a passion for ensuring that all people can access the very best legal guidance and advice whenever they need it and it is this passion that led him to establishing AskUs Anytime.",
+      expertImg: "/expert1.png"
+    },
+    {
+      id: 2,
+      heading: "",
+      styled: null,
+      head1: "Claudia Thomson",
+      paragraph: "Claudia is a qualified lawyer in the UK having obtained undergraduate and postgraduate degrees in Canada and the UK. Claudia has decades of experience working for the world's largest law firms, as well as large multinational companies and bespoke practices. Claudia has advised thousands of people on wide-ranging issues. Claudia is enthusiastic about ensuring that all people can get legal guidance when they need it most and it is this enthusiasm that led to her teaming up with Myles to establish AskUs Anytime.",
+      expertImg: "/expert2.png"
+    }
+  ];
   return (
     <>
       {/* <CreateChat /> */}
@@ -149,10 +173,11 @@ export default function Home() {
       </header>
 
       <main className="">
+        <div className="relative">
+          <Experts data={expertsData} />
+        </div>
         <Spacer />
-
         <HowItWorks />
-
         <Spacer />
 
         <section
