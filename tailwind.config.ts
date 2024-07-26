@@ -10,6 +10,12 @@ const config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "askUsat-gradient": "linear-gradient(180deg, #0477FE 0%, #0023FF 100%)",
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
       colors: {
         "primary": '#0070F0'
       }
