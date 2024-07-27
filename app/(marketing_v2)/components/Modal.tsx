@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onClose, children }:any) => {
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add('overflow-hidden');
@@ -19,11 +19,11 @@ const Modal = ({ isOpen, onClose, children }) => {
     <>
       {/* Backdrop */}
       <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={onClose}></div>
-      
+
       {/* Modal */}
       <div className=" fixed inset-0 md:inset-0 flex items-center justify-center  z-50">
         <div className="bg-white p-6 rounded-lg shadow-lg max-w-[320px]m md: max-w-4xl  md: w-full relative">
-          <button 
+          <button
             className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800"
             onClick={onClose}
           >

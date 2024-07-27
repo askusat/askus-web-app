@@ -47,7 +47,7 @@ function CustomSlider() {
   };
 
   return (
-    <div className="slider-container  mt-8 w-[100vw] mb-8">
+    <div className="max-w-[1440px] mx-auto slider-container  mt-8 w-[100vw] mb-8">
       <Slider {...settings}>
         <div className="slide bg-white rounded-lg h-[270px] md:h-[400px] p-2 md:p-5 lg:p-4 xl:p-6">
         <div className=" flex justify-between items-start">

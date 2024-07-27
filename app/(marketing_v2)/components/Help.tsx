@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Help = () => {
@@ -21,9 +22,11 @@ const Help = () => {
         </p>
 
         <div className="my-[30px] md:my-0 flex justify-center md:justify-start md:mt-[15px] lg:mt-[30px] xl:mt-[50px]">
-          <button className="hover:bg-white hover:text-[#0023FF] border-[2px] border-white px-4 py-2 md:px-[27px] md:py-[14px]  text-white rounded-[5px] md:rounded-[10px] leading-[18.15px]">
-            Get Started
-          </button>
+          <Link href={"/chat"}>
+            <button className="hover:bg-white hover:text-[#0023FF] border-[2px] border-white px-4 py-2 md:px-[27px] md:py-[14px]  text-white rounded-[5px] md:rounded-[10px] leading-[18.15px]">
+              Get Started
+            </button>
+          </Link>
         </div>
       </div>
     </div>
