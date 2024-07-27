@@ -105,10 +105,8 @@ export default function AuthSection() {
           const authUserData: User = authUserDataM as User;
           setUser(authUserData);
           window.localStorage.setItem("userData", JSON.stringify(authUserData));
-          router.push("/chat");
+          router.push("/payment");
         }
-
-        // TODO: proceed to subscription
       } else {
         setUser(userData as User);
         window.localStorage.setItem("userData", JSON.stringify(userData));
