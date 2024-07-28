@@ -23,12 +23,12 @@ This XML file does not appear to have any style information associated with it. 
 <priority>0.80</priority>
 </url>
 <url>
-<loc>https://www.askusat.co.uk/signup</loc>
+<loc>https://www.askusat.co.uk#login</loc>
 <lastmod>2024-04-24T05:57:01+00:00</lastmod>
 <priority>0.80</priority>
 </url>
 <url>
-<loc>https://www.askusat.co.uk/login</loc>
+<loc>https://www.askusat.co.uk#login</loc>
 <lastmod>2024-04-24T05:57:01+00:00</lastmod>
 <priority>0.80</priority>
 </url>

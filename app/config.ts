@@ -14,7 +14,7 @@ export const PRICE_ID =
 
 export const authConfig = {
   meEndpoint: "/auth/me",
-  loginEndpoint: "/jwt/login",
+  loginEndpoint: "/jwt/#login",
   registerEndpoint: "/jwt/register",
   storageTokenKeyName: "accessToken",
   onTokenExpiration: "refreshToken", // logout | refreshToken

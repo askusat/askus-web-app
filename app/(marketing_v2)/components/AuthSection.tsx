@@ -3,15 +3,22 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import { useAuth } from "@/app/hooks/useAuth";
+// import useHash from "@/app/hooks/useHash";
 import { supabase } from "@/app/supabaseClient";
 import { User } from "@/types";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 import { ImSpinner8 } from "react-icons/im";
 import { toast } from "react-toastify";
 
-export default function AuthSection() {
+export default function AuthSection({
+  glow,
+  setGlow,
+}: {
+  glow: boolean;
+  setGlow: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const { setUser } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -19,6 +26,52 @@ export default function AuthSection() {
   const [processing, setProcessing] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [otp, setOtp] = useState<number | undefined>();
+
+  const loginRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleIntersection = (entries: any) => {
+      entries.forEach((entry: any) => {
+        if (entry.isIntersecting && loginRef.current) {
+          setGlow(true);
+          // loginRef.current.classList.add("animate-login-glow");
+          setTimeout(() => {
+            if (loginRef.current) {
+              setGlow(false);
+              // loginRef.current.classList.remove("animate-login-glow");
+            }
+          }, 1000);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 1.0, // Adjust as needed
+    });
+
+    if (loginRef.current) {
+      observer.observe(loginRef.current);
+    }
+
+    // Cleanup observer on component unmount
+    const cur = loginRef.current;
+    return () => {
+      if (cur) {
+        observer.unobserve(cur);
+      }
+    };
+  }, [setGlow]);
+
+  useEffect(() => {
+    if (glow && loginRef.current) {
+      loginRef.current.classList.add("animate-login-glow");
+      setTimeout(() => {
+        if (loginRef.current) {
+          loginRef.current.classList.remove("animate-login-glow");
+        }
+      }, 1000);
+    }
+  }, [glow]);
 
   const handleSendOTP = async () => {
     if (!agreeToTerms)
@@ -50,7 +103,7 @@ export default function AuthSection() {
     if (error) {
       // toast.error(error.message);
     } else {
-      console.log({data});
+      console.log({ data });
 
       toast(`Another OTP code has been sent to your email: ${email}`);
     }
@@ -121,10 +174,14 @@ export default function AuthSection() {
   };
 
   return (
-    <div className="bg-white mb-[20px] md:mb-0 w-full md:max-w-[600px]  md:w-1/2  h-auto rounded-[20px]">
+    <div
+      id="login"
+      ref={loginRef}
+      className="bg-white mb-[20px] md:mb-0 w-full md:max-w-[600px]  md:w-1/2  h-auto rounded-[20px]"
+    >
       <div className="flex justify-center flex-col px-[20px] pt-[22px] md:pt-[30px] lg:pt-[20px] xl:pt-[30px]">
         <h2 className="whitespace-nowrap text-[18px] lg:text-[22px] xl:text-[32px] font-[700] font-poppins">
-          Setup & Start 3-Day Trial
+          Login & Start 3-Day Trial
         </h2>
         <p className="mt-[7px] md:mt-[10px] text-[14px] lg:text-[16px] font-poppins">
           Unlimited Questions, Unlimited Answers just £5 for 3 days!

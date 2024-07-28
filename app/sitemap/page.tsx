@@ -41,10 +41,10 @@ export default function SitemapPage() {
             <Link href="/" className="font-bold hover:underline cursor-pointer text-[25px] text-black">How to Subscribe</Link>
             <div className="flex flex-col leading-[40px] pl-8">
               {/* <Link href="/why-ask-us" className="font-[500] text-[18px] hover:underline">Why Use AskUs</Link> */}
-              <Link href="/login" className="font-[500] text-[18px] hover:underline">Subscriber Login</Link>
-              <Link href="/login" className="font-[500] text-[18px] hover:underline">Sign Up</Link>
-              <Link href="/login" className="font-[500] text-[18px] hover:underline">Sign In</Link>
-              <Link href="/login" className="font-[500] text-[18px] hover:underline">Register Up</Link>
+              <Link href="/#login" className="font-[500] text-[18px] hover:underline">Subscriber Login</Link>
+              <Link href="/#login" className="font-[500] text-[18px] hover:underline">Sign Up</Link>
+              <Link href="/#login" className="font-[500] text-[18px] hover:underline">Sign In</Link>
+              <Link href="/#login" className="font-[500] text-[18px] hover:underline">Register Up</Link>
             </div>
           </div>
 

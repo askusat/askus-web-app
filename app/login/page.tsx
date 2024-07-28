@@ -53,7 +53,7 @@ export default function Login() {
       <head>
         <title>Login to Your AskUs Account - Access Services Now</title>
         <meta name="description" content="Sign in to AskUs to connect with expert advice and services. Secure and easy access to your account and resources." />
-        
+
       </head>
       <AuthLayout>
         <div className="w-full px-[5%] md:px-[10%] lg:px-[15%] xl:px-[20%]">
@@ -170,7 +170,7 @@ export default function Login() {
             </Button>
             <p className="text-center text-[#8091A7] italic text-sm mt-3">
               {`Don't have an account?`}{" "}
-              <Link href={`${returnUrl ? `/signup?returnUrl=${returnUrl}` : `/signup`}`} className="text-primary">
+              <Link href={`${returnUrl ? `/#login?returnUrl=${returnUrl}` : `/#login`}`} className="text-primary">
                 Register here
               </Link>
             </p>

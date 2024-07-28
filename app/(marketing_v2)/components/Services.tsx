@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Services = () => {
@@ -108,9 +109,11 @@ const Services = () => {
         </div>
 
         <div className="py-[40px] flex justify-center items-center">
-          <button className="px-4 py-2 border-[2px] hover:bg-[#0023FF] hover:text-white text-[#0023FF] text-[15px] md:text-[20px] font-[500]  border-[#0023FF] border-solid rounded-[5px] md:rounded-[10px] leading-[18.15px]">
-            Get Started
-          </button>
+          <Link href={"/#login"}>
+            <button className="px-4 py-2 border-[2px] hover:bg-[#0023FF] hover:text-white text-[#0023FF] text-[15px] md:text-[20px] font-[500]  border-[#0023FF] border-solid rounded-[5px] md:rounded-[10px] leading-[18.15px]">
+              Get Started
+            </button>
+          </Link>
         </div>
       </div>
       {/* Round stuff */}

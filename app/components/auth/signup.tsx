@@ -40,7 +40,7 @@ export const SignupStepOne = ({
       .eq("email", email);
     // if yes, take them to login
     if (error) {
-      //   navigate("/login");
+      //   navigate("/#login");
     } else {
       // sign up then continue to payment
       if (processingSignUp) return;
@@ -231,7 +231,7 @@ export const SignupStepOne = ({
       <div className="text-center">
         <p className="text-center text-[#8091A7] italic text-xs">
           Already have an account?{" "}
-          <Link href={`${returnUrl ? `/login?returnUrl=${returnUrl}` : `/login`}`} className="text-primary">
+          <Link href={`${returnUrl ? `/#login?returnUrl=${returnUrl}` : `/#login`}`} className="text-primary">
             Login
           </Link>
         </p>
