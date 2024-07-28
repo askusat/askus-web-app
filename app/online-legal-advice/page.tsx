@@ -66,7 +66,7 @@ export default function page() {
         {
             "id": 1,
             "heading": "Registration:",
-            "peragraph": "<a href='https://www.askusat.co.uk/signup' style='text-decoration: underline; color: #0b69ff;'>Sign up</a> for an account on our platform by providing basic information about yourself and your legal issue."
+            "peragraph": "<a href='https://www.askusat.co.uk#login' style='text-decoration: underline; color: #0b69ff;'>Sign up</a> for an account on our platform by providing basic information about yourself and your legal issue."
         },
         {
             "id": 2,

@@ -1,16 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 import AuthSection from "./AuthSection";
 // import Modal from "./Modal";
 import Nav from "@/app/components/layout/nav";
+import Link from "next/link";
 
 const Hero = () => {
-  // const [isModalOpen, setModalOpen] = useState(false);
-
-  // const openModal = () => setModalOpen(true);
-  // const closeModal = () => setModalOpen(false);
+  const [glow, setGlow] = useState(false);
 
   return (
     <div className="bg-[url('/bg.svg')] bg-no-repeat bg-cover h-auto md:h-screen max-h-[900px] flex justify-center overflow-hidden relative">
@@ -167,12 +165,14 @@ const Hero = () => {
               accessible legal help tailored to your needs.
             </p>
 
-            <button className="hidden sm:py-[15px] sm:px-[30px] md:flex  z-10 lg:px-[27px] py-[18px] bg-gradient-to-r text-[15px] lg:text-[20px] from-[#0477FE] to-[#0023FF] text-white rounded-[10px]">
-              Get Started
-            </button>
+            <Link href={"/#login"} onClick={() => setGlow(true)}>
+              <button className="hidden sm:py-[15px] sm:px-[30px] md:flex  z-10 lg:px-[27px] py-[18px] bg-gradient-to-r text-[15px] lg:text-[20px] from-[#0477FE] to-[#0023FF] text-white rounded-[10px]">
+                Get Started
+              </button>
+            </Link>
           </div>
 
-          <AuthSection />
+          <AuthSection glow={glow} setGlow={setGlow} />
         </div>
       </div>
       {/* Round stuff */}

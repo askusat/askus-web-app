@@ -12,7 +12,7 @@ const Highlight = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3  place-items-center w-full justify-items-center  md:gap-[30px] pb-8 md:pb-0 lg:pb-[80px]">
+        <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 _place-items-center w-full justify-items-center  md:gap-[30px] pb-8 md:pb-0 lg:pb-[80px]">
           <div className="flex _justify-center items-center flex-col text-center">
             <div className="w-[92px] h-[92px] md:w-[133px] md:h-[133px] mt-[20px] md:mt-[22px] rounded-full bg-askUsat-gradient flex items-center justify-center">
               <svg

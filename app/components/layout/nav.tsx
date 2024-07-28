@@ -118,7 +118,7 @@ export default function Nav() {
             {/* <Link href="/signup" className="text-black hover:text-primary">
               Register
             </Link>
-            <Link href="/login" className="text-black hover:text-primary">
+            <Link href="/#login" className="text-black hover:text-primary">
               Sign In
             </Link> */}
           </>
@@ -457,7 +457,7 @@ export default function Nav() {
                       className="w-full"
                     >
                       <Link
-                        href="/login"
+                        href="/#login"
                         className="flex items-center gap-4 text-lg text-black w-full hover:bg-blue-200 py-1 px-3 rounded-lg group hover:text-primary"
                       >
                         <MdLogin

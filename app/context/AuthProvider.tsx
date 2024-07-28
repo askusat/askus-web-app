@@ -50,7 +50,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setUser(null);
         setLoading(false);
         if (check) return;
-        router.replace("/login");
+        router.replace("/#login");
       }
       const authUserData: User = authUserDataM as User;
       setUser(authUserData);
@@ -110,7 +110,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
         if (error || !user) {
           if (PROTECTED_PAGES.includes(pathname)) {
-            router.push(`/signup?returnUrl=${pathname.split("/").pop()}`);
+            router.push(`/#login`);
           }
           return setLoading(false);
         }
@@ -270,7 +270,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     await supabase.auth.signOut();
     console.log("logged out");
     window.localStorage.removeItem("userData");
-    // router.push("/login");
+    // router.push("/#login");
   };
 
   const values = {

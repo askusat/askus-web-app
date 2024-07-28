@@ -53,7 +53,7 @@ export default function PopUp() {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Not now
                 </Button>
-                <Link href={"/signup"}>
+                <Link href={"/#login"}>
                   <Button color="primary" onPress={onClose}>
                     Get Started
                   </Button>

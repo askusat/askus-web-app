@@ -10,7 +10,7 @@ const Footer = () => {
             Contact Askus Anytime today for reliable <br />
             legal assistance in the UK
           </h1>
-          <Link href={"/chat"}>
+          <Link href={"/#login"}>
             <button className="mt-[30px] md:mt-0 md:px-[27px] py-2 px-4 md:py-[14px] border border-white text-white rounded-[10px]">
               Get Started
             </button>

@@ -44,7 +44,7 @@ export default function Login() {
       });
       setIsModalOpen(true);
     }
-    if (data?.user) return router.push(`/login`);
+    if (data?.user) return router.push(`/#login`);
   };
 
   useEffect(() => {
