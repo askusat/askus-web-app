@@ -101,7 +101,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <Script
         id="fb-pixel"
         strategy="afterInteractive"
@@ -134,16 +134,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }}
       />
 
-      <noscript>
+      {/* <noscript>
         <iframe
           src="https://www.googletagmanager.com/ns.html?id=GTM-T9GXXQG6"
           height="0"
           width="0"
           style={{ display: "none", visibility: "hidden" }}
         ></iframe>
-      </noscript>
+      </noscript> */}
 
       <body
+      suppressHydrationWarning
         className={`${inter.className} font-MontserratRegular bg-white text-black`}
       >
         <ToastContainer />

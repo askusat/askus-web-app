@@ -1533,7 +1533,7 @@ export default function ChatPage() {
             </div>
 
             {!user?.isAdmin && (
-              <footer className="fixed md:static grid place-items-center bottom-0 w-full h-[80px] bg-white">
+              <footer suppressHydrationWarning className="fixed md:static grid place-items-center bottom-0 w-full h-[80px] bg-white">
                 <div className="px-6">
                   <Button
                     aria-label="Ask new question"

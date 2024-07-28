@@ -115,12 +115,12 @@ export default function Nav() {
         </Link>
         {!user ? (
           <>
-            <Link href="/signup" className="text-black hover:text-primary">
+            {/* <Link href="/signup" className="text-black hover:text-primary">
               Register
             </Link>
             <Link href="/login" className="text-black hover:text-primary">
               Sign In
-            </Link>
+            </Link> */}
           </>
         ) : (
           <>
@@ -433,7 +433,7 @@ export default function Nav() {
                 </motion.div>
                 {!user ? (
                   <>
-                    <motion.div
+                    {/* <motion.div
                       variants={mobileLinkVars}
                       initial="initial"
                       animate="open"
@@ -449,8 +449,8 @@ export default function Nav() {
                         />
                         <span>Register</span>
                       </Link>
-                    </motion.div>
-                    <motion.div
+                    </motion.div> */}
+                    {/* <motion.div
                       variants={mobileLinkVars}
                       initial="initial"
                       animate="open"
@@ -466,7 +466,7 @@ export default function Nav() {
                         />
                         <span>Login</span>
                       </Link>
-                    </motion.div>
+                    </motion.div> */}
                   </>
                 ) : (
                   <motion.div

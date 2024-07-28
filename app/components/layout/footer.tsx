@@ -7,7 +7,7 @@ import React from "react";
 
 export default function Footer() {
   const pathname = usePathname();
-  const list = ["/chat", "/chatv2",];
+  const list = ["/", "/chat", "/chatv2",];
 
   if (list.includes(pathname)) {
     return <></>;
@@ -16,6 +16,7 @@ export default function Footer() {
   return (
 
     <footer
+    suppressHydrationWarning
       className={`${pathname === "/profile" && "mb-16 lg:mb-0"
         } flex flex-col bg-[#0580FE] w-full lg:px-[60px] px-[5%]`}
     >
@@ -123,7 +124,7 @@ export default function Footer() {
 
       <div className="mt-8 flex items-center justify-end w-full h-full mb-6 flex-col text-[18px] font-Poppins md:leading-[50.3px] tracking-[1px] text-[#FFFFFF]">
         <div className="text-center mb-4 md:mb-0">
-          ©2023 AskUs Limited. All rights reserved.
+          ©2024 AskUs Limited. All rights reserved.
         </div>
         <div className="flex flex-col md:flex-row items-center md:gap-3 gap-2">
           <Link href="/privacy-policy" className="text-[#FFFFFF]">
