@@ -33,7 +33,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const pathname = usePathname();
   // const searchParams = useSearchParams();
   const searchParams = new URLSearchParams(
-    typeof window !== 'undefined' ? window.location.search : '',
+    typeof window !== "undefined" ? window.location.search : ""
   );
   const returnUrl = searchParams.get("returnUrl");
 
@@ -197,6 +197,28 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     };
   }, [notifications, user]);
 
+  const [showPayment, setShowPayment] = useState(false);
+  useEffect(() => {
+    if (!user) return;
+    setShowPayment(true);
+    if (!user.isSubscribed) {
+      setTimeout(() => {
+        setShowPayment(true);
+      }, 1000);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const bodyEl = document.querySelector("body");
+    if (bodyEl) {
+      if (showPayment) {
+        bodyEl.classList.add("h-screen", "overflow-hidden");
+      } else {
+        bodyEl.classList.remove("h-screen", "overflow-hidden");
+      }
+    }
+  }, [showPayment]);
+
   const handleSignup = async (
     params: SignUpParam,
     errorCallback: (error: any) => void,
@@ -284,6 +306,8 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     signup: handleSignup,
     login: handleLogin,
     logout: handleLogout,
+    showPayment,
+    setShowPayment,
   };
 
   // React.Dispatch<React.SetStateAction<User>>
