@@ -200,7 +200,6 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [showPayment, setShowPayment] = useState(false);
   useEffect(() => {
     if (!user) return;
-    setShowPayment(true);
     if (!user.isSubscribed) {
       setTimeout(() => {
         setShowPayment(true);
