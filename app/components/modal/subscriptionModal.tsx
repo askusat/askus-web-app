@@ -12,6 +12,7 @@ import {
 } from "@stripe/stripe-js";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const stripePromise = loadStripe(STRIPE_Pk!);
@@ -81,9 +82,18 @@ export default function SubscriptionModal() {
 
   return (
     <div className="fixed z-[9999999] top-0 left-0 w-full h-screen">
-      <div className="absolute top-0 left-0 w-full h-screen bg-black/50 cursor-pointer" />
+      <div
+        className="absolute top-0 left-0 w-full h-screen bg-black/50 cursor-pointer"
+        onClick={() => setShowPayment(false)}
+      />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[90%] mx-auto md:min-w-[650px]">
-        <form className="bg-white p-4 md:px-16 md:py-[45px] rounded-[20px]">
+        <form className="bg-white p-4 md:px-16 md:py-[45px] rounded-[20px] relative">
+          <div
+            className="absolute top-2 right-2 ring-2 cursor-pointer"
+            onClick={() => setShowPayment(false)}
+          >
+            <FaTimes className="text-red-600" size={20} />
+          </div>
           <div className="text-center text-2xl md:text-[42px] font-bold text-[#0477FE] md:leading-[63px]">
             Subscription
           </div>

@@ -70,6 +70,7 @@ export default function ChatPage() {
     loading: authLoading,
     setOnChatPageId,
     notifications,
+    setShowPayment,
   } = useAuth();
   const [selectedChatId, setSelectedChatId] = useState(0);
   const [selectedChat, setSelectedChat] = useState<Chat>(null);
@@ -718,10 +719,10 @@ export default function ChatPage() {
 
     if (!error && data) {
       try {
-        const chat: Chat = data
+        const chat: Chat = data;
         await axios.post(`/api/send-email`, {
           // to: ["paulinnocent05@gmail.com", "paulinnocent04@gmail.com"],
-          to: ["oxford_lawyer@yahoo.co.uk", 'nancy.josee.smith@gmail.com'],
+          to: ["oxford_lawyer@yahoo.co.uk", "nancy.josee.smith@gmail.com"],
           subject: `New conversation started by ${user?.username}`,
           content: `<div style="font-size: 16px;">
             <p>${user.fullName} (${user.username}) just started a conversation, please join now.</p>
@@ -1339,9 +1340,14 @@ export default function ChatPage() {
 
             {user?.credit === undefined ||
               (!user?.isSubscribed && user?.credit <= 0 && (
-                <Link href={"/payment?returnUrl=/chat"}>
-                  <Button>Subscribe</Button>
-                </Link>
+                // <Link href={"/payment?returnUrl=/chat"}>
+                <Button
+                  className="cursor-pointer"
+                  onClick={() => setShowPayment(true)}
+                >
+                  Subscribe
+                </Button>
+                // </Link>
               ))}
 
             <Link href={"/"}>
@@ -1533,7 +1539,10 @@ export default function ChatPage() {
             </div>
 
             {!user?.isAdmin && (
-              <footer suppressHydrationWarning className="fixed md:static grid place-items-center bottom-0 w-full h-[80px] bg-white">
+              <footer
+                suppressHydrationWarning
+                className="fixed md:static grid place-items-center bottom-0 w-full h-[80px] bg-white"
+              >
                 <div className="px-6">
                   <Button
                     aria-label="Ask new question"
