@@ -4,7 +4,12 @@ import { STRIPE_Pk } from "@/app/config";
 import { useAuth } from "@/app/hooks/useAuth";
 import { supabase } from "@/app/supabaseClient";
 import { User } from "@/types";
-import { Elements, PaymentElement } from "@stripe/react-stripe-js";
+import {
+  Elements,
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
 import {
   Appearance,
   loadStripe,
@@ -12,6 +17,7 @@ import {
 } from "@stripe/stripe-js";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -87,7 +93,7 @@ export default function SubscriptionModal() {
         onClick={() => setShowPayment(false)}
       />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[90%] mx-auto md:min-w-[650px]">
-        <form className="bg-white p-4 md:px-16 md:py-[45px] rounded-[20px] relative">
+        <div className="bg-white p-4 md:px-16 md:py-[45px] rounded-[20px] relative">
           <div
             className="absolute top-2 right-2 ring-2 cursor-pointer"
             onClick={() => setShowPayment(false)}
@@ -101,7 +107,7 @@ export default function SubscriptionModal() {
             Join for £5
           </div>
 
-          <div className="mt-6 max-h-[700px] md:max-h-[300px] overflow-y-auto overflow-x-hidden">
+          <>
             {clientSecret ? (
               <Elements
                 stripe={stripePromise}
@@ -124,14 +130,8 @@ export default function SubscriptionModal() {
                 </p>
               </>
             )}
-          </div>
-          <button
-            type="submit"
-            className="mt-4 md:mt-10 lg:px-[60px] px-[49px] py-[8px] lg:py-[15px] md:px-[40px] md:py-[10px] xl:px-[82px] xl:py-[18px] bg-gradient-to-r text-[12px] lg:text-[20px] from-[#0477FE] to-[#0023FF] text-white rounded-[10px] flex items-center gap-3 w-full justify-center"
-          >
-            Continue
-          </button>
-        </form>
+          </>
+        </div>
       </div>
     </div>
   );
@@ -144,11 +144,78 @@ const StripeCont = ({
   user: User;
   clientSecret: string;
 }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [processingPayment, setProcessingPayment] = useState(false);
+
+  const handleSubmit = async () => {
+    if (processingPayment) {
+      toast.warning("Please wait");
+      return;
+    }
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    // Trigger form validation and wallet collection
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      console.log("submitError:", submitError);
+      alert(submitError.type + ": " + submitError.message);
+      return;
+    }
+
+    setProcessingPayment(true);
+
+    const returnUrl = window.location.href + `/payment/confirm-payment`;
+
+    const { error } = await stripe.confirmSetup({
+      elements,
+      clientSecret,
+      confirmParams: {
+        return_url: returnUrl,
+      },
+    });
+
+    if (error) {
+      toast.error(error?.type + ": " + error?.message);
+    }
+
+    setProcessingPayment(false);
+  };
+
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: "tabs",
   };
 
   return (
-    <PaymentElement id="payment-element" options={paymentElementOptions} />
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit();
+      }}
+    >
+      <div className="mt-6 max-h-[700px] md:max-h-[300px] overflow-y-auto overflow-x-hidden px-2">
+        <PaymentElement id="payment-element" options={paymentElementOptions} />
+      </div>
+
+      <button
+        type={processingPayment ? "button" : "submit"}
+        className={`mt-4 md:mt-10 lg:px-[60px] px-[49px] py-[8px] lg:py-[15px] md:px-[40px] md:py-[10px] xl:px-[82px] xl:py-[18px] bg-gradient-to-r text-[12px] lg:text-[20px] from-[#0477FE] to-[#0023FF] text-white rounded-[10px] flex items-center gap-3 w-full justify-center ${
+          processingPayment ? "cursor-wait" : "cursor-pointer"
+        }`}
+      >
+        <span> {processingPayment ? `Processing...` : `Continue`} </span>
+      </button>
+      {processingPayment && (
+        <div className="flex items-center justify-center gap-2 py-3">
+          <AiOutlineLoading3Quarters className="animate-spin" />
+          <p className="font-[500] text-xs md:text-sm font-MontserratSemiBold text-[#757575] animate-pulse">
+            {`We're processing your request, please wait...`}
+          </p>
+        </div>
+      )}
+    </form>
   );
 };

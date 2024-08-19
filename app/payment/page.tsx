@@ -35,6 +35,7 @@ export default function PaymentPage() {
   const [clientSecret, setClientSecret] = useState("");
   const [proccessingSetupIntent, setProccessingSetupIntent] = useState(false);
 
+  // setAuthUser
   useEffect(() => {
     setProgress("70%");
     const f = async () => {

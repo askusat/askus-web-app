@@ -24,35 +24,35 @@ const config = {
       //   "gradient-conic":
       //     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       // },
-    },
-    fontFamily: {
-      MontserratRegular: "Montserrat-Regular, sans-serif",
-      MontserratSemiBold: "Montserrat-SemiBold, sans-serif",
-      MontserratBold: "Montserrat-Bold, sans-serif",
-      PoppinsRegular: "Poppins-Regular, sans-serif",
-      PoppinsSemiBold: "Poppins-SemiBold, sans-serif",
-      PoppinsBold: "Poppins-Bold, sans-serif",
-    },
-    keyframes: {
-      "accordion-down": {
-        from: { height: "0" },
-        to: { height: "var(--radix-accordion-content-height)" },
+      fontFamily: {
+        MontserratRegular: "Montserrat-Regular, sans-serif",
+        MontserratSemiBold: "Montserrat-SemiBold, sans-serif",
+        MontserratBold: "Montserrat-Bold, sans-serif",
+        PoppinsRegular: "Poppins-Regular, sans-serif",
+        PoppinsSemiBold: "Poppins-SemiBold, sans-serif",
+        PoppinsBold: "Poppins-Bold, sans-serif",
       },
-      "accordion-up": {
-        from: { height: "var(--radix-accordion-content-height)" },
-        to: { height: "0" },
-      },
-      "login-glow": {
-        "0%, 100%": {
-          boxShadow: "0 0 5px blue",
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
-        "50%": { boxShadow: "0 0 20px blue", },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "login-glow": {
+          "0%, 100%": {
+            boxShadow: "0 0 5px blue",
+          },
+          "50%": { boxShadow: "0 0 20px blue" },
+        },
       },
-    },
-    animation: {
-      "accordion-down": "accordion-down 0.2s ease-out",
-      "accordion-up": "accordion-up 0.2s ease-out",
-      "login-glow": "login-glow 1s ease-in-out 2",
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "login-glow": "login-glow 1s ease-in-out 2",
+      },
     },
   },
   darkMode: "class",

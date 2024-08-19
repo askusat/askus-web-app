@@ -202,11 +202,13 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     if (!user) return;
 
     if (!user.isSubscribed) {
-      setTimeout(() => {
-        setShowPayment(true);
-      }, 1000);
+      if (pathname !== `/payment/confirm-payment`) {
+        setTimeout(() => {
+          setShowPayment(true);
+        }, 1000);
+      }
     }
-  }, [user]);
+  }, [pathname, user]);
 
   useEffect(() => {
     const bodyEl = document.querySelector("body");
