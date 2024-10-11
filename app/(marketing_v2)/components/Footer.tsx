@@ -17,6 +17,24 @@ const Footer = () => {
           </Link>
         </div>
       </div>
+      <div className="mt-8 flex items-center justify-end w-full h-full pb-6 flex-col text-[18px] font-Poppins md:leading-[50.3px] tracking-[1px] text-[#FFFFFF]">
+        <div className="text-center mb-4 md:mb-0">
+          ©2024 AskUs Limited. All rights reserved.
+        </div>
+        <div className="flex flex-col md:flex-row items-center md:gap-3 gap-2">
+          <Link href="/privacy-policy" className="text-[#FFFFFF]">
+            Privacy Policy
+          </Link>
+          <div className="hidden md:block"> | </div>
+          <Link href="/terms-of-service" className="text-[#FFFFFF]">
+            Terms of Service
+          </Link>
+          <div className="hidden md:block"> | </div>
+          <Link href="/sitemap" className="text-[#FFFFFF]">
+            Sitemap
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

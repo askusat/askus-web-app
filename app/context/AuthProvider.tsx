@@ -214,9 +214,9 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const bodyEl = document.querySelector("body");
     if (bodyEl) {
       if (showPayment) {
-        bodyEl.classList.add("h-screen", "overflow-hidden");
+        bodyEl.classList.add("h-screen", "overflow-hidden-");
       } else {
-        bodyEl.classList.remove("h-screen", "overflow-hidden");
+        bodyEl.classList.remove("h-screen", "overflow-hidden-");
       }
     }
   }, [showPayment]);

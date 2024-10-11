@@ -12,39 +12,12 @@ const faqData = [
   {
     question: "What types of legal guidance does Askus Anytime specialise in?",
     answer:
-      "Tailwind CSS is a utility-first CSS framework for rapidly building custom designs.",
+      "AskUs Anytime covers a wide range of areas of law including but not limited to criminal law, family law, property law, immigration law, neighbour disputes, noise complaints, social media/harassment issues and human rights claims.",
   },
   {
     question: "Are your legal assistance services affordable?",
     answer:
-      "useState is a Hook that lets you add React state to function components.",
-  },
-  {
-    question: "How can a property dispute lawyer help resolve my issues?",
-    answer:
-      "useState is a Hook that lets you add React state to function components.",
-  },
-  {
-    question: "What services does a British immigration lawyer offer?",
-    answer:
-      "useState is a Hook that lets you add React state to function components.",
-  },
-  {
-    question:
-      "I am looking for legal advice for business owners. Do you provide?",
-    answer:
-      "useState is a Hook that lets you add React state to function components.",
-  },
-  {
-    question:
-      "How can I establish child contact arrangements after separation?",
-    answer:
-      "useState is a Hook that lets you add React state to function components.",
-  },
-  {
-    question: "What rights do employees have under UK employment law?",
-    answer:
-      "useState is a Hook that lets you add React state to function components.",
+      "Our services are very affordable compared to a typical legal service, you can speak to a solicitor now.",
   },
 ];
 

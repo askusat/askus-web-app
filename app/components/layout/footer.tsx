@@ -7,21 +7,22 @@ import React from "react";
 
 export default function Footer() {
   const pathname = usePathname();
-  const list = ["/", "/chat", "/chatv2",];
+  const list = ["/", "/chat", "/chatv2", "/membershiponly", "/Subscription"];
 
   if (list.includes(pathname)) {
     return <></>;
   }
 
   return (
-
     <footer
-    suppressHydrationWarning
-      className={`${pathname === "/profile" && "mb-16 lg:mb-0"
-        } flex flex-col bg-[#0580FE] w-full lg:px-[60px] px-[5%]`}
+      suppressHydrationWarning
+      className={`${
+        pathname === "/profile" && "mb-16 lg:mb-0"
+      } flex flex-col bg-[#0580FE] w-full lg:px-[60px] px-[5%]`}
     >
       <head>
-        <link rel="canonical" href={`https://www.askusat.co.uk${pathname}`} /></head>
+        <link rel="canonical" href={`https://www.askusat.co.uk${pathname}`} />
+      </head>
       <div className="flex flex-col lg:flex-row justify-between w-full">
         <div className="flex flex-col lg:items-start md:items-center">
           <Image
