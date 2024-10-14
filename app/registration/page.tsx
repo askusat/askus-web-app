@@ -21,13 +21,7 @@ import Nav from "../components/layout/nav";
 
 const stripePromise = loadStripe(STRIPE_Pk!);
 
-export default function AuthSection({
-  glow,
-  setGlow,
-}: {
-  glow: boolean;
-  setGlow: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function AuthSection() {
   const { setUser, setShowPayment } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -38,52 +32,6 @@ export default function AuthSection({
   // const [showPayment, ] = useState(false);
 
   const loginRef = useRef<HTMLDivElement | null>(null);
-
-  // handleIntersection
-  useEffect(() => {
-    const handleIntersection = (entries: any) => {
-      entries.forEach((entry: any) => {
-        if (entry.isIntersecting && loginRef.current) {
-          setGlow(true);
-          // loginRef.current.classList.add("animate-login-glow");
-          setTimeout(() => {
-            if (loginRef.current) {
-              setGlow(false);
-              // loginRef.current.classList.remove("animate-login-glow");
-            }
-          }, 1000);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 1.0, // Adjust as needed
-    });
-
-    if (loginRef.current) {
-      observer.observe(loginRef.current);
-    }
-
-    // Cleanup observer on component unmount
-    const cur = loginRef.current;
-    return () => {
-      if (cur) {
-        observer.unobserve(cur);
-      }
-    };
-  }, [setGlow]);
-
-  // animation
-  useEffect(() => {
-    if (glow && loginRef.current) {
-      loginRef.current.classList.add("animate-login-glow");
-      setTimeout(() => {
-        if (loginRef.current) {
-          loginRef.current.classList.remove("animate-login-glow");
-        }
-      }, 1000);
-    }
-  }, [glow]);
 
   const handleSendOTP = async () => {
     if (!agreeToTerms)
