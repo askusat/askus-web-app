@@ -44,7 +44,7 @@ export default function Login() {
       });
       setIsModalOpen(true);
     }
-    if (data?.user) return router.push(`/#login`);
+    if (data?.user) return router.push(`/registration`);
   };
 
   useEffect(() => {
@@ -73,13 +73,19 @@ export default function Login() {
           </Link>
 
           <h5 className="font-bold font-PlusJakartaSansBold text-black/80 text-[18px] md:text-[25px] mt-4 mb-1 -ml-2">
-          Reset Password
+            Reset Password
           </h5>
 
-          <p className="mb-4 text-[17px]">Enter your new password below to reset your password.</p>
+          <p className="mb-4 text-[17px]">
+            Enter your new password below to reset your password.
+          </p>
 
           {errorMsg?.message && (
-            <div className={`${errorMsg.title === "Success" ? "bg-green-300" : "bg-red-300"} py-3 px-4 rounded-lg text-gray-900`}>
+            <div
+              className={`${
+                errorMsg.title === "Success" ? "bg-green-300" : "bg-red-300"
+              } py-3 px-4 rounded-lg text-gray-900`}
+            >
               <div className="font-bold">{errorMsg.title}</div>
               <div className="">{errorMsg.message}</div>
             </div>

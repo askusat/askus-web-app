@@ -27,7 +27,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   // const searchParams = useSearchParams();
   const searchParams = new URLSearchParams(
-    typeof window !== 'undefined' ? window.location.search : '',
+    typeof window !== "undefined" ? window.location.search : ""
   );
   const returnUrl = searchParams.get("returnUrl");
 
@@ -52,13 +52,21 @@ export default function Login() {
     <>
       <head>
         <title>Login to Your AskUs Account - Access Services Now</title>
-        <meta name="description" content="Sign in to AskUs to connect with expert advice and services. Secure and easy access to your account and resources." />
-
+        <meta
+          name="description"
+          content="Sign in to AskUs to connect with expert advice and services. Secure and easy access to your account and resources."
+        />
       </head>
       <AuthLayout>
         <div className="w-full px-[5%] md:px-[10%] lg:px-[15%] xl:px-[20%]">
           <Link href="/">
-            <Image src="/logo-2.svg" alt="logo" width={200} height={40} className="h-auto" />
+            <Image
+              src="/logo-2.svg"
+              alt="logo"
+              width={200}
+              height={40}
+              className="h-auto"
+            />
           </Link>
 
           <h5 className="font-bold font-PlusJakartaSansBold text-black/80 text-[18px] md:text-[25px] mt-4 mb-1 -ml-2">
@@ -130,10 +138,11 @@ export default function Login() {
                   {showPassword && (
                     <FaEyeSlash
                       color="#8094AE"
-                      className={`${showPassword
+                      className={`${
+                        showPassword
                           ? "opacity-100 pointer-events-auto"
                           : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
-                        } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                      } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
                       width={25}
                       height={25}
                       onClick={() => {
@@ -144,10 +153,11 @@ export default function Login() {
                   {!showPassword && (
                     <FaEye
                       color="#8094AE"
-                      className={`${!showPassword
+                      className={`${
+                        !showPassword
                           ? "opacity-100 pointer-events-auto"
                           : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
-                        } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                      } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
                       width={25}
                       height={25}
                       onClick={() => {
@@ -170,7 +180,14 @@ export default function Login() {
             </Button>
             <p className="text-center text-[#8091A7] italic text-sm mt-3">
               {`Don't have an account?`}{" "}
-              <Link href={`${returnUrl ? `/#login?returnUrl=${returnUrl}` : `/#login`}`} className="text-primary">
+              <Link
+                href={`${
+                  returnUrl
+                    ? `/registration?returnUrl=${returnUrl}`
+                    : `/registration`
+                }`}
+                className="text-primary"
+              >
                 Register here
               </Link>
             </p>

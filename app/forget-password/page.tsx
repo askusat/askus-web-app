@@ -82,7 +82,10 @@ export default function Login() {
     <>
       <head>
         <title>Reset Your Password - Easy Recovery | AskUs</title>
-        <meta name="description" content="Quickly reset your AskUs password with our straightforward recovery process. Regain access to your account now." />
+        <meta
+          name="description"
+          content="Quickly reset your AskUs password with our straightforward recovery process. Regain access to your account now."
+        />
       </head>
       <AuthLayout>
         <div className="w-full px-[5%] md:px-[10%] lg:px-[15%] xl:px-[20%]">
@@ -155,11 +158,11 @@ export default function Login() {
               </Button>
 
               <div className="flex items-center justify-center gap-3 text-sm">
-                <Link href={`/#login`} className="text-primary">
+                <Link href={`/registration`} className="text-primary">
                   Login
                 </Link>
                 <div className="">|</div>
-                <Link href={`/#login`} className="text-primary">
+                <Link href={`/registration`} className="text-primary">
                   Register here
                 </Link>
               </div>

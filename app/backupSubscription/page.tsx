@@ -7,6 +7,7 @@ import {
 } from "@stripe/stripe-js";
 import { toast } from "react-toastify";
 import { STRIPE_Pk } from "../config";
+import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { supabase } from "../supabaseClient";
@@ -24,6 +25,7 @@ import Image from "next/image";
 const stripePromise = loadStripe(STRIPE_Pk!);
 
 export default function SubscriptionPage() {
+  const { user, setShowPayment } = useAuth();
   const [clientSecret, setClientSecret] = useState("");
   const [proccessingSetupIntent, setProccessingSetupIntent] = useState(false);
 
@@ -40,20 +42,19 @@ export default function SubscriptionPage() {
     }
 
     const fetch = async () => {
+      if (!user) {
+        toast.warning("You need to login first!");
+        setShowPayment(false);
+        return;
+      }
+
       setProccessingSetupIntent(true);
       console.log("start proccessing setupIntent...");
-
-      // Assuming you have user details passed or retrieved elsewhere
-      const user = {
-        fullName: "John Doe", // Replace with actual user's name
-        email: "johndoe@example.com", // Replace with actual user's email
-      };
-
       let setupIntentRes = await axios
         .post(`/api/stripe`, {
           route: "create_intent",
           name: user.fullName,
-          email: user.email,
+          email: user?.email,
         })
         .then((response: any) => response.data)
         .catch((err: any) => {
@@ -73,13 +74,16 @@ export default function SubscriptionPage() {
       }
     };
     fetch();
-  }, [proccessingSetupIntent]);
+  }, [proccessingSetupIntent, setShowPayment, user]);
 
   const appearance: Appearance = {
+    // theme: 'stripe',
     theme: "flat",
     variables: {
       colorPrimaryText: "#fff",
       colorPrimary: "#EF5F3C",
+      // fontFamily: 'Ideal Sans, system-ui, sans-serif',
+      // colorBackground: '#ffffff',
     },
   };
 
@@ -88,7 +92,10 @@ export default function SubscriptionPage() {
       className=" w-full  pt-20 pb-20 2xl:px-80 xl:px-40 md:px-20 sm:px-10  flex-grow relative bg-cover bg-no-repeat bg-top"
       style={{
         backgroundImage:
-          "linear-gradient(45deg, rgba(0, 112, 240, 0.75), rgba(0, 112, 240, 0.6), rgba(0, 112, 240, 0.45), rgba(0, 112, 240, 0.3), rgba(0, 112, 240, 0.15)), url(team2.jpg)",
+          "url(https://ww2.justanswer.co.uk/static/JA45108/background.jpg)",
+        backgroundPosition: "top",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
       }}
     >
       <div className="flex flex-col md:flex-row md:space-x-4 w-full">
@@ -166,7 +173,7 @@ export default function SubscriptionPage() {
                 question!
               </span>
             </div>
-            <div className="bg-white relative">
+            <div className="bg-white  relative">
               <>
                 {clientSecret ? (
                   <Elements
@@ -176,7 +183,7 @@ export default function SubscriptionPage() {
                       appearance,
                     }}
                   >
-                    <StripeCont clientSecret={clientSecret} />
+                    <StripeCont user={user} clientSecret={clientSecret} />
                   </Elements>
                 ) : (
                   <>
@@ -196,7 +203,7 @@ export default function SubscriptionPage() {
         </div>
         <div className="w-full lg:w-2/5 ">
           <div className="w-full- max-w-sm- mx-auto-">
-            <div className="bg-white/30 border border-gray-300 rounded-md p-4">
+            <div className="bg-white/10 border border-gray-300 rounded-md p-4">
               <h5 className="text-sm font-bold tracking-wide leading-5 mb-3 text-white">
                 What our customers say
               </h5>
@@ -250,7 +257,13 @@ export default function SubscriptionPage() {
   );
 }
 
-const StripeCont = ({ clientSecret }: { clientSecret: string }) => {
+const StripeCont = ({
+  user,
+  clientSecret,
+}: {
+  user: User;
+  clientSecret: string;
+}) => {
   const stripe = useStripe();
   const elements = useElements();
   const [processingPayment, setProcessingPayment] = useState(false);
@@ -275,13 +288,13 @@ const StripeCont = ({ clientSecret }: { clientSecret: string }) => {
 
     setProcessingPayment(true);
 
-    // const returnUrl = window.location.href + `/payment/confirm-payment`;
-    // return_url: `${window.location.origin}/thankyou`,
+    const returnUrl = window.location.href + `/payment/confirm-payment`;
+
     const { error } = await stripe.confirmSetup({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${window.location.origin}/registration`,
+        return_url: returnUrl,
       },
     });
 
@@ -309,21 +322,20 @@ const StripeCont = ({ clientSecret }: { clientSecret: string }) => {
 
       <button
         type={processingPayment ? "button" : "submit"}
-        className={`mt-4 md:mt-10 lg:px-[60px] px-[49px] font-bold py-3 flex w-full items-center justify-center md:w-auto space-x-2 ${
-          processingPayment
-            ? "bg-gray-200 text-gray-400"
-            : "bg-orange-500 text-white hover:bg-orange-400 transition-colors"
+        className={`mt-4 md:mt-10 lg:px-[60px] px-[49px] py-[8px] lg:py-[15px] md:px-[40px] md:py-[10px] xl:px-[82px] xl:py-[18px] bg-gradient-to-r text-[12px] lg:text-[20px] from-[#0477FE] to-[#0023FF] text-white rounded-[10px] flex items-center gap-3 w-full justify-center ${
+          processingPayment ? "cursor-wait" : "cursor-pointer"
         }`}
       >
-        {processingPayment ? (
-          <>
-            <AiOutlineLoading3Quarters className="inline-block animate-spin text-xl" />
-            Processing...
-          </>
-        ) : (
-          <>Start Membership - £5</>
-        )}
+        <span> {processingPayment ? `Processing...` : `Continue`} </span>
       </button>
+      {processingPayment && (
+        <div className="flex items-center justify-center gap-2 py-3">
+          <AiOutlineLoading3Quarters className="animate-spin" />
+          <p className="font-[500] text-xs md:text-sm font-MontserratSemiBold text-[#757575] animate-pulse">
+            {`We're processing your request, please wait...`}
+          </p>
+        </div>
+      )}
     </form>
   );
 };

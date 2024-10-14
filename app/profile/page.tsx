@@ -51,7 +51,7 @@ export default function ProfilePage() {
     const fetch = async () => {
       try {
         const authUser = await supabase.auth.getUser();
-        if (!authUser.data.user) return router.push("/#login");
+        if (!authUser.data.user) return router.push("/registration");
       } catch (error) {
         console.log(error);
       }
@@ -121,13 +121,17 @@ export default function ProfilePage() {
     } catch (error: any) {
       console.log("error");
       console.log(error?.response?.data?.message);
-      if (error?.response?.data?.message?.toLowerCase().startsWith("no such subscription")) {
+      if (
+        error?.response?.data?.message
+          ?.toLowerCase()
+          .startsWith("no such subscription")
+      ) {
         sAlert("Subscription already cancelled");
         await supabase
           .from("users")
           .update({ isSubscribed: false })
           .eq("id", user?.id);
-          window.location.reload();
+        window.location.reload();
       } else {
         sAlert(
           "Subscription cancellation failed! \n" +

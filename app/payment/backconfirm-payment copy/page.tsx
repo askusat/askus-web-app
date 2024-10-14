@@ -10,23 +10,12 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { PRICE_ID, STRIPE_Pk } from "@/app/config";
+import { useAuth } from "@/app/hooks/useAuth";
 import { supabase } from "@/app/supabaseClient";
 
 const stripePromise = loadStripe(STRIPE_Pk || "");
 
-// Define User interface if you haven't already
-interface User {
-  id: string;
-  fullName: string;
-  email: string;
-  stripeCustomerId: string;
-}
-
-interface ThankyouPageProps {
-  user: User; // Use the User interface here
-}
-
-export default function ThankyouPage({ user }: ThankyouPageProps) {
+export default function ThankyouPage() {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
@@ -54,7 +43,7 @@ export default function ThankyouPage({ user }: ThankyouPageProps) {
             appearance,
           }}
         >
-          <ThankyouComp clientSecret={clientSecret} user={user} />
+          <ThankyouComp clientSecret={clientSecret} />
         </Elements>
       ) : (
         <div className="grid place-items-center">
@@ -70,20 +59,15 @@ export default function ThankyouPage({ user }: ThankyouPageProps) {
   );
 }
 
-function ThankyouComp({
-  clientSecret,
-  user,
-}: {
-  clientSecret: string;
-  user: User;
-}) {
+function ThankyouComp({ clientSecret }: { clientSecret: string }) {
+  const { user } = useAuth();
   const stripe = useStripe();
   const router = useRouter();
 
   const [confirmingSetUpIntent, setConfirmingSetUpIntent] = useState(false);
   const [processingSubscription, setProcessingSubscription] = useState(false);
 
-  // confirm setup_intent_client_secret
+  // confirm setup_intent_client_secret;
   useEffect(() => {
     const fetch = async () => {
       if (!stripe || confirmingSetUpIntent || !user) {
@@ -96,6 +80,10 @@ function ThankyouComp({
         return setConfirmingSetUpIntent(false);
       }
 
+      // console.log("clientSecret");
+      // console.log(clientSecret);
+
+      // console.log("setup_intent_client_secret success!");
       const paymentIntent = await stripe.retrieveSetupIntent(clientSecret);
       switch (paymentIntent?.setupIntent?.status) {
         case "succeeded":
@@ -104,7 +92,7 @@ function ThankyouComp({
           if (processingSubscription)
             return console.log("processing subscription already");
           setProcessingSubscription(true);
-          let createSubscription = null;
+          var createSubscription = null;
           try {
             const creditAmount = new URLSearchParams(
               window.location.search
@@ -112,14 +100,17 @@ function ThankyouComp({
             const hash = window.location.hash;
             const creditMode = hash.substring(1) === "credit";
 
-            // Create customer and subscription
+            // console.log("PRICE_ID");
+            // console.log(PRICE_ID);
+
+            // create customer and subscription
             const createSubscriptionData = {
               route: "create_subscription",
-              name: user.fullName, // Use user information directly
-              email: user.email, // Use user information directly
+              name: user?.fullName,
+              email: user?.email,
               price: PRICE_ID,
-              customer_id: user.stripeCustomerId, // Use user information directly
-              payment_method, // Attach payment method to customer
+              customer_id: user?.stripeCustomerId,
+              payment_method, //attach_payment_method_to_customer
               creditMode,
               credit: 0,
             };
@@ -135,7 +126,7 @@ function ThankyouComp({
 
             if (createSubscription.status !== 200) {
               console.log(
-                "failed to create subscription, Please contact support."
+                "faild to create subscription, Please contact support._"
               );
               toast.error(createSubscription.data.message);
               setConfirmingSetUpIntent(false);
@@ -145,13 +136,16 @@ function ThankyouComp({
               return;
             }
           } catch (error: any) {
-            const errorMessage =
-              error instanceof Error
-                ? error.message
-                : "An unexpected error occurred.";
-            toast.error(errorMessage);
+            toast.error(
+              "faild to create subscription, Please contact support."
+            );
+            // alert(error?.message);
+            toast.error(error.message);
             return setConfirmingSetUpIntent(false);
           }
+
+          // console.log("createSubscription: ");
+          // console.log(createSubscription);
 
           let d: any = {
             stripeSubscriptionId: createSubscription?.data?.subscription?.id,
@@ -169,15 +163,21 @@ function ThankyouComp({
             };
           }
 
-          await supabase.from("users").update(d).eq("id", user.id); // Use user information directly
+          // console.log("updateUser data: ");
+          // console.log(d);
 
-          const progressbarEl: HTMLElement | null =
-            document.querySelector("#progressbar");
+          await supabase.from("users").update(d).eq("id", user?.id);
+
+          const progressbarEl: any = document.querySelector("#progressbar");
           if (progressbarEl) {
             progressbarEl.style.width = "100%";
           }
 
+          // window.location.href = user?.isAdmin ? "/admin" : "/profile";
+          // window.location.href = "/thankyou";
           router.push(`/thankyou`);
+          // toast("success! go to /thankyou");
+
           setConfirmingSetUpIntent(false);
           break;
         case "processing":
@@ -204,7 +204,7 @@ function ThankyouComp({
 
   return (
     <div className="max-w-[300px] mx-auto h-screen grid place-items-center">
-      <div>
+      <div className="">
         <div className="skeleton-container min-w-[300px]">
           <div className="skeleton-item"></div>
           <div className="skeleton-item"></div>
