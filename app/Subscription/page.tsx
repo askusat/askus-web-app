@@ -85,7 +85,7 @@ export default function SubscriptionPage() {
 
   return (
     <div
-      className=" w-full  pt-20 pb-20 2xl:px-80 xl:px-40 md:px-20 sm:px-10  flex-grow relative bg-cover bg-no-repeat bg-top"
+      className=" w-full  pt-20 pb-20 2xl:px-60 xl:px-40 md:px-20 sm:px-10  flex-grow relative bg-cover bg-no-repeat bg-top"
       style={{
         backgroundImage:
           "linear-gradient(45deg, rgba(0, 112, 240, 0.75), rgba(0, 112, 240, 0.6), rgba(0, 112, 240, 0.45), rgba(0, 112, 240, 0.3), rgba(0, 112, 240, 0.15)), url(team2.jpg)",
@@ -146,22 +146,24 @@ export default function SubscriptionPage() {
             </div>
 
             <div className="bg-blue-100 border border-gray-300 rounded-b-md p-3 max-w-3lx text-sm leading-4">
-              <div className="font-bold">
-                {`Here's`} a quick recap of our next steps:
-              </div>
+              <div className="font-bold">{`Here's`} what will happen next:</div>
               <div className="mt-2">
                 <ul className="list-disc pl-5">
                   <li>
-                    We’ll provide clear, actionable advice tailored to your
+                    Gain immediate access to our chat system and a qualified UK
+                    lawyer.
+                  </li>
+                  <li>
+                    We will provide clear, actionable advice tailored to your
                     situation.
                   </li>
                   <li>
-                    {`You'll`} understand your rights and the best possible
+                    You will understand your rights and the best possible
                     outcomes for your case.
                   </li>
                   <li>
-                    You can ask as many questions as you like to ensure complete
-                    clarity.
+                    You can ask as many questions as you like to ensure
+                    complete clarity.
                   </li>
                 </ul>
               </div>
