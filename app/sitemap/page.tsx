@@ -62,25 +62,25 @@ export default function SitemapPage() {
             <div className="flex flex-col leading-[40px] pl-8">
               {/* <Link href="/why-ask-us" className="font-[500] text-[18px] hover:underline">Why Use AskUs</Link> */}
               <Link
-                href="/registration"
+                href="/#login"
                 className="font-[500] text-[18px] hover:underline"
               >
                 Subscriber Login
               </Link>
               <Link
-                href="/registration"
+                href="/#login"
                 className="font-[500] text-[18px] hover:underline"
               >
                 Sign Up
               </Link>
               <Link
-                href="/registration"
+                href="/#login"
                 className="font-[500] text-[18px] hover:underline"
               >
                 Sign In
               </Link>
               <Link
-                href="/registration"
+                href="/#login"
                 className="font-[500] text-[18px] hover:underline"
               >
                 Register Up
