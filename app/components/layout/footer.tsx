@@ -87,7 +87,7 @@ export default function Footer() {
               Why use AskUs
             </Link>
             <Link
-              href="/registration"
+              href="/#login"
               className="lg:text-[18px] text-[16px] font-Poppins font-[400] leading-[50.3px] tracking-[1px] text-[#FFFFFF]"
             >
               Sign Up

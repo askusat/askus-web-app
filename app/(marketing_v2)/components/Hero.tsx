@@ -154,7 +154,7 @@ const Hero = () => {
         <div className="flex flex-col md:flex-row justify-between items-center w-full mt-[52px] md:mt-[150px] gap-[20px] lg:gap-[40px]">
           <div className="w-full  text-center md:w-1/2 ">
             <h1 className="font-poppins  md:text-start text-[24px] md:text-[30px] lg:text-[42px] xl:text-[52px] font-[700] ">
-              The Quickest Online Legal{" "}
+              The Fastest Online Legal{" "}
               <span className="text-[#0477FE]">Support Platform in the UK</span>
             </h1>
 
@@ -164,7 +164,7 @@ const Hero = () => {
               top-quality guidance from UK-based lawyers in just minutes.
             </p>
 
-            <Link href={"/registration"} onClick={() => setGlow(true)}>
+            <Link href={"#login"} onClick={() => setGlow(true)}>
               <button className="hidden sm:py-[15px] sm:px-[30px] md:flex  z-10 lg:px-[27px] py-[18px] bg-gradient-to-r text-[15px] lg:text-[20px] from-[#0477FE] to-[#0023FF] text-white rounded-[10px]">
                 Get Started
               </button>

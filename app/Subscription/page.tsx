@@ -102,14 +102,14 @@ export default function SubscriptionPage() {
           </h2>
 
           <div className="pt-4">
-            <div className="bg-blue-500 rounded-t-md flex items-center max-w-md p-2 relative">
+            <div className="bg-blue-500 rounded-t-md flex items-center max-w-3lx p-2 relative">
               <div className="mr-3 relative w-12 h-12">
                 <Image
-                  src="/lawyer.jpg"
-                  alt="Joshua"
-                  width={48}
-                  height={48}
-                  className="rounded-full"
+                  src="/Myles.jpeg"
+                  alt=""
+                  width={45}
+                  height={45}
+                  className="object-cover w-[45px] h-[45px] md:w-[45px] md:h-[45px] object-center object-cover rounded-full"
                 />
                 <span className="absolute top-0 right-0">
                   <svg
@@ -134,28 +134,35 @@ export default function SubscriptionPage() {
               </div>
               <div className="text-white flex flex-col text-sm leading-4">
                 <div className="mb-1">
-                  <b>Joshua,</b> <span>Lawyer</span>
+                  <b>Myles,</b> <span>Lawyer</span>
                 </div>
-                <div className="flex">
+                {/* <div className="flex">
                   <div className="mr-1">
                     <b>36,767</b>
                   </div>
                   <div>Satisfied customers</div>
-                </div>
+                </div> */}
               </div>
             </div>
 
-            <div className="bg-blue-100 border border-gray-300 rounded-b-md p-3 max-w-md text-sm leading-4">
+            <div className="bg-blue-100 border border-gray-300 rounded-b-md p-3 max-w-3lx text-sm leading-4">
               <div className="font-bold">
-                {`Here's`} a quick recap of your conversation so far
+                {`Here's`} a quick recap of our next steps:
               </div>
               <div className="mt-2">
                 <ul className="list-disc pl-5">
-                  <li>You have an issue with your landlord.</li>
                   <li>
-                    You have already tried discussing the problem with them.
+                    We’ll provide clear, actionable advice tailored to your
+                    situation.
                   </li>
-                  <li>The specific issue is repair-related.</li>
+                  <li>
+                    {`You'll`} understand your rights and the best possible
+                    outcomes for your case.
+                  </li>
+                  <li>
+                    You can ask as many questions as you like to ensure complete
+                    clarity.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -281,7 +288,7 @@ const StripeCont = ({ clientSecret }: { clientSecret: string }) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${window.location.origin}/registration`,
+        return_url: `${window.location.origin}/#login`,
       },
     });
 

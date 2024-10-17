@@ -113,7 +113,7 @@ export default function SubscriptionPage() {
               <div className="mr-3 relative w-12 h-12">
                 <Image
                   src="/lawyer.jpg"
-                  alt="Joshua"
+                  alt="Myles"
                   width={48}
                   height={48}
                   className="rounded-full"
@@ -141,7 +141,7 @@ export default function SubscriptionPage() {
               </div>
               <div className="text-white flex flex-col text-sm leading-4">
                 <div className="mb-1">
-                  <b>Joshua,</b> <span>Lawyer</span>
+                  <b>Myles,</b> <span>Lawyer</span>
                 </div>
                 <div className="flex">
                   <div className="mr-1">

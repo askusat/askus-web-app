@@ -152,7 +152,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <Providers>
           {/* <SubscriptionCheck /> */}
           <SpeedInsights />
-          <PopUp />
+          {/* <PopUp /> */}
           <CreateChat />
           <div className="bg-[#f9f9f9]">
             {/* <Notifications /> */}

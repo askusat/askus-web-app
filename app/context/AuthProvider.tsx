@@ -50,7 +50,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setUser(null);
         setLoading(false);
         if (check) return;
-        router.replace("/registration");
+        router.replace("/#login");
       }
       const authUserData: User = authUserDataM as User;
       setUser(authUserData);
@@ -110,7 +110,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
         if (error || !user) {
           if (PROTECTED_PAGES.includes(pathname)) {
-            router.push(`/registration`);
+            router.push(`/#login`);
           }
           return setLoading(false);
         }

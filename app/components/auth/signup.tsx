@@ -244,11 +244,7 @@ export const SignupStepOne = ({
         <p className="text-center text-[#8091A7] italic text-xs">
           Already have an account?{" "}
           <Link
-            href={`${
-              returnUrl
-                ? `/registration?returnUrl=${returnUrl}`
-                : `/registrationn`
-            }`}
+            href={`${returnUrl ? `/#login?returnUrl=${returnUrl}` : `/#login`}`}
             className="text-primary"
           >
             Login

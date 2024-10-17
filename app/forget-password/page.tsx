@@ -158,11 +158,11 @@ export default function Login() {
               </Button>
 
               <div className="flex items-center justify-center gap-3 text-sm">
-                <Link href={`/registration`} className="text-primary">
+                <Link href={`/#login`} className="text-primary">
                   Login
                 </Link>
                 <div className="">|</div>
-                <Link href={`/registration`} className="text-primary">
+                <Link href={`/#login`} className="text-primary">
                   Register here
                 </Link>
               </div>
