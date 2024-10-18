@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
 
-
 function CustomSlider() {
   const settings = {
     dots: true,
@@ -50,12 +49,18 @@ function CustomSlider() {
     <div className="max-w-[1440px] mx-auto slider-container  mt-8 w-[100vw] mb-8">
       <Slider {...settings}>
         <div className="slide bg-white rounded-lg h-[270px] md:h-[400px] p-2 md:p-5 lg:p-4 xl:p-6">
-        <div className=" flex justify-between items-start">
+          <div className=" flex justify-between items-start">
             <div className="flex  items-center gap-2 md:gap-[16px]">
-              <Image src="/Emily.svg" alt="" width={80} height={80} className="w-[44px] h-[44px] md:w-[80px] md:h-[80px] object-center object-contain"/>
+              <Image
+                src="/Emily.svg"
+                alt=""
+                width={80}
+                height={80}
+                className="w-[44px] h-[44px] md:w-[80px] md:h-[80px] object-center object-contain"
+              />
               <div className="flex flex-col">
                 <h1 className="text-[14px]  md:text-[18px] font-poppins  font-[700] text-[#0477FE] ">
-                Emily T., Birmingham
+                  Emily T., Birmingham
                 </h1>
 
                 <div className="md:mt-[15px]">
@@ -134,21 +139,33 @@ function CustomSlider() {
               </div>
             </div>
 
-            <div className=" mt-2 md:mt-2 items-center flex text-[10px] md:text-[14px]">2 March, 2024 </div>
+            <div className=" mt-2 md:mt-2 items-center flex text-[10px] md:text-[14px]">
+              2 March, 2024{" "}
+            </div>
           </div>
 
           <p className="mt-4 text-[12px] md:text-[16px] xl:text-[18px] 2xl:text-[20px] font-[400] font-poppins">
-          After spending a substantial amount on consultations with lawyers without finding a satisfactory solution on a business dispute, a friend recommended Askus Anytime. One of the experts there responded to my query within seconds and provided me with the legal guidance that ultimately helped me. Thanks, Askus Anytime!
+            After spending a substantial amount on consultations with lawyers
+            without finding a satisfactory solution on a business dispute, a
+            friend recommended Askus Anytime. One of the experts there responded
+            to my query within seconds and provided me with the legal guidance
+            that ultimately helped me. Thanks, Askus Anytime!
           </p>
         </div>
 
         <div className="slide bg-white rounded-lg h-[270px] md:h-[400px] p-2 md:p-5 lg:p-4 xl:p-6">
-        <div className=" flex justify-between items-start">
+          <div className=" flex justify-between items-start">
             <div className="flex items-center gap-2 md:gap-[16px]">
-              <Image src="/Jake.svg" alt="" width={80} height={80} className="w-[44px] h-[44px] md:w-[80px] md:h-[80px] object-center object-contain"/>
+              <Image
+                src="/Jake.svg"
+                alt=""
+                width={80}
+                height={80}
+                className="w-[44px] h-[44px] md:w-[80px] md:h-[80px] object-center object-contain"
+              />
               <div className="flex flex-col">
                 <h1 className="text-[14px]  md:text-[18px] font-poppins  font-[700] text-[#0477FE] ">
-                Ahmed K., Manchester
+                  Ahmed K., Manchester
                 </h1>
 
                 <div className="md:mt-[15px]">
@@ -227,19 +244,28 @@ function CustomSlider() {
               </div>
             </div>
 
-            <div className=" mt-2 md:mt-2 items-center flex text-[10px] md:text-[14px]">2 March, 2024 </div>
+            <div className=" mt-2 md:mt-2 items-center flex text-[10px] md:text-[14px]">
+              2 March, 2024{" "}
+            </div>
           </div>
 
           <p className="mt-4 text-[12px] md:text-[16px] xl:text-[18px] 2xl:text-[20px] font-[400] font-poppins">
-          UK immigration lawyers of Askus Anytime were instrumental in helping me secure my visa. They guided me through the entire process and made it seamless. Thank you!
+            UK immigration lawyers of Askus Anytime were instrumental in helping
+            me secure my visa. They guided me through the entire process and
+            made it seamless. Thank you!
           </p>
         </div>
 
-
         <div className="slide bg-white rounded-lg h-[270px] md:h-[400px] p-2 md:p-5 lg:p-4 xl:p-6">
-        <div className=" flex justify-between items-start">
+          <div className=" flex justify-between items-start">
             <div className="flex items-center gap-0 md:gap-[16px]">
-              <Image src="/Image.svg" alt="" width={80} height={80} className="w-[44px] h-[44px] md:w-[80px] md:h-[80px] object-center object-contain"/>
+              <Image
+                src="/Image.svg"
+                alt=""
+                width={80}
+                height={80}
+                className="w-[44px] h-[44px] md:w-[80px] md:h-[80px] object-center object-contain"
+              />
               <div className="flex flex-col">
                 <h1 className="text-[13px] md:text-[18px] font-poppins  font-[700] text-[#0477FE] ">
                   John S., Jordan
@@ -321,18 +347,30 @@ function CustomSlider() {
               </div>
             </div>
 
-            <div className=" mt-2 md:mt-2 items-center flex  text-[10px] md:text-[14px]">2 March, 2024 </div>
+            <div className=" mt-2 md:mt-2 items-center flex  text-[10px] md:text-[14px]">
+              2 March, 2024{" "}
+            </div>
           </div>
 
           <p className="mt-4 text-[12px] md:text-[16px] xl:text-[18px] 2xl:text-[20px] font-[400] font-poppins">
-          Askus Anytime provided excellent legal assistance for divorce. They expertly navigated custody issues with empathy, providing crucial support during a challenging time. Their dedication to ensuring the well-being of my family was evident throughout the process, and I highly recommend their legal service for divorce.
+            Askus Anytime provided excellent legal assistance for divorce. They
+            expertly navigated custody issues with empathy, providing crucial
+            support during a challenging time. Their dedication to ensuring the
+            well-being of my family was evident throughout the process, and I
+            highly recommend their legal service for divorce.
           </p>
         </div>
 
         <div className="slide bg-white rounded-lg h-[270px] md:h-[400px] p-2 md:p-5 lg:p-4 xl:p-6">
-        <div className=" flex justify-between items-start">
+          <div className=" flex justify-between items-start">
             <div className="flex items-center gap-0 md:gap-[16px]">
-              <Image src="/Image.svg" alt="" width={80} height={80} className="w-[44px] h-[44px] md:w-[80px] md:h-[80px] object-center object-contain"/>
+              <Image
+                src="/Image.svg"
+                alt=""
+                width={80}
+                height={80}
+                className="w-[44px] h-[44px] md:w-[80px] md:h-[80px] object-center object-contain"
+              />
               <div className="flex flex-col">
                 <h1 className="text-[14px] md:text-[18px] font-poppins  font-[700] text-[#0477FE] ">
                   John S., London
@@ -414,7 +452,9 @@ function CustomSlider() {
               </div>
             </div>
 
-            <div className=" mt-2 md:mt-2 items-center flex text-[10px] md:text-[14px]">2 March, 2024 </div>
+            <div className=" mt-2 md:mt-2 items-center flex text-[10px] md:text-[14px]">
+              2 March, 2024{" "}
+            </div>
           </div>
 
           <p className="mt-4 text-[12px] md:text-[16px] xl:text-[18px] 2xl:text-[20px] font-[400] font-poppins">

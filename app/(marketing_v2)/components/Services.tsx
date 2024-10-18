@@ -108,13 +108,13 @@ const Services = () => {
           </div>
         </div>
 
-        <div className="py-[40px] flex justify-center items-center">
-          <Link href={"/#login"}>
+        {/* <div className="py-[40px] flex justify-center items-center">
+          <Link href={"#login"}>
             <button className="px-4 py-2 border-[2px] hover:bg-[#0023FF] hover:text-white text-[#0023FF] text-[15px] md:text-[20px] font-[500]  border-[#0023FF] border-solid rounded-[5px] md:rounded-[10px] leading-[18.15px]">
               Get Started
             </button>
           </Link>
-        </div>
+        </div> */}
       </div>
       {/* Round stuff */}
       <div className="hidden md:flex absolute left-0 top-[40px]">

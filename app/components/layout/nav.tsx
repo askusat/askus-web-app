@@ -30,7 +30,7 @@ export default function Nav() {
   const { user, notifications, setNotifications } = useAuth();
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const toggleMenu = () => {
     setOpenMobileMenu(!openMobileMenu);
@@ -151,20 +151,22 @@ export default function Nav() {
       </div>
 
       <div className={`flex items-center gap-3 xl:hidden`}>
-        {user && <Button
-          isIconOnly
-          className=" bg-transparent -mb-2"
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          <div className="relative   w-fit  py-1 px-3">
-            <FaBell size={20} className="" />
-            <div className="w-[18px] h-[18px] bg-red-600   text-white rounded-full text-[9px] grid place-items-center absolute -top-1 right-1">
-              {notifications.length}
+        {user && (
+          <Button
+            isIconOnly
+            className=" bg-transparent -mb-2"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <div className="relative   w-fit  py-1 px-3">
+              <FaBell size={20} className="" />
+              <div className="w-[18px] h-[18px] bg-red-600   text-white rounded-full text-[9px] grid place-items-center absolute -top-1 right-1">
+                {notifications.length}
+              </div>
             </div>
-          </div>
-        </Button>}
+          </Button>
+        )}
 
         <Button
           isIconOnly
@@ -213,7 +215,7 @@ export default function Nav() {
                         notifications,
                         setNotifications
                       );
-                      if(notification?.chatId){
+                      if (notification?.chatId) {
                         // router.push(`/chat?chatId=${notification?.chatId}`)
                         window.location.href = `/chat?chatId=${notification?.chatId}`;
                       }
@@ -241,7 +243,7 @@ export default function Nav() {
       </div>
 
       <div className="hidden xl:block absolute z-50">
-      {open && (
+        {open && (
           <div className="">
             <div
               className="fixed bg-cover w-full h-screen z-5  top-0 left-0 bg-black/10"
@@ -278,7 +280,7 @@ export default function Nav() {
                         notifications,
                         setNotifications
                       );
-                      if(notification?.chatId){
+                      if (notification?.chatId) {
                         // router.push(`/chat?chatId=${notification?.chatId}`)
                         window.location.href = `/chat?chatId=${notification?.chatId}`;
                       }

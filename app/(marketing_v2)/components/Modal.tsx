@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-const Modal = ({ isOpen, onClose, children }:any) => {
+const Modal = ({ isOpen, onClose, children }: any) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add("overflow-hidden");
     } else {
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
     }
 
     return () => {
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
     };
   }, [isOpen]);
 
@@ -18,7 +18,10 @@ const Modal = ({ isOpen, onClose, children }:any) => {
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={onClose}></div>
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        onClick={onClose}
+      ></div>
 
       {/* Modal */}
       <div className=" fixed inset-0 md:inset-0 flex items-center justify-center  z-50">

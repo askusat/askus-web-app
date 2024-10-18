@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 import PopUp from "./components/PopUp";
-import SubscriptionCheck from "./components/SubscriptionCheck";
+// import SubscriptionCheck from "./components/SubscriptionCheck";
 
 const inter = Inter({ subsets: ["latin"] });
 const APP_NAME = "ASKUS";
@@ -145,14 +145,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </noscript> */}
 
       <body
-      suppressHydrationWarning
+        suppressHydrationWarning
         className={`${inter.className} font-MontserratRegular bg-white text-black`}
       >
         <ToastContainer />
         <Providers>
-          <SubscriptionCheck />
+          {/* <SubscriptionCheck /> */}
           <SpeedInsights />
-          <PopUp />
+          {/* <PopUp /> */}
           <CreateChat />
           <div className="bg-[#f9f9f9]">
             {/* <Notifications /> */}
