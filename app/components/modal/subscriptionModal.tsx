@@ -168,7 +168,7 @@ const StripeCont = ({
 
     setProcessingPayment(true);
 
-    const returnUrl = window.location.href + `/payment/confirm-payment`;
+    const returnUrl = window.location.origin + `/payment/confirm-payment`;
 
     const { error } = await stripe.confirmSetup({
       elements,

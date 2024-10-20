@@ -161,7 +161,7 @@ export default function RequestForCall({
                   color="danger"
                   variant="light"
                   onPress={onClose}
-                  isLoading={loading}
+                  disabled={loading}
                 >
                   Not now
                 </Button>

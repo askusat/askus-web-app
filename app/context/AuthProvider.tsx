@@ -202,7 +202,8 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     if (!user) return;
 
     if (!user.isSubscribed) {
-      if (pathname !== `/payment/confirm-payment`) {
+      // if (pathname !== `/payment/confirm-payment`) {
+      if (!pathname.startsWith(`/payment/confirm-payment`)) {
         setTimeout(() => {
           setShowPayment(true);
         }, 1000);
