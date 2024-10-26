@@ -183,7 +183,7 @@ export default function Login() {
               {`Don't have an account?`}{" "}
               <Link
                 href={`${
-                  returnUrl ? `/#login?returnUrl=${returnUrl}` : `/#login`
+                  returnUrl ? `/Subscription?returnUrl=${returnUrl}` : `/Subscription`
                 }`}
                 className="text-primary"
               >

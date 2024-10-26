@@ -15,7 +15,7 @@ interface AuthContextType {
   signup: (
     params: SignUpParam,
     errorCallback: (error: any) => void,
-    setProcessingSignUp: React.Dispatch<React.SetStateAction<boolean>>
+    setProcessingSignUp?: React.Dispatch<React.SetStateAction<boolean>>
   ) => void;
   login: (
     params: LoginParam,

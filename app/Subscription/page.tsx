@@ -10,7 +10,7 @@ import { STRIPE_Pk } from "../config";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { supabase } from "../supabaseClient";
-import { FaTimes } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
 import {
   Elements,
   PaymentElement,
@@ -20,15 +20,26 @@ import {
 import { User } from "@/types";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Image from "next/image";
+import Link from "next/link";
+import { useAuth } from "../hooks/useAuth";
+import { SignUpParam } from "../context/AuthProvider";
 
 const stripePromise = loadStripe(STRIPE_Pk!);
 
 export default function SubscriptionPage() {
   const [clientSecret, setClientSecret] = useState("");
   const [proccessingSetupIntent, setProccessingSetupIntent] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [processingSignup, setProcessingSignup] = useState(false);
+  const { user, signup } = useAuth();
+  const [step, setStep] = useState(1);
 
   // Create SetupIntent as soon as the page loads
   useEffect(() => {
+    if (!user) return;
+
     const setupIntentclientSecret = new URLSearchParams(
       window.location.search
     ).get("setup_intent_client_secret");
@@ -42,12 +53,6 @@ export default function SubscriptionPage() {
     const fetch = async () => {
       setProccessingSetupIntent(true);
       console.log("start proccessing setupIntent...");
-
-      // Assuming you have user details passed or retrieved elsewhere
-      const user = {
-        fullName: "John Doe", // Replace with actual user's name
-        email: "johndoe@example.com", // Replace with actual user's email
-      };
 
       let setupIntentRes = await axios
         .post(`/api/stripe`, {
@@ -73,7 +78,31 @@ export default function SubscriptionPage() {
       }
     };
     fetch();
-  }, [proccessingSetupIntent]);
+  }, [user, proccessingSetupIntent]);
+
+  async function handleSignup() {
+    setProcessingSignup(true);
+    try {
+      const fullName = email.split("@")[0];
+      const username = email.split("@")[0];
+      let success = true;
+      await signup(
+        { email, password, fullName, username } as SignUpParam,
+        (error) => {
+          // console.log('signupError', error);
+          toast.error(error.message);
+          success = false;
+        }
+      );
+      if (success) {
+        setStep(2);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setProcessingSignup(false);
+    }
+  }
 
   const appearance: Appearance = {
     theme: "flat",
@@ -109,7 +138,7 @@ export default function SubscriptionPage() {
                   alt=""
                   width={45}
                   height={45}
-                  className="object-cover w-[45px] h-[45px] md:w-[45px] md:h-[45px] object-center object-cover rounded-full"
+                  className="w-[45px] h-[45px] md:w-[45px] md:h-[45px] object-center object-cover rounded-full"
                 />
                 <span className="absolute top-0 right-0">
                   <svg
@@ -189,14 +218,107 @@ export default function SubscriptionPage() {
                   </Elements>
                 ) : (
                   <>
-                    <div className="skeleton-container">
-                      <div className="skeleton-item"></div>
-                      <div className="skeleton-item"></div>
-                      <div className="skeleton-item"></div>
-                    </div>
-                    <p className="text-center text-lg mt-3 animate-pulse">
-                      Loading...
-                    </p>
+                    {step === 2 ? (
+                      <div className="">
+                        <div className="skeleton-container">
+                          <div className="skeleton-item"></div>
+                          <div className="skeleton-item"></div>
+                          <div className="skeleton-item"></div>
+                        </div>
+                        <p className="text-center text-lg mt-3 animate-pulse">
+                          Loading...
+                        </p>
+                      </div>
+                    ) : (
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleSignup();
+                        }}
+                      >
+                        <>
+                          <div className="mt-6">
+                            <input
+                              type="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="Email address"
+                              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                              required
+                            />
+                          </div>
+                          <div className="mt-6 relative">
+                            <input
+                              type={showPassword ? "text" : "password"}
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              placeholder="************"
+                              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                              required
+                            />
+                            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center h-[50px]">
+                              {showPassword && (
+                                <FaEyeSlash
+                                  color="#8094AE"
+                                  className={`${
+                                    showPassword
+                                      ? "opacity-100 pointer-events-auto"
+                                      : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
+                                  } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                                  width={25}
+                                  height={25}
+                                  onClick={() => {
+                                    setShowPassword(!showPassword);
+                                  }}
+                                />
+                              )}
+                              {!showPassword && (
+                                <FaEye
+                                  color="#8094AE"
+                                  className={`${
+                                    !showPassword
+                                      ? "opacity-100 pointer-events-auto"
+                                      : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
+                                  } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                                  width={25}
+                                  height={25}
+                                  onClick={() => {
+                                    setShowPassword(!showPassword);
+                                  }}
+                                />
+                              )}
+                            </div>
+                          </div>
+                        </>
+
+                        <button
+                          type={"submit"}
+                          className={`mt-4 md:mt-10 lg:px-[60px] px-[49px] font-bold py-3 flex w-full items-center justify-center rounded-lg space-x-2 ${
+                            processingSignup
+                              ? "bg-gray-200 text-gray-400"
+                              : "bg-orange-500 text-white hover:bg-orange-400 transition-colors disabled:bg-gray-200 disabled:text-gray-400"
+                          }`}
+                          disabled={!email || !password}
+                        >
+                          {processingSignup ? (
+                            <>
+                              <AiOutlineLoading3Quarters className="inline-block animate-spin text-xl" />
+                            </>
+                          ) : (
+                            <>Continue</>
+                          )}
+                        </button>
+
+                        <div className="text-center my-4">
+                          <Link
+                            href="/login"
+                            className="text-blue-600 hover:underline"
+                          >
+                            Already have an account? Login
+                          </Link>
+                        </div>
+                      </form>
+                    )}
                   </>
                 )}
               </>
@@ -284,13 +406,14 @@ const StripeCont = ({ clientSecret }: { clientSecret: string }) => {
 
     setProcessingPayment(true);
 
-    // const returnUrl = window.location.href + `/payment/confirm-payment`;
+    const returnUrl = window.location.origin + `/payment/confirm-payment`;
     // return_url: `${window.location.origin}/thankyou`,
     const { error } = await stripe.confirmSetup({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${window.location.origin}/#login`,
+        // return_url: `${window.location.origin}/#login`,
+        return_url: returnUrl,
       },
     });
 
@@ -318,7 +441,7 @@ const StripeCont = ({ clientSecret }: { clientSecret: string }) => {
 
       <button
         type={processingPayment ? "button" : "submit"}
-        className={`mt-4 md:mt-10 lg:px-[60px] px-[49px] font-bold py-3 flex w-full items-center justify-center md:w-auto space-x-2 ${
+        className={`mt-4 md:mt-10 lg:px-[60px] px-[49px] font-bold py-3 flex w-full items-center justify-center rounded-lg space-x-2 ${
           processingPayment
             ? "bg-gray-200 text-gray-400"
             : "bg-orange-500 text-white hover:bg-orange-400 transition-colors"
@@ -327,12 +450,17 @@ const StripeCont = ({ clientSecret }: { clientSecret: string }) => {
         {processingPayment ? (
           <>
             <AiOutlineLoading3Quarters className="inline-block animate-spin text-xl" />
-            Processing...
           </>
         ) : (
           <>Start Membership - £5</>
         )}
       </button>
+
+      <div className="text-center my-4">
+        <Link href="/login" className="text-blue-600 hover:underline">
+          Already have an account? Login
+        </Link>
+      </div>
     </form>
   );
 };

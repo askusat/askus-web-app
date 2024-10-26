@@ -54,7 +54,7 @@ export default function AuthSection({
   }, [setGlow]);
 
   const handleProceed = () => {
-    if (!agreeToTerms) {
+    if (!user && !agreeToTerms) {
       toast.warning("Please agree to the terms of service");
       return;
     }
@@ -64,7 +64,7 @@ export default function AuthSection({
     //   return;
     // }
 
-    router.push("/Subscription");
+    router.push(user ? "/chat" : "/Subscription");
   };
 
   return (

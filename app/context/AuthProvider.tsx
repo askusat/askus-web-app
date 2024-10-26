@@ -82,7 +82,8 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     const { data: authUserDataM, error } = await supabase
       .from("users")
-      .insert(entryData);
+      .insert(entryData).select("*").single();
+
     if (error) {
       console.log("error creating user profile", error);
 
@@ -91,11 +92,14 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     } else {
       const authUserData: User = authUserDataM as User;
       setUser(authUserData);
-      window.localStorage.setItem("userData", JSON.stringify(authUserData));
+      // console.log("authUserData");
+      // console.log(authUserData);
+
+      // window.localStorage.setItem("userData", JSON.stringify(authUserData));
       // const redirectURL =
       //   returnUrl && returnUrl !== "/" ? returnUrl : authConfig.afterSignup;
-      const redirectURL = authConfig.afterSignup;
-      router.replace(redirectURL as string);
+      // const redirectURL = authConfig.afterSignup;
+      // router.replace(redirectURL as string);
     }
   };
 
@@ -224,9 +228,9 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const handleSignup = async (
     params: SignUpParam,
     errorCallback: (error: any) => void,
-    setProcessingSignUp: React.Dispatch<React.SetStateAction<boolean>>
+    setProcessingSignUp?: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
-    setProcessingSignUp(true);
+    setProcessingSignUp && setProcessingSignUp(true);
     const { email, password, fullName, username } = params;
     const {
       data: { user: authUser },
@@ -237,7 +241,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     });
     if (error) {
       if (errorCallback) errorCallback(error);
-      setProcessingSignUp(false);
+      setProcessingSignUp && setProcessingSignUp(false);
       return;
     }
     // console.log(authUser);
@@ -253,7 +257,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       await createUserProfile(authUser, fullName, username, errorCallback);
     } else {
       if (errorCallback) errorCallback(error);
-      setProcessingSignUp(false);
+      setProcessingSignUp && setProcessingSignUp(false);
       return;
     }
   };

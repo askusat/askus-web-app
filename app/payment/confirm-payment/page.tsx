@@ -211,7 +211,7 @@ function ThankyouComp({ clientSecret }: { clientSecret: string }) {
           <div className="skeleton-item"></div>
         </div>
         <p className="text-center text-lg mt-3 animate-pulse">
-          Verification in progress...
+          Verification in progress. This might take a minute...
         </p>
       </div>
     </div>
