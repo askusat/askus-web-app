@@ -7,7 +7,14 @@ import React from "react";
 
 export default function Footer() {
   const pathname = usePathname();
-  const list = ["/", "/chat", "/chatv2", "/membershiponly", "/Subscription"];
+  const list = [
+    "/",
+    "/chat",
+    "/chatv2",
+    "/membershiponly",
+    "/Subscription",
+    "/askusnow",
+  ];
 
   if (list.includes(pathname)) {
     return <></>;

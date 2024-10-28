@@ -16,6 +16,7 @@ export default function CreateChat() {
     "/login",
     "/Subscription",
     "/payment",
+    "/askusnow",
   ];
 
   if (dontShowList.includes(pathname)) {
