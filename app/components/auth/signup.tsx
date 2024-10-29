@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { SignUpParam } from "@/app/context/AuthProvider";
 import { useAuth } from "@/app/hooks/useAuth";
@@ -23,12 +23,12 @@ export const SignupStepOne = ({
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState({
     title: "",
-    message: '',
+    message: "",
   });
   const [processingSignUp, setProcessingSignUp] = useState<boolean>(false);
   // const searchParams = useSearchParams();
   const searchParams = new URLSearchParams(
-    typeof window !== 'undefined' ? window.location.search : '',
+    typeof window !== "undefined" ? window.location.search : ""
   );
   const returnUrl = searchParams.get("returnUrl");
 
@@ -44,24 +44,34 @@ export const SignupStepOne = ({
     } else {
       // sign up then continue to payment
       if (processingSignUp) return;
-      auth.signup({ email, password, fullName, username } as SignUpParam, (error) => {
-        // console.log('signupError', error);
-        setErrorMsg({
-          title: "Failed to register",
-          message: error.message,
-        });
-      }, setProcessingSignUp);
+      auth.signup(
+        { email, password, fullName, username } as SignUpParam,
+        (error) => {
+          // console.log('signupError', error);
+          setErrorMsg({
+            title: "Failed to register",
+            message: error.message,
+          });
+        },
+        setProcessingSignUp
+      );
     }
   };
 
   return (
     <div className="">
       <Link href="/">
-        <ImageNUI src="/logo-2.svg" alt="logo" width={200} height={40} className="h-auto" />
+        <ImageNUI
+          src="/logo-2.svg"
+          alt="logo"
+          width={200}
+          height={40}
+          className="h-auto"
+        />
       </Link>
 
       <h5 className="font-bold font-PlusJakartaSansBold text-black/80 text-[18px] md:text-[25px] mt-4 mb-1 -ml-2">
-        ⚡ Setup & Start 3-Day  Trial
+        ⚡ Setup & Start 3-Day Trial
       </h5>
 
       <p className="mb-4 text-[17px]">
@@ -174,10 +184,11 @@ export const SignupStepOne = ({
               {showPassword && (
                 <FaEyeSlash
                   color="#8094AE"
-                  className={`${showPassword
+                  className={`${
+                    showPassword
                       ? "opacity-100 pointer-events-auto"
                       : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
-                    } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                  } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
                   width={25}
                   height={25}
                   onClick={() => {
@@ -188,10 +199,11 @@ export const SignupStepOne = ({
               {!showPassword && (
                 <FaEye
                   color="#8094AE"
-                  className={`${!showPassword
+                  className={`${
+                    !showPassword
                       ? "opacity-100 pointer-events-auto"
                       : "opacity-0 pointer-events-none max-w-0 min-w-0 w-0 h-0"
-                    } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
+                  } transition-all duration-300 min-w-[20px] h-auto cursor-pointer`}
                   width={25}
                   height={25}
                   onClick={() => {
@@ -206,7 +218,7 @@ export const SignupStepOne = ({
         <Button
           aria-label="Submit signup form"
           type="submit"
-          onClick={() => { }}
+          onClick={() => {}}
           className={`bg-primary w-full flex items-center gap-3 justify-center text-white`}
           isLoading={processingSignUp}
         >
@@ -231,7 +243,10 @@ export const SignupStepOne = ({
       <div className="text-center">
         <p className="text-center text-[#8091A7] italic text-xs">
           Already have an account?{" "}
-          <Link href={`${returnUrl ? `/#login?returnUrl=${returnUrl}` : `/#login`}`} className="text-primary">
+          <Link
+            href={`${returnUrl ? `/#login?returnUrl=${returnUrl}` : `/#login`}`}
+            className="text-primary"
+          >
             Login
           </Link>
         </p>

@@ -121,13 +121,17 @@ export default function ProfilePage() {
     } catch (error: any) {
       console.log("error");
       console.log(error?.response?.data?.message);
-      if (error?.response?.data?.message?.toLowerCase().startsWith("no such subscription")) {
+      if (
+        error?.response?.data?.message
+          ?.toLowerCase()
+          .startsWith("no such subscription")
+      ) {
         sAlert("Subscription already cancelled");
         await supabase
           .from("users")
           .update({ isSubscribed: false })
           .eq("id", user?.id);
-          window.location.reload();
+        window.location.reload();
       } else {
         sAlert(
           "Subscription cancellation failed! \n" +

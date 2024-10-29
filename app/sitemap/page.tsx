@@ -3,9 +3,10 @@ import Layout from "../components/layout";
 import Link from "next/link";
 
 export const metadata = {
-  title: 'AskUs Sitemap',
-  description: 'Explore the sitemap of AskUs for easy navigation and quick access to valuable information. Find what you need effortlessly.'
-}
+  title: "AskUs Sitemap",
+  description:
+    "Explore the sitemap of AskUs for easy navigation and quick access to valuable information. Find what you need effortlessly.",
+};
 
 export default function SitemapPage() {
   return (
@@ -25,50 +26,118 @@ export default function SitemapPage() {
         </header>
 
         <div className="lg:max-w-[60%] md:max-w-[80%] mx-auto flex flex-col lg:flex-col md:flex-row gap-6 mb-20">
-
-
           <div className="flex flex-col font-[400] leading-[50.3px] tracking-[1px] ">
-          <Link href="/" className="font-bold hover:underline cursor-pointer text-[25px] text-black">General</Link>
+            <Link
+              href="/"
+              className="font-bold hover:underline cursor-pointer text-[25px] text-black"
+            >
+              General
+            </Link>
             <div className="flex flex-col  leading-[40px]  pl-8">
-              <Link href="/" className="font-[500] text-[18px] hover:underline">Home</Link>
-              <Link href="/about" className="font-[500] text-[18px] hover:underline">About</Link>
-              <Link href="/chat" className="font-[500] text-[18px] hover:underline">Chat With Expert</Link>
-           </div>
+              <Link href="/" className="font-[500] text-[18px] hover:underline">
+                Home
+              </Link>
+              <Link
+                href="/about"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                About
+              </Link>
+              <Link
+                href="/chat"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                Chat With Expert
+              </Link>
+            </div>
           </div>
 
-
           <div className="flex flex-col leading-[50.3px] tracking-[1px] ">
-            <Link href="/" className="font-bold hover:underline cursor-pointer text-[25px] text-black">How to Subscribe</Link>
+            <Link
+              href="/"
+              className="font-bold hover:underline cursor-pointer text-[25px] text-black"
+            >
+              How to Subscribe
+            </Link>
             <div className="flex flex-col leading-[40px] pl-8">
               {/* <Link href="/why-ask-us" className="font-[500] text-[18px] hover:underline">Why Use AskUs</Link> */}
-              <Link href="/#login" className="font-[500] text-[18px] hover:underline">Subscriber Login</Link>
-              <Link href="/#login" className="font-[500] text-[18px] hover:underline">Sign Up</Link>
-              <Link href="/#login" className="font-[500] text-[18px] hover:underline">Sign In</Link>
-              <Link href="/#login" className="font-[500] text-[18px] hover:underline">Register Up</Link>
+              <Link
+                href="/#login"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                Subscriber Login
+              </Link>
+              <Link
+                href="/#login"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                Sign Up
+              </Link>
+              <Link
+                href="/#login"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/#login"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                Register Up
+              </Link>
             </div>
           </div>
 
           <div className="flex flex-col leading-[50.3px] tracking-[1px]">
             {/* <Link href="/help" className="font-bold hover:underline  text-[25px] cursor-pointer text-black">Help</Link> */}
             <div className="flex flex-col leading-[40px]  pl-8">
-              <Link href="/faq" className="font-[500] text-[18px] hover:underline">FAQ</Link>
-              <Link href="/contact-us" className="font-[500] text-[18px] hover:underline">Contact Us</Link>
-              <Link href="#" className="font-[500] text-[18px] hover:underline">Sign Up</Link>
+              <Link
+                href="/faq"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                FAQ
+              </Link>
+              <Link
+                href="/contact-us"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                Contact Us
+              </Link>
+              <Link href="#" className="font-[500] text-[18px] hover:underline">
+                Sign Up
+              </Link>
             </div>
           </div>
-
 
           <div className="flex flex-col leading-[50.3px] tracking-[1px]">
-            <Link href="/" className="font-bold hover:underline cursor-pointer  text-[25px] text-black">Security</Link>
+            <Link
+              href="/"
+              className="font-bold hover:underline cursor-pointer  text-[25px] text-black"
+            >
+              Security
+            </Link>
             <div className="flex flex-col leading-[40px]  pl-8">
-              <Link href="/privacy-policy" className="font-[500] text-[18px] hover:underline">Privacy Policy</Link>
-              <Link href="/terms-of-service" className="font-[500] text-[18px] hover:underline">Term Of Service</Link>
-              <Link href="/sitemap" className="font-[500] text-[18px] hover:underline">Sitemap</Link>
+              <Link
+                href="/privacy-policy"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms-of-service"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                Term Of Service
+              </Link>
+              <Link
+                href="/sitemap"
+                className="font-[500] text-[18px] hover:underline"
+              >
+                Sitemap
+              </Link>
             </div>
           </div>
-
         </div>
-
       </div>
     </div>
   );

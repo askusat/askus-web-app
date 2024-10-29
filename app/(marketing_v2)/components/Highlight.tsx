@@ -6,9 +6,7 @@ const Highlight = () => {
       <div className="px-[30px] lg:px-[80px] xl:px-[100px] max-w-[1440px] max-auto">
         <div className=" mt-[30px] md:mt-[80px] flex justify-center">
           <h2 className="text-[17px]  md:text-[32px] font-poppins font-[700] text-center">
-            Highlights and Performance <br className="md:hidden " /> Impacts{" "}
-            <br className="hidden md:flex" /> of{" "}
-            <span className="text-[#0477FE]">Askus Anytime</span>
+            Why Choose <span className="text-[#0477FE]">Askus Anytime</span>
           </h2>
         </div>
 

@@ -175,7 +175,7 @@ function ThankyouComp({ clientSecret }: { clientSecret: string }) {
 
           // window.location.href = user?.isAdmin ? "/admin" : "/profile";
           // window.location.href = "/thankyou";
-          router.push(`/thankyou`)
+          router.push(`/thankyou`);
           // toast("success! go to /thankyou");
 
           setConfirmingSetUpIntent(false);
@@ -210,7 +210,9 @@ function ThankyouComp({ clientSecret }: { clientSecret: string }) {
           <div className="skeleton-item"></div>
           <div className="skeleton-item"></div>
         </div>
-        <p className="text-center text-lg mt-3 animate-pulse">Verification in progress...</p>
+        <p className="text-center text-lg mt-3 animate-pulse">
+          Verification in progress. This might take a minute...
+        </p>
       </div>
     </div>
   );
