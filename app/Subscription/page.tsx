@@ -237,9 +237,11 @@ export default function SubscriptionPage() {
                         }}
                       >
                         <>
-                          <div className="mt-6">
+                          <div className="mt-6 grid">
+                            <label htmlFor="email">Register to access our legal support platform</label>
                             <input
                               type="email"
+                              id="email"
                               value={email}
                               onChange={(e) => setEmail(e.target.value)}
                               placeholder="Email address"
@@ -247,9 +249,11 @@ export default function SubscriptionPage() {
                               required
                             />
                           </div>
-                          <div className="mt-6 relative">
+                          <div className="mt-6 grid relative">
+                            <label htmlFor="password">Create your password</label>
                             <input
                               type={showPassword ? "text" : "password"}
+                              id={"password"}
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
                               placeholder="************"
