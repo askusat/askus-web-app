@@ -18,7 +18,7 @@ export default function Home() {
       <Hero />
       <div className=" bg-gradient-to-b- relative py-[70px] from-[#0477FE]- to-[#0023FF]- flex flex-col h-auto overflow-hidden  _px-[100]">
         <h1 className="text-[16px] md:text-[32px] text-[#000] font-[700] font-poppins text-center">
-          Meet The Solicitors
+          Meet The Lawyers
         </h1>
         <SolicitorsSlider />
       </div>

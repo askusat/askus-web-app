@@ -197,7 +197,7 @@ export default function AuthSection({
 
       <div className="flex justify-center flex-col px-[20px] pt-[22px] md:pt-[30px] lg:pt-[20px] xl:pt-[30px]">
         <h2 className="whitespace-nowrap text-[18px] lg:text-[22px] xl:text-[32px] font-[700] font-poppins">
-          Talk to a Solicitor
+          Talk to a Lawyer
         </h2>
         <p className="mt-[7px] md:mt-[10px] text-[14px] lg:text-[16px] font-poppins">
           Unlimited Questions, Unlimited Answers just £5 for 3 days!
@@ -256,7 +256,7 @@ export default function AuthSection({
               2
             </span>
             <div className="text-[12px] leading-[16px] text-black">
-              Connect with a Solicitor
+              Connect with a Lawyer
             </div>
           </div>
           <div className="flex items-center w-full sm:w-auto">

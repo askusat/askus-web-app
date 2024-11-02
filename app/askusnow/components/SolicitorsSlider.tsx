@@ -69,7 +69,7 @@ function SolicitorsSlider() {
                     <b>Myles Jones</b>, Lawyer
                   </div>
                   <div className="text-sm">
-                    Myles is a US and UK qualified Attorney, Solicitor and
+                    Myles is a US and UK qualified Attorney, Lawyer and
                     Barrister. Myles has over 10 years experience in the legal
                     field working for a wide range different legal practices
                     from multinational law firms to boutique practices, as well

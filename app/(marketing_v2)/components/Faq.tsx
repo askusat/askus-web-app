@@ -17,7 +17,7 @@ const faqData = [
   {
     question: "Are your legal assistance services affordable?",
     answer:
-      "Our services are very affordable compared to a typical legal service, you can speak to a solicitor now.",
+      "Our services are very affordable compared to a typical legal service, you can speak to a lawyer now.",
   },
 ];
 

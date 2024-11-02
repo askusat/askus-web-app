@@ -6,8 +6,8 @@ import hammer from "../assets/hammer.png";
 import discussion from "../assets/discussion.png";
 import lapi from "../assets/lapi.png";
 export const metadata = {
-    title: 'Online Legal Advice | Online Solicitor UK | Askusat',
-    description: 'Get expert Online Legal Advice from our Online Solicitor UK team, offering prompt and professional legal support for all your needs'
+    title: 'Online Legal Advice | Online Lawyer UK | Askusat',
+    description: 'Get expert Online Legal Advice from our Online Lawyer UK team, offering prompt and professional legal support for all your needs'
 }
 
 export default function page() {
@@ -20,12 +20,12 @@ export default function page() {
         {
             "id": 2,
             "heading": "Personally Injury",
-            "peragraph": "If you've suffered a <a href='https://www.law.ac.uk/employability/legal-practice-areas/personal-injury-and-clinical-negligence-law/' style='text-decoration: underline; color: #0b69ff;'>personal injury</a>, ask a solicitor online to seek justice. Whether it's filing compensation claims for accidents or addressing cases of medical negligence, our skilled legal team will work tirelessly to ensure you receive the compensation and support you deserve."
+            "peragraph": "If you've suffered a <a href='https://www.law.ac.uk/employability/legal-practice-areas/personal-injury-and-clinical-negligence-law/' style='text-decoration: underline; color: #0b69ff;'>personal injury</a>, ask a lawyer online to seek justice. Whether it's filing compensation claims for accidents or addressing cases of medical negligence, our skilled legal team will work tirelessly to ensure you receive the compensation and support you deserve."
         },
         {
             "id": 3,
             "heading": "Business Law",
-            "peragraph": "In the complex world of business law, our platform offers essential support. From drafting contracts to resolving disputes and protecting intellectual property rights, our online solicitor advice provides comprehensive guidance to ensure your business operates smoothly and efficiently."
+            "peragraph": "In the complex world of business law, our platform offers essential support. From drafting contracts to resolving disputes and protecting intellectual property rights, our online lawyer advice provides comprehensive guidance to ensure your business operates smoothly and efficiently."
         },
         {
             "id": 4,
@@ -98,8 +98,8 @@ export default function page() {
         },
         {
             "id": 2,
-            "heading": "How much does online solicitor advice cost?",
-            "peragraph": "The cost of online solicitor advice varies depending on the platform and the complexity of your legal issue. Our platform offers transparent pricing and flexible payment options to ensure that online legal advice UK remains accessible to all."
+            "heading": "How much does online lawyer advice cost?",
+            "peragraph": "The cost of online lawyer advice varies depending on the platform and the complexity of your legal issue. Our platform offers transparent pricing and flexible payment options to ensure that online legal advice UK remains accessible to all."
         },
         {
             "id": 3,
@@ -144,7 +144,7 @@ export default function page() {
             "id": 2,
             "heading": "Case Study 2:",
             "heading2": "John's Personal Injury Claim",
-            "peragraph": "John was injured in a car accident and needed to ask a solicitor online on how to pursue a personal injury claim against the responsible party. Unable to visit a law office due to his injuries, John turned to our online legal advice UK for assistance. Through our platform, he was able to connect with a skilled personal injury lawyer who guided him through the legal process, explained his rights, and helped him build a strong case. With the support of his lawyer, John successfully negotiated a fair settlement that covered his medical expenses and compensated him for his pain and suffering."
+            "peragraph": "John was injured in a car accident and needed to ask a lawyer online on how to pursue a personal injury claim against the responsible party. Unable to visit a law office due to his injuries, John turned to our online legal advice UK for assistance. Through our platform, he was able to connect with a skilled personal injury lawyer who guided him through the legal process, explained his rights, and helped him build a strong case. With the support of his lawyer, John successfully negotiated a fair settlement that covered his medical expenses and compensated him for his pain and suffering."
         },
         {
             "id": 3,
@@ -197,10 +197,10 @@ export default function page() {
                     <div className=" space-y-5">
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
                             <h2 className="text-[30px]  mx-custom font-PoppinsBold">
-                                Solicitor Advice & Legal Consultation Online
+                                Lawyer Advice & Legal Consultation Online
                             </h2>
                             <p className="text-[17px]  font-PoppinsRegular mx-custom md:text-start">
-                                {`Gain instant access to online legal advice UK with our expert lawyers. Our team of solicitors is here to provide personalized guidance and support for your legal matters, all from the comfort of your own home. Whether you're dealing with family law issues, personal injury claims, business disputes, or any other legal concerns, ask a solicitor online for a convenient and efficient solution to meet your needs.`}
+                                {`Gain instant access to online legal advice UK with our expert lawyers. Our team of lawyers is here to provide personalized guidance and support for your legal matters, all from the comfort of your own home. Whether you're dealing with family law issues, personal injury claims, business disputes, or any other legal concerns, ask a lawyer online for a convenient and efficient solution to meet your needs.`}
                             </p>
                         </div>
                         <div className="flex flex-col justify-center item-center px-6 md:px-0 mb-8">
@@ -208,7 +208,7 @@ export default function page() {
                                 Understanding Online Legal Advice UK
                             </h2>
                             <p className="text-[17px]  font-PoppinsRegular mx-custom md:text-start">
-                                Legal advice online plays a crucial role in various legal matters, offering guidance and expertise to individuals navigating complex legal issues. Traditionally, seeking online solicitor advice involved scheduling in-person consultations with lawyers, often accompanied by long wait times and geographical limitations. However, with <a href="https://www.askusat.co.uk/" className="underline decoration-blue-600 text-blue-600">Askus Anytime</a>, individuals now have the opportunity to access professional legal guidance remotely, from the comfort of their own homes or offices.
+                                Legal advice online plays a crucial role in various legal matters, offering guidance and expertise to individuals navigating complex legal issues. Traditionally, seeking online lawyer advice involved scheduling in-person consultations with lawyers, often accompanied by long wait times and geographical limitations. However, with <a href="https://www.askusat.co.uk/" className="underline decoration-blue-600 text-blue-600">Askus Anytime</a>, individuals now have the opportunity to access professional legal guidance remotely, from the comfort of their own homes or offices.
                             </p>
 
                         </div>

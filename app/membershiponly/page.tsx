@@ -26,7 +26,7 @@ export default function MembershiponlyPage() {
               Join for £5 and get your answer in minutes
             </h1>
             <h2 className="text-base font-normal leading-5 text-gray-800 pt-2">
-              Unlimited conversations with solicitors — try 3 days for just £5.
+              Unlimited conversations with lawyers — try 3 days for just £5.
               Then £50/month. Cancel anytime.
             </h2>
 
@@ -91,7 +91,7 @@ export default function MembershiponlyPage() {
 
               <div className="pt-4">
                 <span>
-                  5 Solicitors are online now and ready to help with your
+                  5 Lawyers are online now and ready to help with your
                   question!
                 </span>
               </div>

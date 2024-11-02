@@ -161,11 +161,11 @@ const Hero = () => {
               top-quality guidance from UK-based lawyers in just minutes.
             </p>
 
-            <Link href={"#login"} onClick={() => setGlow(true)}>
+            {/* <Link href={"#login"} onClick={() => setGlow(true)}>
               <button className="hidden sm:py-[15px] sm:px-[30px] md:flex  z-10 lg:px-[27px] py-[18px] bg-gradient-to-r text-[15px] lg:text-[20px] from-[#0477FE] to-[#0023FF] text-white rounded-[10px]">
                 Get Started
               </button>
-            </Link>
+            </Link> */}
           </div>
 
           <AuthSection glow={glow} setGlow={setGlow} />
