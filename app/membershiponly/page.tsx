@@ -27,7 +27,7 @@ export default function MembershiponlyPage() {
             </h1>
             <h2 className="text-base font-normal leading-5 text-gray-800 pt-2">
               Unlimited conversations with lawyers — try 3 days for just £5.
-              Then £50/month. Cancel anytime.
+              Cancel anytime.
             </h2>
 
             <div className="pt-4">
